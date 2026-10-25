@@ -665,42 +665,35 @@
       gap: 12px;
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-
-    .stat {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--r-m);
-      padding: 10px 12px;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-3);
-    }
-
-    .stat-value {
-      margin-top: 2px;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+    .quiz-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0 2px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
       font-variant-numeric: tabular-nums;
     }
 
-    .stat-value small {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-3);
+    .quiz-head strong { color: var(--text); }
+
+    .progress {
+      display: flex;
+      gap: 4px;
     }
 
-    .stat-value.hot { color: var(--accent-text); }
+    .progress span {
+      flex: 1;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--surface-3);
+      transition: background 0.25s;
+    }
+
+    .progress .ok { background: var(--good); }
+    .progress .no { background: var(--bad); }
+    .progress .now { background: var(--text-3); }
 
     .quiz-card {
       position: relative;
@@ -708,7 +701,7 @@
       border: 1px solid var(--line);
       border-radius: var(--r-l);
       box-shadow: var(--shadow-2);
-      padding: 20px;
+      padding: 24px 20px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -722,32 +715,7 @@
       40%, 80% { transform: translateX(6px); }
     }
 
-    .history {
-      display: flex;
-      gap: 4px;
-      align-self: stretch;
-      justify-content: center;
-      min-height: 6px;
-    }
-
-    .history span {
-      width: 18px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--surface-3);
-    }
-
-    .history .ok { background: var(--good); }
-    .history .no { background: var(--bad); }
-
-    .quiz-prompt {
-      margin: 0;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-2);
-    }
-
-    .quiz-card .paper { max-width: 180px; }
+    .quiz-card .paper { max-width: 180px; transition: border-color 0.2s; }
     .quiz-card .paper .big { font-size: 100px; }
     .quiz-card .paper .big.long { font-size: 66px; }
 
@@ -801,7 +769,7 @@
     }
 
     .option:disabled { cursor: default; }
-    .option.dim { opacity: 0.45; }
+    .option.dim { opacity: 0.4; }
 
     .option.correct {
       background: var(--good-soft);
@@ -826,52 +794,51 @@
       width: 100%;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
-      padding: 12px 12px 12px 16px;
+      padding: 10px 10px 10px 16px;
       border-radius: var(--r-m);
+      background: var(--bad-soft);
       animation: rise 0.3s var(--ease);
     }
 
-    .feedback.ok { background: var(--good-soft); }
-    .feedback.no { background: var(--bad-soft); }
+    .feedback-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--bad);
+    }
+
+    .feedback-title b { font-weight: 800; }
 
     @keyframes rise {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: none; }
     }
 
-    .feedback-text { flex: 1; min-width: 0; }
-
-    .feedback-title {
-      font-weight: 700;
-      font-size: 15px;
-    }
-
-    .feedback.ok .feedback-title { color: var(--good); }
-    .feedback.no .feedback-title { color: var(--bad); }
-
-    .feedback-tip {
-      margin-top: 2px;
-      font-size: 13px;
-      color: var(--text-2);
-    }
-
-    .next-btn {
+    .btn {
       flex: none;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      padding: 10px 16px;
+      padding: 11px 18px;
       border-radius: 999px;
-      background: var(--text);
-      color: var(--bg);
       font-size: 14px;
       font-weight: 700;
-      transition: transform 0.15s var(--ease);
+      transition: transform 0.15s var(--ease), background 0.15s;
     }
 
-    .next-btn:hover { transform: translateX(2px); }
-    .next-btn svg { width: 14px; height: 14px; }
+    .btn svg { width: 14px; height: 14px; }
+
+    .btn-primary { background: var(--text); color: var(--bg); }
+    .btn-primary:hover { transform: translateX(2px); }
+
+    .btn-secondary {
+      background: var(--surface);
+      border: 1.5px solid var(--line-strong);
+    }
+
+    .btn-secondary:hover { border-color: var(--text); }
 
     .hint {
       text-align: center;
@@ -890,11 +857,99 @@
 
     @media (hover: none) { .hint { display: none; } }
 
+    /* Results */
+    .result {
+      text-align: center;
+      animation: rise 0.35s var(--ease);
+    }
+
+    .result-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .result-score {
+      margin-top: 6px;
+      font-size: 64px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .result-score small {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-3);
+    }
+
+    .result-verdict {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .result-sub {
+      margin-top: 2px;
+      font-size: 14px;
+      color: var(--text-2);
+    }
+
+    .result .progress { width: 100%; }
+
+    .review {
+      width: 100%;
+      text-align: left;
+    }
+
+    .review-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .review-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px 5px 5px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line-strong);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .review-item:hover { border-color: var(--accent); color: var(--text); }
+
+    .review-item .kana {
+      display: grid;
+      place-items: center;
+      min-width: 30px;
+      height: 30px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: var(--bad-soft);
+      color: var(--bad);
+      font-size: 18px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .actions .btn { flex: 1; }
+
     @media (max-width: 420px) {
-      .quiz-card { padding: 16px; }
-      .stat-value { font-size: 19px; }
-      .feedback { flex-wrap: wrap; }
-      .next-btn { width: 100%; justify-content: center; }
+      .quiz-card { padding: 20px 16px 16px; }
+      .actions { flex-direction: column-reverse; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1038,6 +1093,7 @@
     const ICON_CLOSE = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
     const ICON_ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
 
+    const ROUND_SIZE = 10;
     const BY_KANA = new Map(HIRAGANA_DATA.map(item => [item.kana, item]));
     const narrow = window.matchMedia('(max-width: 860px)');
 
@@ -1048,14 +1104,14 @@
       selectedKana: 'あ',
       sheetOpen: false,
       quiz: {
-        currentQuestion: null,
+        round: null,
+        index: 0,
+        results: [],
+        done: false,
         options: [],
         selectedAnswer: null,
         isAnswered: false,
-        score: 0,
-        streak: 0,
-        totalAsked: 0,
-        history: []
+        timer: null
       }
     };
 
@@ -1235,31 +1291,55 @@
     }
 
     /* ---------- Quiz ---------- */
-    function generateQuizQuestion() {
-      const list = getFilteredList();
-      if (list.length === 0) return;
+    function startRound(pool = getFilteredList()) {
+      clearTimeout(state.quiz.timer);
+      Object.assign(state.quiz, {
+        round: shuffle([...pool]).slice(0, ROUND_SIZE),
+        index: 0,
+        results: [],
+        done: false
+      });
+      prepareQuestion();
+    }
 
-      // Avoid asking the same character twice in a row
-      const prev = state.quiz.currentQuestion;
-      const candidates = list.length > 1 && prev ? list.filter(item => item.kana !== prev.kana) : list;
-      const target = candidates[Math.floor(Math.random() * candidates.length)];
+    function prepareQuestion() {
+      const qz = state.quiz;
+      const target = qz.round[qz.index];
+      const list = getFilteredList();
 
       // Prefer distractors from the same category, then fill from the rest
       const sameCat = shuffle(list.filter(item => item.kana !== target.kana));
       const others = shuffle(HIRAGANA_DATA.filter(item => item.kana !== target.kana && !sameCat.includes(item)));
       const distractors = sameCat.concat(others).slice(0, 3);
 
-      state.quiz.currentQuestion = target;
-      state.quiz.options = shuffle([target, ...distractors]);
-      state.quiz.selectedAnswer = null;
-      state.quiz.isAnswered = false;
+      qz.options = shuffle([target, ...distractors]);
+      qz.selectedAnswer = null;
+      qz.isAnswered = false;
+    }
+
+    function progressHtml(withCurrent) {
+      const qz = state.quiz;
+      return '<div class="progress" aria-hidden="true">' + qz.round.map((_, i) => {
+        const r = qz.results[i];
+        const cls = r ? (r.ok ? 'ok' : 'no') : (withCurrent && i === qz.index ? 'now' : '');
+        return `<span class="${cls}"></span>`;
+      }).join('') + '</div>';
+    }
+
+    function verdict(pct) {
+      if (pct === 100) return 'Perfect!';
+      if (pct >= 80) return 'Great job';
+      if (pct >= 50) return 'Getting there';
+      return 'Keep practicing';
     }
 
     function renderQuiz() {
-      if (!state.quiz.currentQuestion) generateQuizQuestion();
+      if (!state.quiz.round) startRound();
       const qz = state.quiz;
-      const q = qz.currentQuestion;
-      const accuracy = qz.totalAsked ? Math.round((qz.score / qz.totalAsked) * 100) : null;
+      if (qz.done) return renderResults();
+
+      const q = qz.round[qz.index];
+      const score = qz.results.filter(r => r.ok).length;
       const isRight = qz.isAnswered && qz.selectedAnswer === q.kana;
 
       const options = qz.options.map((opt, i) => {
@@ -1272,63 +1352,96 @@
         return `<button type="button" class="option ${cls}" data-kana="${opt.kana}" ${qz.isAnswered ? 'disabled' : ''}><span class="key">${i + 1}</span>${opt.romaji}</button>`;
       }).join('');
 
-      const history = qz.history.slice(-12);
-      const dots = history.map(ok => `<span class="${ok ? 'ok' : 'no'}"></span>`).join('')
-        + '<span></span>'.repeat(Math.max(0, 12 - history.length));
-
-      const feedback = qz.isAnswered ? `
-        <div class="feedback ${isRight ? 'ok' : 'no'}">
-          <div class="feedback-text">
-            <div class="feedback-title">${isRight ? 'Correct' : `It's “${q.romaji}”`}</div>
-            <div class="feedback-tip">${q.mnemonic}</div>
-          </div>
-          <button type="button" class="next-btn" id="next-btn">Next ${ICON_ARROW}</button>
+      const feedback = qz.isAnswered && !isRight ? `
+        <div class="feedback">
+          <div class="feedback-title">Answer: <b>${q.romaji}</b></div>
+          <button type="button" class="btn btn-primary" data-next>Next ${ICON_ARROW}</button>
         </div>` : '';
 
       $view.innerHTML = `
         <div class="quiz">
-          <div class="stats">
-            <div class="stat"><div class="stat-label">Score</div><div class="stat-value">${qz.score}<small> / ${qz.totalAsked}</small></div></div>
-            <div class="stat"><div class="stat-label">Accuracy</div><div class="stat-value">${accuracy === null ? '–' : accuracy + '<small>%</small>'}</div></div>
-            <div class="stat"><div class="stat-label">Streak</div><div class="stat-value ${qz.streak >= 3 ? 'hot' : ''}">${qz.streak}</div></div>
+          <div class="quiz-head">
+            <span>Question <strong>${qz.index + 1}</strong> of ${qz.round.length}</span>
+            <span>Score <strong>${score}</strong></span>
           </div>
-          <div class="quiz-card ${qz.isAnswered ? (isRight ? 'is-right' : 'is-wrong') : ''}" id="quiz-card">
-            <div class="history" aria-hidden="true">${dots}</div>
-            <p class="quiz-prompt">How do you read this?</p>
-            <div class="paper"><span class="big ${q.kana.length > 1 ? 'long' : ''}">${q.kana}</span></div>
+          ${progressHtml(true)}
+          <div class="quiz-card ${qz.isAnswered ? (isRight ? 'is-right' : 'is-wrong') : ''} ${qz.isAnswered && !isRight ? 'shake' : ''}">
+            <div class="paper"><span class="big ${q.kana.length > 1 ? 'long' : ''}" ${qz.isAnswered ? 'style="animation:none"' : ''}>${q.kana}</span></div>
             <div class="options">${options}</div>
             <div aria-live="polite" style="width:100%">${feedback}</div>
           </div>
-          <div class="hint">Press <kbd>1</kbd>–<kbd>4</kbd> to answer, <kbd>Enter</kbd> for next</div>
+          <div class="hint"><kbd>1</kbd>–<kbd>4</kbd> to answer · <kbd>Enter</kbd> for next</div>
         </div>`;
 
-      if (qz.isAnswered && !isRight) {
-        const card = document.getElementById('quiz-card');
-        card.classList.add('shake');
-      }
-      const nextBtn = document.getElementById('next-btn');
+      const nextBtn = $view.querySelector('[data-next]');
       if (nextBtn) nextBtn.focus({ preventScroll: true });
+    }
+
+    function renderResults() {
+      const qz = state.quiz;
+      const total = qz.results.length;
+      const score = qz.results.filter(r => r.ok).length;
+      const pct = Math.round((score / total) * 100);
+      const missed = qz.results.filter(r => !r.ok).map(r => r.item);
+
+      const review = missed.length ? `
+        <div class="block review">
+          <span class="block-label">Review these</span>
+          <div class="review-list">
+            ${missed.map(m => `<button type="button" class="review-item" data-review="${m.kana}"><span class="kana">${m.kana}</span>${m.romaji}</button>`).join('')}
+          </div>
+        </div>` : '';
+
+      $view.innerHTML = `
+        <div class="quiz">
+          <div class="quiz-card result">
+            <div>
+              <div class="result-label">Round complete</div>
+              <div class="result-score">${score}<small> / ${total}</small></div>
+              <div class="result-verdict">${verdict(pct)}</div>
+              <div class="result-sub">${pct}% correct</div>
+            </div>
+            ${progressHtml(false)}
+            ${review}
+            <div class="actions">
+              ${missed.length ? `<button type="button" class="btn btn-secondary" data-retry>Retry missed (${missed.length})</button>` : ''}
+              <button type="button" class="btn btn-primary" data-new>New round</button>
+            </div>
+          </div>
+        </div>`;
+
+      $view.querySelector('[data-new]').focus({ preventScroll: true });
     }
 
     function answer(kana) {
       const qz = state.quiz;
-      if (qz.isAnswered) return;
-      const correct = kana === qz.currentQuestion.kana;
+      if (qz.isAnswered || qz.done) return;
+      const item = qz.round[qz.index];
+      const ok = kana === item.kana;
       qz.selectedAnswer = kana;
       qz.isAnswered = true;
-      qz.totalAsked += 1;
-      qz.history.push(correct);
-      if (correct) {
-        qz.score += 1;
-        qz.streak += 1;
-      } else {
-        qz.streak = 0;
-      }
+      qz.results.push({ item, ok });
+      renderQuiz();
+      if (ok) qz.timer = setTimeout(advance, 650);
+    }
+
+    function advance() {
+      const qz = state.quiz;
+      clearTimeout(qz.timer);
+      if (!qz.isAnswered) return;
+      qz.index += 1;
+      if (qz.index >= qz.round.length) qz.done = true;
+      else prepareQuestion();
+      if (state.mode === 'quiz') renderQuiz();
+    }
+
+    function retryMissed() {
+      startRound(state.quiz.results.filter(r => !r.ok).map(r => r.item));
       renderQuiz();
     }
 
-    function nextQuestion() {
-      generateQuizQuestion();
+    function newRound() {
+      startRound();
       renderQuiz();
     }
 
@@ -1357,8 +1470,11 @@
       if (!chip || chip.dataset.cat === state.category) return;
       state.category = chip.dataset.cat;
       chip.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
-      if (state.mode === 'quiz') generateQuizQuestion();
-      else state.quiz.currentQuestion = null;
+      if (state.mode === 'quiz') startRound();
+      else {
+        clearTimeout(state.quiz.timer);
+        state.quiz.round = null;
+      }
       render();
     });
 
@@ -1377,7 +1493,15 @@
       if (e.target.closest('[data-close]')) return setSheet(false);
       const option = e.target.closest('.option');
       if (option) return answer(option.dataset.kana);
-      if (e.target.closest('#next-btn')) return nextQuestion();
+      if (e.target.closest('[data-next]')) return advance();
+      if (e.target.closest('[data-retry]')) return retryMissed();
+      if (e.target.closest('[data-new]')) return newRound();
+      const review = e.target.closest('[data-review]');
+      if (review) {
+        state.mode = 'explore';
+        render();
+        selectKana(review.dataset.review, { openSheet: true });
+      }
     });
 
     document.getElementById('backdrop').addEventListener('click', () => setSheet(false));
@@ -1391,11 +1515,15 @@
         else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
         return;
       }
-      if (!state.quiz.isAnswered && e.key >= '1' && e.key <= '4') {
-        const opt = state.quiz.options[Number(e.key) - 1];
+      const qz = state.quiz;
+      if (e.key === 'Enter' && document.activeElement?.tagName === 'BUTTON') return;
+      if (qz.done) {
+        if (e.key === 'Enter') newRound();
+      } else if (!qz.isAnswered && e.key >= '1' && e.key <= '4') {
+        const opt = qz.options[Number(e.key) - 1];
         if (opt) answer(opt.kana);
-      } else if (state.quiz.isAnswered && e.key === 'Enter' && document.activeElement?.id !== 'next-btn') {
-        nextQuestion();
+      } else if (qz.isAnswered && e.key === 'Enter') {
+        advance();
       }
     });
 
