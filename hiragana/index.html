@@ -150,13 +150,18 @@
       box-shadow: 0 4px 12px -4px var(--accent);
     }
 
-    .brand-text { min-width: 0; }
+    .brand { flex: 1; }
+
+    .brand-text { min-width: 0; overflow: hidden; }
 
     .brand-title {
+      display: block;
       font-size: 16px;
       font-weight: 700;
       letter-spacing: -0.01em;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .brand-sub {
@@ -649,6 +654,10 @@
 
     @media (max-width: 420px) {
       .brand-sub { display: none; }
+      .brand-title { font-size: 15px; }
+      .brand-full { display: none; }
+      .segmented button { padding: 7px 12px; }
+      .topbar-actions { gap: 6px; }
       .gojuon { gap: 5px; grid-template-columns: 16px repeat(5, minmax(0, 1fr)); }
       .cell { min-height: 60px; }
       .cell-empty { min-height: 60px; }
@@ -678,22 +687,19 @@
 
     .quiz-head strong { color: var(--text); }
 
-    .progress {
-      display: flex;
-      gap: 4px;
-    }
-
-    .progress span {
-      flex: 1;
-      height: 6px;
+    .meter {
+      height: 8px;
       border-radius: 999px;
       background: var(--surface-3);
-      transition: background 0.25s;
+      overflow: hidden;
     }
 
-    .progress .ok { background: var(--good); }
-    .progress .no { background: var(--bad); }
-    .progress .now { background: var(--text-3); }
+    .meter-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--good);
+      transition: width 0.5s var(--ease);
+    }
 
     .quiz-card {
       position: relative;
@@ -705,7 +711,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
     }
 
     .quiz-card.shake { animation: shake 0.4s; }
@@ -721,6 +727,22 @@
 
     .quiz-card.is-right .paper { border-color: var(--good); }
     .quiz-card.is-wrong .paper { border-color: var(--bad); }
+
+    .pips {
+      display: flex;
+      gap: 6px;
+      margin-top: -4px;
+    }
+
+    .pips span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--surface-3);
+      transition: background 0.25s, transform 0.25s var(--ease);
+    }
+
+    .pips .on { background: var(--good); transform: scale(1.15); }
 
     .options {
       display: grid;
@@ -790,13 +812,21 @@
       40% { transform: scale(1.04); }
     }
 
+    .feedback-slot {
+      width: 100%;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .feedback {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 10px 10px 10px 16px;
+      padding: 8px 8px 8px 16px;
       border-radius: var(--r-m);
       background: var(--bad-soft);
       animation: rise 0.3s var(--ease);
@@ -809,6 +839,27 @@
     }
 
     .feedback-title b { font-weight: 800; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--good-soft);
+      color: var(--good);
+      font-size: 14px;
+      font-weight: 700;
+      animation: pop-in 0.4s var(--ease);
+    }
+
+    .badge .kana { font-size: 18px; }
+    .badge svg { width: 14px; height: 14px; }
+
+    @keyframes pop-in {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: none; }
+    }
 
     @keyframes rise {
       from { opacity: 0; transform: translateY(6px); }
@@ -825,7 +876,7 @@
       border-radius: 999px;
       font-size: 14px;
       font-weight: 700;
-      transition: transform 0.15s var(--ease), background 0.15s;
+      transition: transform 0.15s var(--ease), background 0.15s, border-color 0.15s;
     }
 
     .btn svg { width: 14px; height: 14px; }
@@ -857,87 +908,38 @@
 
     @media (hover: none) { .hint { display: none; } }
 
-    /* Results */
-    .result {
+    /* Complete */
+    .complete {
       text-align: center;
       animation: rise 0.35s var(--ease);
     }
 
-    .result-label {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-3);
+    .done-icon {
+      display: grid;
+      place-items: center;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--good-soft);
+      color: var(--good);
+      animation: pop-in 0.5s var(--ease);
     }
 
-    .result-score {
-      margin-top: 6px;
-      font-size: 64px;
+    .done-icon svg { width: 34px; height: 34px; }
+
+    .complete-title {
+      font-size: 24px;
       font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
     }
 
-    .result-score small {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text-3);
-    }
-
-    .result-verdict {
-      margin-top: 10px;
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .result-sub {
-      margin-top: 2px;
+    .complete-sub {
+      margin-top: 4px;
       font-size: 14px;
       color: var(--text-2);
     }
 
-    .result .progress { width: 100%; }
-
-    .review {
-      width: 100%;
-      text-align: left;
-    }
-
-    .review-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .review-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 12px 5px 5px;
-      border-radius: 999px;
-      background: var(--surface);
-      border: 1px solid var(--line-strong);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-2);
-      transition: border-color 0.15s, color 0.15s;
-    }
-
-    .review-item:hover { border-color: var(--accent); color: var(--text); }
-
-    .review-item .kana {
-      display: grid;
-      place-items: center;
-      min-width: 30px;
-      height: 30px;
-      padding: 0 5px;
-      border-radius: 999px;
-      background: var(--bad-soft);
-      color: var(--bad);
-      font-size: 18px;
-    }
+    .complete .meter { width: 100%; }
 
     .actions {
       display: flex;
@@ -950,6 +952,50 @@
     @media (max-width: 420px) {
       .quiz-card { padding: 20px 16px 16px; }
       .actions { flex-direction: column-reverse; }
+    }
+
+    /* Mastery marks and sound */
+    .cell.mastered::after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--good);
+    }
+
+    .chip-count.done {
+      background: var(--good-soft);
+      color: var(--good);
+    }
+
+    .chip[aria-pressed="true"] .chip-count.done {
+      background: var(--good);
+      color: #fff;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: none;
+    }
+
+    .sound-btn[aria-pressed="false"] { color: var(--text-3); }
+
+    .reading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .speak-btn { width: 32px; height: 32px; }
+
+    @media (max-width: 379px) {
+      .brand-text { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -966,14 +1012,17 @@
       <a class="brand" href="../">
         <span class="brand-mark" aria-hidden="true">あ</span>
         <span class="brand-text">
-          <span class="brand-title">Hiragana Studio</span><br>
+          <span class="brand-title">Hiragana<span class="brand-full"> Studio</span></span>
           <span class="brand-sub">Learn the shapes, then test yourself</span>
         </span>
       </a>
+      <div class="topbar-actions">
+      <button type="button" class="icon-btn sound-btn" id="sound" aria-pressed="true" aria-label="Sound on"></button>
       <div class="segmented" id="mode" role="tablist" data-active="explore">
         <span class="segmented-thumb" aria-hidden="true"></span>
         <button type="button" role="tab" data-mode="explore" aria-selected="true">Chart</button>
-        <button type="button" role="tab" data-mode="quiz" aria-selected="false">Quiz</button>
+        <button type="button" role="tab" data-mode="quiz" aria-selected="false">Practice</button>
+      </div>
       </div>
     </div>
   </header>
@@ -1088,15 +1137,105 @@
       ['', ['ん', null, null, null, null]]
     ];
 
+    // A character is mastered after NEED_FRESH correct answers in a row,
+    // or NEED_AFTER_MISS in a row once it has been missed.
+    const NEED_FRESH = 2;
+    const NEED_AFTER_MISS = 3;
+    // How many unmastered characters are in rotation at once
+    const ACTIVE_SIZE = 5;
+    const STORAGE_KEY = 'hiragana-studio-v1';
+
     const ICON_PREV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg>';
     const ICON_NEXT = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3 5 5-5 5"/></svg>';
     const ICON_CLOSE = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
     const ICON_ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+    const ICON_CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3L13 4.5"/></svg>';
+    const ICON_SOUND_ON = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5M12.8 3.5a6.3 6.3 0 0 1 0 9"/></svg>';
+    const ICON_SOUND_OFF = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z"/><path d="m11 6 4 4M15 6l-4 4"/></svg>';
+    const ICON_SPEAK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg>';
 
-    const ROUND_SIZE = 10;
     const BY_KANA = new Map(HIRAGANA_DATA.map(item => [item.kana, item]));
     const narrow = window.matchMedia('(max-width: 860px)');
 
+    /* ---------- Saved progress ---------- */
+    function loadSaved() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    const saved = loadSaved();
+    const mastered = new Set((saved.mastered || []).filter(k => BY_KANA.has(k)));
+
+    function persist() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ mastered: [...mastered], sound: Sound.on }));
+      } catch (e) {}
+    }
+
+    /* ---------- Sound ---------- */
+    const Sound = {
+      on: saved.sound !== false,
+      ctx: null,
+
+      context() {
+        if (!this.ctx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return null;
+          this.ctx = new AC();
+        }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        return this.ctx;
+      },
+
+      // Soft sine/triangle notes with a quick fade so nothing clicks or blares
+      notes(freqs, { gap = 0.07, dur = 0.22, type = 'sine', vol = 0.07 } = {}) {
+        if (!this.on) return;
+        const ctx = this.context();
+        if (!ctx) return;
+        const t0 = ctx.currentTime + 0.01;
+        freqs.forEach((f, i) => {
+          const t = t0 + i * gap;
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = type;
+          osc.frequency.value = f;
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.exponentialRampToValueAtTime(vol, t + 0.015);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+          osc.connect(g).connect(ctx.destination);
+          osc.start(t);
+          osc.stop(t + dur + 0.02);
+        });
+      },
+
+      correct() { this.notes([659, 988], { gap: 0.06, dur: 0.2 }); },
+      wrong() { this.notes([220, 185], { gap: 0.09, dur: 0.24, type: 'triangle', vol: 0.06 }); },
+      mastered() { this.notes([659, 831, 988, 1319], { gap: 0.06, dur: 0.26, vol: 0.06 }); },
+      complete() { this.notes([523, 659, 784, 1047, 1319], { gap: 0.1, dur: 0.45, vol: 0.06 }); },
+
+      speak(text, force = false) {
+        if ((!this.on && !force) || !('speechSynthesis' in window)) return;
+        const synth = window.speechSynthesis;
+        synth.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'ja-JP';
+        u.rate = 0.85;
+        const voice = synth.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith('ja'));
+        if (voice) u.voice = voice;
+        synth.speak(u);
+      }
+    };
+
+    if ('speechSynthesis' in window) window.speechSynthesis.getVoices();
+
+    function buzz(ms) {
+      if (Sound.on && navigator.vibrate) navigator.vibrate(ms);
+    }
+
+    /* ---------- State ---------- */
     const state = {
       mode: 'explore',
       category: 'basic_1',
@@ -1104,13 +1243,17 @@
       selectedKana: 'あ',
       sheetOpen: false,
       quiz: {
-        round: null,
-        index: 0,
-        results: [],
-        done: false,
+        cat: null,
+        queue: [],
+        levels: new Map(),
+        current: null,
+        last: null,
         options: [],
         selectedAnswer: null,
         isAnswered: false,
+        justMastered: false,
+        answers: 0,
+        correct: 0,
         timer: null
       }
     };
@@ -1119,14 +1262,23 @@
     const $chips = document.getElementById('chips');
     const $mode = document.getElementById('mode');
     const $switch = document.getElementById('romaji-switch');
+    const $sound = document.getElementById('sound');
+
+    function itemsIn(cat) {
+      if (cat === 'all') return HIRAGANA_DATA;
+      return HIRAGANA_DATA.filter(item => item.cat === cat);
+    }
 
     function getFilteredList() {
-      if (state.category === 'all') return HIRAGANA_DATA;
-      return HIRAGANA_DATA.filter(item => item.cat === state.category);
+      return itemsIn(state.category);
     }
 
     function inCategory(item) {
       return state.category === 'all' || item.cat === state.category;
+    }
+
+    function masteredCount(cat) {
+      return itemsIn(cat).filter(item => mastered.has(item.kana)).length;
     }
 
     function shuffle(arr) {
@@ -1137,17 +1289,22 @@
       return arr;
     }
 
-    /* ---------- Chips ---------- */
+    /* ---------- Chips & chrome ---------- */
     function renderChips() {
-      $chips.innerHTML = CATEGORIES.map(cat => {
-        const count = cat.id === 'all' ? HIRAGANA_DATA.length : HIRAGANA_DATA.filter(item => item.cat === cat.id).length;
-        return `<button type="button" class="chip" data-cat="${cat.id}" aria-pressed="${cat.id === state.category}">${cat.label}<span class="chip-count">${count}</span></button>`;
-      }).join('');
+      $chips.innerHTML = CATEGORIES.map(cat =>
+        `<button type="button" class="chip" data-cat="${cat.id}" aria-pressed="${cat.id === state.category}">${cat.label}<span class="chip-count"></span></button>`
+      ).join('');
     }
 
     function syncChrome() {
       $chips.querySelectorAll('.chip').forEach(chip => {
-        chip.setAttribute('aria-pressed', String(chip.dataset.cat === state.category));
+        const cat = chip.dataset.cat;
+        const total = itemsIn(cat).length;
+        const done = masteredCount(cat);
+        const count = chip.querySelector('.chip-count');
+        count.textContent = done === 0 ? total : `${done}/${total}`;
+        count.classList.toggle('done', done === total);
+        chip.setAttribute('aria-pressed', String(cat === state.category));
       });
       $mode.dataset.active = state.mode;
       $mode.querySelectorAll('button').forEach(btn => {
@@ -1155,12 +1312,15 @@
       });
       $switch.checked = state.showRomaji;
       document.body.classList.toggle('hide-romaji', !state.showRomaji);
+      $sound.setAttribute('aria-pressed', String(Sound.on));
+      $sound.setAttribute('aria-label', Sound.on ? 'Sound on' : 'Sound off');
+      $sound.innerHTML = Sound.on ? ICON_SOUND_ON : ICON_SOUND_OFF;
     }
 
     /* ---------- Chart ---------- */
     function cellHtml(item) {
       return `
-        <button type="button" class="cell" data-kana="${item.kana}" aria-pressed="${item.kana === state.selectedKana}" aria-label="${item.kana} ${item.romaji}">
+        <button type="button" class="cell ${mastered.has(item.kana) ? 'mastered' : ''}" data-kana="${item.kana}" aria-pressed="${item.kana === state.selectedKana}" aria-label="${item.kana} ${item.romaji}${mastered.has(item.kana) ? ', mastered' : ''}">
           <span class="glyph">${item.kana}</span>
           <span class="ro">${item.romaji}</span>
         </button>`;
@@ -1209,11 +1369,17 @@
       renderDetail();
     }
 
-    function lookalikeHtml(text) {
+    function parseLookalikes(text) {
+      if (!text) return [];
       return text.split('/').map(part => {
         const m = part.trim().match(/^(\S+)\s*\((.+)\)$/);
-        if (!m) return `<span class="look">${part.trim()}</span>`;
-        const [, kana, note] = m;
+        return m ? { kana: m[1], note: m[2] } : { kana: null, note: part.trim() };
+      });
+    }
+
+    function lookalikeHtml(text) {
+      return parseLookalikes(text).map(({ kana, note }) => {
+        if (!kana) return `<span class="look">${note}</span>`;
         if (BY_KANA.has(kana)) {
           return `<button type="button" class="look" data-jump="${kana}"><span class="kana">${kana}</span>${note}</button>`;
         }
@@ -1230,7 +1396,7 @@
 
       $detail.innerHTML = `
         <div class="detail-top">
-          <span class="detail-index">${idx + 1} / ${list.length}</span>
+          <span class="detail-index">${idx + 1} / ${list.length}${mastered.has(c.kana) ? ' · Mastered' : ''}</span>
           <div class="nav-btns">
             <button type="button" class="icon-btn" data-step="-1" aria-label="Previous" ${idx <= 0 ? 'disabled' : ''}>${ICON_PREV}</button>
             <button type="button" class="icon-btn" data-step="1" aria-label="Next" ${idx >= list.length - 1 ? 'disabled' : ''}>${ICON_NEXT}</button>
@@ -1238,7 +1404,10 @@
           </div>
         </div>
         <div class="paper"><span class="big ${c.kana.length > 1 ? 'long' : ''}">${c.kana}</span></div>
-        <div class="reading">${c.romaji}</div>
+        <div class="reading">
+          <span>${c.romaji}</span>
+          <button type="button" class="icon-btn speak-btn" data-speak="${c.kana}" aria-label="Play pronunciation">${ICON_SPEAK}</button>
+        </div>
         <div class="block">
           <span class="block-label">Mnemonic</span>
           <p>${c.mnemonic}</p>
@@ -1290,56 +1459,67 @@
       document.body.classList.toggle('sheet-open', open);
     }
 
-    /* ---------- Quiz ---------- */
-    function startRound(pool = getFilteredList()) {
-      clearTimeout(state.quiz.timer);
-      Object.assign(state.quiz, {
-        round: shuffle([...pool]).slice(0, ROUND_SIZE),
-        index: 0,
-        results: [],
-        done: false
+    /* ---------- Practice ---------- */
+    function startSession() {
+      const qz = state.quiz;
+      clearTimeout(qz.timer);
+      Object.assign(qz, {
+        cat: state.category,
+        queue: shuffle(getFilteredList().filter(item => !mastered.has(item.kana))),
+        levels: new Map(),
+        current: null,
+        last: null,
+        justMastered: false,
+        answers: 0,
+        correct: 0
       });
-      prepareQuestion();
+      pickQuestion();
     }
 
-    function prepareQuestion() {
+    function levelOf(item) {
       const qz = state.quiz;
-      const target = qz.round[qz.index];
-      const list = getFilteredList();
+      if (!qz.levels.has(item.kana)) qz.levels.set(item.kana, { streak: 0, need: NEED_FRESH });
+      return qz.levels.get(item.kana);
+    }
 
-      // Prefer distractors from the same category, then fill from the rest
-      const sameCat = shuffle(list.filter(item => item.kana !== target.kana));
-      const others = shuffle(HIRAGANA_DATA.filter(item => item.kana !== target.kana && !sameCat.includes(item)));
-      const distractors = sameCat.concat(others).slice(0, 3);
-
-      qz.options = shuffle([target, ...distractors]);
+    function pickQuestion() {
+      const qz = state.quiz;
+      const active = qz.queue.slice(0, ACTIVE_SIZE);
       qz.selectedAnswer = null;
       qz.isAnswered = false;
-    }
+      if (active.length === 0) {
+        qz.current = null;
+        return;
+      }
+      const choices = active.length > 1 ? active.filter(item => item !== qz.last) : active;
+      const target = choices[Math.floor(Math.random() * choices.length)];
 
-    function progressHtml(withCurrent) {
-      const qz = state.quiz;
-      return '<div class="progress" aria-hidden="true">' + qz.round.map((_, i) => {
-        const r = qz.results[i];
-        const cls = r ? (r.ok ? 'ok' : 'no') : (withCurrent && i === qz.index ? 'now' : '');
-        return `<span class="${cls}"></span>`;
-      }).join('') + '</div>';
-    }
+      // Look-alikes make the best distractors, then the same group, then anything
+      const used = new Set([target.kana]);
+      const distractors = [];
+      const take = items => items.forEach(item => {
+        if (distractors.length < 3 && item && !used.has(item.kana)) {
+          used.add(item.kana);
+          distractors.push(item);
+        }
+      });
+      take(shuffle(parseLookalikes(target.lookalike).map(l => BY_KANA.get(l.kana))).slice(0, 1));
+      take(shuffle(getFilteredList().slice()));
+      take(shuffle(HIRAGANA_DATA.slice()));
 
-    function verdict(pct) {
-      if (pct === 100) return 'Perfect!';
-      if (pct >= 80) return 'Great job';
-      if (pct >= 50) return 'Getting there';
-      return 'Keep practicing';
+      qz.current = target;
+      qz.options = shuffle([target, ...distractors]);
     }
 
     function renderQuiz() {
-      if (!state.quiz.round) startRound();
       const qz = state.quiz;
-      if (qz.done) return renderResults();
+      if (qz.cat !== state.category) startSession();
+      if (!qz.current) return renderComplete();
 
-      const q = qz.round[qz.index];
-      const score = qz.results.filter(r => r.ok).length;
+      const q = qz.current;
+      const lvl = levelOf(q);
+      const total = getFilteredList().length;
+      const done = masteredCount(state.category);
       const isRight = qz.isAnswered && qz.selectedAnswer === q.kana;
 
       const options = qz.options.map((opt, i) => {
@@ -1352,23 +1532,31 @@
         return `<button type="button" class="option ${cls}" data-kana="${opt.kana}" ${qz.isAnswered ? 'disabled' : ''}><span class="key">${i + 1}</span>${opt.romaji}</button>`;
       }).join('');
 
-      const feedback = qz.isAnswered && !isRight ? `
-        <div class="feedback">
-          <div class="feedback-title">Answer: <b>${q.romaji}</b></div>
-          <button type="button" class="btn btn-primary" data-next>Next ${ICON_ARROW}</button>
-        </div>` : '';
+      const pips = Array.from({ length: lvl.need }, (_, i) => `<span class="${i < lvl.streak ? 'on' : ''}"></span>`).join('');
+
+      let feedback = '';
+      if (qz.isAnswered && !isRight) {
+        feedback = `
+          <div class="feedback">
+            <div class="feedback-title">Answer: <b>${q.romaji}</b></div>
+            <button type="button" class="btn btn-primary" data-next>Next ${ICON_ARROW}</button>
+          </div>`;
+      } else if (qz.justMastered) {
+        feedback = `<span class="badge">${ICON_CHECK}<span class="kana">${q.kana}</span> mastered</span>`;
+      }
 
       $view.innerHTML = `
         <div class="quiz">
           <div class="quiz-head">
-            <span>Question <strong>${qz.index + 1}</strong> of ${qz.round.length}</span>
-            <span>Score <strong>${score}</strong></span>
+            <span>Mastered <strong>${done}</strong> of ${total}</span>
+            <span>${qz.queue.length} to go</span>
           </div>
-          ${progressHtml(true)}
-          <div class="quiz-card ${qz.isAnswered ? (isRight ? 'is-right' : 'is-wrong') : ''} ${qz.isAnswered && !isRight ? 'shake' : ''}">
+          <div class="meter" aria-hidden="true"><div class="meter-fill" style="width:${(done / total) * 100}%"></div></div>
+          <div class="quiz-card ${qz.isAnswered ? (isRight ? 'is-right' : 'is-wrong shake') : ''}">
             <div class="paper"><span class="big ${q.kana.length > 1 ? 'long' : ''}" ${qz.isAnswered ? 'style="animation:none"' : ''}>${q.kana}</span></div>
+            <div class="pips" aria-label="${lvl.streak} of ${lvl.need} correct in a row">${pips}</div>
             <div class="options">${options}</div>
-            <div aria-live="polite" style="width:100%">${feedback}</div>
+            <div class="feedback-slot" aria-live="polite">${feedback}</div>
           </div>
           <div class="hint"><kbd>1</kbd>–<kbd>4</kbd> to answer · <kbd>Enter</kbd> for next</div>
         </div>`;
@@ -1377,71 +1565,98 @@
       if (nextBtn) nextBtn.focus({ preventScroll: true });
     }
 
-    function renderResults() {
-      const qz = state.quiz;
-      const total = qz.results.length;
-      const score = qz.results.filter(r => r.ok).length;
-      const pct = Math.round((score / total) * 100);
-      const missed = qz.results.filter(r => !r.ok).map(r => r.item);
+    function nextCategory() {
+      const order = CATEGORIES.map(c => c.id).filter(id => id !== 'all');
+      const start = order.indexOf(state.category);
+      if (start === -1) return null;
+      for (let i = 1; i < order.length; i++) {
+        const id = order[(start + i) % order.length];
+        if (masteredCount(id) < itemsIn(id).length) return id;
+      }
+      return masteredCount('all') < HIRAGANA_DATA.length ? 'all' : null;
+    }
 
-      const review = missed.length ? `
-        <div class="block review">
-          <span class="block-label">Review these</span>
-          <div class="review-list">
-            ${missed.map(m => `<button type="button" class="review-item" data-review="${m.kana}"><span class="kana">${m.kana}</span>${m.romaji}</button>`).join('')}
-          </div>
-        </div>` : '';
+    function renderComplete() {
+      const qz = state.quiz;
+      const total = getFilteredList().length;
+      const label = CATEGORIES.find(c => c.id === state.category).label;
+      const next = nextCategory();
+      const sub = qz.answers > 0
+        ? `${qz.answers} answers · ${Math.round((qz.correct / qz.answers) * 100)}% correct`
+        : 'You already know this group.';
 
       $view.innerHTML = `
         <div class="quiz">
-          <div class="quiz-card result">
+          <div class="quiz-card complete">
+            <div class="done-icon">${ICON_CHECK}</div>
             <div>
-              <div class="result-label">Round complete</div>
-              <div class="result-score">${score}<small> / ${total}</small></div>
-              <div class="result-verdict">${verdict(pct)}</div>
-              <div class="result-sub">${pct}% correct</div>
+              <div class="complete-title">All ${total} mastered</div>
+              <div class="complete-sub">${label} · ${sub}</div>
             </div>
-            ${progressHtml(false)}
-            ${review}
+            <div class="meter" aria-hidden="true"><div class="meter-fill" style="width:100%"></div></div>
             <div class="actions">
-              ${missed.length ? `<button type="button" class="btn btn-secondary" data-retry>Retry missed (${missed.length})</button>` : ''}
-              <button type="button" class="btn btn-primary" data-new>New round</button>
+              <button type="button" class="btn btn-secondary" data-again>Practice again</button>
+              ${next ? `<button type="button" class="btn btn-primary" data-goto="${next}">Next: ${CATEGORIES.find(c => c.id === next).label} ${ICON_ARROW}</button>` : ''}
             </div>
           </div>
         </div>`;
 
-      $view.querySelector('[data-new]').focus({ preventScroll: true });
+      const primary = $view.querySelector('[data-goto]') || $view.querySelector('[data-again]');
+      primary.focus({ preventScroll: true });
     }
 
     function answer(kana) {
       const qz = state.quiz;
-      if (qz.isAnswered || qz.done) return;
-      const item = qz.round[qz.index];
+      if (qz.isAnswered || !qz.current) return;
+      const item = qz.current;
+      const lvl = levelOf(item);
       const ok = kana === item.kana;
       qz.selectedAnswer = kana;
       qz.isAnswered = true;
-      qz.results.push({ item, ok });
+      qz.answers += 1;
+
+      if (ok) {
+        qz.correct += 1;
+        lvl.streak += 1;
+        if (lvl.streak >= lvl.need) {
+          mastered.add(item.kana);
+          qz.queue = qz.queue.filter(i => i !== item);
+          qz.justMastered = true;
+          persist();
+          syncChrome();
+          Sound.mastered();
+        } else {
+          Sound.correct();
+        }
+        qz.timer = setTimeout(advance, qz.justMastered ? 1000 : 650);
+      } else {
+        lvl.streak = 0;
+        lvl.need = NEED_AFTER_MISS;
+        // Move the missed character to the front so it stays in rotation
+        qz.queue = [item, ...qz.queue.filter(i => i !== item)];
+        Sound.wrong();
+        buzz(40);
+        setTimeout(() => Sound.speak(item.kana), 250);
+      }
       renderQuiz();
-      if (ok) qz.timer = setTimeout(advance, 650);
     }
 
     function advance() {
       const qz = state.quiz;
       clearTimeout(qz.timer);
       if (!qz.isAnswered) return;
-      qz.index += 1;
-      if (qz.index >= qz.round.length) qz.done = true;
-      else prepareQuestion();
+      qz.last = qz.current;
+      qz.justMastered = false;
+      pickQuestion();
+      if (!qz.current) Sound.complete();
       if (state.mode === 'quiz') renderQuiz();
     }
 
-    function retryMissed() {
-      startRound(state.quiz.results.filter(r => !r.ok).map(r => r.item));
-      renderQuiz();
-    }
-
-    function newRound() {
-      startRound();
+    function practiceAgain() {
+      getFilteredList().forEach(item => mastered.delete(item.kana));
+      persist();
+      syncChrome();
+      startSession();
       renderQuiz();
     }
 
@@ -1470,17 +1685,20 @@
       if (!chip || chip.dataset.cat === state.category) return;
       state.category = chip.dataset.cat;
       chip.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
-      if (state.mode === 'quiz') startRound();
-      else {
-        clearTimeout(state.quiz.timer);
-        state.quiz.round = null;
-      }
       render();
     });
 
     $switch.addEventListener('change', e => {
       state.showRomaji = e.target.checked;
       syncChrome();
+    });
+
+    $sound.addEventListener('click', () => {
+      Sound.on = !Sound.on;
+      if (!Sound.on && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+      persist();
+      syncChrome();
+      Sound.correct();
     });
 
     $view.addEventListener('click', e => {
@@ -1491,16 +1709,17 @@
       const stepBtn = e.target.closest('[data-step]');
       if (stepBtn) return step(Number(stepBtn.dataset.step));
       if (e.target.closest('[data-close]')) return setSheet(false);
+      const speak = e.target.closest('[data-speak]');
+      if (speak) return Sound.speak(speak.dataset.speak, true);
       const option = e.target.closest('.option');
       if (option) return answer(option.dataset.kana);
       if (e.target.closest('[data-next]')) return advance();
-      if (e.target.closest('[data-retry]')) return retryMissed();
-      if (e.target.closest('[data-new]')) return newRound();
-      const review = e.target.closest('[data-review]');
-      if (review) {
-        state.mode = 'explore';
+      if (e.target.closest('[data-again]')) return practiceAgain();
+      const go = e.target.closest('[data-goto]');
+      if (go) {
+        state.category = go.dataset.goto;
+        $chips.querySelector(`[data-cat="${state.category}"]`)?.scrollIntoView({ inline: 'nearest', block: 'nearest' });
         render();
-        selectKana(review.dataset.review, { openSheet: true });
       }
     });
 
@@ -1517,9 +1736,8 @@
       }
       const qz = state.quiz;
       if (e.key === 'Enter' && document.activeElement?.tagName === 'BUTTON') return;
-      if (qz.done) {
-        if (e.key === 'Enter') newRound();
-      } else if (!qz.isAnswered && e.key >= '1' && e.key <= '4') {
+      if (!qz.current) return;
+      if (!qz.isAnswered && e.key >= '1' && e.key <= '4') {
         const opt = qz.options[Number(e.key) - 1];
         if (opt) answer(opt.kana);
       } else if (qz.isAnswered && e.key === 'Enter') {
