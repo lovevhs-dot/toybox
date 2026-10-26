@@ -20,7 +20,8 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/toybox/toybox-icon-180.png?v=4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Klee+One:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Klee+One:wght@600&family=Gowun+Dodum&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Klee+One:wght@600&family=Gowun+Dodum&display=swap"></noscript>
   <style>
     :root {
       --bg: #f7f4ee;
@@ -150,6 +151,8 @@
     }
 
     .card:hover .thumb-glyph { transform: scale(1.08) rotate(-3deg); }
+
+    .thumb-glyph-ko { font-family: 'Gowun Dodum', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; font-weight: 400; }
 
     .thumb-paper {
       position: relative;
@@ -297,6 +300,20 @@
           </div>
         </a>
       </li>
+      <li>
+        <a class="card" href="hangul/">
+          <div class="thumb" style="--thumb-bg: #e3eafc; --thumb-fg: #2f5bd3;">
+            <div class="thumb-paper"><span class="thumb-glyph thumb-glyph-ko">한</span></div>
+          </div>
+          <div class="card-body">
+            <div class="card-text">
+              <h2 class="card-title">Hangul Studio</h2>
+              <p class="card-desc" data-i18n="hangul">Korean alphabet chart and practice</p>
+            </div>
+            <span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+          </div>
+        </a>
+      </li>
     </ul>
 
     <footer>
@@ -317,12 +334,12 @@
 
   <script>
     const TEXT = {
-      en: { tagline: 'Small things to play with and use.', hiragana: 'Hiragana chart and quiz', more: 'More coming soon.', language: 'Language' },
-      ko: { tagline: '가지고 놀고 쓰는 작은 것들.', hiragana: '히라가나 표와 연습', more: '더 추가될 예정이에요.', language: '언어' },
-      'zh-Hans': { tagline: '好玩又好用的小东西。', hiragana: '平假名字表与练习', more: '更多内容即将推出。', language: '语言' },
-      'zh-Hant': { tagline: '好玩又好用的小東西。', hiragana: '平假名字表與練習', more: '更多內容即將推出。', language: '語言' },
-      ja: { tagline: '遊んだり使ったりできる小さなもの。', hiragana: 'ひらがな表と練習', more: '今後も追加予定です。', language: '言語' },
-      fr: { tagline: 'De petites choses pour jouer et s\'en servir.', hiragana: 'Tableau et entraînement aux hiragana', more: 'D\'autres arrivent bientôt.', language: 'Langue' }
+      en: { tagline: 'Small things to play with and use.', hiragana: 'Hiragana chart and quiz', hangul: 'Korean alphabet chart and practice', more: 'More coming soon.', language: 'Language' },
+      ko: { tagline: '가지고 놀고 쓰는 작은 것들.', hiragana: '히라가나 표와 연습', hangul: '한글 자모표와 연습', more: '더 추가될 예정이에요.', language: '언어' },
+      'zh-Hans': { tagline: '好玩又好用的小东西。', hiragana: '平假名字表与练习', hangul: '韩文字母表与练习', more: '更多内容即将推出。', language: '语言' },
+      'zh-Hant': { tagline: '好玩又好用的小東西。', hiragana: '平假名字表與練習', hangul: '韓文字母表與練習', more: '更多內容即將推出。', language: '語言' },
+      ja: { tagline: '遊んだり使ったりできる小さなもの。', hiragana: 'ひらがな表と練習', hangul: 'ハングルの一覧と練習', more: '今後も追加予定です。', language: '言語' },
+      fr: { tagline: 'De petites choses pour jouer et s\'en servir.', hiragana: 'Tableau et entraînement aux hiragana', hangul: 'Tableau et entraînement à l\'alphabet coréen', more: 'D\'autres arrivent bientôt.', language: 'Langue' }
     };
     // Shared with every app so the choice carries across pages
     const LANG_KEY = 'toybox-lang';

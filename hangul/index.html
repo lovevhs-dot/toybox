@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Hangul Studio</title>
+  <meta name="description" content="Learn the Korean alphabet with a clean chart and a quick quiz.">
+  <meta name="theme-color" content="#f7f4ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#151412" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Hangul Studio">
+  <meta property="og:description" content="Learn the Korean alphabet with a clean chart and a quick quiz.">
+  <meta property="og:url" content="https://nanyan4.github.io/toybox/hangul/">
+  <meta property="og:image" content="https://nanyan4.github.io/toybox/hangul/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="32x32" href="/toybox/toybox-icon-32.png?v=4">
+  <link rel="icon" type="image/png" sizes="180x180" href="/toybox/toybox-icon-180.png?v=4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/toybox/toybox-icon-180.png?v=4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Gowun+Dodum&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Gowun+Dodum&display=swap"></noscript>
+  <style>
+    :root {
+      --bg: #f7f4ee;
+      --surface: #fffdf9;
+      --surface-2: #efebe3;
+      --surface-3: #e5e0d6;
+      --text: #1d1b18;
+      --text-2: #6b665d;
+      --text-3: #a39d92;
+      --line: #e3ddd2;
+      --line-strong: #cfc8bb;
+      --accent: #2f5bd3;
+      --accent-soft: #e3eafc;
+      --accent-text: #2448ad;
+      --on-accent: #ffffff;
+      --good: #1f8a5b;
+      --good-soft: #dff3e8;
+      --bad: #c9352b;
+      --bad-soft: #fbe3e1;
+      --guide: rgba(47, 91, 211, 0.22);
+      --shadow-1: 0 1px 2px rgba(40, 30, 20, 0.06), 0 1px 1px rgba(40, 30, 20, 0.04);
+      --shadow-2: 0 10px 30px -10px rgba(40, 30, 20, 0.18), 0 2px 6px rgba(40, 30, 20, 0.06);
+      --r-s: 10px;
+      --r-m: 14px;
+      --r-l: 20px;
+      --ff-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'PingFang SC', 'PingFang TC', 'Microsoft YaHei', 'Microsoft JhengHei', 'Noto Sans CJK SC', sans-serif;
+      --ff-char: 'Gowun Dodum', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+      --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #151412;
+        --surface: #1e1d1a;
+        --surface-2: #262420;
+        --surface-3: #312e29;
+        --text: #efebe4;
+        --text-2: #aaa499;
+        --text-3: #716c63;
+        --line: #2e2b27;
+        --line-strong: #403c36;
+        --accent: #6f93ff;
+        --accent-soft: #18213d;
+        --accent-text: #9db4ff;
+        --on-accent: #1a0f0c;
+        --good: #4cc98c;
+        --good-soft: #15291f;
+        --bad: #ff6b5e;
+        --bad-soft: #351816;
+        --guide: rgba(111, 147, 255, 0.3);
+        --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+        --shadow-2: 0 14px 34px -12px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--ff-ui);
+      font-size: 15px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .char { font-family: var(--ff-char); font-weight: 600; }
+
+    .char, .brand-mark, .cell .glyph, .paper .big, .example .word, .tip-char { font-synthesis: none; }
+
+    /* ---------- Top bar ---------- */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      backdrop-filter: saturate(1.4) blur(14px);
+      -webkit-backdrop-filter: saturate(1.4) blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      flex: none;
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: var(--on-accent);
+      font-family: var(--ff-char);
+      font-size: 22px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px -4px var(--accent);
+    }
+
+    .brand { flex: 1; }
+
+    .brand-text { min-width: 0; overflow: hidden; }
+
+    .brand-title {
+      display: block;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-2);
+      white-space: nowrap;
+    }
+
+    .segmented {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 3px;
+      background: var(--surface-2);
+      border-radius: 999px;
+      flex: none;
+    }
+
+    .segmented-thumb {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      left: 3px;
+      width: calc(50% - 3px);
+      border-radius: 999px;
+      background: var(--surface);
+      box-shadow: var(--shadow-1);
+      transition: transform 0.3s var(--ease);
+    }
+
+    .segmented[data-active="quiz"] .segmented-thumb { transform: translateX(100%); }
+
+    .segmented button {
+      position: relative;
+      z-index: 1;
+      padding: 7px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-2);
+      transition: color 0.2s;
+    }
+
+    .segmented button[aria-selected="true"] { color: var(--text); }
+
+    /* ---------- Layout ---------- */
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 16px 16px 48px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      flex: 1;
+      min-width: 0;
+      padding: 2px;
+      margin: -2px;
+      mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+      -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+    }
+
+    .chips::-webkit-scrollbar { display: none; }
+
+    .chip {
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .chip:hover { color: var(--text); border-color: var(--text-3); }
+
+    .chip-count {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--text-2);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .chip[aria-pressed="true"] {
+      background: var(--text);
+      border-color: var(--text);
+      color: var(--bg);
+    }
+
+    .chip[aria-pressed="true"] .chip-count {
+      background: color-mix(in srgb, var(--bg) 22%, transparent);
+      color: var(--bg);
+    }
+
+    .switch {
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .switch input { position: absolute; opacity: 0; pointer-events: none; }
+
+    .switch-track {
+      position: relative;
+      width: 38px;
+      height: 22px;
+      border-radius: 999px;
+      background: var(--surface-3);
+      transition: background 0.2s;
+    }
+
+    .switch-track::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      transition: transform 0.25s var(--ease);
+    }
+
+    .switch input:checked + .switch-track { background: var(--accent); }
+    .switch input:checked + .switch-track::after { transform: translateX(16px); }
+    .switch input:focus-visible + .switch-track { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* ---------- Chart ---------- */
+    .explore {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .section + .section { margin-top: 24px; }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin: 0 2px 10px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-2);
+    }
+
+    .section-meta {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+      gap: 6px;
+    }
+
+    .cell {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      min-height: 68px;
+      padding: 8px 4px;
+      border-radius: var(--r-s);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-1);
+      transition: transform 0.18s var(--ease), border-color 0.15s, background 0.15s, box-shadow 0.18s;
+    }
+
+    .cell:hover {
+      transform: translateY(-2px);
+      border-color: var(--line-strong);
+      box-shadow: var(--shadow-2);
+    }
+
+    .cell:active { transform: translateY(0) scale(0.97); }
+
+    .cell .glyph {
+      font-family: var(--ff-char);
+      font-weight: 600;
+      font-size: 26px;
+      line-height: 1.1;
+    }
+
+    .cell .ro {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      letter-spacing: 0.02em;
+    }
+
+    .cell[aria-pressed="true"] {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent) inset, var(--shadow-1);
+    }
+
+    .cell[aria-pressed="true"] .ro { color: var(--accent-text); }
+
+    .hide-romaji .cell .ro { display: none; }
+    .hide-romaji .cell { min-height: 60px; }
+
+    /* ---------- Detail panel ---------- */
+    .detail {
+      position: sticky;
+      top: 84px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--r-l);
+      box-shadow: var(--shadow-2);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .detail-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .detail-index {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-3);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .icon-btn {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text-2);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .icon-btn:hover { background: var(--surface-2); color: var(--text); }
+    .icon-btn:disabled { opacity: 0.35; cursor: default; }
+    .icon-btn svg { width: 16px; height: 16px; }
+
+    .nav-btns { display: flex; gap: 6px; }
+
+    .paper {
+      position: relative;
+      width: 100%;
+      max-width: 200px;
+      aspect-ratio: 1;
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
+      border: 1.5px solid var(--guide);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .paper::before, .paper::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .paper::before {
+      left: 0;
+      right: 0;
+      top: 50%;
+      border-top: 1.5px dashed var(--guide);
+    }
+
+    .paper::after {
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      border-left: 1.5px dashed var(--guide);
+    }
+
+    .paper .big {
+      position: relative;
+      z-index: 1;
+      font-family: var(--ff-char);
+      font-weight: 600;
+      font-size: 108px;
+      line-height: 1;
+      animation: ink 0.35s var(--ease);
+    }
+
+    .paper .big.long { font-size: 72px; }
+
+    @keyframes ink {
+      from { opacity: 0; transform: scale(0.92); filter: blur(3px); }
+      to { opacity: 1; transform: none; filter: none; }
+    }
+
+    .reading {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--accent-text);
+    }
+
+    .block {
+      border-radius: var(--r-m);
+      background: var(--surface-2);
+      padding: 12px 14px;
+    }
+
+    .block-label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+
+    .block p { margin: 0; }
+
+    .example {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 4px 10px;
+    }
+
+    .example .word {
+      font-family: var(--ff-char);
+      font-weight: 600;
+      font-size: 22px;
+    }
+
+    .example .word-ro { color: var(--text-2); font-size: 14px; }
+    .example .word-meaning { width: 100%; font-size: 14px; }
+
+    .lookalikes {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .look-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .look-row .look { flex: none; }
+
+    .look-tip {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.35;
+      color: var(--text-2);
+    }
+
+    .look {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px 5px 6px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line-strong);
+      font-size: 13px;
+      color: var(--text-2);
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    button.look:hover { border-color: var(--accent); color: var(--text); }
+
+    .look .char {
+      display: grid;
+      place-items: center;
+      min-width: 26px;
+      height: 26px;
+      padding: 0 4px;
+      border-radius: 999px;
+      background: var(--bad-soft);
+      color: var(--bad);
+      font-size: 16px;
+    }
+
+    .sheet-close { display: none; }
+    .sheet-backdrop { display: none; }
+
+    @media (max-width: 860px) {
+      .explore { grid-template-columns: 1fr; }
+
+      .detail {
+        position: fixed;
+        z-index: 40;
+        top: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-height: 88vh;
+        overflow-y: auto;
+        border-radius: 24px 24px 0 0;
+        border-bottom: none;
+        padding: 10px 18px calc(20px + env(safe-area-inset-bottom));
+        transform: translateY(105%);
+        transition: transform 0.35s var(--ease);
+        visibility: hidden;
+      }
+
+      .detail::before {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 4px;
+        margin: 0 auto 4px;
+        border-radius: 999px;
+        background: var(--line-strong);
+      }
+
+      .sheet-open .detail { transform: none; visibility: visible; }
+
+      .sheet-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        background: rgba(10, 8, 6, 0.38);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+
+      .sheet-open .sheet-backdrop { opacity: 1; pointer-events: auto; }
+
+      .sheet-close { display: grid; }
+
+      .paper { max-width: 168px; }
+      .paper .big { font-size: 92px; }
+      .paper .big.long { font-size: 60px; }
+    }
+
+    @media (max-width: 420px) {
+      .brand-sub { display: none; }
+      .brand-title { font-size: 15px; }
+      .brand-full { display: none; }
+      .toolbar { flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+      .toolbar .chips { flex-basis: 100%; }
+      .segmented button { padding: 7px 12px; }
+      .topbar-actions { gap: 6px; }
+      .cell { min-height: 60px; }
+      .cell .glyph { font-size: 24px; }
+      .flow { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
+    }
+
+    /* ---------- Quiz ---------- */
+    .quiz {
+      max-width: 560px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .quiz-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0 2px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .quiz-head strong { color: var(--text); }
+
+    .meter {
+      height: 8px;
+      border-radius: 999px;
+      background: var(--surface-3);
+      overflow: hidden;
+    }
+
+    .meter-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--good);
+      transition: width 0.5s var(--ease);
+    }
+
+    .quiz-card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--r-l);
+      box-shadow: var(--shadow-2);
+      padding: 24px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .quiz-card.shake { animation: shake 0.4s; }
+
+    @keyframes shake {
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    .quiz-card .paper { max-width: 180px; transition: border-color 0.2s; }
+    .quiz-card .paper .big { font-size: 100px; }
+    .quiz-card .paper .big.long { font-size: 66px; }
+
+    .quiz-card.is-right .paper { border-color: var(--good); }
+    .quiz-card.is-wrong .paper { border-color: var(--bad); }
+
+    .pips {
+      display: flex;
+      gap: 6px;
+      margin-top: -4px;
+    }
+
+    .pips span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--surface-3);
+      transition: background 0.25s, transform 0.25s var(--ease);
+    }
+
+    .pips .on { background: var(--good); transform: scale(1.15); }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .option {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      padding: 10px 36px;
+      border-radius: var(--r-m);
+      border: 1.5px solid var(--line-strong);
+      background: var(--surface);
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      transition: transform 0.15s var(--ease), border-color 0.15s, background 0.15s, opacity 0.2s;
+    }
+
+    .option:hover:not(:disabled) {
+      border-color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .option:active:not(:disabled) { transform: scale(0.98); }
+
+    .option .key {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: var(--surface-2);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-3);
+    }
+
+    .option:disabled { cursor: default; }
+    .option.dim { opacity: 0.4; }
+
+    .option.correct {
+      background: var(--good-soft);
+      border-color: var(--good);
+      color: var(--good);
+      animation: pop 0.35s var(--ease);
+    }
+
+    .option.wrong {
+      background: var(--bad-soft);
+      border-color: var(--bad);
+      color: var(--bad);
+    }
+
+    .option.correct .key, .option.wrong .key { background: transparent; color: inherit; }
+
+    @keyframes pop {
+      40% { transform: scale(1.04); }
+    }
+
+    .feedback-slot {
+      width: 100%;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feedback {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 8px 8px 8px 16px;
+      border-radius: var(--r-m);
+      background: var(--bad-soft);
+      animation: rise 0.3s var(--ease);
+    }
+
+    .feedback-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .compare {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 0 0 6px;
+      padding: 10px 12px;
+      border-radius: var(--r-s);
+      background: var(--surface);
+      text-align: left;
+    }
+
+    .compare-pair {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cmp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .cmp .char {
+      display: grid;
+      place-items: center;
+      min-width: 34px;
+      height: 34px;
+      padding: 0 4px;
+      border-radius: 8px;
+      font-size: 22px;
+    }
+
+    .cmp.ok { color: var(--good); }
+    .cmp.ok .char { background: var(--good-soft); }
+    .cmp.no { color: var(--bad); }
+    .cmp.no .char { background: var(--bad-soft); }
+
+    .vs {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-3);
+    }
+
+    .tip-char {
+      font-family: var(--ff-char);
+      font-weight: 600;
+      font-size: 1.2em;
+      line-height: 1;
+    }
+
+    .compare-tip {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    .feedback-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--bad);
+    }
+
+    .feedback-title b { font-weight: 800; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--good-soft);
+      color: var(--good);
+      font-size: 14px;
+      font-weight: 700;
+      animation: pop-in 0.4s var(--ease);
+    }
+
+    .badge .char { font-size: 18px; }
+    .badge svg { width: 14px; height: 14px; }
+
+    @keyframes pop-in {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: none; }
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .btn {
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 11px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform 0.15s var(--ease), background 0.15s, border-color 0.15s;
+    }
+
+    .btn svg { width: 14px; height: 14px; }
+
+    .btn-primary { background: var(--text); color: var(--bg); }
+    .btn-primary:hover { transform: translateX(2px); }
+
+    .btn-secondary {
+      background: var(--surface);
+      border: 1.5px solid var(--line-strong);
+    }
+
+    .btn-secondary:hover { border-color: var(--text); }
+
+    .hint {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .hint kbd {
+      font: inherit;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 4px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+    }
+
+    @media (hover: none) { .hint { display: none; } }
+
+    /* Complete */
+    .complete {
+      text-align: center;
+      animation: rise 0.35s var(--ease);
+    }
+
+    .done-icon {
+      display: grid;
+      place-items: center;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--good-soft);
+      color: var(--good);
+      animation: pop-in 0.5s var(--ease);
+    }
+
+    .done-icon svg { width: 34px; height: 34px; }
+
+    .complete-title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .complete-sub {
+      margin-top: 4px;
+      font-size: 14px;
+      color: var(--text-2);
+    }
+
+    .complete .meter { width: 100%; }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .actions .btn { flex: 1; }
+
+    @media (max-width: 420px) {
+      .quiz-card { padding: 20px 16px 16px; }
+      .actions { flex-direction: column-reverse; }
+    }
+
+    /* Mastery marks and sound */
+    .cell.mastered::after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--good);
+    }
+
+    .chip-count.done {
+      background: var(--good-soft);
+      color: var(--good);
+    }
+
+    .chip[aria-pressed="true"] .chip-count.done {
+      background: var(--good);
+      color: #fff;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: none;
+    }
+
+    .sound-btn[aria-pressed="false"] { color: var(--text-3); }
+
+    .reading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .speak-btn { width: 32px; height: 32px; }
+
+
+    .lang-btn {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .lang-btn select {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .lang-btn:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    @media (max-width: 480px) {
+      .brand-text { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../">
+        <span class="brand-mark" aria-hidden="true">한</span>
+        <span class="brand-text">
+          <span class="brand-title">Hangul<span class="brand-full"> Studio</span></span>
+          <span class="brand-sub" id="subtitle">Learn the letters, then test yourself</span>
+        </span>
+      </a>
+      <div class="topbar-actions">
+      <label class="icon-btn lang-btn">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4M8 1.8c1.8 1.7 2.6 3.8 2.6 6.2S9.8 12.5 8 14.2C6.2 12.5 5.4 10.4 5.4 8S6.2 3.5 8 1.8z"/></svg>
+        <select id="lang" aria-label="Language"></select>
+      </label>
+      <button type="button" class="icon-btn sound-btn" id="sound" aria-pressed="true" aria-label="Sound on"></button>
+      <div class="segmented" id="mode" role="tablist" data-active="explore">
+        <span class="segmented-thumb" aria-hidden="true"></span>
+        <button type="button" role="tab" data-mode="explore" aria-selected="true">Chart</button>
+        <button type="button" role="tab" data-mode="quiz" aria-selected="false">Practice</button>
+      </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="toolbar">
+      <div class="chips" id="chips"></div>
+      <label class="switch">
+        <span id="reading-label">Romaji</span>
+        <input type="checkbox" id="romaji-switch" checked>
+        <span class="switch-track"></span>
+      </label>
+    </div>
+
+    <div id="view"></div>
+  </main>
+
+  <div class="sheet-backdrop" id="backdrop"></div>
+
+  <script src="i18n.js"></script>
+  <script>
+    // Basic vowels, basic consonants, and starter syllables (consonant + ㅏ).
+    // Romanization follows the Revised Romanization of Korean (syllable-initial form).
+    const HANGUL_DATA = [
+      // Vowels
+      { char: 'ㅏ', romaji: 'a', say: '아', cat: 'vowels', mnemonic: 'A standing line with a short stroke pointing right.', example: { word: '아기', romaji: 'agi', meaning: 'Baby' } },
+      { char: 'ㅑ', romaji: 'ya', say: '야', cat: 'vowels', mnemonic: 'ㅏ with two short strokes. The extra stroke adds a y sound.', example: { word: '야구', romaji: 'yagu', meaning: 'Baseball' } },
+      { char: 'ㅓ', romaji: 'eo', say: '어', cat: 'vowels', mnemonic: 'The short stroke points left. Sounds like the u in "up".', example: { word: '어머니', romaji: 'eomeoni', meaning: 'Mother' } },
+      { char: 'ㅕ', romaji: 'yeo', say: '여', cat: 'vowels', mnemonic: 'ㅓ with two short strokes: add a y.', example: { word: '여자', romaji: 'yeoja', meaning: 'Woman' } },
+      { char: 'ㅗ', romaji: 'o', say: '오', cat: 'vowels', mnemonic: 'A flat line with a short stroke pointing up.', example: { word: '오이', romaji: 'oi', meaning: 'Cucumber' } },
+      { char: 'ㅛ', romaji: 'yo', say: '요', cat: 'vowels', mnemonic: 'ㅗ with two short strokes: add a y.', example: { word: '요리', romaji: 'yori', meaning: 'Cooking' } },
+      { char: 'ㅜ', romaji: 'u', say: '우', cat: 'vowels', mnemonic: 'The short stroke points down. Sounds like "oo".', example: { word: '우유', romaji: 'uyu', meaning: 'Milk' } },
+      { char: 'ㅠ', romaji: 'yu', say: '유', cat: 'vowels', mnemonic: 'ㅜ with two short strokes: add a y.', example: { word: '유리', romaji: 'yuri', meaning: 'Glass' } },
+      { char: 'ㅡ', romaji: 'eu', say: '으', cat: 'vowels', mnemonic: 'A flat line, like the flat earth. Say it with flat, unrounded lips.', example: { word: '크다', romaji: 'keuda', meaning: 'Big' } },
+      { char: 'ㅣ', romaji: 'i', say: '이', cat: 'vowels', mnemonic: 'A person standing up. Sounds like "ee".', example: { word: '이', romaji: 'i', meaning: 'Tooth / Two' } },
+
+      // Consonants 1
+      { char: 'ㄱ', romaji: 'g', say: '가', cat: 'cons_1', mnemonic: 'The back of the tongue rising to the roof of the mouth. Sounds k at the end of a syllable.', example: { word: '가방', romaji: 'gabang', meaning: 'Bag' } },
+      { char: 'ㄴ', romaji: 'n', say: '나', cat: 'cons_1', mnemonic: 'The tongue tip touching behind the upper teeth.', example: { word: '나무', romaji: 'namu', meaning: 'Tree' } },
+      { char: 'ㄷ', romaji: 'd', say: '다', cat: 'cons_1', mnemonic: 'ㄴ with a lid on top. Sounds t at the end of a syllable.', example: { word: '다리', romaji: 'dari', meaning: 'Leg / Bridge' } },
+      { char: 'ㄹ', romaji: 'r/l', say: '라', cat: 'cons_1', mnemonic: 'A winding road: r between vowels, l at the end.', example: { word: '라면', romaji: 'ramyeon', meaning: 'Ramen' } },
+      { char: 'ㅁ', romaji: 'm', say: '마', cat: 'cons_1', mnemonic: 'A closed mouth, like a square.', example: { word: '물', romaji: 'mul', meaning: 'Water' } },
+      { char: 'ㅂ', romaji: 'b', say: '바', cat: 'cons_1', mnemonic: 'A bucket. Sounds p at the end of a syllable.', example: { word: '바다', romaji: 'bada', meaning: 'Sea' } },
+      { char: 'ㅅ', romaji: 's', say: '사', cat: 'cons_1', mnemonic: 'A tooth, or a person walking.', example: { word: '사람', romaji: 'saram', meaning: 'Person' } },
+
+      // Consonants 2
+      { char: 'ㅇ', romaji: '–/ng', say: '아', cat: 'cons_2', mnemonic: 'The throat, a circle. Silent at the start of a syllable, ng at the end.', example: { word: '아이', romaji: 'ai', meaning: 'Child' } },
+      { char: 'ㅈ', romaji: 'j', say: '자', cat: 'cons_2', mnemonic: 'ㅅ with a line on top.', example: { word: '자동차', romaji: 'jadongcha', meaning: 'Car' } },
+      { char: 'ㅊ', romaji: 'ch', say: '차', cat: 'cons_2', mnemonic: 'ㅈ wearing a hat: more breath, ch.', example: { word: '친구', romaji: 'chingu', meaning: 'Friend' } },
+      { char: 'ㅋ', romaji: 'k', say: '카', cat: 'cons_2', mnemonic: 'ㄱ with an extra line: a stronger k with a puff of air.', example: { word: '커피', romaji: 'keopi', meaning: 'Coffee' } },
+      { char: 'ㅌ', romaji: 't', say: '타', cat: 'cons_2', mnemonic: 'ㄷ with an extra line: a stronger t with a puff of air.', example: { word: '토마토', romaji: 'tomato', meaning: 'Tomato' } },
+      { char: 'ㅍ', romaji: 'p', say: '파', cat: 'cons_2', mnemonic: 'A table, like π: a strong p with a puff of air.', example: { word: '포도', romaji: 'podo', meaning: 'Grapes' } },
+      { char: 'ㅎ', romaji: 'h', say: '하', cat: 'cons_2', mnemonic: 'A person in a hat, breathing out: h.', example: { word: '하나', romaji: 'hana', meaning: 'One' } },
+
+      // Syllables: consonant + ㅏ
+      { char: '가', romaji: 'ga', say: '가', cat: 'syllables', parts: 'ㄱ + ㅏ', example: { word: '가다', romaji: 'gada', meaning: 'To go' } },
+      { char: '나', romaji: 'na', say: '나', cat: 'syllables', parts: 'ㄴ + ㅏ', example: { word: '나', romaji: 'na', meaning: 'I / Me' } },
+      { char: '다', romaji: 'da', say: '다', cat: 'syllables', parts: 'ㄷ + ㅏ', example: { word: '다', romaji: 'da', meaning: 'All' } },
+      { char: '라', romaji: 'ra', say: '라', cat: 'syllables', parts: 'ㄹ + ㅏ', example: { word: '라디오', romaji: 'radio', meaning: 'Radio' } },
+      { char: '마', romaji: 'ma', say: '마', cat: 'syllables', parts: 'ㅁ + ㅏ', example: { word: '마음', romaji: 'maeum', meaning: 'Heart / Mind' } },
+      { char: '바', romaji: 'ba', say: '바', cat: 'syllables', parts: 'ㅂ + ㅏ', example: { word: '바지', romaji: 'baji', meaning: 'Pants' } },
+      { char: '사', romaji: 'sa', say: '사', cat: 'syllables', parts: 'ㅅ + ㅏ', example: { word: '사과', romaji: 'sagwa', meaning: 'Apple' } },
+      { char: '아', romaji: 'a', say: '아', cat: 'syllables', parts: 'ㅇ + ㅏ', example: { word: '아빠', romaji: 'appa', meaning: 'Dad' } },
+      { char: '자', romaji: 'ja', say: '자', cat: 'syllables', parts: 'ㅈ + ㅏ', example: { word: '자다', romaji: 'jada', meaning: 'To sleep' } },
+      { char: '차', romaji: 'cha', say: '차', cat: 'syllables', parts: 'ㅊ + ㅏ', example: { word: '차', romaji: 'cha', meaning: 'Tea / Car' } },
+      { char: '카', romaji: 'ka', say: '카', cat: 'syllables', parts: 'ㅋ + ㅏ', example: { word: '카드', romaji: 'kadeu', meaning: 'Card' } },
+      { char: '타', romaji: 'ta', say: '타', cat: 'syllables', parts: 'ㅌ + ㅏ', example: { word: '타다', romaji: 'tada', meaning: 'To ride' } },
+      { char: '파', romaji: 'pa', say: '파', cat: 'syllables', parts: 'ㅍ + ㅏ', example: { word: '파도', romaji: 'pado', meaning: 'Wave' } },
+      { char: '하', romaji: 'ha', say: '하', cat: 'syllables', parts: 'ㅎ + ㅏ', example: { word: '하늘', romaji: 'haneul', meaning: 'Sky' } }
+    ];
+
+    const CATEGORIES = [
+      { id: 'vowels' },
+      { id: 'cons_1' },
+      { id: 'cons_2' },
+      { id: 'syllables' },
+      { id: 'all' }
+    ];
+
+    // A character is mastered after NEED_FRESH correct answers in a row,
+    // or NEED_AFTER_MISS in a row once it has been missed.
+    const NEED_FRESH = 2;
+    const NEED_AFTER_MISS = 3;
+    // How many unmastered characters are in rotation at once
+    const ACTIVE_SIZE = 5;
+    const STORAGE_KEY = 'hangul-studio-v1';
+
+    const ICON_PREV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg>';
+    const ICON_NEXT = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 3 5 5-5 5"/></svg>';
+    const ICON_CLOSE = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
+    const ICON_ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+    const ICON_CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8.5 3.2 3L13 4.5"/></svg>';
+    const ICON_SOUND_ON = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5M12.8 3.5a6.3 6.3 0 0 1 0 9"/></svg>';
+    const ICON_SOUND_OFF = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z"/><path d="m11 6 4 4M15 6l-4 4"/></svg>';
+    const ICON_SPEAK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg>';
+
+    // Commonly confused pairs, each with a one-line way to tell them apart
+    const CONFUSABLE = [
+      ['ㄱ', 'ㅋ', 'ㅋ is ㄱ with an extra line, and adds a puff of air.'],
+      ['ㄷ', 'ㅌ', 'ㅌ is ㄷ with an extra line, and adds a puff of air.'],
+      ['ㅂ', 'ㅍ', 'ㅂ is a bucket standing up. ㅍ is a table, like π.'],
+      ['ㅈ', 'ㅊ', 'ㅊ is ㅈ with a small hat on top.'],
+      ['ㅅ', 'ㅈ', 'ㅈ is ㅅ with a line across the top.'],
+      ['ㄴ', 'ㄷ', 'ㄷ is ㄴ with a lid on top.'],
+      ['ㄷ', 'ㄹ', 'ㄹ has an extra turn in the middle, like a winding road.'],
+      ['ㅁ', 'ㅂ', 'ㅁ is a closed box. ㅂ has two posts sticking up.'],
+      ['ㅇ', 'ㅎ', 'ㅎ is ㅇ wearing a hat (two lines on top).'],
+      ['ㄱ', 'ㄴ', 'ㄱ hangs down on the right, like a 7. ㄴ sits at the bottom left, like an L.'],
+      ['ㅏ', 'ㅓ', 'In ㅏ the short stroke points right. In ㅓ it points left.'],
+      ['ㅗ', 'ㅜ', 'In ㅗ the short stroke points up. In ㅜ it points down.'],
+      ['ㅏ', 'ㅑ', 'ㅑ has two short strokes. The extra one adds a y: ya.'],
+      ['ㅓ', 'ㅕ', 'ㅕ has two short strokes. The extra one adds a y: yeo.'],
+      ['ㅗ', 'ㅛ', 'ㅛ has two short strokes. The extra one adds a y: yo.'],
+      ['ㅜ', 'ㅠ', 'ㅠ has two short strokes. The extra one adds a y: yu.'],
+      ['ㅡ', 'ㅣ', 'ㅡ lies flat (eu). ㅣ stands up (i).'],
+      ['가', '카', '카 starts with ㅋ, a k with a puff of air. 가 starts with ㄱ.'],
+      ['다', '타', '타 starts with ㅌ, a t with a puff of air. 다 starts with ㄷ.'],
+      ['바', '파', '파 starts with ㅍ, a p with a puff of air. 바 starts with ㅂ.'],
+      ['자', '차', '차 starts with ㅊ (ㅈ with a hat), with more breath. 자 starts with ㅈ.']
+    ];
+
+    const BY_CHAR = new Map(HANGUL_DATA.map(item => [item.char, item]));
+    const pairKey = (a, b) => [a, b].sort().join('|');
+    const TIP_INDEX = new Map(CONFUSABLE.map(([a, b], i) => [pairKey(a, b), i]));
+
+    /* ---------- Language ---------- */
+    // Shared with the Toybox index so the choice carries across pages
+    const LANG_KEY = 'toybox-lang';
+
+    function detectLang() {
+      try {
+        const stored = localStorage.getItem(LANG_KEY);
+        if (stored && I18N.ui[stored]) return stored;
+      } catch (e) {}
+      for (const l of navigator.languages || [navigator.language || 'en']) {
+        const x = l.toLowerCase();
+        const id = x.startsWith('zh') ? (/hant|tw|hk|mo/.test(x) ? 'zh-Hant' : 'zh-Hans') : x.split('-')[0];
+        if (I18N.ui[id]) return id;
+      }
+      return 'en';
+    }
+
+    let lang = detectLang();
+    let T = I18N.ui[lang];
+
+    // Hangul inside running text uses the glyph font so the described shapes are visible
+    function wrapChars(text) {
+      return text.replace(/[\u1100-\u11ff\u3130-\u318f\uac00-\ud7af]+/g, k => `<span class="tip-char">${k}</span>`);
+    }
+
+    function tipFor(a, b) {
+      const i = TIP_INDEX.get(pairKey(a, b));
+      if (i === undefined) return null;
+      return wrapChars(lang === 'en' ? CONFUSABLE[i][2] : I18N.tips[lang][i]);
+    }
+
+    function mnemonicOf(item) {
+      if (item.parts) return wrapChars(T.syllable(item.parts, item.romaji));
+      return wrapChars(lang === 'en' ? item.mnemonic : I18N.chars[lang][item.char][0]);
+    }
+
+    function meaningOf(item) {
+      return lang === 'en' ? item.example.meaning : I18N.chars[lang][item.char][1];
+    }
+
+    function reading(item) {
+      return item.romaji;
+    }
+
+    function catLabel(id) {
+      return T.cats[CATEGORIES.findIndex(c => c.id === id)];
+    }
+    const narrow = window.matchMedia('(max-width: 860px)');
+
+    /* ---------- Saved progress ---------- */
+    function loadSaved() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    const saved = loadSaved();
+    const mastered = new Set((saved.mastered || []).filter(k => BY_CHAR.has(k)));
+
+    function persist() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ mastered: [...mastered], sound: Sound.on }));
+      } catch (e) {}
+    }
+
+    /* ---------- Sound ---------- */
+    const Sound = {
+      on: saved.sound !== false,
+      ctx: null,
+
+      context() {
+        if (!this.ctx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return null;
+          this.ctx = new AC();
+        }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        return this.ctx;
+      },
+
+      // Soft sine/triangle notes with a quick fade so nothing clicks or blares
+      notes(freqs, { gap = 0.07, dur = 0.22, type = 'sine', vol = 0.07 } = {}) {
+        if (!this.on) return;
+        const ctx = this.context();
+        if (!ctx) return;
+        const t0 = ctx.currentTime + 0.01;
+        freqs.forEach((f, i) => {
+          const t = t0 + i * gap;
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = type;
+          osc.frequency.value = f;
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.exponentialRampToValueAtTime(vol, t + 0.015);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+          osc.connect(g).connect(ctx.destination);
+          osc.start(t);
+          osc.stop(t + dur + 0.02);
+        });
+      },
+
+      correct() { this.notes([659, 988], { gap: 0.06, dur: 0.2 }); },
+      wrong() { this.notes([220, 185], { gap: 0.09, dur: 0.24, type: 'triangle', vol: 0.06 }); },
+      mastered() { this.notes([659, 831, 988, 1319], { gap: 0.06, dur: 0.26, vol: 0.06 }); },
+      complete() { this.notes([523, 659, 784, 1047, 1319], { gap: 0.1, dur: 0.45, vol: 0.06 }); },
+
+      speak(text, force = false) {
+        if ((!this.on && !force) || !('speechSynthesis' in window)) return;
+        const synth = window.speechSynthesis;
+        synth.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'ko-KR';
+        u.rate = 0.85;
+        const voice = synth.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith('ko'));
+        if (voice) u.voice = voice;
+        synth.speak(u);
+      }
+    };
+
+    if ('speechSynthesis' in window) window.speechSynthesis.getVoices();
+
+    function buzz(ms) {
+      if (Sound.on && navigator.vibrate) navigator.vibrate(ms);
+    }
+
+    /* ---------- State ---------- */
+    const state = {
+      mode: 'explore',
+      category: 'vowels',
+      showRomaji: true,
+      selectedChar: 'ㅏ',
+      sheetOpen: false,
+      quiz: {
+        cat: null,
+        queue: [],
+        levels: new Map(),
+        current: null,
+        last: null,
+        options: [],
+        selectedAnswer: null,
+        isAnswered: false,
+        justMastered: false,
+        answers: 0,
+        correct: 0,
+        timer: null
+      }
+    };
+
+    const $view = document.getElementById('view');
+    const $chips = document.getElementById('chips');
+    const $mode = document.getElementById('mode');
+    const $switch = document.getElementById('romaji-switch');
+    const $sound = document.getElementById('sound');
+    const $lang = document.getElementById('lang');
+
+    function itemsIn(cat) {
+      if (cat === 'all') return HANGUL_DATA;
+      return HANGUL_DATA.filter(item => item.cat === cat);
+    }
+
+    function getFilteredList() {
+      return itemsIn(state.category);
+    }
+
+    function inCategory(item) {
+      return state.category === 'all' || item.cat === state.category;
+    }
+
+    function masteredCount(cat) {
+      return itemsIn(cat).filter(item => mastered.has(item.char)).length;
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    /* ---------- Chips & chrome ---------- */
+    function renderChips() {
+      $chips.innerHTML = CATEGORIES.map(cat =>
+        `<button type="button" class="chip" data-cat="${cat.id}" aria-pressed="${cat.id === state.category}">${catLabel(cat.id)}<span class="chip-count"></span></button>`
+      ).join('');
+    }
+
+    function syncChrome() {
+      $chips.querySelectorAll('.chip').forEach(chip => {
+        const cat = chip.dataset.cat;
+        const total = itemsIn(cat).length;
+        const done = masteredCount(cat);
+        const count = chip.querySelector('.chip-count');
+        count.textContent = done === 0 ? total : `${done}/${total}`;
+        count.classList.toggle('done', done === total);
+        chip.setAttribute('aria-pressed', String(cat === state.category));
+      });
+      $mode.dataset.active = state.mode;
+      $mode.querySelectorAll('button').forEach(btn => {
+        btn.setAttribute('aria-selected', String(btn.dataset.mode === state.mode));
+      });
+      $switch.checked = state.showRomaji;
+      document.body.classList.toggle('hide-romaji', !state.showRomaji);
+      $sound.setAttribute('aria-pressed', String(Sound.on));
+      $sound.setAttribute('aria-label', Sound.on ? T.soundOn : T.soundOff);
+      $sound.innerHTML = Sound.on ? ICON_SOUND_ON : ICON_SOUND_OFF;
+    }
+
+    // Text that lives in the static markup
+    function applyLanguage() {
+      document.documentElement.lang = lang;
+      $lang.value = lang;
+      $lang.setAttribute('aria-label', T.language);
+      document.getElementById('subtitle').textContent = T.subtitle;
+      document.getElementById('reading-label').textContent = T.reading;
+      $mode.querySelector('[data-mode="explore"]').textContent = T.chart;
+      $mode.querySelector('[data-mode="quiz"]').textContent = T.practice;
+      renderChips();
+    }
+
+    function setLang(next) {
+      lang = next;
+      T = I18N.ui[lang];
+      try {
+        localStorage.setItem(LANG_KEY, lang);
+      } catch (e) {}
+      applyLanguage();
+      render();
+    }
+
+    /* ---------- Chart ---------- */
+    function cellHtml(item) {
+      return `
+        <button type="button" class="cell ${mastered.has(item.char) ? 'mastered' : ''}" data-char="${item.char}" aria-pressed="${item.char === state.selectedChar}" aria-label="${item.char} ${reading(item)}${mastered.has(item.char) ? ', ' + T.masteredTag : ''}">
+          <span class="glyph">${item.char}</span>
+          <span class="ro">${reading(item)}</span>
+        </button>`;
+    }
+
+    function flowSection(title, items) {
+      if (items.length === 0) return '';
+      return section(title, T.characters(items.length), `<div class="flow">${items.map(cellHtml).join('')}</div>`);
+    }
+
+    function section(title, meta, body) {
+      return `
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">${title}</h2>
+            <span class="section-meta">${meta}</span>
+          </div>
+          ${body}
+        </section>`;
+    }
+
+    function renderExplore() {
+      const groups = CATEGORIES.map(c => c.id).filter(id => id !== 'all' && (state.category === 'all' || state.category === id));
+      $view.innerHTML = `
+        <div class="explore">
+          <div class="board">
+            ${groups.map(id => flowSection(catLabel(id), itemsIn(id))).join('')}
+          </div>
+          <aside class="detail" id="detail" aria-live="polite"></aside>
+        </div>`;
+      renderDetail();
+    }
+
+    // Every confusable pair that includes this character
+    function lookalikesOf(item) {
+      const chars = new Set();
+      CONFUSABLE.forEach(([a, b]) => {
+        if (a === item.char) chars.add(b);
+        if (b === item.char) chars.add(a);
+      });
+      chars.delete(item.char);
+      return [...chars].map(k => BY_CHAR.get(k));
+    }
+
+    function lookalikeHtml(item) {
+      return lookalikesOf(item).map(other => {
+        const tip = tipFor(item.char, other.char);
+        return `
+          <div class="look-row">
+            <button type="button" class="look" data-jump="${other.char}"><span class="char">${other.char}</span>${reading(other)}</button>
+            ${tip ? `<p class="look-tip">${tip}</p>` : ''}
+          </div>`;
+      }).join('');
+    }
+
+    function renderDetail() {
+      const $detail = document.getElementById('detail');
+      if (!$detail) return;
+      const list = getFilteredList();
+      const c = BY_CHAR.get(state.selectedChar);
+      const idx = list.indexOf(c);
+
+      $detail.innerHTML = `
+        <div class="detail-top">
+          <span class="detail-index">${idx + 1} / ${list.length}${mastered.has(c.char) ? ' · ' + T.masteredTag : ''}</span>
+          <div class="nav-btns">
+            <button type="button" class="icon-btn" data-step="-1" aria-label="${T.prev}" ${idx <= 0 ? 'disabled' : ''}>${ICON_PREV}</button>
+            <button type="button" class="icon-btn" data-step="1" aria-label="${T.next}" ${idx >= list.length - 1 ? 'disabled' : ''}>${ICON_NEXT}</button>
+            <button type="button" class="icon-btn sheet-close" data-close aria-label="${T.close}">${ICON_CLOSE}</button>
+          </div>
+        </div>
+        <div class="paper"><span class="big ${c.char.length > 1 ? 'long' : ''}">${c.char}</span></div>
+        <div class="reading">
+          <span>${reading(c)}</span>
+          <button type="button" class="icon-btn speak-btn" data-speak="${c.say}" aria-label="${T.play}">${ICON_SPEAK}</button>
+        </div>
+        <div class="block">
+          <span class="block-label">${T.mnemonic}</span>
+          <p>${mnemonicOf(c)}</p>
+        </div>
+        <div class="block">
+          <span class="block-label">${c.example.word === c.char ? T.asWord : T.example}</span>
+          <div class="example">
+            <span class="word">${c.example.word}</span>
+            <span class="word-ro">${c.example.romaji}</span>
+            <span class="word-meaning">${meaningOf(c)}</span>
+          </div>
+        </div>
+        ${lookalikesOf(c).length ? `
+        <div class="block">
+          <span class="block-label">${T.dontMix}</span>
+          <div class="lookalikes">${lookalikeHtml(c)}</div>
+        </div>` : ''}`;
+    }
+
+    function selectChar(ch, { openSheet = false } = {}) {
+      const item = BY_CHAR.get(ch);
+      if (!item) return;
+      if (!inCategory(item)) {
+        state.category = 'all';
+        state.selectedChar = ch;
+        syncChrome();
+        renderExplore();
+      } else {
+        state.selectedChar = ch;
+        $view.querySelectorAll('.cell').forEach(cell => {
+          cell.setAttribute('aria-pressed', String(cell.dataset.char === ch));
+        });
+        renderDetail();
+      }
+      if (openSheet && narrow.matches) setSheet(true);
+    }
+
+    function step(delta) {
+      const list = getFilteredList();
+      const next = list[list.indexOf(BY_CHAR.get(state.selectedChar)) + delta];
+      if (!next) return;
+      selectChar(next.char);
+      const cell = $view.querySelector(`.cell[data-char="${next.char}"]`);
+      if (cell && !state.sheetOpen) cell.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+
+    function setSheet(open) {
+      state.sheetOpen = open;
+      document.body.classList.toggle('sheet-open', open);
+    }
+
+    /* ---------- Practice ---------- */
+    function startSession() {
+      const qz = state.quiz;
+      clearTimeout(qz.timer);
+      Object.assign(qz, {
+        cat: state.category,
+        queue: shuffle(getFilteredList().filter(item => !mastered.has(item.char))),
+        levels: new Map(),
+        current: null,
+        last: null,
+        justMastered: false,
+        answers: 0,
+        correct: 0
+      });
+      pickQuestion();
+    }
+
+    function levelOf(item) {
+      const qz = state.quiz;
+      if (!qz.levels.has(item.char)) qz.levels.set(item.char, { streak: 0, need: NEED_FRESH });
+      return qz.levels.get(item.char);
+    }
+
+    function pickQuestion() {
+      const qz = state.quiz;
+      const active = qz.queue.slice(0, ACTIVE_SIZE);
+      qz.selectedAnswer = null;
+      qz.isAnswered = false;
+      if (active.length === 0) {
+        qz.current = null;
+        return;
+      }
+      const choices = active.length > 1 ? active.filter(item => item !== qz.last) : active;
+      const target = choices[Math.floor(Math.random() * choices.length)];
+
+      // Look-alikes make the best distractors, then the same group, then anything
+      // Readings must be unique too, since a vowel and its syllable share one (ㅏ and 아)
+      const used = new Set([target.char]);
+      const usedReadings = new Set([reading(target)]);
+      const distractors = [];
+      const take = items => items.forEach(item => {
+        if (distractors.length < 3 && item && !used.has(item.char) && !usedReadings.has(reading(item))) {
+          used.add(item.char);
+          usedReadings.add(reading(item));
+          distractors.push(item);
+        }
+      });
+      take(shuffle(lookalikesOf(target)).slice(0, 1));
+      take(shuffle(getFilteredList().slice()));
+      take(shuffle(HANGUL_DATA.slice()));
+
+      qz.current = target;
+      qz.options = shuffle([target, ...distractors]);
+    }
+
+    function renderQuiz() {
+      const qz = state.quiz;
+      if (qz.cat !== state.category) startSession();
+      if (!qz.current) return renderComplete();
+
+      const q = qz.current;
+      const lvl = levelOf(q);
+      const total = getFilteredList().length;
+      const done = masteredCount(state.category);
+      const isRight = qz.isAnswered && qz.selectedAnswer === q.char;
+
+      const options = qz.options.map((opt, i) => {
+        let cls = '';
+        if (qz.isAnswered) {
+          if (opt.char === q.char) cls = 'correct';
+          else if (opt.char === qz.selectedAnswer) cls = 'wrong';
+          else cls = 'dim';
+        }
+        return `<button type="button" class="option ${cls}" data-char="${opt.char}" ${qz.isAnswered ? 'disabled' : ''}><span class="key">${i + 1}</span>${reading(opt)}</button>`;
+      }).join('');
+
+      const pips = Array.from({ length: lvl.need }, (_, i) => `<span class="${i < lvl.streak ? 'on' : ''}"></span>`).join('');
+
+      let feedback = '';
+      if (qz.isAnswered && !isRight) {
+        const picked = BY_CHAR.get(qz.selectedAnswer);
+        const tip = tipFor(q.char, picked.char);
+        feedback = `
+          <div class="feedback">
+            <div class="feedback-row">
+              <div class="feedback-title">${T.answer} <b>${reading(q)}</b></div>
+              <button type="button" class="btn btn-primary" data-next>${T.nextBtn} ${ICON_ARROW}</button>
+            </div>
+            ${tip ? `
+            <div class="compare">
+              <div class="compare-pair">
+                <span class="cmp ok"><span class="char">${q.char}</span>${reading(q)}</span>
+                <span class="vs">vs</span>
+                <span class="cmp no"><span class="char">${picked.char}</span>${reading(picked)}</span>
+              </div>
+              <p class="compare-tip">${tip}</p>
+            </div>` : ''}
+          </div>`;
+      } else if (qz.justMastered) {
+        feedback = `<span class="badge">${ICON_CHECK}${T.masteredBadge(`<span class="char">${q.char}</span>`)}</span>`;
+      }
+
+      $view.innerHTML = `
+        <div class="quiz">
+          <div class="quiz-head">
+            <span>${T.masteredOf(done, total)}</span>
+            <span>${T.toGo(qz.queue.length)}</span>
+          </div>
+          <div class="meter" aria-hidden="true"><div class="meter-fill" style="width:${(done / total) * 100}%"></div></div>
+          <div class="quiz-card ${qz.isAnswered ? (isRight ? 'is-right' : 'is-wrong shake') : ''}">
+            <div class="paper"><span class="big ${q.char.length > 1 ? 'long' : ''}" ${qz.isAnswered ? 'style="animation:none"' : ''}>${q.char}</span></div>
+            <div class="pips" aria-label="${T.streak(lvl.streak, lvl.need)}">${pips}</div>
+            <div class="options">${options}</div>
+            <div class="feedback-slot" aria-live="polite">${feedback}</div>
+          </div>
+          <div class="hint">${T.hint}</div>
+        </div>`;
+
+      const nextBtn = $view.querySelector('[data-next]');
+      if (nextBtn) nextBtn.focus({ preventScroll: true });
+    }
+
+    function nextCategory() {
+      const order = CATEGORIES.map(c => c.id).filter(id => id !== 'all');
+      const start = order.indexOf(state.category);
+      if (start === -1) return null;
+      for (let i = 1; i < order.length; i++) {
+        const id = order[(start + i) % order.length];
+        if (masteredCount(id) < itemsIn(id).length) return id;
+      }
+      return masteredCount('all') < HANGUL_DATA.length ? 'all' : null;
+    }
+
+    function renderComplete() {
+      const qz = state.quiz;
+      const total = getFilteredList().length;
+      const label = catLabel(state.category);
+      const next = nextCategory();
+      const sub = qz.answers > 0
+        ? T.stats(qz.answers, Math.round((qz.correct / qz.answers) * 100))
+        : T.already;
+
+      $view.innerHTML = `
+        <div class="quiz">
+          <div class="quiz-card complete">
+            <div class="done-icon">${ICON_CHECK}</div>
+            <div>
+              <div class="complete-title">${T.allMastered(total)}</div>
+              <div class="complete-sub">${label} · ${sub}</div>
+            </div>
+            <div class="meter" aria-hidden="true"><div class="meter-fill" style="width:100%"></div></div>
+            <div class="actions">
+              <button type="button" class="btn btn-secondary" data-again>${T.practiceAgain}</button>
+              ${next ? `<button type="button" class="btn btn-primary" data-goto="${next}">${T.nextGroup(catLabel(next))} ${ICON_ARROW}</button>` : ''}
+            </div>
+          </div>
+        </div>`;
+
+      const primary = $view.querySelector('[data-goto]') || $view.querySelector('[data-again]');
+      primary.focus({ preventScroll: true });
+    }
+
+    function answer(ch) {
+      const qz = state.quiz;
+      if (qz.isAnswered || !qz.current) return;
+      const item = qz.current;
+      const lvl = levelOf(item);
+      const ok = ch === item.char;
+      qz.selectedAnswer = ch;
+      qz.isAnswered = true;
+      qz.answers += 1;
+
+      if (ok) {
+        qz.correct += 1;
+        lvl.streak += 1;
+        if (lvl.streak >= lvl.need) {
+          mastered.add(item.char);
+          qz.queue = qz.queue.filter(i => i !== item);
+          qz.justMastered = true;
+          persist();
+          syncChrome();
+          Sound.mastered();
+        } else {
+          Sound.correct();
+        }
+        qz.timer = setTimeout(advance, qz.justMastered ? 1000 : 650);
+      } else {
+        lvl.streak = 0;
+        lvl.need = NEED_AFTER_MISS;
+        // Move the missed character to the front so it stays in rotation
+        qz.queue = [item, ...qz.queue.filter(i => i !== item)];
+        Sound.wrong();
+        buzz(40);
+        setTimeout(() => Sound.speak(item.say), 250);
+      }
+      renderQuiz();
+    }
+
+    function advance() {
+      const qz = state.quiz;
+      clearTimeout(qz.timer);
+      if (!qz.isAnswered) return;
+      qz.last = qz.current;
+      qz.justMastered = false;
+      pickQuestion();
+      if (!qz.current) Sound.complete();
+      if (state.mode === 'quiz') renderQuiz();
+    }
+
+    function practiceAgain() {
+      getFilteredList().forEach(item => mastered.delete(item.char));
+      persist();
+      syncChrome();
+      startSession();
+      renderQuiz();
+    }
+
+    /* ---------- Render ---------- */
+    function render() {
+      const list = getFilteredList();
+      if (!list.some(item => item.char === state.selectedChar) && list.length > 0) {
+        state.selectedChar = list[0].char;
+      }
+      syncChrome();
+      if (state.mode === 'explore') renderExplore();
+      else renderQuiz();
+    }
+
+    /* ---------- Events ---------- */
+    $mode.addEventListener('click', e => {
+      const btn = e.target.closest('button[data-mode]');
+      if (!btn || btn.dataset.mode === state.mode) return;
+      state.mode = btn.dataset.mode;
+      setSheet(false);
+      render();
+    });
+
+    $chips.addEventListener('click', e => {
+      const chip = e.target.closest('.chip');
+      if (!chip || chip.dataset.cat === state.category) return;
+      state.category = chip.dataset.cat;
+      chip.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
+      render();
+    });
+
+    $switch.addEventListener('change', e => {
+      state.showRomaji = e.target.checked;
+      syncChrome();
+    });
+
+    $lang.addEventListener('change', e => setLang(e.target.value));
+
+    $sound.addEventListener('click', () => {
+      Sound.on = !Sound.on;
+      if (!Sound.on && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+      persist();
+      syncChrome();
+      Sound.correct();
+    });
+
+    $view.addEventListener('click', e => {
+      const cell = e.target.closest('.cell');
+      if (cell) return selectChar(cell.dataset.char, { openSheet: true });
+      const jump = e.target.closest('[data-jump]');
+      if (jump) return selectChar(jump.dataset.jump);
+      const stepBtn = e.target.closest('[data-step]');
+      if (stepBtn) return step(Number(stepBtn.dataset.step));
+      if (e.target.closest('[data-close]')) return setSheet(false);
+      const speak = e.target.closest('[data-speak]');
+      if (speak) return Sound.speak(speak.dataset.speak, true);
+      const option = e.target.closest('.option');
+      if (option) return answer(option.dataset.char);
+      if (e.target.closest('[data-next]')) return advance();
+      if (e.target.closest('[data-again]')) return practiceAgain();
+      const go = e.target.closest('[data-goto]');
+      if (go) {
+        state.category = go.dataset.goto;
+        $chips.querySelector(`[data-cat="${state.category}"]`)?.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+        render();
+      }
+    });
+
+    document.getElementById('backdrop').addEventListener('click', () => setSheet(false));
+    narrow.addEventListener('change', () => setSheet(false));
+
+    document.addEventListener('keydown', e => {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      if (state.mode === 'explore') {
+        if (e.key === 'Escape') setSheet(false);
+        else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+        return;
+      }
+      const qz = state.quiz;
+      if (e.key === 'Enter' && document.activeElement?.tagName === 'BUTTON') return;
+      if (!qz.current) return;
+      if (!qz.isAnswered && e.key >= '1' && e.key <= '4') {
+        const opt = qz.options[Number(e.key) - 1];
+        if (opt) answer(opt.char);
+      } else if (qz.isAnswered && e.key === 'Enter') {
+        advance();
+      }
+    });
+
+    $lang.innerHTML = I18N.langs.map(l => `<option value="${l.id}">${l.name}</option>`).join('');
+    applyLanguage();
+    render();
+  </script>
+</body>
+</html>

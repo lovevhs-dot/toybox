@@ -11,8 +11,8 @@ This repository is public. Never put personal or sensitive information in it:
 - Code and comments are written in English.
 - Language pickers list languages by their own names: Latin-script names first in
   alphabetical order, then other scripts in Unicode order. Currently: English, Français,
-  中文（简体）, 中文（繁體）, 日本語, 한국어. English is the default. Hiragana Studio has no
-  Japanese option, since its users are learning Japanese.
+  中文（简体）, 中文（繁體）, 日本語, 한국어. English is the default. A learning app leaves out
+  the language it teaches (Hiragana Studio has no 日本語, Hangul Studio has no 한국어).
 - Follow international standards and widely accepted conventions wherever one exists, e.g.
   BCP 47 language tags (en, fr, zh-Hans, zh-Hant, ja, ko), ISO 8601 dates, ISO 639/3166 codes,
   Unicode and UTF-8, WCAG accessibility, semantic HTML, and established romanization systems
