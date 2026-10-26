@@ -3,10 +3,10 @@
 window.I18N = {
   langs: [
     { id: 'en', name: 'English' },
-    { id: 'ko', name: '한국어' },
-    { id: 'zh-Hans', name: '简体中文' },
-    { id: 'zh-Hant', name: '繁體中文' },
-    { id: 'fr', name: 'Français' }
+    { id: 'fr', name: 'Français' },
+    { id: 'zh-Hans', name: '中文（简体）' },
+    { id: 'zh-Hant', name: '中文（繁體）' },
+    { id: 'ko', name: '한국어' }
   ],
 
   ui: {
