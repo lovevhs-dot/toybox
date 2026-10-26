@@ -1464,6 +1464,13 @@
     if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
     const mastered = new Set((saved.mastered || []).filter(k => BY_KANA.has(k)));
 
+    // Lets the Toybox home and course pages offer to continue the app practiced last
+    function markRecent() {
+      try {
+        localStorage.setItem('toybox-recent', STORAGE_KEY);
+      } catch (e) {}
+    }
+
     function persist() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify({ mastered: [...mastered], sound: Sound.on, script: state.script }));
@@ -2018,6 +2025,7 @@
       qz.selectedAnswer = kana;
       qz.isAnswered = true;
       qz.answers += 1;
+      markRecent();
 
       if (ok) {
         qz.correct += 1;

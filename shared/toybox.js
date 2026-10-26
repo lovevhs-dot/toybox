@@ -447,8 +447,19 @@
     return { live, done, total };
   }
 
-  // What to suggest next in a course: a started step first, otherwise the first unfinished one
+  // The unfinished step practiced most recently, as recorded by the apps
+  function recentStep() {
+    let key = null;
+    try {
+      key = localStorage.getItem('toybox-recent');
+    } catch (e) {}
+    return allSteps().find(s => s.storageKey === key && progressOf(s).done < s.total) || null;
+  }
+
+  // What to suggest next in a course: the step practiced last, then a started one, then the first unfinished one
   function nextStep(c) {
+    const recent = recentStep();
+    if (recent && c.steps.includes(recent)) return recent;
     const open = c.steps.filter(s => s.href && progressOf(s).done < s.total);
     return open.find(s => progressOf(s).done > 0) || open[0] || null;
   }
@@ -496,8 +507,13 @@
       </a>`;
   }
 
-  // On the home page: the unfinished step that is furthest along, in any course
+  // On the home page: the step practiced last, or else the unfinished step furthest along
   function continueCard() {
+    const recent = recentStep();
+    if (recent) {
+      const c = COURSES.find(course => course.steps.includes(recent));
+      return featureCard(c, recent, `${TEXT[lang].continue} · ${pick(c.name)}`);
+    }
     let best = null;
     COURSES.forEach(c => c.steps.filter(s => s.href).forEach(s => {
       const p = progressOf(s);
