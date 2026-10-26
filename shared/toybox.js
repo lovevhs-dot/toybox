@@ -434,6 +434,12 @@
 
   const pct = (d, t) => (t ? Math.round((d / t) * 100) : 0);
 
+  // CSS variables for a course color: hex for solid fills, r, g, b for rgba tints
+  function colorVars(c) {
+    const rgb = [1, 3, 5].map(i => parseInt(c.color.slice(i, i + 2), 16)).join(', ');
+    return `--c: ${c.color}; --c-rgb: ${rgb}`;
+  }
+
   function liveStats(c) {
     const live = c.steps.filter(s => s.href);
     const done = live.reduce((n, s) => n + progressOf(s).done, 0);
@@ -478,7 +484,7 @@
   function featureCard(c, s, label) {
     const p = progressOf(s);
     return `
-      <a class="feature" href="${root}${s.href}" style="--c: ${c.color}">
+      <a class="feature" href="${root}${s.href}" style="${colorVars(c)}">
         <span class="feature-glyph ${c.glyphClass}" aria-hidden="true">${c.glyph}</span>
         <span class="feature-label">${label}</span>
         <span class="feature-title">${pick(s.name)}</span>
@@ -517,7 +523,7 @@
           ${COURSES.map(c => {
             const st = liveStats(c);
             return `
-              <a class="course-card" href="${root}${c.id}/" style="--c: ${c.color}">
+              <a class="course-card" href="${root}${c.id}/" style="${colorVars(c)}">
                 <span class="tile ${c.glyphClass}" aria-hidden="true">${c.glyph}</span>
                 <span class="course-card-text">
                   <span class="course-card-title">${pick(c.name)}</span>
@@ -584,7 +590,7 @@
     const nextLabel = next && `${progressOf(next).done ? T.continue : T.start} · ${T.step(course.steps.indexOf(next) + 1)}`;
     return `
       ${topBar()}
-      <main style="--c: ${course.color}">
+      <main style="${colorVars(course)}">
         <section class="banner">
           <span class="banner-glyph ${course.glyphClass}" aria-hidden="true">${course.glyph}</span>
           <h1>${pick(course.name)}</h1>

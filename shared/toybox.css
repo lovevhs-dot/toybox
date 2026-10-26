@@ -50,10 +50,15 @@ a { color: inherit; text-decoration: none; }
 
 :focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 
-/* Each course sets --c to its color; the tints follow light and dark themes */
+/* Each course sets --c (hex) and --c-rgb (r, g, b). Tints use rgba so older browsers,
+   such as some in-app browsers in China, render them too; color-mix only adds a deeper shade. */
 [style*="--c"] {
-  --c-soft: color-mix(in srgb, var(--c) 13%, var(--surface));
-  --c-deep: color-mix(in srgb, var(--c) 78%, #000);
+  --c-soft: rgba(var(--c-rgb), 0.13);
+  --c-deep: var(--c);
+}
+
+@supports (color: color-mix(in srgb, red 50%, blue)) {
+  [style*="--c"] { --c-deep: color-mix(in srgb, var(--c) 78%, #000); }
 }
 
 .glyph-ja { font-family: 'Klee One', 'Hiragino Sans', 'Yu Gothic', sans-serif; font-weight: 600; }
@@ -503,7 +508,7 @@ footer.more {
 
 .banner-progress .meter {
   flex: 1;
-  background: color-mix(in srgb, var(--c) 18%, transparent);
+  background: rgba(var(--c-rgb), 0.18);
 }
 
 .steps {

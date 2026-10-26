@@ -25,6 +25,7 @@
   <style>
     :root {
       --bg: #f7f4ee;
+      --bg-rgb: 247, 244, 238;
       --surface: #fffdf9;
       --surface-2: #efebe3;
       --surface-3: #e5e0d6;
@@ -54,6 +55,7 @@
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #151412;
+        --bg-rgb: 21, 20, 18;
         --surface: #1e1d1a;
         --surface-2: #262420;
         --surface-3: #312e29;
@@ -113,7 +115,7 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      background: rgba(var(--bg-rgb), 0.82);
       backdrop-filter: saturate(1.4) blur(14px);
       -webkit-backdrop-filter: saturate(1.4) blur(14px);
       border-bottom: 1px solid var(--line);
@@ -323,7 +325,7 @@
     }
 
     .chip[aria-pressed="true"] .chip-count {
-      background: color-mix(in srgb, var(--bg) 22%, transparent);
+      background: rgba(var(--bg-rgb), 0.22);
       color: var(--bg);
     }
 
