@@ -391,6 +391,8 @@
     .cell .ro {
       font-size: 11px;
       font-weight: 600;
+      line-height: 1.2;
+      text-align: center;
       color: var(--text-3);
       letter-spacing: 0.02em;
     }
@@ -846,6 +848,7 @@
 
     .compare-pair {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       gap: 8px;
     }
@@ -853,6 +856,7 @@
     .cmp {
       display: inline-flex;
       align-items: center;
+      white-space: nowrap;
       gap: 6px;
       font-size: 13px;
       font-weight: 700;
@@ -1055,6 +1059,20 @@
 
     .speak-btn { width: 32px; height: 32px; }
 
+    .speak-mini {
+      width: 26px;
+      height: 26px;
+      margin-left: 2px;
+    }
+
+    .speak-mini svg { width: 13px; height: 13px; }
+
+    .reading-sub {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-3);
+    }
+
 
     .lang-btn {
       position: relative;
@@ -1127,7 +1145,8 @@
 
   <script src="i18n.js"></script>
   <script>
-    // Basic vowels, basic consonants, and starter syllables (consonant + ㅏ).
+    // All 40 letters (basic and compound vowels, basic and double consonants)
+    // plus starter syllables (consonant + ㅏ).
     // Romanization follows the Revised Romanization of Korean (syllable-initial form).
     const HANGUL_DATA = [
       // Vowels
@@ -1142,23 +1161,22 @@
       { char: 'ㅡ', romaji: 'eu', say: '으', cat: 'vowels', mnemonic: 'A flat line, like the flat earth. Say it with flat, unrounded lips.', example: { word: '크다', romaji: 'keuda', meaning: 'Big' } },
       { char: 'ㅣ', romaji: 'i', say: '이', cat: 'vowels', mnemonic: 'A person standing up. Sounds like "ee".', example: { word: '이', romaji: 'i', meaning: 'Tooth / Two' } },
 
-      // Consonants 1
-      { char: 'ㄱ', romaji: 'g', say: '가', cat: 'cons_1', mnemonic: 'The back of the tongue rising to the roof of the mouth. Sounds k at the end of a syllable.', example: { word: '가방', romaji: 'gabang', meaning: 'Bag' } },
-      { char: 'ㄴ', romaji: 'n', say: '나', cat: 'cons_1', mnemonic: 'The tongue tip touching behind the upper teeth.', example: { word: '나무', romaji: 'namu', meaning: 'Tree' } },
-      { char: 'ㄷ', romaji: 'd', say: '다', cat: 'cons_1', mnemonic: 'ㄴ with a lid on top. Sounds t at the end of a syllable.', example: { word: '다리', romaji: 'dari', meaning: 'Leg / Bridge' } },
-      { char: 'ㄹ', romaji: 'r/l', say: '라', cat: 'cons_1', mnemonic: 'A winding road: r between vowels, l at the end.', example: { word: '라면', romaji: 'ramyeon', meaning: 'Ramen' } },
-      { char: 'ㅁ', romaji: 'm', say: '마', cat: 'cons_1', mnemonic: 'A closed mouth, like a square.', example: { word: '물', romaji: 'mul', meaning: 'Water' } },
-      { char: 'ㅂ', romaji: 'b', say: '바', cat: 'cons_1', mnemonic: 'A bucket. Sounds p at the end of a syllable.', example: { word: '바다', romaji: 'bada', meaning: 'Sea' } },
-      { char: 'ㅅ', romaji: 's', say: '사', cat: 'cons_1', mnemonic: 'A tooth, or a person walking.', example: { word: '사람', romaji: 'saram', meaning: 'Person' } },
+      // Consonants
+      { char: 'ㄱ', romaji: 'g', say: '가', cat: 'consonants', mnemonic: 'The back of the tongue rising to the roof of the mouth. Sounds k at the end of a syllable.', example: { word: '가방', romaji: 'gabang', meaning: 'Bag' } },
+      { char: 'ㄴ', romaji: 'n', say: '나', cat: 'consonants', mnemonic: 'The tongue tip touching behind the upper teeth.', example: { word: '나무', romaji: 'namu', meaning: 'Tree' } },
+      { char: 'ㄷ', romaji: 'd', say: '다', cat: 'consonants', mnemonic: 'ㄴ with a lid on top. Sounds t at the end of a syllable.', example: { word: '다리', romaji: 'dari', meaning: 'Leg / Bridge' } },
+      { char: 'ㄹ', romaji: 'r/l', say: '라', cat: 'consonants', mnemonic: 'A winding road: r between vowels, l at the end.', example: { word: '라면', romaji: 'ramyeon', meaning: 'Ramen' } },
+      { char: 'ㅁ', romaji: 'm', say: '마', cat: 'consonants', mnemonic: 'A closed mouth, like a square.', example: { word: '물', romaji: 'mul', meaning: 'Water' } },
+      { char: 'ㅂ', romaji: 'b', say: '바', cat: 'consonants', mnemonic: 'A bucket. Sounds p at the end of a syllable.', example: { word: '바다', romaji: 'bada', meaning: 'Sea' } },
+      { char: 'ㅅ', romaji: 's', say: '사', cat: 'consonants', mnemonic: 'A tooth, or a person walking.', example: { word: '사람', romaji: 'saram', meaning: 'Person' } },
 
-      // Consonants 2
-      { char: 'ㅇ', romaji: '–/ng', say: '아', cat: 'cons_2', mnemonic: 'The throat, a circle. Silent at the start of a syllable, ng at the end.', example: { word: '아이', romaji: 'ai', meaning: 'Child' } },
-      { char: 'ㅈ', romaji: 'j', say: '자', cat: 'cons_2', mnemonic: 'ㅅ with a line on top.', example: { word: '자동차', romaji: 'jadongcha', meaning: 'Car' } },
-      { char: 'ㅊ', romaji: 'ch', say: '차', cat: 'cons_2', mnemonic: 'ㅈ wearing a hat: more breath, ch.', example: { word: '친구', romaji: 'chingu', meaning: 'Friend' } },
-      { char: 'ㅋ', romaji: 'k', say: '카', cat: 'cons_2', mnemonic: 'ㄱ with an extra line: a stronger k with a puff of air.', example: { word: '커피', romaji: 'keopi', meaning: 'Coffee' } },
-      { char: 'ㅌ', romaji: 't', say: '타', cat: 'cons_2', mnemonic: 'ㄷ with an extra line: a stronger t with a puff of air.', example: { word: '토마토', romaji: 'tomato', meaning: 'Tomato' } },
-      { char: 'ㅍ', romaji: 'p', say: '파', cat: 'cons_2', mnemonic: 'A table, like π: a strong p with a puff of air.', example: { word: '포도', romaji: 'podo', meaning: 'Grapes' } },
-      { char: 'ㅎ', romaji: 'h', say: '하', cat: 'cons_2', mnemonic: 'A person in a hat, breathing out: h.', example: { word: '하나', romaji: 'hana', meaning: 'One' } },
+      { char: 'ㅇ', romaji: '–/ng', say: '아', cat: 'consonants', mnemonic: 'The throat, a circle. Silent at the start of a syllable, ng at the end.', example: { word: '아이', romaji: 'ai', meaning: 'Child' } },
+      { char: 'ㅈ', romaji: 'j', say: '자', cat: 'consonants', mnemonic: 'ㅅ with a line on top.', example: { word: '자동차', romaji: 'jadongcha', meaning: 'Car' } },
+      { char: 'ㅊ', romaji: 'ch', say: '차', cat: 'consonants', mnemonic: 'ㅈ wearing a hat: more breath, ch.', example: { word: '친구', romaji: 'chingu', meaning: 'Friend' } },
+      { char: 'ㅋ', romaji: 'k', say: '카', cat: 'consonants', mnemonic: 'ㄱ with an extra line: a stronger k with a puff of air.', example: { word: '커피', romaji: 'keopi', meaning: 'Coffee' } },
+      { char: 'ㅌ', romaji: 't', say: '타', cat: 'consonants', mnemonic: 'ㄷ with an extra line: a stronger t with a puff of air.', example: { word: '토마토', romaji: 'tomato', meaning: 'Tomato' } },
+      { char: 'ㅍ', romaji: 'p', say: '파', cat: 'consonants', mnemonic: 'A table, like π: a strong p with a puff of air.', example: { word: '포도', romaji: 'podo', meaning: 'Grapes' } },
+      { char: 'ㅎ', romaji: 'h', say: '하', cat: 'consonants', mnemonic: 'A person in a hat, breathing out: h.', example: { word: '하나', romaji: 'hana', meaning: 'One' } },
 
       // Syllables: consonant + ㅏ
       { char: '가', romaji: 'ga', say: '가', cat: 'syllables', parts: 'ㄱ + ㅏ', example: { word: '가다', romaji: 'gada', meaning: 'To go' } },
@@ -1174,14 +1192,35 @@
       { char: '카', romaji: 'ka', say: '카', cat: 'syllables', parts: 'ㅋ + ㅏ', example: { word: '카드', romaji: 'kadeu', meaning: 'Card' } },
       { char: '타', romaji: 'ta', say: '타', cat: 'syllables', parts: 'ㅌ + ㅏ', example: { word: '타다', romaji: 'tada', meaning: 'To ride' } },
       { char: '파', romaji: 'pa', say: '파', cat: 'syllables', parts: 'ㅍ + ㅏ', example: { word: '파도', romaji: 'pado', meaning: 'Wave' } },
-      { char: '하', romaji: 'ha', say: '하', cat: 'syllables', parts: 'ㅎ + ㅏ', example: { word: '하늘', romaji: 'haneul', meaning: 'Sky' } }
+      { char: '하', romaji: 'ha', say: '하', cat: 'syllables', parts: 'ㅎ + ㅏ', example: { word: '하늘', romaji: 'haneul', meaning: 'Sky' } },
+
+      // Compound vowels
+      { char: 'ㅐ', romaji: 'ae', say: '애', cat: 'vowels_2', mnemonic: 'ㅏ + ㅣ. Sounds like the e in "bed", mouth a little wider.', example: { word: '개', romaji: 'gae', meaning: 'Dog' } },
+      { char: 'ㅒ', romaji: 'yae', say: '얘', cat: 'vowels_2', mnemonic: 'ㅑ + ㅣ: ae with a y.', example: { word: '얘기', romaji: 'yaegi', meaning: 'Talk / Story' } },
+      { char: 'ㅔ', romaji: 'e', say: '에', cat: 'vowels_2', mnemonic: 'ㅓ + ㅣ. Sounds like the e in "bed". Today ㅐ and ㅔ sound almost the same.', example: { word: '게', romaji: 'ge', meaning: 'Crab' } },
+      { char: 'ㅖ', romaji: 'ye', say: '예', cat: 'vowels_2', mnemonic: 'ㅕ + ㅣ: e with a y.', example: { word: '시계', romaji: 'sigye', meaning: 'Clock' } },
+      { char: 'ㅘ', romaji: 'wa', say: '와', cat: 'vowels_2', mnemonic: 'ㅗ + ㅏ: o sliding into a = wa.', example: { word: '과자', romaji: 'gwaja', meaning: 'Snack' } },
+      { char: 'ㅙ', romaji: 'wae', say: '왜', cat: 'vowels_2', mnemonic: 'ㅗ + ㅐ = wae.', example: { word: '왜', romaji: 'wae', meaning: 'Why' } },
+      { char: 'ㅚ', romaji: 'oe', say: '외', cat: 'vowels_2', mnemonic: 'ㅗ + ㅣ. Today it sounds like we.', example: { word: '외국', romaji: 'oeguk', meaning: 'Foreign country' } },
+      { char: 'ㅝ', romaji: 'wo', say: '워', cat: 'vowels_2', mnemonic: 'ㅜ + ㅓ: u sliding into eo = wo.', example: { word: '원', romaji: 'won', meaning: 'Won (currency)' } },
+      { char: 'ㅞ', romaji: 'we', say: '웨', cat: 'vowels_2', mnemonic: 'ㅜ + ㅔ = we.', example: { word: '웨이터', romaji: 'weiteo', meaning: 'Waiter' } },
+      { char: 'ㅟ', romaji: 'wi', say: '위', cat: 'vowels_2', mnemonic: 'ㅜ + ㅣ = wi.', example: { word: '귀', romaji: 'gwi', meaning: 'Ear' } },
+      { char: 'ㅢ', romaji: 'ui', say: '의', cat: 'vowels_2', mnemonic: 'ㅡ + ㅣ: say eu, then i, quickly.', example: { word: '의사', romaji: 'uisa', meaning: 'Doctor' } },
+
+      // Double (tense) consonants
+      { char: 'ㄲ', romaji: 'kk', say: '까', cat: 'cons_double', mnemonic: 'Two ㄱ: a tense k with no puff of air.', example: { word: '꽃', romaji: 'kkot', meaning: 'Flower' } },
+      { char: 'ㄸ', romaji: 'tt', say: '따', cat: 'cons_double', mnemonic: 'Two ㄷ: a tense t with no puff of air.', example: { word: '딸기', romaji: 'ttalgi', meaning: 'Strawberry' } },
+      { char: 'ㅃ', romaji: 'pp', say: '빠', cat: 'cons_double', mnemonic: 'Two ㅂ: a tense p with no puff of air.', example: { word: '빵', romaji: 'ppang', meaning: 'Bread' } },
+      { char: 'ㅆ', romaji: 'ss', say: '싸', cat: 'cons_double', mnemonic: 'Two ㅅ: a tense, sharp s.', example: { word: '쌀', romaji: 'ssal', meaning: 'Rice (uncooked)' } },
+      { char: 'ㅉ', romaji: 'jj', say: '짜', cat: 'cons_double', mnemonic: 'Two ㅈ: a tense j.', example: { word: '짜다', romaji: 'jjada', meaning: 'Salty' } }
     ];
 
     const CATEGORIES = [
       { id: 'vowels' },
-      { id: 'cons_1' },
-      { id: 'cons_2' },
+      { id: 'consonants' },
       { id: 'syllables' },
+      { id: 'vowels_2' },
+      { id: 'cons_double' },
       { id: 'all' }
     ];
 
@@ -1224,7 +1263,22 @@
       ['가', '카', '카 starts with ㅋ, a k with a puff of air. 가 starts with ㄱ.'],
       ['다', '타', '타 starts with ㅌ, a t with a puff of air. 다 starts with ㄷ.'],
       ['바', '파', '파 starts with ㅍ, a p with a puff of air. 바 starts with ㅂ.'],
-      ['자', '차', '차 starts with ㅊ (ㅈ with a hat), with more breath. 자 starts with ㅈ.']
+      ['자', '차', '차 starts with ㅊ (ㅈ with a hat), with more breath. 자 starts with ㅈ.'],
+      ['ㅐ', 'ㅔ', 'ㅐ is ㅏ + ㅣ (short stroke points out). ㅔ is ㅓ + ㅣ (short stroke points in). They sound almost the same today.'],
+      ['ㅒ', 'ㅖ', 'ㅒ is ㅑ + ㅣ. ㅖ is ㅕ + ㅣ. Check which way the two short strokes point.'],
+      ['ㅐ', 'ㅒ', 'ㅒ has two short strokes: ae with a y.'],
+      ['ㅔ', 'ㅖ', 'ㅖ has two short strokes: e with a y.'],
+      ['ㅘ', 'ㅝ', 'ㅘ is ㅗ + ㅏ (wa). ㅝ is ㅜ + ㅓ (wo).'],
+      ['ㅙ', 'ㅞ', 'ㅙ is ㅗ + ㅐ (wae). ㅞ is ㅜ + ㅔ (we).'],
+      ['ㅚ', 'ㅟ', 'ㅚ is ㅗ + ㅣ (oe). ㅟ is ㅜ + ㅣ (wi).'],
+      ['ㅢ', 'ㅟ', 'ㅢ is ㅡ + ㅣ (ui). ㅟ is ㅜ + ㅣ, with a short stroke pointing down (wi).'],
+      ['ㄱ', 'ㄲ', 'ㄲ doubles ㄱ: a tense k with no puff of air.'],
+      ['ㅋ', 'ㄲ', 'ㅋ has a puff of air. ㄲ is tense and tight, with no puff.'],
+      ['ㄷ', 'ㄸ', 'ㄸ doubles ㄷ: a tense t with no puff of air.'],
+      ['ㅂ', 'ㅃ', 'ㅃ doubles ㅂ: a tense p with no puff of air.'],
+      ['ㅅ', 'ㅆ', 'ㅆ doubles ㅅ: a tense, sharp s.'],
+      ['ㅈ', 'ㅉ', 'ㅉ doubles ㅈ: a tense j.'],
+      ['ㅊ', 'ㅉ', 'ㅊ has a puff of air. ㅉ is tense, with no puff.']
     ];
 
     const BY_CHAR = new Map(HANGUL_DATA.map(item => [item.char, item]));
@@ -1263,7 +1317,7 @@
     }
 
     function mnemonicOf(item) {
-      if (item.parts) return wrapChars(T.syllable(item.parts, item.romaji));
+      if (item.parts) return wrapChars(T.syllable(item.parts, reading(item)));
       return wrapChars(lang === 'en' ? item.mnemonic : I18N.chars[lang][item.char][0]);
     }
 
@@ -1271,8 +1325,9 @@
       return lang === 'en' ? item.example.meaning : I18N.chars[lang][item.char][1];
     }
 
+    // English readers get the standard romanization; others get a hint in their own system
     function reading(item) {
-      return item.romaji;
+      return lang === 'en' ? item.romaji : I18N.sound[lang][item.char];
     }
 
     function catLabel(id) {
@@ -1541,6 +1596,7 @@
         <div class="paper"><span class="big ${c.char.length > 1 ? 'long' : ''}">${c.char}</span></div>
         <div class="reading">
           <span>${reading(c)}</span>
+          ${lang !== 'en' ? `<span class="reading-sub">${c.romaji}</span>` : ''}
           <button type="button" class="icon-btn speak-btn" data-speak="${c.say}" aria-label="${T.play}">${ICON_SPEAK}</button>
         </div>
         <div class="block">
@@ -1685,9 +1741,9 @@
             ${tip ? `
             <div class="compare">
               <div class="compare-pair">
-                <span class="cmp ok"><span class="char">${q.char}</span>${reading(q)}</span>
+                <span class="cmp ok"><span class="char">${q.char}</span>${reading(q)}<button type="button" class="icon-btn speak-mini" data-speak="${q.say}" aria-label="${T.play}">${ICON_SPEAK}</button></span>
                 <span class="vs">vs</span>
-                <span class="cmp no"><span class="char">${picked.char}</span>${reading(picked)}</span>
+                <span class="cmp no"><span class="char">${picked.char}</span>${reading(picked)}<button type="button" class="icon-btn speak-mini" data-speak="${picked.say}" aria-label="${T.play}">${ICON_SPEAK}</button></span>
               </div>
               <p class="compare-tip">${tip}</p>
             </div>` : ''}
