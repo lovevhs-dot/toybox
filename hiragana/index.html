@@ -980,6 +980,50 @@
       line-height: 1;
     }
 
+    .study {
+      margin: 0 0 6px;
+      padding: 10px 12px;
+      border-radius: var(--r-s);
+      background: var(--surface);
+      text-align: left;
+      animation: rise 0.25s var(--ease);
+    }
+
+    .study-label {
+      margin: 0 0 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--bad);
+    }
+
+    .study-text {
+      margin: 0 0 8px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .study-example {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 8px;
+    }
+
+    .study-example .word {
+      font-family: var(--ff-kana);
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    .study-example .word-ro { font-size: 13px; color: var(--text-2); }
+    .study-example .word-meaning { width: 100%; font-size: 13px; color: var(--text-2); }
+
+    .study-open {
+      align-self: flex-start;
+      margin: 0 0 6px;
+      font-size: 13px;
+    }
+
     .compare-tip {
       margin: 0;
       font-size: 14px;
@@ -1245,7 +1289,7 @@
 
   <div class="sheet-backdrop" id="backdrop"></div>
 
-  <script src="i18n.js?v=2026-10-26.2"></script>
+  <script src="i18n.js?v=2026-10-26.3"></script>
   <script>
     const HIRAGANA_DATA = [
       // Vowels & K / S
@@ -1882,6 +1926,7 @@
       const active = qz.queue.slice(0, ACTIVE_SIZE);
       qz.selectedAnswer = null;
       qz.isAnswered = false;
+      qz.showStudy = false;
       if (active.length === 0) {
         qz.current = null;
         return;
@@ -1934,6 +1979,19 @@
 
       let feedback = '';
       if (qz.isAnswered && !isRight) {
+        // A second miss shows the explanation right away; the first offers it behind a button
+        const missed = lvl.misses || 0;
+        const study = missed >= 2 || qz.showStudy ? `
+            <div class="study">
+              ${missed >= 2 ? `<p class="study-label">${T.missedOften(missed)}</p>` : ''}
+              <p class="study-text">${mnemonicOf(q)}</p>
+              <div class="study-example">
+                <span class="word">${q.example.word}</span>
+                <span class="word-ro">${q.example.romaji}</span>
+                <button type="button" class="icon-btn speak-mini" data-speak="${q.example.word}" aria-label="${T.play}">${ICON_SPEAK}</button>
+                <span class="word-meaning">${meaningOf(q)}</span>
+              </div>
+            </div>` : `<button type="button" class="link-btn study-open" data-study>${T.howToRemember}</button>`;
         const picked = BY_KANA.get(qz.selectedAnswer);
         const tip = tipFor(q.kana, picked.kana);
         feedback = `
@@ -1951,6 +2009,7 @@
               </div>
               <p class="compare-tip">${tip}</p>
             </div>` : ''}
+            ${study}
           </div>`;
       } else if (qz.justMastered) {
         feedback = `<span class="badge">${ICON_CHECK}${T.masteredBadge(`<span class="kana">${q.kana}</span>`)}</span>`;
@@ -2050,6 +2109,7 @@
         });
       } else {
         lvl.streak = 0;
+        lvl.misses = (lvl.misses || 0) + 1;
         lvl.need = NEED_AFTER_MISS;
         // Move the missed character to the front so it stays in rotation
         qz.queue = [item, ...qz.queue.filter(i => i !== item)];
@@ -2168,6 +2228,10 @@
       const option = e.target.closest('.option');
       if (option) return answer(option.dataset.kana);
       if (e.target.closest('[data-next]')) return advance();
+      if (e.target.closest('[data-study]')) {
+        state.quiz.showStudy = true;
+        return renderQuiz();
+      }
       if (e.target.closest('[data-again]')) return practiceAgain();
       const go = e.target.closest('[data-goto]');
       if (go) {
