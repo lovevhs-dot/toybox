@@ -565,6 +565,14 @@
     }
 
     .example .word-ro { color: var(--text-2); font-size: 14px; }
+    .example .speak-mini { align-self: center; margin-left: 0; }
+
+    .speak-mini {
+      width: 26px;
+      height: 26px;
+    }
+
+    .speak-mini svg { width: 13px; height: 13px; }
     .example .word-meaning { width: 100%; font-size: 14px; }
 
     .lookalikes {
@@ -1690,6 +1698,7 @@
           <div class="example">
             <span class="word">${c.example.word}</span>
             <span class="word-ro">${c.example.romaji}</span>
+            <button type="button" class="icon-btn speak-mini" data-speak="${c.example.word}" aria-label="${T.play}">${ICON_SPEAK}</button>
             <span class="word-meaning">${meaningOf(c)}</span>
           </div>
         </div>
