@@ -23,7 +23,14 @@
       step: n => `Step ${n}`,
       more: 'More coming soon.',
       language: 'Language',
-      progress: 'Your progress',
+      share: 'Share',
+      restoredList: list => `Restored: ${list}`,
+      emptyCode: 'This code has no saved progress in it. Make a new code on the device where you practiced.',
+      nothingHere: 'No progress is saved in this browser yet.',
+      continue: 'Continue',
+      start: 'Start',
+      allSteps: 'All steps',
+      backup: 'Back up or restore progress',
       backupNote: 'Progress is saved only in this browser. Copy a backup code to keep it safe or move it to another device.',
       copy: 'Copy backup code',
       restore: 'Restore from code',
@@ -31,7 +38,6 @@
       apply: 'Restore',
       copied: 'Copied. Keep it somewhere safe, like a note or a message to yourself.',
       copyFailed: 'Copy this code and keep it somewhere safe:',
-      restored: 'Progress restored.',
       invalid: 'That code doesn\'t look right.',
       iosTip: 'On iPhone, add Toybox to your Home Screen. Safari may clear saved progress if you don\'t visit for a week.'
     },
@@ -46,7 +52,14 @@
       step: n => `Étape ${n}`,
       more: 'D\'autres arrivent bientôt.',
       language: 'Langue',
-      progress: 'Votre progression',
+      share: 'Partager',
+      restoredList: list => `Restauré : ${list}`,
+      emptyCode: 'Ce code ne contient aucune progression. Créez un nouveau code sur l\'appareil où vous avez pratiqué.',
+      nothingHere: 'Aucune progression n\'est encore enregistrée dans ce navigateur.',
+      continue: 'Continuer',
+      start: 'Commencer',
+      allSteps: 'Toutes les étapes',
+      backup: 'Sauvegarder ou restaurer la progression',
       backupNote: 'La progression est enregistrée uniquement dans ce navigateur. Copiez un code de sauvegarde pour la garder ou la transférer sur un autre appareil.',
       copy: 'Copier le code de sauvegarde',
       restore: 'Restaurer avec un code',
@@ -54,7 +67,6 @@
       apply: 'Restaurer',
       copied: 'Copié. Gardez-le en lieu sûr, par exemple dans une note.',
       copyFailed: 'Copiez ce code et gardez-le en lieu sûr :',
-      restored: 'Progression restaurée.',
       invalid: 'Ce code ne semble pas valide.',
       iosTip: 'Sur iPhone, ajoutez Toybox à l\'écran d\'accueil. Safari peut effacer la progression après une semaine sans visite.'
     },
@@ -69,7 +81,14 @@
       step: n => `第 ${n} 步`,
       more: '更多内容即将推出。',
       language: '语言',
-      progress: '你的进度',
+      share: '分享',
+      restoredList: list => `已恢复：${list}`,
+      emptyCode: '这个代码里没有进度。请在练习过的设备上重新生成。',
+      nothingHere: '这个浏览器里还没有保存进度。',
+      continue: '继续',
+      start: '开始',
+      allSteps: '全部阶段',
+      backup: '备份或恢复进度',
       backupNote: '进度只保存在这个浏览器里。复制备份码，可以妥善保存或转移到其他设备。',
       copy: '复制备份码',
       restore: '用备份码恢复',
@@ -77,7 +96,6 @@
       apply: '恢复',
       copied: '已复制。请保存在安全的地方，比如备忘录或发给自己的消息。',
       copyFailed: '请复制这段代码并妥善保存：',
-      restored: '进度已恢复。',
       invalid: '这个代码好像不对。',
       iosTip: '在 iPhone 上，请把 Toybox 添加到主屏幕。一周没打开的话，Safari 可能会清除进度。'
     },
@@ -92,7 +110,14 @@
       step: n => `第 ${n} 步`,
       more: '更多內容即將推出。',
       language: '語言',
-      progress: '你的進度',
+      share: '分享',
+      restoredList: list => `已還原：${list}`,
+      emptyCode: '這個代碼裡沒有進度。請在練習過的裝置上重新產生。',
+      nothingHere: '這個瀏覽器裡還沒有儲存進度。',
+      continue: '繼續',
+      start: '開始',
+      allSteps: '全部階段',
+      backup: '備份或還原進度',
       backupNote: '進度只儲存在這個瀏覽器裡。複製備份碼，可以妥善保存或轉移到其他裝置。',
       copy: '複製備份碼',
       restore: '用備份碼還原',
@@ -100,7 +125,6 @@
       apply: '還原',
       copied: '已複製。請存放在安全的地方，例如備忘錄或傳給自己的訊息。',
       copyFailed: '請複製這段代碼並妥善保存：',
-      restored: '進度已還原。',
       invalid: '這個代碼好像不對。',
       iosTip: '在 iPhone 上，請把 Toybox 加入主畫面。一週沒打開的話，Safari 可能會清除進度。'
     },
@@ -115,7 +139,14 @@
       step: n => `ステップ ${n}`,
       more: '今後も追加予定です。',
       language: '言語',
-      progress: '学習の進み具合',
+      share: '共有',
+      restoredList: list => `復元しました：${list}`,
+      emptyCode: 'このコードには進み具合が入っていません。練習した端末で新しくコードを作ってください。',
+      nothingHere: 'このブラウザにはまだ進み具合が保存されていません。',
+      continue: '続ける',
+      start: '始める',
+      allSteps: 'すべてのステップ',
+      backup: '進み具合のバックアップ・復元',
       backupNote: '進み具合はこのブラウザにだけ保存されます。バックアップコードをコピーしておけば、安全に保管したり別の端末に移したりできます。',
       copy: 'バックアップコードをコピー',
       restore: 'コードから復元',
@@ -123,7 +154,6 @@
       apply: '復元',
       copied: 'コピーしました。メモや自分宛てのメッセージなど、安全な場所に保管してください。',
       copyFailed: 'このコードをコピーして保管してください：',
-      restored: '進み具合を復元しました。',
       invalid: 'コードが正しくないようです。',
       iosTip: 'iPhone では Toybox をホーム画面に追加してください。1週間開かないと Safari が進み具合を消すことがあります。'
     },
@@ -138,7 +168,14 @@
       step: n => `${n}단계`,
       more: '더 추가될 예정이에요.',
       language: '언어',
-      progress: '내 진행 기록',
+      share: '공유',
+      restoredList: list => `복원했어요: ${list}`,
+      emptyCode: '이 코드에는 진행 기록이 없어요. 연습했던 기기에서 코드를 새로 만들어 주세요.',
+      nothingHere: '이 브라우저에는 아직 저장된 진행 기록이 없어요.',
+      continue: '이어서 하기',
+      start: '시작하기',
+      allSteps: '전체 단계',
+      backup: '진행 기록 백업·복원',
       backupNote: '진행 기록은 이 브라우저에만 저장돼요. 백업 코드를 복사해두면 안전하게 보관하거나 다른 기기로 옮길 수 있어요.',
       copy: '백업 코드 복사',
       restore: '코드로 복원',
@@ -146,7 +183,6 @@
       apply: '복원',
       copied: '복사했어요. 메모나 나에게 보내는 메시지처럼 안전한 곳에 보관하세요.',
       copyFailed: '이 코드를 복사해서 보관하세요:',
-      restored: '진행 기록을 복원했어요.',
       invalid: '코드가 올바르지 않은 것 같아요.',
       iosTip: '아이폰에서는 Toybox를 홈 화면에 추가하세요. 일주일 동안 안 들어가면 Safari가 기록을 지울 수 있어요.'
     }
@@ -228,6 +264,7 @@
   const ICON_CHEVRON = '<svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>';
   const ICON_BACK = '<svg class="back" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>';
   const ICON_CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 8.5 3.2 3L13 4.5"/></svg>';
+  const ICON_ARROW = '<svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
   const LOGO = '<span class="logo" aria-hidden="true"><span></span><span></span><span></span><span></span></span>';
 
   const page = document.body.dataset.page;
@@ -258,23 +295,28 @@
   const CODE_PREFIX = 'TOYBOX1:';
   const appKeys = () => COURSES.flatMap(c => c.steps).filter(s => s.storageKey).map(s => s.storageKey);
 
+  const allSteps = () => COURSES.flatMap(c => c.steps).filter(s => s.storageKey);
+
+  // Returns null when nothing is saved in this browser
   function makeCode() {
     const data = {};
     appKeys().forEach(k => {
       try {
-        const v = localStorage.getItem(k);
-        if (v !== null) data[k] = JSON.parse(v);
+        const v = JSON.parse(localStorage.getItem(k));
+        if (v && Array.isArray(v.mastered) && v.mastered.length) data[k] = v;
       } catch (e) {}
     });
+    if (!Object.keys(data).length) return null;
     const bytes = new TextEncoder().encode(JSON.stringify({ v: 1, data }));
     return CODE_PREFIX + btoa(String.fromCharCode(...bytes));
   }
 
   function readCode(code) {
-    const clean = code.replace(/\s+/g, '');
-    if (!clean.startsWith(CODE_PREFIX)) return null;
+    // Pasted text may carry line breaks or other words around the code
+    const match = code.replace(/\s+/g, '').match(/TOYBOX1:[A-Za-z0-9+/=]+/);
+    if (!match) return null;
     try {
-      const bytes = Uint8Array.from(atob(clean.slice(CODE_PREFIX.length)), ch => ch.charCodeAt(0));
+      const bytes = Uint8Array.from(atob(match[0].slice(CODE_PREFIX.length)), ch => ch.charCodeAt(0));
       const parsed = JSON.parse(new TextDecoder().decode(bytes));
       return parsed && parsed.v === 1 && parsed.data ? parsed.data : null;
     } catch (e) {
@@ -282,13 +324,17 @@
     }
   }
 
-  // Merges into what is already here, so restoring never loses progress on this device
+  // Merges into what is already here, so restoring never loses progress on this device.
+  // Returns null for a bad code, otherwise [step, count] for each app found in the code.
   function restoreCode(code) {
     const data = readCode(code);
-    if (!data) return false;
-    appKeys().forEach(k => {
+    if (!data) return null;
+    const found = [];
+    allSteps().forEach(step => {
+      const k = step.storageKey;
       const incoming = data[k];
-      if (!incoming || !Array.isArray(incoming.mastered)) return;
+      if (!incoming || !Array.isArray(incoming.mastered) || !incoming.mastered.length) return;
+      found.push([step, incoming.mastered.length]);
       let local = {};
       try {
         local = JSON.parse(localStorage.getItem(k)) || {};
@@ -298,7 +344,7 @@
         localStorage.setItem(k, JSON.stringify({ ...incoming, ...local, mastered }));
       } catch (e) {}
     });
-    return true;
+    return found;
   }
 
   const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !navigator.standalone;
@@ -315,14 +361,30 @@
     return { done: count, total: step.total };
   }
 
-  function courseSummary(c) {
-    const T = TEXT[lang];
+  const pct = (d, t) => (t ? Math.round((d / t) * 100) : 0);
+
+  function liveStats(c) {
     const live = c.steps.filter(s => s.href);
     const done = live.reduce((n, s) => n + progressOf(s).done, 0);
     const total = live.reduce((n, s) => n + s.total, 0);
-    const parts = [T.ready(live.length, c.steps.length)];
-    if (done > 0) parts.push(T.mastered(done, total));
-    return parts.join(' · ');
+    return { live, done, total };
+  }
+
+  // What to suggest next in a course: a started step first, otherwise the first unfinished one
+  function nextStep(c) {
+    const open = c.steps.filter(s => s.href && progressOf(s).done < s.total);
+    return open.find(s => progressOf(s).done > 0) || open[0] || null;
+  }
+
+  function stepDots(c) {
+    return `<span class="dots" aria-hidden="true">${c.steps.map(s => {
+      const cls = !s.href ? '' : progressOf(s).done === s.total ? 'done' : 'live';
+      return `<span class="${cls}"></span>`;
+    }).join('')}</span>`;
+  }
+
+  function ring(percent) {
+    return `<span class="ring" style="--p: ${percent}" aria-hidden="true"><span>${percent}%</span></span>`;
   }
 
   function topBar() {
@@ -341,6 +403,33 @@
       </header>`;
   }
 
+  // Big colored card that takes you straight into a step
+  function featureCard(c, s, label) {
+    const p = progressOf(s);
+    return `
+      <a class="feature" href="${root}${s.href}" style="--c: ${c.color}">
+        <span class="feature-glyph ${c.glyphClass}" aria-hidden="true">${c.glyph}</span>
+        <span class="feature-label">${label}</span>
+        <span class="feature-title">${pick(s.name)}</span>
+        <span class="feature-sub">${p.done ? TEXT[lang].mastered(p.done, p.total) : pick(s.desc)}</span>
+        <span class="feature-foot">
+          <span class="meter"><span class="meter-fill" style="width:${pct(p.done, p.total)}%"></span></span>
+          ${ICON_ARROW}
+        </span>
+      </a>`;
+  }
+
+  // On the home page: the unfinished step that is furthest along, in any course
+  function continueCard() {
+    let best = null;
+    COURSES.forEach(c => c.steps.filter(s => s.href).forEach(s => {
+      const p = progressOf(s);
+      const share = p.done / p.total;
+      if (p.done > 0 && p.done < p.total && (!best || share > best.share)) best = { c, s, share };
+    }));
+    return best ? featureCard(best.c, best.s, `${TEXT[lang].continue} · ${pick(best.c.name)}`) : '';
+  }
+
   function renderHome() {
     const T = TEXT[lang];
     document.title = 'Toybox';
@@ -351,85 +440,93 @@
           <h1>Toybox</h1>
           <p class="tagline">${T.tagline}</p>
         </section>
+        ${continueCard()}
         <h2 class="section-title">${T.learn}</h2>
-        <ul class="rows">
-          ${COURSES.map(c => `
-            <li>
-              <a class="row" href="${root}${c.id}/" style="--c: ${c.color}">
+        <div class="course-grid">
+          ${COURSES.map(c => {
+            const st = liveStats(c);
+            return `
+              <a class="course-card" href="${root}${c.id}/" style="--c: ${c.color}">
                 <span class="tile ${c.glyphClass}" aria-hidden="true">${c.glyph}</span>
-                <span class="row-text">
-                  <span class="row-title">${pick(c.name)}</span>
-                  <span class="row-sub">${courseSummary(c)}</span>
+                <span class="course-card-text">
+                  <span class="course-card-title">${pick(c.name)}</span>
+                  <span class="course-card-sub">${pick(c.goal)}</span>
+                  <span class="course-card-steps">${stepDots(c)}<span>${T.ready(st.live.length, c.steps.length)}</span></span>
                 </span>
-                ${ICON_CHEVRON}
-              </a>
-            </li>`).join('')}
-        </ul>
-        <h2 class="section-title">${T.progress}</h2>
-        <section class="backup">
-          <p class="backup-note">${T.backupNote}</p>
-          ${isIOS ? `<p class="backup-note">${T.iosTip}</p>` : ''}
-          <div class="backup-actions">
-            <button type="button" class="btn" data-act="copy">${T.copy}</button>
-            <button type="button" class="btn btn-ghost" data-act="restore">${T.restore}</button>
+                ${ring(pct(st.done, st.total))}
+              </a>`;
+          }).join('')}
+        </div>
+        <details class="backup" ${backupMessage ? 'open' : ''}>
+          <summary>${T.backup}${ICON_CHEVRON}</summary>
+          <div class="backup-body">
+            <p class="backup-note">${T.backupNote}</p>
+            ${isIOS ? `<p class="backup-note">${T.iosTip}</p>` : ''}
+            <div class="backup-actions">
+              <button type="button" class="btn" data-act="copy">${T.copy}</button>
+              <button type="button" class="btn btn-ghost" data-act="restore">${T.restore}</button>
+            </div>
+            <div class="backup-panel" data-panel="out" hidden>
+              <textarea id="backup-out" rows="3" readonly spellcheck="false" autocapitalize="off" autocorrect="off"></textarea>
+              ${navigator.share ? `<button type="button" class="btn" data-act="share">${T.share}</button>` : ''}
+            </div>
+            <div class="backup-panel" data-panel="in" hidden>
+              <textarea id="backup-code" rows="3" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off" placeholder="${T.paste}"></textarea>
+              <button type="button" class="btn" data-act="apply">${T.apply}</button>
+            </div>
+            <p class="backup-msg" role="status">${backupMessage}</p>
           </div>
-          <div class="backup-panel" hidden>
-            <textarea id="backup-code" rows="3" spellcheck="false" placeholder="${T.paste}"></textarea>
-            <button type="button" class="btn" data-act="apply">${T.apply}</button>
-          </div>
-          <p class="backup-msg" role="status">${backupMessage}</p>
-        </section>
+        </details>
         <footer class="more">${T.more}</footer>
       </main>`;
   }
 
-  function stepHtml(step, i) {
+  function stepRow(step, i) {
     const T = TEXT[lang];
     const p = progressOf(step);
     const finished = p && p.done === p.total;
     const state = !step.href ? 'soon' : finished ? 'done' : 'live';
-    const pill = !step.href ? `<span class="pill">${T.soon}</span>`
-      : finished ? `<span class="pill go">${T.done}</span>` : '';
-    const progress = step.href ? `
-      <div class="step-progress">
-        <div class="meter" aria-hidden="true"><div class="meter-fill" style="width:${(p.done / p.total) * 100}%"></div></div>
-        <span>${p.done ? T.mastered(p.done, p.total) : T.notStarted}</span>
-      </div>` : '';
+    const status = !step.href ? `<span class="pill">${T.soon}</span>`
+      : finished ? `<span class="pill go">${T.done}</span>`
+      : `<span class="step-pct">${pct(p.done, p.total)}%</span>`;
     const body = `
-      <div class="step-head">
-        <span class="step-label">${T.step(i + 1)}</span>
-        ${pill}
-      </div>
-      <p class="step-name">${pick(step.name)}</p>
-      <p class="step-desc">${pick(step.desc)}</p>
-      ${progress}`;
+      <span class="step-text">
+        <span class="step-name">${pick(step.name)}</span>
+        <span class="step-desc">${pick(step.desc)}</span>
+      </span>
+      ${status}
+      ${step.href ? ICON_CHEVRON : ''}`;
     return `
       <li class="step ${state}">
-        <span class="step-num">${finished ? ICON_CHECK : i + 1}</span>
+        <span class="step-num" aria-label="${T.step(i + 1)}">${finished ? ICON_CHECK : i + 1}</span>
         ${step.href
-          ? `<a class="step-card" href="${root}${step.href}">${body}</a>`
-          : `<div class="step-card" aria-disabled="true">${body}</div>`}
+          ? `<a class="step-row" href="${root}${step.href}">${body}</a>`
+          : `<div class="step-row" aria-disabled="true">${body}</div>`}
       </li>`;
   }
 
   function renderCourse() {
-    const live = course.steps.filter(s => s.href);
-    const done = live.reduce((n, s) => n + progressOf(s).done, 0);
-    const total = live.reduce((n, s) => n + s.total, 0);
+    const T = TEXT[lang];
+    const st = liveStats(course);
+    const next = nextStep(course);
     document.title = `${pick(course.name)} · Toybox`;
+    const nextLabel = next && `${progressOf(next).done ? T.continue : T.start} · ${T.step(course.steps.indexOf(next) + 1)}`;
     return `
       ${topBar()}
       <main style="--c: ${course.color}">
-        <section class="course-hero">
-          <span class="tile ${course.glyphClass}" aria-hidden="true">${course.glyph}</span>
-          <div>
-            <h1>${pick(course.name)}</h1>
-            <p>${pick(course.goal)}</p>
+        <section class="banner">
+          <span class="banner-glyph ${course.glyphClass}" aria-hidden="true">${course.glyph}</span>
+          <h1>${pick(course.name)}</h1>
+          <p>${pick(course.goal)}</p>
+          <div class="banner-progress">
+            <span class="meter"><span class="meter-fill" style="width:${pct(st.done, st.total)}%"></span></span>
+            <span>${T.ready(st.live.length, course.steps.length)}</span>
           </div>
         </section>
-        <div class="meter" style="margin-top: 18px" aria-hidden="true"><div class="meter-fill" style="width:${total ? (done / total) * 100 : 0}%"></div></div>
+        ${next ? featureCard(course, next, nextLabel) : ''}
+        <h2 class="section-title">${T.allSteps}</h2>
         <ol class="steps">
-          ${course.steps.map(stepHtml).join('')}
+          ${course.steps.map(stepRow).join('')}
         </ol>
       </main>`;
   }
@@ -450,7 +547,9 @@
 
   function bindBackup(app) {
     const T = TEXT[lang];
-    const panel = app.querySelector('.backup-panel');
+    const out = app.querySelector('[data-panel="out"]');
+    const input = app.querySelector('[data-panel="in"]');
+    const outBox = app.querySelector('#backup-out');
     const box = app.querySelector('#backup-code');
     const msg = app.querySelector('.backup-msg');
     const say = (text, bad = false) => {
@@ -459,31 +558,44 @@
       msg.classList.toggle('bad', bad);
     };
 
+    // The code is always shown as well, since some in-app browsers report a copy that never happened
     app.querySelector('[data-act="copy"]').addEventListener('click', () => {
       const code = makeCode();
-      const showCode = () => {
-        panel.hidden = false;
-        box.value = code;
-        box.select();
-        say(T.copyFailed);
-      };
+      input.hidden = true;
+      if (!code) {
+        out.hidden = true;
+        return say(T.nothingHere, true);
+      }
+      out.hidden = false;
+      outBox.value = code;
+      outBox.select();
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(code).then(() => say(T.copied), showCode);
+        navigator.clipboard.writeText(code).then(() => say(T.copied), () => say(T.copyFailed));
       } else {
-        showCode();
+        say(T.copyFailed);
       }
     });
 
+    const share = app.querySelector('[data-act="share"]');
+    if (share) {
+      share.addEventListener('click', () => {
+        navigator.share({ text: outBox.value }).catch(() => {});
+      });
+    }
+
     app.querySelector('[data-act="restore"]').addEventListener('click', () => {
-      panel.hidden = false;
+      out.hidden = true;
+      input.hidden = false;
       box.value = '';
       box.focus();
       say('');
     });
 
     app.querySelector('[data-act="apply"]').addEventListener('click', () => {
-      if (!restoreCode(box.value)) return say(T.invalid, true);
-      backupMessage = T.restored;
+      const found = restoreCode(box.value);
+      if (!found) return say(T.invalid, true);
+      if (!found.length) return say(T.emptyCode, true);
+      backupMessage = T.restoredList(found.map(([step, n]) => `${pick(step.name)} ${n}`).join(' · '));
       render();
     });
   }
