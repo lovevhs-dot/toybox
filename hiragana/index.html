@@ -1140,6 +1140,14 @@
 
     .complete .meter { width: 100%; }
 
+    .review-missed { width: 100%; text-align: left; }
+
+    .lookalikes-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
     .actions {
       display: flex;
       gap: 8px;
@@ -1289,7 +1297,7 @@
 
   <div class="sheet-backdrop" id="backdrop"></div>
 
-  <script src="i18n.js?v=2026-10-26.3"></script>
+  <script src="i18n.js?v=2026-10-26.4"></script>
   <script>
     const HIRAGANA_DATA = [
       // Vowels & K / S
@@ -1391,6 +1399,8 @@
     const NEED_AFTER_MISS = 3;
     // How many unmastered characters are in rotation at once
     const ACTIVE_SIZE = 5;
+    // How many questions a review of a finished group asks
+    const REVIEW_SIZE = 10;
     const STORAGE_KEY = 'hiragana-studio-v1';
 
     const ICON_PREV = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg>';
@@ -1910,7 +1920,8 @@
         last: null,
         justMastered: false,
         answers: 0,
-        correct: 0
+        correct: 0,
+        review: null
       });
       pickQuestion();
     }
@@ -1934,6 +1945,11 @@
       const choices = active.length > 1 ? active.filter(item => item !== qz.last) : active;
       const target = choices[Math.floor(Math.random() * choices.length)];
 
+      qz.current = target;
+      qz.options = optionsFor(target);
+    }
+
+    function optionsFor(target) {
       // Look-alikes make the best distractors, then the same group, then anything
       // Readings must be unique too, since two kana can share one Hangul spelling
       const used = new Set([target.kana]);
@@ -1950,13 +1966,13 @@
       take(shuffle(getFilteredList().slice()));
       take(shuffle(HIRAGANA_DATA.slice()));
 
-      qz.current = target;
-      qz.options = shuffle([target, ...distractors]);
+      return shuffle([target, ...distractors]);
     }
 
     function renderQuiz() {
       const qz = state.quiz;
       if (qz.cat !== state.category) startSession();
+      if (qz.review && qz.review.done) return renderReviewDone();
       if (!qz.current) return renderComplete();
 
       const q = qz.current;
@@ -2018,13 +2034,13 @@
       $view.innerHTML = `
         <div class="quiz">
           <div class="quiz-head">
-            <span>${T.masteredOf(done, total)}</span>
-            <span>${T.toGo(qz.queue.length)}</span>
+            <span>${qz.review ? T.reviewOf(qz.review.index + 1, qz.review.items.length) : T.masteredOf(done, total)}</span>
+            <span>${qz.review ? '' : T.toGo(qz.queue.length)}</span>
           </div>
-          <div class="meter" aria-hidden="true"><div class="meter-fill" style="width:${(done / total) * 100}%"></div></div>
+          <div class="meter" aria-hidden="true"><div class="meter-fill" style="width:${qz.review ? (qz.review.index / qz.review.items.length) * 100 : (done / total) * 100}%"></div></div>
           <div class="quiz-card ${qz.isAnswered ? (isRight ? 'is-right' : 'is-wrong shake') : ''}">
             <div class="paper"><span class="big ${q.kana.length > 1 ? 'long' : ''}" ${qz.isAnswered ? 'style="animation:none"' : ''}>${q.kana}</span></div>
-            <div class="pips" aria-label="${T.streak(lvl.streak, lvl.need)}">${pips}</div>
+            ${qz.review ? '' : `<div class="pips" aria-label="${T.streak(lvl.streak, lvl.need)}">${pips}</div>`}
             <div class="options">${options}</div>
             <div class="feedback-slot" aria-live="polite">${feedback}</div>
           </div>
@@ -2065,13 +2081,13 @@
             </div>
             <div class="meter" aria-hidden="true"><div class="meter-fill" style="width:100%"></div></div>
             <div class="actions">
-              <button type="button" class="btn btn-secondary" data-again>${T.practiceAgain}</button>
+              <button type="button" class="btn btn-secondary" data-review-start>${T.review}</button>
               ${next ? `<button type="button" class="btn btn-primary" data-goto="${next}">${T.nextGroup(catLabel(next))} ${ICON_ARROW}</button>` : ''}
             </div>
           </div>
         </div>`;
 
-      const primary = $view.querySelector('[data-goto]') || $view.querySelector('[data-again]');
+      const primary = $view.querySelector('[data-goto]') || $view.querySelector('[data-review-start]');
       primary.focus({ preventScroll: true });
     }
 
@@ -2089,7 +2105,7 @@
       if (ok) {
         qz.correct += 1;
         lvl.streak += 1;
-        if (lvl.streak >= lvl.need) {
+        if (!qz.review && lvl.streak >= lvl.need) {
           mastered.add(item.kana);
           qz.queue = qz.queue.filter(i => i !== item);
           qz.justMastered = true;
@@ -2110,9 +2126,13 @@
       } else {
         lvl.streak = 0;
         lvl.misses = (lvl.misses || 0) + 1;
-        lvl.need = NEED_AFTER_MISS;
-        // Move the missed character to the front so it stays in rotation
-        qz.queue = [item, ...qz.queue.filter(i => i !== item)];
+        if (qz.review) {
+          qz.review.missed.push(item);
+        } else {
+          lvl.need = NEED_AFTER_MISS;
+          // Move the missed character to the front so it stays in rotation
+          qz.queue = [item, ...qz.queue.filter(i => i !== item)];
+        }
         Sound.wrong();
         buzz(40);
         setTimeout(() => Sound.speak(item.kana), 250);
@@ -2123,20 +2143,92 @@
     function advance() {
       const qz = state.quiz;
       clearTimeout(qz.timer);
-      if (!qz.isAnswered) return;
+      // A finished review waits on its summary screen
+      if (!qz.isAnswered || (qz.review && qz.review.done)) return;
       qz.last = qz.current;
       qz.justMastered = false;
+      if (qz.review) {
+        qz.review.index += 1;
+        if (qz.review.index >= qz.review.items.length) {
+          qz.review.done = true;
+          // Missed characters go back into practice right away, whether or not it starts now
+          qz.review.missed.forEach(item => mastered.delete(item.kana));
+          if (qz.review.missed.length) {
+            persist();
+            syncChrome();
+          }
+          Sound.complete();
+        } else {
+          reviewQuestion();
+        }
+        if (state.mode === 'quiz') renderQuiz();
+        return;
+      }
       pickQuestion();
       if (!qz.current) Sound.complete();
       if (state.mode === 'quiz') renderQuiz();
     }
 
-    function practiceAgain() {
-      getFilteredList().forEach(item => mastered.delete(item.kana));
-      persist();
-      syncChrome();
+    /* ---------- Review: a quick check of a finished group that leaves saved progress alone ---------- */
+    function startReview() {
+      const qz = state.quiz;
+      clearTimeout(qz.timer);
+      qz.review = { items: shuffle(getFilteredList().slice()).slice(0, REVIEW_SIZE), index: 0, missed: [], done: false };
+      qz.levels = new Map();
+      reviewQuestion();
+    }
+
+    function reviewQuestion() {
+      const qz = state.quiz;
+      qz.current = qz.review.items[qz.review.index];
+      qz.options = optionsFor(qz.current);
+      qz.selectedAnswer = null;
+      qz.isAnswered = false;
+      qz.showStudy = false;
+    }
+
+    function renderReviewDone() {
+      const r = state.quiz.review;
+      const total = r.items.length;
+      const score = total - r.missed.length;
+      const next = r.missed.length ? null : nextCategory();
+      $view.innerHTML = `
+        <div class="quiz">
+          <div class="quiz-card complete">
+            <div class="done-icon">${ICON_CHECK}</div>
+            <div>
+              <div class="complete-title">${T.reviewScore(score, total)}</div>
+              <div class="complete-sub">${catLabel(state.category)} · ${r.missed.length ? T.missedBack : T.reviewNote}</div>
+            </div>
+            ${r.missed.length ? `
+            <div class="review-missed">
+              <span class="block-label">${T.missedLabel}</span>
+              <div class="lookalikes-row">${r.missed.map(m => `<span class="look"><span class="kana">${m.kana}</span>${reading(m)}</span>`).join('')}</div>
+            </div>` : ''}
+            <div class="actions">
+              <button type="button" class="btn btn-secondary" data-review-close>${T.close}</button>
+              ${r.missed.length
+                ? `<button type="button" class="btn btn-primary" data-practice-missed>${T.practiceNow}</button>`
+                : `<button type="button" class="btn btn-secondary" data-review-start>${T.reviewAgain}</button>
+                   ${next ? `<button type="button" class="btn btn-primary" data-goto="${next}">${T.nextGroup(catLabel(next))} ${ICON_ARROW}</button>` : ''}`}
+            </div>
+          </div>
+        </div>`;
+      const primary = $view.querySelector('[data-practice-missed]') || $view.querySelector('[data-goto]') || $view.querySelector('[data-review-start]');
+      primary.focus({ preventScroll: true });
+    }
+
+    // The missed characters are already back in practice; start on them now
+    function practiceMissed() {
       startSession();
       renderQuiz();
+    }
+
+    function closeReview() {
+      state.quiz.review = null;
+      state.quiz.cat = null;
+      state.mode = 'explore';
+      render();
     }
 
     /* ---------- Render ---------- */
@@ -2232,7 +2324,12 @@
         state.quiz.showStudy = true;
         return renderQuiz();
       }
-      if (e.target.closest('[data-again]')) return practiceAgain();
+      if (e.target.closest('[data-review-start]')) {
+        startReview();
+        return renderQuiz();
+      }
+      if (e.target.closest('[data-practice-missed]')) return practiceMissed();
+      if (e.target.closest('[data-review-close]')) return closeReview();
       const go = e.target.closest('[data-goto]');
       if (go) {
         state.category = go.dataset.goto;
