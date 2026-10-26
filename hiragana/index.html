@@ -344,6 +344,16 @@
       color: var(--text-2);
     }
 
+    .link-btn {
+      font: inherit;
+      font-weight: 700;
+      color: var(--accent-text);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .relearn { align-self: center; }
+
     .section-meta {
       font-size: 12px;
       color: var(--text-3);
@@ -1628,27 +1638,32 @@
     function gojuonSection() {
       const rows = GOJUON.filter(([, kanas]) => inCategory(BY_KANA.get(kanas[0])));
       if (rows.length === 0) return '';
-      const count = rows.reduce((n, [, kanas]) => n + kanas.filter(Boolean).length, 0);
+      const items = rows.flatMap(([, kanas]) => kanas.filter(Boolean).map(k => BY_KANA.get(k)));
       let html = '<div class="gojuon"><span></span>' + ['a', 'i', 'u', 'e', 'o'].map(v => `<span class="col-head">${v}</span>`).join('');
       rows.forEach(([label, kanas]) => {
         html += `<span class="row-head">${label}</span>`;
         html += kanas.map(k => k ? cellHtml(BY_KANA.get(k)) : '<span class="cell-empty" aria-hidden="true"></span>').join('');
       });
       html += '</div>';
-      return section(T.basic, T.characters(count), html);
+      return section(T.basic, items, html);
     }
 
     function flowSection(title, items) {
       if (items.length === 0) return '';
-      return section(title, T.characters(items.length), `<div class="flow">${items.map(cellHtml).join('')}</div>`);
+      return section(title, items, `<div class="flow">${items.map(cellHtml).join('')}</div>`);
     }
 
-    function section(title, meta, body) {
+    function section(title, items, body) {
+      const done = items.filter(item => mastered.has(item.kana)).length;
+      const meta = done ? T.groupMastered(done, items.length) : T.characters(items.length);
+      const reset = done
+        ? ` · <button type="button" class="link-btn" data-reset="${items.map(item => item.kana).join(',')}" data-label="${title}">${T.reset}</button>`
+        : '';
       return `
         <section class="section">
           <div class="section-head">
             <h2 class="section-title">${title}</h2>
-            <span class="section-meta">${meta}</span>
+            <span class="section-meta">${meta}${reset}</span>
           </div>
           ${body}
         </section>`;
@@ -1737,7 +1752,8 @@
         <div class="block">
           <span class="block-label">${T.dontMix}</span>
           <div class="lookalikes">${lookalikeHtml(c)}</div>
-        </div>` : ''}`;
+        </div>` : ''}
+        ${mastered.has(c.kana) ? `<button type="button" class="btn btn-secondary relearn" data-relearn="${c.kana}">${T.relearn}</button>` : ''}`;
     }
 
     function selectKana(kana, { openSheet = false } = {}) {
@@ -1765,6 +1781,17 @@
       selectKana(next.kana);
       const cell = $view.querySelector(`.cell[data-kana="${next.kana}"]`);
       if (cell && !state.sheetOpen) cell.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+
+    // Puts characters back into practice; a whole group asks first
+    function resetChars(list, label) {
+      if (label && !window.confirm(T.confirmReset(label))) return;
+      list.forEach(k => mastered.delete(k));
+      persist();
+      // Build a fresh practice queue so the reset characters come back
+      state.quiz.cat = null;
+      syncChrome();
+      renderExplore();
     }
 
     function setSheet(open) {
@@ -2057,6 +2084,10 @@
       const stepBtn = e.target.closest('[data-step]');
       if (stepBtn) return step(Number(stepBtn.dataset.step));
       if (e.target.closest('[data-close]')) return setSheet(false);
+      const reset = e.target.closest('[data-reset]');
+      if (reset) return resetChars(reset.dataset.reset.split(','), reset.dataset.label);
+      const relearn = e.target.closest('[data-relearn]');
+      if (relearn) return resetChars([relearn.dataset.relearn]);
       const speak = e.target.closest('[data-speak]');
       if (speak) return Sound.speak(speak.dataset.speak, true);
       const option = e.target.closest('.option');

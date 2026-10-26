@@ -346,6 +346,16 @@
       color: var(--text-2);
     }
 
+    .link-btn {
+      font: inherit;
+      font-weight: 700;
+      color: var(--accent-text);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .relearn { align-self: center; }
+
     .section-meta {
       font-size: 12px;
       color: var(--text-3);
@@ -1561,15 +1571,20 @@
 
     function flowSection(title, items) {
       if (items.length === 0) return '';
-      return section(title, T.characters(items.length), `<div class="flow">${items.map(cellHtml).join('')}</div>`);
+      return section(title, items, `<div class="flow">${items.map(cellHtml).join('')}</div>`);
     }
 
-    function section(title, meta, body) {
+    function section(title, items, body) {
+      const done = items.filter(item => mastered.has(item.char)).length;
+      const meta = done ? T.groupMastered(done, items.length) : T.characters(items.length);
+      const reset = done
+        ? ` · <button type="button" class="link-btn" data-reset="${items.map(item => item.char).join(',')}" data-label="${title}">${T.reset}</button>`
+        : '';
       return `
         <section class="section">
           <div class="section-head">
             <h2 class="section-title">${title}</h2>
-            <span class="section-meta">${meta}</span>
+            <span class="section-meta">${meta}${reset}</span>
           </div>
           ${body}
         </section>`;
@@ -1648,7 +1663,8 @@
         <div class="block">
           <span class="block-label">${T.dontMix}</span>
           <div class="lookalikes">${lookalikeHtml(c)}</div>
-        </div>` : ''}`;
+        </div>` : ''}
+        ${mastered.has(c.char) ? `<button type="button" class="btn btn-secondary relearn" data-relearn="${c.char}">${T.relearn}</button>` : ''}`;
     }
 
     function selectChar(ch, { openSheet = false } = {}) {
@@ -1676,6 +1692,17 @@
       selectChar(next.char);
       const cell = $view.querySelector(`.cell[data-char="${next.char}"]`);
       if (cell && !state.sheetOpen) cell.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+
+    // Puts characters back into practice; a whole group asks first
+    function resetChars(list, label) {
+      if (label && !window.confirm(T.confirmReset(label))) return;
+      list.forEach(k => mastered.delete(k));
+      persist();
+      // Build a fresh practice queue so the reset characters come back
+      state.quiz.cat = null;
+      syncChrome();
+      renderExplore();
     }
 
     function setSheet(open) {
@@ -1958,6 +1985,10 @@
       const stepBtn = e.target.closest('[data-step]');
       if (stepBtn) return step(Number(stepBtn.dataset.step));
       if (e.target.closest('[data-close]')) return setSheet(false);
+      const reset = e.target.closest('[data-reset]');
+      if (reset) return resetChars(reset.dataset.reset.split(','), reset.dataset.label);
+      const relearn = e.target.closest('[data-relearn]');
+      if (relearn) return resetChars([relearn.dataset.relearn]);
       const speak = e.target.closest('[data-speak]');
       if (speak) return Sound.speak(speak.dataset.speak, true);
       const option = e.target.closest('.option');

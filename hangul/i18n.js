@@ -41,7 +41,11 @@ window.I18N = {
       nextGroup: label => `Next: ${label}`,
       soundOn: 'Sound on',
       soundOff: 'Sound off',
-      language: 'Language'
+      language: 'Language',
+      groupMastered: (d, t) => `${d}/${t} mastered`,
+      reset: 'Reset',
+      confirmReset: label => `Reset progress for ${label}?`,
+      relearn: 'Practice this one again'
     },
     fr: {
       subtitle: 'Apprenez les lettres, puis testez-vous',
@@ -74,7 +78,11 @@ window.I18N = {
       nextGroup: label => `Suivant : ${label}`,
       soundOn: 'Son activé',
       soundOff: 'Son désactivé',
-      language: 'Langue'
+      language: 'Langue',
+      groupMastered: (d, t) => `${d}/${t} maîtrisés`,
+      reset: 'Réinitialiser',
+      confirmReset: label => `Réinitialiser la progression de « ${label} » ?`,
+      relearn: 'Revoir ce caractère'
     },
     'zh-Hans': {
       subtitle: '先认字母，再自我测验',
@@ -107,7 +115,11 @@ window.I18N = {
       nextGroup: label => `下一组：${label}`,
       soundOn: '声音已开启',
       soundOff: '声音已关闭',
-      language: '语言'
+      language: '语言',
+      groupMastered: (d, t) => `已掌握 ${d}/${t}`,
+      reset: '重置',
+      confirmReset: label => `要重置「${label}」的进度吗？`,
+      relearn: '重新练习这个'
     },
     'zh-Hant': {
       subtitle: '先認字母，再自我測驗',
@@ -140,7 +152,11 @@ window.I18N = {
       nextGroup: label => `下一組：${label}`,
       soundOn: '聲音已開啟',
       soundOff: '聲音已關閉',
-      language: '語言'
+      language: '語言',
+      groupMastered: (d, t) => `已掌握 ${d}/${t}`,
+      reset: '重置',
+      confirmReset: label => `要重置「${label}」的進度嗎？`,
+      relearn: '重新練習這個'
     },
     ja: {
       subtitle: '文字を覚えて、腕試し',
@@ -173,7 +189,11 @@ window.I18N = {
       nextGroup: label => `次：${label}`,
       soundOn: 'サウンドオン',
       soundOff: 'サウンドオフ',
-      language: '言語'
+      language: '言語',
+      groupMastered: (d, t) => `${d}/${t} 覚えた`,
+      reset: 'リセット',
+      confirmReset: label => `「${label}」の進み具合をリセットしますか？`,
+      relearn: 'もう一度練習する'
     }
   },
 
