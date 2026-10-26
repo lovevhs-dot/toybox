@@ -18,4 +18,7 @@ This repository is public. Never put personal or sensitive information in it:
   Unicode and UTF-8, WCAG accessibility, semantic HTML, and established romanization systems
   (Hepburn for Japanese, Revised Romanization for Korean, Hanyu Pinyin for Chinese).
   When no standard exists, use the most common practice and note the choice.
+- Courses and their steps are listed in shared/toybox.js; the home page and each course page
+  (japanese/, korean/) render from it. A new app gets its own folder and an entry there.
+  Keep each app small (about 50 cards) so progress stays easy to finish.
 - Check all of the above before every commit and push.
