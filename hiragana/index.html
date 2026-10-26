@@ -568,8 +568,23 @@
 
     .lookalikes {
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .look-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .look-row .look { flex: none; }
+
+    .look-tip {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.35;
+      color: var(--text-2);
     }
 
     .look {
@@ -825,13 +840,79 @@
     .feedback {
       width: 100%;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      flex-direction: column;
+      gap: 8px;
       padding: 8px 8px 8px 16px;
       border-radius: var(--r-m);
       background: var(--bad-soft);
       animation: rise 0.3s var(--ease);
+    }
+
+    .feedback-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .compare {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 0 0 6px;
+      padding: 10px 12px;
+      border-radius: var(--r-s);
+      background: var(--surface);
+      text-align: left;
+    }
+
+    .compare-pair {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cmp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .cmp .kana {
+      display: grid;
+      place-items: center;
+      min-width: 34px;
+      height: 34px;
+      padding: 0 4px;
+      border-radius: 8px;
+      font-size: 22px;
+    }
+
+    .cmp.ok { color: var(--good); }
+    .cmp.ok .kana { background: var(--good-soft); }
+    .cmp.no { color: var(--bad); }
+    .cmp.no .kana { background: var(--bad-soft); }
+
+    .vs {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-3);
+    }
+
+    .tip-kana {
+      font-family: var(--ff-kana);
+      font-weight: 600;
+      font-size: 1.2em;
+      line-height: 1;
+    }
+
+    .compare-tip {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      color: var(--text);
     }
 
     .feedback-title {
@@ -1156,7 +1237,47 @@
     const ICON_SOUND_OFF = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z"/><path d="m11 6 4 4M15 6l-4 4"/></svg>';
     const ICON_SPEAK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5"/></svg>';
 
+    // Commonly confused pairs, each with a one-line way to tell them apart
+    const CONFUSABLE = [
+      ['あ', 'お', 'お has a separate dot at the top right. あ doesn\'t.'],
+      ['い', 'り', 'り\'s right stroke is long and curves down. い\'s strokes are short and even.'],
+      ['う', 'つ', 'う has a small dash on top. つ is one curve with nothing above.'],
+      ['う', 'ら', 'ら drops straight down on the left before curving. う curves right away.'],
+      ['え', 'ん', 'え has a dash on top and a zigzag. ん is one stroke with no dash.'],
+      ['か', 'が', 'が is か with two small marks (゛), so it reads ga.'],
+      ['き', 'さ', 'き has two horizontal lines. さ has one.'],
+      ['く', 'へ', 'く opens to the right, like &lt;. へ is a roof, like ^.'],
+      ['け', 'は', 'は has a loop at the bottom right. け\'s right side is a plain line.'],
+      ['こ', 'に', 'に has a vertical stroke on the left. こ is just two lines.'],
+      ['し', 'つ', 'し hangs down and hooks right. つ lies sideways like a wave.'],
+      ['し', 'も', 'も is a hook with two lines across it. し has no lines.'],
+      ['す', 'ぬ', 'す is a cross with one loop. ぬ has two crossing strokes and a loop at the end.'],
+      ['す', 'む', 'む has a dot at the top right. す doesn\'t.'],
+      ['そ', 'ろ', 'そ has a zigzag on top. ろ starts with a flat line, like a 3.'],
+      ['た', 'な', 'な has a dot and a loop on the right. た has two short lines.'],
+      ['ち', 'さ', 'ち\'s bottom bulges right, like a 5. さ\'s bottom opens right, like a c.'],
+      ['ち', 'ら', 'ち has a long crossbar. ら has only a short dash on top.'],
+      ['ち', 'を', 'を has a zigzag and a separate curve at the bottom. ち is one bar and one curve.'],
+      ['ぬ', 'め', 'ぬ ends in a small loop. め doesn\'t.'],
+      ['ぬ', 'ね', 'ね has a straight vertical line on the left. ぬ\'s first stroke is slanted.'],
+      ['ね', 'れ', 'ね ends in a loop. れ ends with a kick to the right.'],
+      ['ね', 'わ', 'ね ends in a loop. わ ends with a wide round curve.'],
+      ['れ', 'わ', 'れ ends with a kick to the right. わ ends with a round curve.'],
+      ['の', 'め', 'の is a single stroke. め has a second stroke crossing it.'],
+      ['は', 'ほ', 'ほ has two horizontal lines on the right. は has one.'],
+      ['ほ', 'ま', 'ほ has a vertical line on the left. ま doesn\'t.'],
+      ['ま', 'よ', 'ま has two horizontal lines. よ has one.'],
+      ['る', 'ろ', 'る ends in a small loop. ろ ends open.'],
+      ['ば', 'ぱ', 'ば has two marks (゛) and reads b. ぱ has a small circle (゜) and reads p.']
+    ];
+
     const BY_KANA = new Map(HIRAGANA_DATA.map(item => [item.kana, item]));
+    const pairKey = (a, b) => [a, b].sort().join('|');
+    // Kana inside tips use the handwriting font so the described shapes are visible
+    const TIPS = new Map(CONFUSABLE.map(([a, b, tip]) => [
+      pairKey(a, b),
+      tip.replace(/[\u3040-\u309f]+/g, k => `<span class="tip-kana">${k}</span>`)
+    ]));
     const narrow = window.matchMedia('(max-width: 860px)');
 
     /* ---------- Saved progress ---------- */
@@ -1379,13 +1500,25 @@
       });
     }
 
-    function lookalikeHtml(text) {
-      return parseLookalikes(text).map(({ kana, note }) => {
-        if (!kana) return `<span class="look">${note}</span>`;
-        if (BY_KANA.has(kana)) {
-          return `<button type="button" class="look" data-jump="${kana}"><span class="kana">${kana}</span>${note}</button>`;
-        }
-        return `<span class="look"><span class="kana">${kana}</span>${note}</span>`;
+    // Look-alikes from the dataset plus every confusable pair that includes this character
+    function lookalikesOf(item) {
+      const kanas = new Set(parseLookalikes(item.lookalike).map(l => l.kana).filter(k => BY_KANA.has(k)));
+      CONFUSABLE.forEach(([a, b]) => {
+        if (a === item.kana) kanas.add(b);
+        if (b === item.kana) kanas.add(a);
+      });
+      kanas.delete(item.kana);
+      return [...kanas].map(k => BY_KANA.get(k));
+    }
+
+    function lookalikeHtml(item) {
+      return lookalikesOf(item).map(other => {
+        const tip = TIPS.get(pairKey(item.kana, other.kana));
+        return `
+          <div class="look-row">
+            <button type="button" class="look" data-jump="${other.kana}"><span class="kana">${other.kana}</span>${other.romaji}</button>
+            ${tip ? `<p class="look-tip">${tip}</p>` : ''}
+          </div>`;
       }).join('');
     }
 
@@ -1422,10 +1555,10 @@
             <span class="word-meaning">${c.example.meaning}</span>
           </div>
         </div>
-        ${c.lookalike ? `
+        ${lookalikesOf(c).length ? `
         <div class="block">
           <span class="block-label">Don't mix up with</span>
-          <div class="lookalikes">${lookalikeHtml(c.lookalike)}</div>
+          <div class="lookalikes">${lookalikeHtml(c)}</div>
         </div>` : ''}`;
     }
 
@@ -1505,7 +1638,7 @@
           distractors.push(item);
         }
       });
-      take(shuffle(parseLookalikes(target.lookalike).map(l => BY_KANA.get(l.kana))).slice(0, 1));
+      take(shuffle(lookalikesOf(target)).slice(0, 1));
       take(shuffle(getFilteredList().slice()));
       take(shuffle(HIRAGANA_DATA.slice()));
 
@@ -1538,10 +1671,23 @@
 
       let feedback = '';
       if (qz.isAnswered && !isRight) {
+        const picked = BY_KANA.get(qz.selectedAnswer);
+        const tip = TIPS.get(pairKey(q.kana, picked.kana));
         feedback = `
           <div class="feedback">
-            <div class="feedback-title">Answer: <b>${q.romaji}</b></div>
-            <button type="button" class="btn btn-primary" data-next>Next ${ICON_ARROW}</button>
+            <div class="feedback-row">
+              <div class="feedback-title">Answer: <b>${q.romaji}</b></div>
+              <button type="button" class="btn btn-primary" data-next>Next ${ICON_ARROW}</button>
+            </div>
+            ${tip ? `
+            <div class="compare">
+              <div class="compare-pair">
+                <span class="cmp ok"><span class="kana">${q.kana}</span>${q.romaji}</span>
+                <span class="vs">vs</span>
+                <span class="cmp no"><span class="kana">${picked.kana}</span>${picked.romaji}</span>
+              </div>
+              <p class="compare-tip">${tip}</p>
+            </div>` : ''}
           </div>`;
       } else if (qz.justMastered) {
         feedback = `<span class="badge">${ICON_CHECK}<span class="kana">${q.kana}</span> mastered</span>`;
