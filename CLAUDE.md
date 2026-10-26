@@ -21,4 +21,7 @@ This repository is public. Never put personal or sensitive information in it:
 - Courses and their steps are listed in shared/toybox.js; the home page and each course page
   (japanese/, korean/) render from it. A new app gets its own folder and an entry there.
   Keep each app small (about 50 cards) so progress stays easy to finish.
+- GitHub Pages caches files for about 10 minutes, so pages load shared/*.css, shared/*.js and
+  each app's i18n.js with a `?v=YYYY-MM-DD.N` query. Whenever one of those files changes, bump
+  the version in every page that loads it.
 - Check all of the above before every commit and push.
