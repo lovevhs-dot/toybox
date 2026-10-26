@@ -23,6 +23,7 @@
       step: n => `Step ${n}`,
       more: 'More coming soon.',
       language: 'Language',
+      confirmRestore: 'Restore the progress in this link? It is added to what is already here.',
       share: 'Share',
       restoredList: list => `Restored: ${list}`,
       emptyCode: 'This code has no saved progress in it. Make a new code on the device where you practiced.',
@@ -52,6 +53,7 @@
       step: n => `Étape ${n}`,
       more: 'D\'autres arrivent bientôt.',
       language: 'Langue',
+      confirmRestore: 'Restaurer la progression de ce lien ? Elle s\'ajoute à celle déjà présente.',
       share: 'Partager',
       restoredList: list => `Restauré : ${list}`,
       emptyCode: 'Ce code ne contient aucune progression. Créez un nouveau code sur l\'appareil où vous avez pratiqué.',
@@ -81,6 +83,7 @@
       step: n => `第 ${n} 步`,
       more: '更多内容即将推出。',
       language: '语言',
+      confirmRestore: '要恢复这个链接里的进度吗？会与这里已有的进度合并。',
       share: '分享',
       restoredList: list => `已恢复：${list}`,
       emptyCode: '这个代码里没有进度。请在练习过的设备上重新生成。',
@@ -110,6 +113,7 @@
       step: n => `第 ${n} 步`,
       more: '更多內容即將推出。',
       language: '語言',
+      confirmRestore: '要還原這個連結裡的進度嗎？會與這裡已有的進度合併。',
       share: '分享',
       restoredList: list => `已還原：${list}`,
       emptyCode: '這個代碼裡沒有進度。請在練習過的裝置上重新產生。',
@@ -139,6 +143,7 @@
       step: n => `ステップ ${n}`,
       more: '今後も追加予定です。',
       language: '言語',
+      confirmRestore: 'このリンクの進み具合を復元しますか？今ある進み具合に追加されます。',
       share: '共有',
       restoredList: list => `復元しました：${list}`,
       emptyCode: 'このコードには進み具合が入っていません。練習した端末で新しくコードを作ってください。',
@@ -168,6 +173,7 @@
       step: n => `${n}단계`,
       more: '더 추가될 예정이에요.',
       language: '언어',
+      confirmRestore: '이 링크의 진행 기록을 복원할까요? 지금 있는 기록에 더해져요.',
       share: '공유',
       restoredList: list => `복원했어요: ${list}`,
       emptyCode: '이 코드에는 진행 기록이 없어요. 연습했던 기기에서 코드를 새로 만들어 주세요.',
@@ -291,44 +297,92 @@
   if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
 
   /* ---------- Backup codes ---------- */
-  // A code holds every app's saved progress, so it can be kept safe or moved to another device
-  const CODE_PREFIX = 'TOYBOX1:';
+  // A code holds every app's saved progress, so it can be kept safe or moved to another device.
+  // It travels as a link (#restore=...) or as text starting with TOYBOX2. (TOYBOX1: still works).
   const appKeys = () => COURSES.flatMap(c => c.steps).filter(s => s.storageKey).map(s => s.storageKey);
-
   const allSteps = () => COURSES.flatMap(c => c.steps).filter(s => s.storageKey);
 
-  // Returns null when nothing is saved in this browser
-  function makeCode() {
+  // URL-safe base64, done by hand so no browser quirk in atob/btoa can break a code
+  const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+
+  function toBase64Url(bytes) {
+    let out = '';
+    for (let i = 0; i < bytes.length; i += 3) {
+      const n = (bytes[i] << 16) | ((bytes[i + 1] || 0) << 8) | (bytes[i + 2] || 0);
+      out += B64[(n >> 18) & 63] + B64[(n >> 12) & 63];
+      if (i + 1 < bytes.length) out += B64[(n >> 6) & 63];
+      if (i + 2 < bytes.length) out += B64[n & 63];
+    }
+    return out;
+  }
+
+  // Accepts standard and URL-safe base64 and skips anything else (spaces, padding, stray marks)
+  function fromBase64(text) {
+    const value = ch => {
+      const i = B64.indexOf(ch);
+      if (i >= 0) return i;
+      if (ch === '+') return 62;
+      if (ch === '/') return 63;
+      return -1;
+    };
+    const out = [];
+    let buf = 0;
+    let bits = 0;
+    for (const ch of text) {
+      const v = value(ch);
+      if (v < 0) continue;
+      buf = (buf << 6) | v;
+      bits += 6;
+      if (bits >= 8) {
+        bits -= 8;
+        out.push((buf >> bits) & 255);
+        buf &= (1 << bits) - 1;
+      }
+    }
+    return new Uint8Array(out);
+  }
+
+  function savedData() {
     const data = {};
     appKeys().forEach(k => {
       try {
         const v = JSON.parse(localStorage.getItem(k));
-        if (v && Array.isArray(v.mastered) && v.mastered.length) data[k] = v;
+        if (v && Array.isArray(v.mastered) && v.mastered.length) data[k] = { mastered: v.mastered };
       } catch (e) {}
     });
-    if (!Object.keys(data).length) return null;
-    const bytes = new TextEncoder().encode(JSON.stringify({ v: 1, data }));
-    return CODE_PREFIX + btoa(String.fromCharCode(...bytes));
+    return Object.keys(data).length ? data : null;
   }
 
-  function readCode(code) {
-    // Pasted text may carry line breaks or other words around the code
-    const match = code.replace(/\s+/g, '').match(/TOYBOX1:[A-Za-z0-9+/=]+/);
-    if (!match) return null;
+  function payload() {
+    const data = savedData();
+    return data && toBase64Url(new TextEncoder().encode(JSON.stringify({ v: 1, data })));
+  }
+
+  // A link back to this home page that restores the progress when opened
+  function backupLink() {
+    const p = payload();
+    return p && `${new URL(root || './', location.href).href.split('#')[0]}#restore=${p}`;
+  }
+
+  // Finds a code in pasted text or a link. Returns { data } or { error } with a short code to report
+  function readCode(text) {
+    const match = text.match(/#restore=([A-Za-z0-9_-]+)/) || text.match(/TOYBOX[12]\s*[.:：]\s*([A-Za-z0-9+/=_\-\s]+)/i);
+    if (!match) return { error: 'E1' };
+    let parsed;
     try {
-      const bytes = Uint8Array.from(atob(match[0].slice(CODE_PREFIX.length)), ch => ch.charCodeAt(0));
-      const parsed = JSON.parse(new TextDecoder().decode(bytes));
-      return parsed && parsed.v === 1 && parsed.data ? parsed.data : null;
+      parsed = JSON.parse(new TextDecoder().decode(fromBase64(match[1])));
     } catch (e) {
-      return null;
+      return { error: 'E2' };
     }
+    if (!parsed || parsed.v !== 1 || !parsed.data || typeof parsed.data !== 'object') return { error: 'E3' };
+    return { data: parsed.data };
   }
 
   // Merges into what is already here, so restoring never loses progress on this device.
-  // Returns null for a bad code, otherwise [step, count] for each app found in the code.
+  // Returns { error } for a bad code, otherwise { found: [step, count] for each app in the code }.
   function restoreCode(code) {
-    const data = readCode(code);
-    if (!data) return null;
+    const { data, error } = readCode(code);
+    if (error) return { error };
     const found = [];
     allSteps().forEach(step => {
       const k = step.storageKey;
@@ -341,14 +395,31 @@
       } catch (e) {}
       const mastered = [...new Set([...(local.mastered || []), ...incoming.mastered.filter(x => typeof x === 'string')])];
       try {
-        localStorage.setItem(k, JSON.stringify({ ...incoming, ...local, mastered }));
+        localStorage.setItem(k, JSON.stringify({ ...local, mastered }));
       } catch (e) {}
     });
-    return found;
+    return { found };
+  }
+
+  function restoredMessage(found) {
+    const T = TEXT[lang];
+    return T.restoredList(found.map(([step, n]) => `${pick(step.name)} ${n}`).join(' · '));
+  }
+
+  // Opening a backup link restores it after asking once
+  function restoreFromLink() {
+    if (page !== 'home' || !location.hash.startsWith('#restore=')) return;
+    const link = location.hash;
+    history.replaceState(null, '', location.pathname + location.search);
+    if (!window.confirm(TEXT[lang].confirmRestore)) return;
+    const { found, error } = restoreCode(link);
+    backupMessage = error ? `${TEXT[lang].invalid} (${error})` : found.length ? restoredMessage(found) : TEXT[lang].emptyCode;
+    backupOpen = true;
   }
 
   const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !navigator.standalone;
   let backupMessage = '';
+  let backupOpen = false;
 
   // Progress is read from each app's own saved data on this device
   function progressOf(step) {
@@ -457,7 +528,7 @@
               </a>`;
           }).join('')}
         </div>
-        <details class="backup" ${backupMessage ? 'open' : ''}>
+        <details class="backup" ${backupMessage || backupOpen ? 'open' : ''}>
           <summary>${T.backup}${ICON_CHEVRON}</summary>
           <div class="backup-body">
             <p class="backup-note">${T.backupNote}</p>
@@ -560,7 +631,7 @@
 
     // The code is always shown as well, since some in-app browsers report a copy that never happened
     app.querySelector('[data-act="copy"]').addEventListener('click', () => {
-      const code = makeCode();
+      const code = backupLink();
       input.hidden = true;
       if (!code) {
         out.hidden = true;
@@ -579,7 +650,7 @@
     const share = app.querySelector('[data-act="share"]');
     if (share) {
       share.addEventListener('click', () => {
-        navigator.share({ text: outBox.value }).catch(() => {});
+        navigator.share({ title: 'Toybox', url: outBox.value }).catch(() => {});
       });
     }
 
@@ -592,14 +663,15 @@
     });
 
     app.querySelector('[data-act="apply"]').addEventListener('click', () => {
-      const found = restoreCode(box.value);
-      if (!found) return say(T.invalid, true);
+      const { found, error } = restoreCode(box.value);
+      if (error) return say(`${T.invalid} (${error})`, true);
       if (!found.length) return say(T.emptyCode, true);
-      backupMessage = T.restoredList(found.map(([step, n]) => `${pick(step.name)} ${n}`).join(' · '));
+      backupMessage = restoredMessage(found);
       render();
     });
   }
 
+  restoreFromLink();
   render();
   // Coming back with the browser's back button can show a cached page; refresh the progress
   window.addEventListener('pageshow', e => { if (e.persisted) render(); });
