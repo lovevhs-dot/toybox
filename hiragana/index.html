@@ -46,7 +46,7 @@
       --r-s: 10px;
       --r-m: 14px;
       --r-l: 20px;
-      --ff-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --ff-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'PingFang SC', 'PingFang TC', 'Microsoft YaHei', 'Microsoft JhengHei', 'Noto Sans CJK SC', sans-serif;
       --ff-kana: 'Klee One', 'Hiragino Maru Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', sans-serif;
       --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
     }
@@ -673,6 +673,8 @@
       .brand-sub { display: none; }
       .brand-title { font-size: 15px; }
       .brand-full { display: none; }
+      .toolbar { flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+      .toolbar .chips { flex-basis: 100%; }
       .segmented button { padding: 7px 12px; }
       .topbar-actions { gap: 6px; }
       .gojuon { gap: 5px; grid-template-columns: 16px repeat(5, minmax(0, 1fr)); }
@@ -1077,7 +1079,54 @@
 
     .speak-btn { width: 32px; height: 32px; }
 
-    @media (max-width: 379px) {
+    .reading-sub {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-3);
+    }
+
+    .lang-btn {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .lang-btn select {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .lang-btn:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    .script-toggle {
+      flex: none;
+      display: flex;
+      padding: 2px;
+      border-radius: 999px;
+      background: var(--surface-2);
+    }
+
+    .script-toggle[hidden] { display: none; }
+
+    .script-toggle button {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-3);
+    }
+
+    .script-toggle button[aria-pressed="true"] {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow-1);
+    }
+
+    @media (max-width: 480px) {
       .brand-text { display: none; }
     }
 
@@ -1096,10 +1145,14 @@
         <span class="brand-mark" aria-hidden="true">あ</span>
         <span class="brand-text">
           <span class="brand-title">Hiragana<span class="brand-full"> Studio</span></span>
-          <span class="brand-sub">Learn the shapes, then test yourself</span>
+          <span class="brand-sub" id="subtitle">Learn the shapes, then test yourself</span>
         </span>
       </a>
       <div class="topbar-actions">
+      <label class="icon-btn lang-btn">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4M8 1.8c1.8 1.7 2.6 3.8 2.6 6.2S9.8 12.5 8 14.2C6.2 12.5 5.4 10.4 5.4 8S6.2 3.5 8 1.8z"/></svg>
+        <select id="lang" aria-label="Language"></select>
+      </label>
       <button type="button" class="icon-btn sound-btn" id="sound" aria-pressed="true" aria-label="Sound on"></button>
       <div class="segmented" id="mode" role="tablist" data-active="explore">
         <span class="segmented-thumb" aria-hidden="true"></span>
@@ -1114,10 +1167,14 @@
     <div class="toolbar">
       <div class="chips" id="chips"></div>
       <label class="switch">
-        <span>Romaji</span>
+        <span id="reading-label">Romaji</span>
         <input type="checkbox" id="romaji-switch" checked>
         <span class="switch-track"></span>
       </label>
+      <div class="script-toggle" id="script" hidden>
+        <button type="button" data-script="romaji" aria-label="Romaji">abc</button>
+        <button type="button" data-script="hangul" aria-label="한글">가</button>
+      </div>
     </div>
 
     <div id="view"></div>
@@ -1125,6 +1182,7 @@
 
   <div class="sheet-backdrop" id="backdrop"></div>
 
+  <script src="i18n.js"></script>
   <script>
     const HIRAGANA_DATA = [
       // Vowels & K / S
@@ -1199,11 +1257,11 @@
     ];
 
     const CATEGORIES = [
-      { id: 'basic_1', label: 'Vowels · K · S' },
-      { id: 'basic_2', label: 'T · N · H' },
-      { id: 'basic_3', label: 'M · Y · R · W · N' },
-      { id: 'dakuten', label: 'Dakuten & Combos' },
-      { id: 'all', label: 'All' }
+      { id: 'basic_1' },
+      { id: 'basic_2' },
+      { id: 'basic_3' },
+      { id: 'dakuten' },
+      { id: 'all' }
     ];
 
     const GOJUON = [
@@ -1273,11 +1331,60 @@
 
     const BY_KANA = new Map(HIRAGANA_DATA.map(item => [item.kana, item]));
     const pairKey = (a, b) => [a, b].sort().join('|');
-    // Kana inside tips use the handwriting font so the described shapes are visible
-    const TIPS = new Map(CONFUSABLE.map(([a, b, tip]) => [
-      pairKey(a, b),
-      tip.replace(/[\u3040-\u309f]+/g, k => `<span class="tip-kana">${k}</span>`)
-    ]));
+    const TIP_INDEX = new Map(CONFUSABLE.map(([a, b], i) => [pairKey(a, b), i]));
+
+    /* ---------- Language ---------- */
+    // Shared with the Toybox index so the choice carries across pages
+    const LANG_KEY = 'toybox-lang';
+
+    function detectLang() {
+      try {
+        const stored = localStorage.getItem(LANG_KEY);
+        if (stored && I18N.ui[stored]) return stored;
+      } catch (e) {}
+      for (const l of navigator.languages || [navigator.language || 'en']) {
+        const x = l.toLowerCase();
+        if (x.startsWith('ko')) return 'ko';
+        if (x.startsWith('zh')) return /hant|tw|hk|mo/.test(x) ? 'zh-Hant' : 'zh-Hans';
+        if (x.startsWith('fr')) return 'fr';
+        if (x.startsWith('en')) return 'en';
+      }
+      return 'en';
+    }
+
+    let lang = detectLang();
+    let T = I18N.ui[lang];
+
+    // Kana inside running text use the handwriting font so the described shapes are visible
+    function wrapKana(text) {
+      return text.replace(/[\u3040-\u309f]+/g, k => `<span class="tip-kana">${k}</span>`);
+    }
+
+    function tipFor(a, b) {
+      const i = TIP_INDEX.get(pairKey(a, b));
+      if (i === undefined) return null;
+      return wrapKana(lang === 'en' ? CONFUSABLE[i][2] : I18N.tips[lang][i]);
+    }
+
+    function mnemonicOf(item) {
+      return wrapKana(lang === 'en' ? item.mnemonic : I18N.kana[lang][item.kana][0]);
+    }
+
+    function meaningOf(item) {
+      return lang === 'en' ? item.example.meaning : I18N.kana[lang][item.kana][1];
+    }
+
+    function hangulMode() {
+      return lang === 'ko' && state.script === 'hangul';
+    }
+
+    function reading(item) {
+      return hangulMode() ? I18N.hangul[item.kana] : item.romaji;
+    }
+
+    function catLabel(id) {
+      return T.cats[CATEGORIES.findIndex(c => c.id === id)];
+    }
     const narrow = window.matchMedia('(max-width: 860px)');
 
     /* ---------- Saved progress ---------- */
@@ -1294,7 +1401,7 @@
 
     function persist() {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ mastered: [...mastered], sound: Sound.on }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ mastered: [...mastered], sound: Sound.on, script: state.script }));
       } catch (e) {}
     }
 
@@ -1363,6 +1470,7 @@
       mode: 'explore',
       category: 'basic_1',
       showRomaji: true,
+      script: saved.script === 'hangul' ? 'hangul' : 'romaji',
       selectedKana: 'あ',
       sheetOpen: false,
       quiz: {
@@ -1386,6 +1494,8 @@
     const $mode = document.getElementById('mode');
     const $switch = document.getElementById('romaji-switch');
     const $sound = document.getElementById('sound');
+    const $lang = document.getElementById('lang');
+    const $script = document.getElementById('script');
 
     function itemsIn(cat) {
       if (cat === 'all') return HIRAGANA_DATA;
@@ -1415,7 +1525,7 @@
     /* ---------- Chips & chrome ---------- */
     function renderChips() {
       $chips.innerHTML = CATEGORIES.map(cat =>
-        `<button type="button" class="chip" data-cat="${cat.id}" aria-pressed="${cat.id === state.category}">${cat.label}<span class="chip-count"></span></button>`
+        `<button type="button" class="chip" data-cat="${cat.id}" aria-pressed="${cat.id === state.category}">${catLabel(cat.id)}<span class="chip-count"></span></button>`
       ).join('');
     }
 
@@ -1436,16 +1546,42 @@
       $switch.checked = state.showRomaji;
       document.body.classList.toggle('hide-romaji', !state.showRomaji);
       $sound.setAttribute('aria-pressed', String(Sound.on));
-      $sound.setAttribute('aria-label', Sound.on ? 'Sound on' : 'Sound off');
+      $sound.setAttribute('aria-label', Sound.on ? T.soundOn : T.soundOff);
       $sound.innerHTML = Sound.on ? ICON_SOUND_ON : ICON_SOUND_OFF;
+      $script.hidden = lang !== 'ko';
+      $script.querySelectorAll('button').forEach(btn => {
+        btn.setAttribute('aria-pressed', String(btn.dataset.script === state.script));
+      });
+    }
+
+    // Text that lives in the static markup
+    function applyLanguage() {
+      document.documentElement.lang = lang;
+      $lang.value = lang;
+      $lang.setAttribute('aria-label', T.language);
+      document.getElementById('subtitle').textContent = T.subtitle;
+      document.getElementById('reading-label').textContent = T.reading;
+      $mode.querySelector('[data-mode="explore"]').textContent = T.chart;
+      $mode.querySelector('[data-mode="quiz"]').textContent = T.practice;
+      renderChips();
+    }
+
+    function setLang(next) {
+      lang = next;
+      T = I18N.ui[lang];
+      try {
+        localStorage.setItem(LANG_KEY, lang);
+      } catch (e) {}
+      applyLanguage();
+      render();
     }
 
     /* ---------- Chart ---------- */
     function cellHtml(item) {
       return `
-        <button type="button" class="cell ${mastered.has(item.kana) ? 'mastered' : ''}" data-kana="${item.kana}" aria-pressed="${item.kana === state.selectedKana}" aria-label="${item.kana} ${item.romaji}${mastered.has(item.kana) ? ', mastered' : ''}">
+        <button type="button" class="cell ${mastered.has(item.kana) ? 'mastered' : ''}" data-kana="${item.kana}" aria-pressed="${item.kana === state.selectedKana}" aria-label="${item.kana} ${reading(item)}${mastered.has(item.kana) ? ', ' + T.masteredTag : ''}">
           <span class="glyph">${item.kana}</span>
-          <span class="ro">${item.romaji}</span>
+          <span class="ro">${reading(item)}</span>
         </button>`;
     }
 
@@ -1459,12 +1595,12 @@
         html += kanas.map(k => k ? cellHtml(BY_KANA.get(k)) : '<span class="cell-empty" aria-hidden="true"></span>').join('');
       });
       html += '</div>';
-      return section('Basic', `${count} characters`, html);
+      return section(T.basic, T.characters(count), html);
     }
 
     function flowSection(title, items) {
       if (items.length === 0) return '';
-      return section(title, `${items.length} characters`, `<div class="flow">${items.map(cellHtml).join('')}</div>`);
+      return section(title, T.characters(items.length), `<div class="flow">${items.map(cellHtml).join('')}</div>`);
     }
 
     function section(title, meta, body) {
@@ -1484,8 +1620,8 @@
         <div class="explore">
           <div class="board">
             ${gojuonSection()}
-            ${flowSection('Dakuten', extras.filter(item => item.kana.length === 1))}
-            ${flowSection('Combos', extras.filter(item => item.kana.length > 1))}
+            ${flowSection(T.dakuten, extras.filter(item => item.kana.length === 1))}
+            ${flowSection(T.combos, extras.filter(item => item.kana.length > 1))}
           </div>
           <aside class="detail" id="detail" aria-live="polite"></aside>
         </div>`;
@@ -1513,10 +1649,10 @@
 
     function lookalikeHtml(item) {
       return lookalikesOf(item).map(other => {
-        const tip = TIPS.get(pairKey(item.kana, other.kana));
+        const tip = tipFor(item.kana, other.kana);
         return `
           <div class="look-row">
-            <button type="button" class="look" data-jump="${other.kana}"><span class="kana">${other.kana}</span>${other.romaji}</button>
+            <button type="button" class="look" data-jump="${other.kana}"><span class="kana">${other.kana}</span>${reading(other)}</button>
             ${tip ? `<p class="look-tip">${tip}</p>` : ''}
           </div>`;
       }).join('');
@@ -1531,33 +1667,34 @@
 
       $detail.innerHTML = `
         <div class="detail-top">
-          <span class="detail-index">${idx + 1} / ${list.length}${mastered.has(c.kana) ? ' · Mastered' : ''}</span>
+          <span class="detail-index">${idx + 1} / ${list.length}${mastered.has(c.kana) ? ' · ' + T.masteredTag : ''}</span>
           <div class="nav-btns">
-            <button type="button" class="icon-btn" data-step="-1" aria-label="Previous" ${idx <= 0 ? 'disabled' : ''}>${ICON_PREV}</button>
-            <button type="button" class="icon-btn" data-step="1" aria-label="Next" ${idx >= list.length - 1 ? 'disabled' : ''}>${ICON_NEXT}</button>
-            <button type="button" class="icon-btn sheet-close" data-close aria-label="Close">${ICON_CLOSE}</button>
+            <button type="button" class="icon-btn" data-step="-1" aria-label="${T.prev}" ${idx <= 0 ? 'disabled' : ''}>${ICON_PREV}</button>
+            <button type="button" class="icon-btn" data-step="1" aria-label="${T.next}" ${idx >= list.length - 1 ? 'disabled' : ''}>${ICON_NEXT}</button>
+            <button type="button" class="icon-btn sheet-close" data-close aria-label="${T.close}">${ICON_CLOSE}</button>
           </div>
         </div>
         <div class="paper"><span class="big ${c.kana.length > 1 ? 'long' : ''}">${c.kana}</span></div>
         <div class="reading">
-          <span>${c.romaji}</span>
-          <button type="button" class="icon-btn speak-btn" data-speak="${c.kana}" aria-label="Play pronunciation">${ICON_SPEAK}</button>
+          <span>${reading(c)}</span>
+          ${hangulMode() ? `<span class="reading-sub">${c.romaji}</span>` : ''}
+          <button type="button" class="icon-btn speak-btn" data-speak="${c.kana}" aria-label="${T.play}">${ICON_SPEAK}</button>
         </div>
         <div class="block">
-          <span class="block-label">Mnemonic</span>
-          <p>${c.mnemonic}</p>
+          <span class="block-label">${T.mnemonic}</span>
+          <p>${mnemonicOf(c)}</p>
         </div>
         <div class="block">
-          <span class="block-label">${c.example.word === c.kana ? 'As a word' : 'Example'}</span>
+          <span class="block-label">${c.example.word === c.kana ? T.asWord : T.example}</span>
           <div class="example">
             <span class="word">${c.example.word}</span>
             <span class="word-ro">${c.example.romaji}</span>
-            <span class="word-meaning">${c.example.meaning}</span>
+            <span class="word-meaning">${meaningOf(c)}</span>
           </div>
         </div>
         ${lookalikesOf(c).length ? `
         <div class="block">
-          <span class="block-label">Don't mix up with</span>
+          <span class="block-label">${T.dontMix}</span>
           <div class="lookalikes">${lookalikeHtml(c)}</div>
         </div>` : ''}`;
     }
@@ -1630,11 +1767,14 @@
       const target = choices[Math.floor(Math.random() * choices.length)];
 
       // Look-alikes make the best distractors, then the same group, then anything
+      // Readings must be unique too, since two kana can share one Hangul spelling
       const used = new Set([target.kana]);
+      const usedReadings = new Set([reading(target)]);
       const distractors = [];
       const take = items => items.forEach(item => {
-        if (distractors.length < 3 && item && !used.has(item.kana)) {
+        if (distractors.length < 3 && item && !used.has(item.kana) && !usedReadings.has(reading(item))) {
           used.add(item.kana);
+          usedReadings.add(reading(item));
           distractors.push(item);
         }
       });
@@ -1664,7 +1804,7 @@
           else if (opt.kana === qz.selectedAnswer) cls = 'wrong';
           else cls = 'dim';
         }
-        return `<button type="button" class="option ${cls}" data-kana="${opt.kana}" ${qz.isAnswered ? 'disabled' : ''}><span class="key">${i + 1}</span>${opt.romaji}</button>`;
+        return `<button type="button" class="option ${cls}" data-kana="${opt.kana}" ${qz.isAnswered ? 'disabled' : ''}><span class="key">${i + 1}</span>${reading(opt)}</button>`;
       }).join('');
 
       const pips = Array.from({ length: lvl.need }, (_, i) => `<span class="${i < lvl.streak ? 'on' : ''}"></span>`).join('');
@@ -1672,41 +1812,41 @@
       let feedback = '';
       if (qz.isAnswered && !isRight) {
         const picked = BY_KANA.get(qz.selectedAnswer);
-        const tip = TIPS.get(pairKey(q.kana, picked.kana));
+        const tip = tipFor(q.kana, picked.kana);
         feedback = `
           <div class="feedback">
             <div class="feedback-row">
-              <div class="feedback-title">Answer: <b>${q.romaji}</b></div>
-              <button type="button" class="btn btn-primary" data-next>Next ${ICON_ARROW}</button>
+              <div class="feedback-title">${T.answer} <b>${reading(q)}</b></div>
+              <button type="button" class="btn btn-primary" data-next>${T.nextBtn} ${ICON_ARROW}</button>
             </div>
             ${tip ? `
             <div class="compare">
               <div class="compare-pair">
-                <span class="cmp ok"><span class="kana">${q.kana}</span>${q.romaji}</span>
+                <span class="cmp ok"><span class="kana">${q.kana}</span>${reading(q)}</span>
                 <span class="vs">vs</span>
-                <span class="cmp no"><span class="kana">${picked.kana}</span>${picked.romaji}</span>
+                <span class="cmp no"><span class="kana">${picked.kana}</span>${reading(picked)}</span>
               </div>
               <p class="compare-tip">${tip}</p>
             </div>` : ''}
           </div>`;
       } else if (qz.justMastered) {
-        feedback = `<span class="badge">${ICON_CHECK}<span class="kana">${q.kana}</span> mastered</span>`;
+        feedback = `<span class="badge">${ICON_CHECK}${T.masteredBadge(`<span class="kana">${q.kana}</span>`)}</span>`;
       }
 
       $view.innerHTML = `
         <div class="quiz">
           <div class="quiz-head">
-            <span>Mastered <strong>${done}</strong> of ${total}</span>
-            <span>${qz.queue.length} to go</span>
+            <span>${T.masteredOf(done, total)}</span>
+            <span>${T.toGo(qz.queue.length)}</span>
           </div>
           <div class="meter" aria-hidden="true"><div class="meter-fill" style="width:${(done / total) * 100}%"></div></div>
           <div class="quiz-card ${qz.isAnswered ? (isRight ? 'is-right' : 'is-wrong shake') : ''}">
             <div class="paper"><span class="big ${q.kana.length > 1 ? 'long' : ''}" ${qz.isAnswered ? 'style="animation:none"' : ''}>${q.kana}</span></div>
-            <div class="pips" aria-label="${lvl.streak} of ${lvl.need} correct in a row">${pips}</div>
+            <div class="pips" aria-label="${T.streak(lvl.streak, lvl.need)}">${pips}</div>
             <div class="options">${options}</div>
             <div class="feedback-slot" aria-live="polite">${feedback}</div>
           </div>
-          <div class="hint"><kbd>1</kbd>–<kbd>4</kbd> to answer · <kbd>Enter</kbd> for next</div>
+          <div class="hint">${T.hint}</div>
         </div>`;
 
       const nextBtn = $view.querySelector('[data-next]');
@@ -1727,24 +1867,24 @@
     function renderComplete() {
       const qz = state.quiz;
       const total = getFilteredList().length;
-      const label = CATEGORIES.find(c => c.id === state.category).label;
+      const label = catLabel(state.category);
       const next = nextCategory();
       const sub = qz.answers > 0
-        ? `${qz.answers} answers · ${Math.round((qz.correct / qz.answers) * 100)}% correct`
-        : 'You already know this group.';
+        ? T.stats(qz.answers, Math.round((qz.correct / qz.answers) * 100))
+        : T.already;
 
       $view.innerHTML = `
         <div class="quiz">
           <div class="quiz-card complete">
             <div class="done-icon">${ICON_CHECK}</div>
             <div>
-              <div class="complete-title">All ${total} mastered</div>
+              <div class="complete-title">${T.allMastered(total)}</div>
               <div class="complete-sub">${label} · ${sub}</div>
             </div>
             <div class="meter" aria-hidden="true"><div class="meter-fill" style="width:100%"></div></div>
             <div class="actions">
-              <button type="button" class="btn btn-secondary" data-again>Practice again</button>
-              ${next ? `<button type="button" class="btn btn-primary" data-goto="${next}">Next: ${CATEGORIES.find(c => c.id === next).label} ${ICON_ARROW}</button>` : ''}
+              <button type="button" class="btn btn-secondary" data-again>${T.practiceAgain}</button>
+              ${next ? `<button type="button" class="btn btn-primary" data-goto="${next}">${T.nextGroup(catLabel(next))} ${ICON_ARROW}</button>` : ''}
             </div>
           </div>
         </div>`;
@@ -1841,6 +1981,18 @@
       syncChrome();
     });
 
+    $lang.addEventListener('change', e => setLang(e.target.value));
+
+    $script.addEventListener('click', e => {
+      const btn = e.target.closest('button[data-script]');
+      if (!btn || btn.dataset.script === state.script) return;
+      state.script = btn.dataset.script;
+      // Options were picked for the old script, so pick a fresh question
+      if (state.quiz.current && !state.quiz.isAnswered) pickQuestion();
+      persist();
+      render();
+    });
+
     $sound.addEventListener('click', () => {
       Sound.on = !Sound.on;
       if (!Sound.on && 'speechSynthesis' in window) window.speechSynthesis.cancel();
@@ -1893,7 +2045,8 @@
       }
     });
 
-    renderChips();
+    $lang.innerHTML = I18N.langs.map(l => `<option value="${l.id}">${l.name}</option>`).join('');
+    applyLanguage();
     render();
   </script>
 </body>
