@@ -22,7 +22,18 @@
       soon: 'Coming soon',
       step: n => `Step ${n}`,
       more: 'More coming soon.',
-      language: 'Language'
+      language: 'Language',
+      progress: 'Your progress',
+      backupNote: 'Progress is saved only in this browser. Copy a backup code to keep it safe or move it to another device.',
+      copy: 'Copy backup code',
+      restore: 'Restore from code',
+      paste: 'Paste your backup code here',
+      apply: 'Restore',
+      copied: 'Copied. Keep it somewhere safe, like a note or a message to yourself.',
+      copyFailed: 'Copy this code and keep it somewhere safe:',
+      restored: 'Progress restored.',
+      invalid: 'That code doesn\'t look right.',
+      iosTip: 'On iPhone, add Toybox to your Home Screen. Safari may clear saved progress if you don\'t visit for a week.'
     },
     fr: {
       tagline: 'De petites choses pour jouer et s\'en servir.',
@@ -34,7 +45,18 @@
       soon: 'Bientôt',
       step: n => `Étape ${n}`,
       more: 'D\'autres arrivent bientôt.',
-      language: 'Langue'
+      language: 'Langue',
+      progress: 'Votre progression',
+      backupNote: 'La progression est enregistrée uniquement dans ce navigateur. Copiez un code de sauvegarde pour la garder ou la transférer sur un autre appareil.',
+      copy: 'Copier le code de sauvegarde',
+      restore: 'Restaurer avec un code',
+      paste: 'Collez votre code de sauvegarde ici',
+      apply: 'Restaurer',
+      copied: 'Copié. Gardez-le en lieu sûr, par exemple dans une note.',
+      copyFailed: 'Copiez ce code et gardez-le en lieu sûr :',
+      restored: 'Progression restaurée.',
+      invalid: 'Ce code ne semble pas valide.',
+      iosTip: 'Sur iPhone, ajoutez Toybox à l\'écran d\'accueil. Safari peut effacer la progression après une semaine sans visite.'
     },
     'zh-Hans': {
       tagline: '好玩又好用的小东西。',
@@ -46,7 +68,18 @@
       soon: '即将推出',
       step: n => `第 ${n} 步`,
       more: '更多内容即将推出。',
-      language: '语言'
+      language: '语言',
+      progress: '你的进度',
+      backupNote: '进度只保存在这个浏览器里。复制备份码，可以妥善保存或转移到其他设备。',
+      copy: '复制备份码',
+      restore: '用备份码恢复',
+      paste: '在这里粘贴备份码',
+      apply: '恢复',
+      copied: '已复制。请保存在安全的地方，比如备忘录或发给自己的消息。',
+      copyFailed: '请复制这段代码并妥善保存：',
+      restored: '进度已恢复。',
+      invalid: '这个代码好像不对。',
+      iosTip: '在 iPhone 上，请把 Toybox 添加到主屏幕。一周没打开的话，Safari 可能会清除进度。'
     },
     'zh-Hant': {
       tagline: '好玩又好用的小東西。',
@@ -58,7 +91,18 @@
       soon: '即將推出',
       step: n => `第 ${n} 步`,
       more: '更多內容即將推出。',
-      language: '語言'
+      language: '語言',
+      progress: '你的進度',
+      backupNote: '進度只儲存在這個瀏覽器裡。複製備份碼，可以妥善保存或轉移到其他裝置。',
+      copy: '複製備份碼',
+      restore: '用備份碼還原',
+      paste: '在這裡貼上備份碼',
+      apply: '還原',
+      copied: '已複製。請存放在安全的地方，例如備忘錄或傳給自己的訊息。',
+      copyFailed: '請複製這段代碼並妥善保存：',
+      restored: '進度已還原。',
+      invalid: '這個代碼好像不對。',
+      iosTip: '在 iPhone 上，請把 Toybox 加入主畫面。一週沒打開的話，Safari 可能會清除進度。'
     },
     ja: {
       tagline: '遊んだり使ったりできる小さなもの。',
@@ -70,7 +114,18 @@
       soon: '準備中',
       step: n => `ステップ ${n}`,
       more: '今後も追加予定です。',
-      language: '言語'
+      language: '言語',
+      progress: '学習の進み具合',
+      backupNote: '進み具合はこのブラウザにだけ保存されます。バックアップコードをコピーしておけば、安全に保管したり別の端末に移したりできます。',
+      copy: 'バックアップコードをコピー',
+      restore: 'コードから復元',
+      paste: 'バックアップコードをここに貼り付け',
+      apply: '復元',
+      copied: 'コピーしました。メモや自分宛てのメッセージなど、安全な場所に保管してください。',
+      copyFailed: 'このコードをコピーして保管してください：',
+      restored: '進み具合を復元しました。',
+      invalid: 'コードが正しくないようです。',
+      iosTip: 'iPhone では Toybox をホーム画面に追加してください。1週間開かないと Safari が進み具合を消すことがあります。'
     },
     ko: {
       tagline: '가지고 놀고 쓰는 작은 것들.',
@@ -82,7 +137,18 @@
       soon: '준비 중',
       step: n => `${n}단계`,
       more: '더 추가될 예정이에요.',
-      language: '언어'
+      language: '언어',
+      progress: '내 진행 기록',
+      backupNote: '진행 기록은 이 브라우저에만 저장돼요. 백업 코드를 복사해두면 안전하게 보관하거나 다른 기기로 옮길 수 있어요.',
+      copy: '백업 코드 복사',
+      restore: '코드로 복원',
+      paste: '여기에 백업 코드를 붙여넣으세요',
+      apply: '복원',
+      copied: '복사했어요. 메모나 나에게 보내는 메시지처럼 안전한 곳에 보관하세요.',
+      copyFailed: '이 코드를 복사해서 보관하세요:',
+      restored: '진행 기록을 복원했어요.',
+      invalid: '코드가 올바르지 않은 것 같아요.',
+      iosTip: '아이폰에서는 Toybox를 홈 화면에 추가하세요. 일주일 동안 안 들어가면 Safari가 기록을 지울 수 있어요.'
     }
   };
 
@@ -184,6 +250,60 @@
   let lang = detectLang();
   const pick = field => field[lang] || field.en;
 
+  // Ask the browser not to clear saved progress when space runs low
+  if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+
+  /* ---------- Backup codes ---------- */
+  // A code holds every app's saved progress, so it can be kept safe or moved to another device
+  const CODE_PREFIX = 'TOYBOX1:';
+  const appKeys = () => COURSES.flatMap(c => c.steps).filter(s => s.storageKey).map(s => s.storageKey);
+
+  function makeCode() {
+    const data = {};
+    appKeys().forEach(k => {
+      try {
+        const v = localStorage.getItem(k);
+        if (v !== null) data[k] = JSON.parse(v);
+      } catch (e) {}
+    });
+    const bytes = new TextEncoder().encode(JSON.stringify({ v: 1, data }));
+    return CODE_PREFIX + btoa(String.fromCharCode(...bytes));
+  }
+
+  function readCode(code) {
+    const clean = code.replace(/\s+/g, '');
+    if (!clean.startsWith(CODE_PREFIX)) return null;
+    try {
+      const bytes = Uint8Array.from(atob(clean.slice(CODE_PREFIX.length)), ch => ch.charCodeAt(0));
+      const parsed = JSON.parse(new TextDecoder().decode(bytes));
+      return parsed && parsed.v === 1 && parsed.data ? parsed.data : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Merges into what is already here, so restoring never loses progress on this device
+  function restoreCode(code) {
+    const data = readCode(code);
+    if (!data) return false;
+    appKeys().forEach(k => {
+      const incoming = data[k];
+      if (!incoming || !Array.isArray(incoming.mastered)) return;
+      let local = {};
+      try {
+        local = JSON.parse(localStorage.getItem(k)) || {};
+      } catch (e) {}
+      const mastered = [...new Set([...(local.mastered || []), ...incoming.mastered.filter(x => typeof x === 'string')])];
+      try {
+        localStorage.setItem(k, JSON.stringify({ ...incoming, ...local, mastered }));
+      } catch (e) {}
+    });
+    return true;
+  }
+
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !navigator.standalone;
+  let backupMessage = '';
+
   // Progress is read from each app's own saved data on this device
   function progressOf(step) {
     if (!step.storageKey) return null;
@@ -245,6 +365,20 @@
               </a>
             </li>`).join('')}
         </ul>
+        <h2 class="section-title">${T.progress}</h2>
+        <section class="backup">
+          <p class="backup-note">${T.backupNote}</p>
+          ${isIOS ? `<p class="backup-note">${T.iosTip}</p>` : ''}
+          <div class="backup-actions">
+            <button type="button" class="btn" data-act="copy">${T.copy}</button>
+            <button type="button" class="btn btn-ghost" data-act="restore">${T.restore}</button>
+          </div>
+          <div class="backup-panel" hidden>
+            <textarea id="backup-code" rows="3" spellcheck="false" placeholder="${T.paste}"></textarea>
+            <button type="button" class="btn" data-act="apply">${T.apply}</button>
+          </div>
+          <p class="backup-msg" role="status">${backupMessage}</p>
+        </section>
         <footer class="more">${T.more}</footer>
       </main>`;
   }
@@ -309,6 +443,47 @@
       try {
         localStorage.setItem(LANG_KEY, lang);
       } catch (err) {}
+      render();
+    });
+    if (page === 'home') bindBackup(app);
+  }
+
+  function bindBackup(app) {
+    const T = TEXT[lang];
+    const panel = app.querySelector('.backup-panel');
+    const box = app.querySelector('#backup-code');
+    const msg = app.querySelector('.backup-msg');
+    const say = (text, bad = false) => {
+      backupMessage = text;
+      msg.textContent = text;
+      msg.classList.toggle('bad', bad);
+    };
+
+    app.querySelector('[data-act="copy"]').addEventListener('click', () => {
+      const code = makeCode();
+      const showCode = () => {
+        panel.hidden = false;
+        box.value = code;
+        box.select();
+        say(T.copyFailed);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(() => say(T.copied), showCode);
+      } else {
+        showCode();
+      }
+    });
+
+    app.querySelector('[data-act="restore"]').addEventListener('click', () => {
+      panel.hidden = false;
+      box.value = '';
+      box.focus();
+      say('');
+    });
+
+    app.querySelector('[data-act="apply"]').addEventListener('click', () => {
+      if (!restoreCode(box.value)) return say(T.invalid, true);
+      backupMessage = T.restored;
       render();
     });
   }

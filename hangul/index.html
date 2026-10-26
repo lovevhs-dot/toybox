@@ -1346,6 +1346,8 @@
     }
 
     const saved = loadSaved();
+    // Ask the browser not to clear saved progress when space runs low
+    if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
     const mastered = new Set((saved.mastered || []).filter(k => BY_CHAR.has(k)));
 
     function persist() {
