@@ -84,7 +84,8 @@ Learning should feel fresh and quick, not like exam drill: keep the tempo fast, 
 types, and keep bringing in something new that wakes the brain up. Exams (HSK, JLPT, TOPIK, CEFR)
 set the scope, but every new step should also pass this check: is it short, varied and fun?
 - Right answers move on by themselves (after the word or sentence is spoken); a wrong answer waits
-  for Next so the learner can read the correction. All four practice apps do this.
+  for Next so the learner can read the correction. All four practice apps do this, with an "Auto next"
+  switch in settings (on by default, saved per app).
 - Prefer new question types made from existing content (e.g. putting a grammar sentence's words in
   order) over more of the same.
 
@@ -162,7 +163,9 @@ How to build it:
 Idioms and sayings (`chinese/chengyu/`): HSK 1-6 list hardly any chengyu, so this step adds them.
 `chinese/data/src/chengyu.txt` is `part|hanzi|pinyin|en|fr|ja|ko` (parts `idioms` and `phrases`); Japanese
 and Korean give the same-character idiom where one exists (一石二鳥, 일석이조), always followed by a plain
-explanation; Korean leaves out hanja so the Chinese characters don't give the answer away. Build with
+explanation; Korean leaves out hanja so the Chinese characters don't give the answer away. While a
+question is open the app shows only the explanation (the part after the colon); the list and the answer
+show the whole meaning. Build with
 `python3 chinese/tools/build_chengyu.py` (checks duplicates, punctuation and overlap with HSK 1-6). The study
 app treats `idioms` and `phrases` like words. Avoid short-lived internet slang; sayings use 普通话.
 

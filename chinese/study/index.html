@@ -177,11 +177,12 @@
     <label class="set-row"><span id="lang-label">Language</span><select id="lang"></select></label>
     <div class="set-row"><span id="pinyin-label">Pinyin</span><label class="switch"><input type="checkbox" id="pinyin" checked aria-labelledby="pinyin-label"><span></span></label></div>
     <div class="set-row"><span id="trad-label">Traditional characters</span><label class="switch"><input type="checkbox" id="trad" aria-labelledby="trad-label"><span></span></label></div>
+    <div class="set-row"><span id="auto-label">Auto next</span><label class="switch"><input type="checkbox" id="auto" checked aria-labelledby="auto-label"><span></span></label></div>
     <div class="set-row"><button type="button" class="link-btn" id="reset"></button></div>
   </div>
   <main class="page" id="page"><p class="msg">…</p></main>
 
-  <script src="i18n.js?v=2026-10-31.7"></script>
+  <script src="i18n.js?v=2026-10-31.8"></script>
   <script>
   (() => {
     'use strict';
@@ -227,7 +228,7 @@
     const m = setId.match(/^zh-(hsk[1-9]|pinyin|chengyu)-(words|grammar|tones|initials|finals|idioms|phrases)-(\d{1,2})$/);
     const PINYIN_KINDS = ['tones', 'initials', 'finals'];
     const WORD_KINDS = ['words', 'idioms', 'phrases'];
-    const prefs = Object.assign({ pinyin: true, sound: true, trad: false }, store.get(PREFS_KEY) || {});
+    const prefs = Object.assign({ pinyin: true, sound: true, trad: false, auto: true }, store.get(PREFS_KEY) || {});
     let D = null, kind = null, partNo = 0, items = [], storageKey = '';
 
     // ---------- Sound ----------
@@ -305,6 +306,7 @@
     }
     const toneName = it => T.toneNames[it.tone];
     const meanOf = it => (kind === 'tones' ? toneName(it) : it.mean[LI[lang]]);
+    const quizMean = it => (['idioms', 'phrases'].includes(kind) ? meanOf(it).replace(/^[^:：]{1,20}[:：]\s*/, '') : meanOf(it));
     const isPinyin = () => PINYIN_KINDS.includes(kind);
     const sayText = it => (isPinyin() ? it.hz : kind === 'grammar' ? full(it) : it.zh);
     const full = it => it.sentence.replace('＿', it.zh);
@@ -374,14 +376,14 @@
         return shuffle([it.label, ...shuffle(items.filter(x => x !== it).map(x => x.label)).slice(0, 3)]);
       }
       const byMeaning = type === 'meaning';
-      const shown = x => (byMeaning ? meanOf(x) : x.zh);
+      const shown = x => (byMeaning ? quizMean(x) : x.zh);
       const used = new Set([shown(it)]);
-      const answerMeaning = meanOf(it);
+      const answerMeaning = quizMean(it);
       const out = [it];
       for (const x of shuffle(items.filter(x => x !== it))) {
         if (out.length === 4) break;
         // Skip anything that could also be right (same text or same meaning)
-        if (used.has(shown(x)) || meanOf(x) === answerMeaning) continue;
+        if (used.has(shown(x)) || quizMean(x) === answerMeaning) continue;
         used.add(shown(x));
         out.push(x);
       }
@@ -421,7 +423,7 @@
       if (type === 'tone-name') return toneName(it);
       if (type === 'sound-listen' || type === 'hint') return it.label;
       if (type === 'complete') return qz.blank;
-      return type === 'meaning' ? meanOf(it) : it.zh;
+      return type === 'meaning' ? quizMean(it) : it.zh;
     }
 
     function choose(i) {
@@ -472,7 +474,7 @@
         if (!still()) return;
         const started = Date.now();
         Sound.say(sayText(it)).then(spoke => {
-          if (!ok || !still()) return;
+          if (!ok || !prefs.auto || !still()) return;
           setTimeout(() => { if (still()) next(); }, spoke ? 250 : Math.max(0, 900 - (Date.now() - started)));
         });
       }, ok ? 350 : 500);
@@ -559,7 +561,7 @@
         return `<span class="q-label">${esc(T.qComplete)}</span>
           <span class="q-zh" lang="zh-CN">${shown}</span>
           ${prefs.pinyin ? `<span class="q-py">${esc(it.py)}</span>` : ''}
-          <span class="q-sub">${esc(meanOf(it))}</span>`;
+          <span class="q-sub">${esc(quizMean(it))}</span>`;
       }
       if (qz.type === 'order') {
         return `<span class="q-label">${esc(T.qOrder)}</span><span class="q-mean">${esc(it.tr[LI[lang]])}</span>`;
@@ -576,7 +578,7 @@
           <button type="button" class="speak" data-say="${esc(it.zh)}">${ICON_SPEAK}${esc(T.play)}</button>`;
       }
       if (qz.type === 'hanzi') {
-        return `<span class="q-label">${esc(T.qHanzi)}</span><span class="q-mean">${esc(meanOf(it))}</span>`;
+        return `<span class="q-label">${esc(T.qHanzi)}</span><span class="q-mean">${esc(quizMean(it))}</span>`;
       }
       return `<span class="q-label">${esc(T.qListen)}</span>
         <button type="button" class="speak big" data-say="${esc(it.zh)}" aria-label="${esc(T.play)}">${ICON_SPEAK}</button>`;
@@ -721,6 +723,8 @@
       $('trad-label').textContent = T.trad;
       $('trad').checked = prefs.trad;
       $('reset').textContent = T.reset;
+      $('auto-label').textContent = T.autoNext;
+      $('auto').checked = prefs.auto;
       $('pinyin').checked = prefs.pinyin;
       $('sound-btn').innerHTML = prefs.sound ? ICON_SOUND_ON : ICON_SOUND_OFF;
       $('sound-btn').setAttribute('aria-label', prefs.sound ? T.soundOn : T.soundOff);
@@ -779,6 +783,7 @@
     });
     $('pinyin').addEventListener('change', e => { prefs.pinyin = e.target.checked; store.set(PREFS_KEY, prefs); render(); });
     $('trad').addEventListener('change', e => { prefs.trad = e.target.checked; store.set(PREFS_KEY, prefs); render(); });
+    $('auto').addEventListener('change', e => { prefs.auto = e.target.checked; store.set(PREFS_KEY, prefs); });
     $('sound-btn').addEventListener('click', () => {
       prefs.sound = !prefs.sound; store.set(PREFS_KEY, prefs);
       if (!prefs.sound && window.speechSynthesis) speechSynthesis.cancel();
