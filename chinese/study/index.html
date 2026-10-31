@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
-  <link rel="stylesheet" href="../../shared/toybox.css?v=2026-10-31.6">
+  <link rel="stylesheet" href="../../shared/toybox.css?v=2026-10-31.7">
   <style>
     :root {
       --c: #0f8b6c;
@@ -94,12 +94,17 @@
     .card .sent b { color: var(--c); }
     .card .note { font-size: 13px; color: var(--text-2); }
     .hide-py .py { display: none; }
+    .card .py-big { font-size: 26px; font-weight: 700; line-height: 1.2; }
+    .card .py-ex { font-size: 14px; color: var(--c); font-weight: 600; }
+    .card .py-ex .zh { color: var(--text-2); }
+    .q-pyb { font-size: 48px; font-weight: 700; line-height: 1.15; }
 
     .quiz { display: grid; gap: 14px; }
     .q-card { padding: 22px 18px; border-radius: 20px; background: var(--surface); box-shadow: var(--shadow-1); text-align: center; display: grid; gap: 8px; justify-items: center; }
     .q-label { font-size: 13px; font-weight: 700; color: var(--text-2); }
     .q-zh { font-family: var(--ff-zh); font-size: 52px; font-weight: 600; line-height: 1.15; }
     .q-sent { font-family: var(--ff-zh); font-size: 26px; line-height: 1.5; }
+    .q-zh .blank { display: inline-block; min-width: 1em; border-bottom: 3px solid var(--c); color: var(--c); }
     .q-sent .blank { display: inline-block; min-width: 2.2em; border-bottom: 2px solid var(--c); color: var(--c); }
     .q-mean { font-size: 22px; font-weight: 700; }
     .q-sub { font-size: 15px; color: var(--text-2); }
@@ -154,7 +159,7 @@
   </div>
   <main class="page" id="page"><p class="msg">…</p></main>
 
-  <script src="i18n.js?v=2026-10-31.1"></script>
+  <script src="i18n.js?v=2026-10-31.3"></script>
   <script>
   (() => {
     'use strict';
@@ -197,7 +202,8 @@
 
     // ---------- Which part ----------
     const setId = new URLSearchParams(location.search).get('set') || '';
-    const m = setId.match(/^zh-(hsk[1-9])-(words|chars|grammar)-(\d{1,2})$/);
+    const m = setId.match(/^zh-(hsk[1-9]|pinyin)-(words|chars|grammar|tones|initials|finals)-(\d{1,2})$/);
+    const PINYIN_KINDS = ['tones', 'initials', 'finals'];
     const prefs = Object.assign({ pinyin: true, sound: true }, store.get(PREFS_KEY) || {});
     let D = null, kind = null, partNo = 0, items = [], storageKey = '';
 
@@ -252,19 +258,25 @@
       const start = sizes.slice(0, partNo - 1).reduce((a, b) => a + b, 0);
       const rows = D[kind].slice(start, start + sizes[partNo - 1]);
       items = rows.map((r, i) => {
+        if (kind === 'tones') {
+          return { key: r[0], py: r[0], hz: r[1], tone: r[2], opts: r[3] };
+        }
+        if (kind === 'initials' || kind === 'finals') {
+          return { key: r[0], label: r[0], py: r[1], hz: r[2], mean: r.slice(3, 7) };
+        }
         if (kind === 'grammar') {
           return { key: `g${start + i + 1}`, label: r[0], sentence: r[1], zh: r[2], wrong: r[3], tr: r.slice(4, 8), note: r.slice(8, 12) };
         }
         const it = { key: r[0], zh: r[0], py: r[1], mean: r.slice(2, 6) };
-        if (kind === 'chars' && r[6] >= 0) {
-          const w = D.words[r[6]];
-          it.ex = { zh: w[0], py: w[1], mean: w.slice(2, 6) };
-        }
+        if (kind === 'chars') it.words = r[6].map(i => ({ zh: D.words[i][0], py: D.words[i][1], mean: D.words[i].slice(2, 6) }));
         return it;
       });
       return true;
     }
-    const meanOf = it => it.mean[LI[lang]];
+    const toneName = it => T.toneNames[it.tone];
+    const meanOf = it => (kind === 'tones' ? toneName(it) : it.mean[LI[lang]]);
+    const isPinyin = () => PINYIN_KINDS.includes(kind);
+    const sayText = it => (isPinyin() ? it.hz : kind === 'grammar' ? full(it) : kind === 'chars' && qz.word ? qz.word.zh : it.zh);
     const full = it => it.sentence.replace('＿', it.zh);
 
     // ---------- Progress ----------
@@ -301,6 +313,11 @@
 
     function questionType(it) {
       if (kind === 'grammar') return 'blank';
+      // Characters are practiced inside words, so they differ from the word parts
+      if (kind === 'chars') return 'complete';
+      const voice = Sound.canSpeak() && prefs.sound;
+      if (kind === 'tones') return voice && Math.random() < 0.7 ? 'tone-listen' : 'tone-name';
+      if (isPinyin()) return voice && Math.random() < 0.6 ? 'sound-listen' : 'hint';
       const types = ['meaning', 'hanzi'];
       if (kind === 'words' && Sound.canSpeak() && prefs.sound) types.push('listen');
       return types[Math.floor(Math.random() * types.length)];
@@ -308,6 +325,21 @@
 
     function optionsFor(it, type) {
       if (type === 'blank') return shuffle([it.zh, ...it.wrong]);
+      if (type === 'complete') {
+        // Skip a character that would also make a real word in that spot
+        const known = new Set(D.words.map(w => w[0]));
+        const fits = c => known.has(qz.word.zh.split(it.zh).join(c));
+        const wrong = shuffle(items.filter(x => x !== it && !fits(x.zh)).map(x => x.zh)).slice(0, 3);
+        return shuffle([it.zh, ...wrong]);
+      }
+      if (type === 'tone-listen') return shuffle(it.opts.slice());
+      if (type === 'tone-name') {
+        const others = shuffle([0, 1, 2, 3, 4].filter(t => t !== it.tone && (it.tone === 0 || t !== 0))).slice(0, 3);
+        return shuffle([it.tone, ...others]).map(t => T.toneNames[t]);
+      }
+      if (type === 'sound-listen' || type === 'hint') {
+        return shuffle([it.label, ...shuffle(items.filter(x => x !== it).map(x => x.label)).slice(0, 3)]);
+      }
       const byMeaning = type === 'meaning';
       const shown = x => (byMeaning ? meanOf(x) : x.zh);
       const used = new Set([shown(it)]);
@@ -336,14 +368,18 @@
       }
       qz.current = it;
       qz.type = questionType(it);
+      qz.word = it.words ? it.words[Math.floor(Math.random() * it.words.length)] : null;
       qz.options = optionsFor(it, qz.type);
       qz.answered = false;
       qz.chosen = null;
       qz.seq++;
-      if (qz.type === 'listen') setTimeout(() => Sound.say(it.zh), 250);
+      if (/listen/.test(qz.type)) setTimeout(() => Sound.say(isPinyin() ? it.hz : it.zh), 250);
     }
 
     function answerText(it, type) {
+      if (type === 'tone-listen') return it.py;
+      if (type === 'tone-name') return toneName(it);
+      if (type === 'sound-listen' || type === 'hint') return it.label;
       return type === 'meaning' ? meanOf(it) : it.zh;
     }
 
@@ -381,7 +417,7 @@
       render();
       // Say the Chinese after answering, unless the answer chime is still playing a big finish
       const seq = qz.seq;
-      setTimeout(() => { if (seq === qz.seq && qz.answered) Sound.say(kind === 'grammar' ? full(it) : it.zh); }, ok ? 350 : 500);
+      setTimeout(() => { if (seq === qz.seq && qz.answered) Sound.say(sayText(it)); }, ok ? 350 : 500);
     }
 
     function next() {
@@ -405,6 +441,14 @@
     // ---------- Rendering ----------
     function cardHtml(it) {
       const tick = mastered.has(it.key) ? `<span class="tick" title="${esc(T.masteredBadge)}">${ICON_CHECK}</span>` : '';
+      if (isPinyin()) {
+        return `<button type="button" class="card" data-say="${esc(it.hz)}" aria-label="${esc(T.play)} ${esc(it.py)}">
+          ${tick}
+          <span class="py-big">${esc(kind === 'tones' ? it.py : it.label)}</span>
+          <span class="py-ex">${kind === 'tones' ? '' : esc(it.py) + ' '}<span class="zh" lang="zh-CN">${esc(it.hz)}</span></span>
+          <span class="mean">${esc(meanOf(it))}</span>
+        </button>`;
+      }
       if (kind === 'grammar') {
         return `<button type="button" class="card" data-say="${esc(full(it))}">
           ${tick}
@@ -414,7 +458,7 @@
           <span class="note">${esc(it.note[LI[lang]])}</span>
         </button>`;
       }
-      const ex = it.ex ? `<span class="ex"><span class="zh" lang="zh-CN">${esc(it.ex.zh)}</span> · ${esc(it.ex.mean[LI[lang]])}</span>` : '';
+      const ex = it.words ? it.words.slice(0, 3).map(w => `<span class="ex"><span class="zh" lang="zh-CN">${esc(w.zh)}</span> · ${esc(w.mean[LI[lang]])}</span>`).join('') : '';
       return `<button type="button" class="card" data-say="${esc(it.zh)}" aria-label="${esc(T.play)} ${esc(it.zh)}">
         ${tick}
         <span class="zh-big" lang="zh-CN">${esc(it.zh)}</span>
@@ -437,6 +481,26 @@
 
     function promptHtml(it) {
       const py = prefs.pinyin && it.py ? `<span class="q-py">${esc(it.py)}</span>` : '';
+      if (qz.type === 'tone-listen' || qz.type === 'sound-listen') {
+        return `<span class="q-label">${esc(qz.type === 'tone-listen' ? T.qTone : T.qSound)}</span>
+          <button type="button" class="speak big" data-say="${esc(it.hz)}" aria-label="${esc(T.play)}">${ICON_SPEAK}</button>`;
+      }
+      if (qz.type === 'tone-name') {
+        return `<span class="q-label">${esc(T.qToneName)}</span>
+          <span class="q-pyb">${esc(it.py)}</span><span class="q-sub zh" lang="zh-CN">${esc(it.hz)}</span>`;
+      }
+      if (qz.type === 'hint') {
+        return `<span class="q-label">${esc(T.qHint)}</span><span class="q-mean">${esc(meanOf(it))}</span>`;
+      }
+      if (qz.type === 'complete') {
+        const w = qz.word;
+        // Reduplicated words (妈妈, 谢谢) blank every copy so the answer is not shown
+        const shown = esc(w.zh).split(esc(it.zh)).join(`<span class="blank">${qz.answered ? esc(it.zh) : '&nbsp;'}</span>`);
+        return `<span class="q-label">${esc(T.qComplete)}</span>
+          <span class="q-zh" lang="zh-CN">${shown}</span>
+          ${prefs.pinyin ? `<span class="q-py">${esc(w.py)}</span>` : ''}
+          <span class="q-sub">${esc(w.mean[LI[lang]])}</span>`;
+      }
       if (qz.type === 'blank') {
         const sent = esc(it.sentence).replace('＿', `<span class="blank">${qz.answered ? esc(it.zh) : '&nbsp;'}</span>`);
         return `<span class="q-label">${esc(T.qBlank)} · ${esc(it.label)}</span>
@@ -457,10 +521,14 @@
 
     function afterHtml(it) {
       if (!qz.answered) return '';
+      if (isPinyin()) {
+        const head = kind === 'tones' ? esc(it.py) : `${esc(it.label)} · ${esc(it.py)}`;
+        return `<div class="after"><span>${head} <span class="zh" lang="zh-CN">${esc(it.hz)}</span></span><span>${esc(meanOf(it))}</span></div>`;
+      }
       if (kind === 'grammar') {
         return `<div class="after"><span class="zh" lang="zh-CN">${esc(full(it))}</span><span>${esc(it.note[LI[lang]])}</span></div>`;
       }
-      const ex = it.ex ? `<span>${esc(T.example)}: <span class="zh" lang="zh-CN">${esc(it.ex.zh)}</span> ${esc(it.ex.py)} · ${esc(it.ex.mean[LI[lang]])}</span>` : '';
+      const ex = it.words ? it.words.slice(0, 4).map(w => `<span><span class="zh" lang="zh-CN">${esc(w.zh)}</span> ${esc(w.py)} · ${esc(w.mean[LI[lang]])}</span>`).join('') : '';
       return `<div class="after"><span><span class="zh" lang="zh-CN">${esc(it.zh)}</span> ${esc(it.py)} · ${esc(meanOf(it))}</span>${ex}</div>`;
     }
 
@@ -468,7 +536,7 @@
       if (!qz.current) return qz.review ? reviewDoneHtml() : doneHtml();
       const it = qz.current;
       const ans = answerText(it, qz.type);
-      const zhOpts = qz.type !== 'meaning';
+      const zhOpts = !isPinyin() && qz.type !== 'meaning';
       const head = qz.review
         ? `<div class="progress"><span class="meter"><span class="meter-fill" style="width:${Math.round((qz.review.i / qz.review.list.length) * 100)}%"></span></span><span>${esc(T.reviewOf(qz.review.i + 1, qz.review.list.length))}</span></div>`
         : progressHtml();
@@ -547,7 +615,8 @@
 
     function syncChrome() {
       document.documentElement.lang = lang;
-      const title = D ? `${D.name} · ${T.kinds[kind]} · ${T.part(partNo)}` : 'Chinese';
+      const name = D && (typeof D.name === 'object' ? D.name[lang] : D.name);
+      const title = D ? (isPinyin() ? `${name} · ${T.kinds[kind]}` : `${name} · ${T.kinds[kind]} · ${T.part(partNo)}`) : 'Chinese';
       $('title').textContent = title;
       document.title = `${title} · Toybox`;
       $('subtitle').textContent = D ? T.mastered(mastered.size, items.length) : '';
@@ -626,7 +695,7 @@
     if (!m) { fail(T.notFound); return; }
     kind = m[2]; partNo = Number(m[3]); storageKey = `${setId}-v1`;
     const script = document.createElement('script');
-    script.src = `../${m[1]}/data.js?v=2026-10-31.1`;
+    script.src = `../${m[1]}/data.js?v=2026-10-31.2`;
     script.onload = () => {
       D = window.ZH_LEVEL;
       if (!D || !buildItems()) { D = null; fail(T.notFound); return; }

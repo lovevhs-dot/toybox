@@ -9,8 +9,9 @@ and what to build next, so any new session can continue without the earlier conv
 |---|---|---|
 | `/` | Home | Continue card, course cards, backup links |
 | `japanese/` | Course page | Hiragana live; Hiragana 2, Katakana 1-2, JLPT N5-N1 "coming soon" |
-| `chinese/` | Course page | Pinyin and HSK 1-6 steps; HSK 1 live |
-| `chinese/hsk1/` | HSK 1 level page | 6 word parts (294), 5 character parts (248), 1 grammar part (44); data in `data.js` |
+| `chinese/` | Course page | Pinyin and HSK 1-6 steps; Pinyin and HSK 1 live |
+| `chinese/pinyin/` | Pinyin level page | Tones (45: 10 syllables x 4 tones + 5 neutral), initials (23), finals (38), each with hints in every UI language |
+| `chinese/hsk1/` | HSK 1 level page | 6 word parts (294), 4 character parts (175), 1 grammar part (44); data in `data.js` |
 | `chinese/study/` | Shared study app | `?set=zh-hsk1-words-1` etc.; list + mastery practice; UI en/fr/ja/ko |
 | `korean/` | Course page | Hangul live; Batchim, TOPIK 1-6 "coming soon" |
 | `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/ko, readings in each UI language's own spelling |
@@ -74,7 +75,7 @@ Course steps (listed in `shared/toybox.js`; HSK 1 is live):
 
 | Step | Content | Data |
 |---|---|---|
-| Pinyin and tones (`pinyin/`) | 4 tones + neutral tone, 21 initials, main finals, about 50 cards | written by hand |
+| Pinyin and tones (`chinese/pinyin/`) | Live: tones, initials, finals | `chinese/pinyin/data.js` |
 | HSK 1 (`hsk1`) | 294 words, 6 parts | `chinese/data/hsk1.tsv` |
 | HSK 2 (`hsk2`) | 197 words, 4 parts | `chinese/data/hsk2.tsv` |
 | HSK 3 (`hsk3`) | 487 words, 10 parts | `chinese/data/hsk3.tsv` |
@@ -84,15 +85,17 @@ Course steps (listed in `shared/toybox.js`; HSK 1 is live):
 
 How to build it:
 
-1. **Pinyin app** first: example syllable plus character for speech (mā 妈 / má 麻 / mǎ 马 / mà 骂).
-   Practice: hear a syllable and pick its tone; see pinyin and pick the sound.
+1. **Pinyin** (done): tones by ear (or by name when no Chinese voice exists), initials and finals by
+   ear or by description.
 2. **Done for HSK 1, repeat for each level:** copy `chinese/hsk1/` to `chinese/hsk<N>/` (level page
    shell with `data-step="hsk<N>"`), write `chinese/hsk<N>/data.js` in the same shape as HSK 1
    (words, chars, grammar, parts), then give the step `href` and `parts: makeParts(...)` in
    `shared/toybox.js` with the same part sizes. Parts stay about 50 items, in frequency order.
    - Words: meanings in en, fr, ja and ko written together; never copy dictionary definitions
      (CC-CEDICT is CC BY-SA). Check words that list other readings and fix the TSV.
-   - Characters: the level's new characters in order of first use, each with an example word.
+   - Characters: only those used inside the level's words of two or more characters (single-character
+     words are already in the word parts), each with the words that use it. Practice fills the
+     missing character of a word, so it never repeats the word parts.
    - Grammar: the level's patterns as fill-in-the-blank cards with original sentences, wrong
      options that are clearly wrong, a translation and a one-line note in every UI language.
 3. The study app (`chinese/study/`) handles every kind: list view, then practice with

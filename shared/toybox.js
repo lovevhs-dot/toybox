@@ -30,7 +30,7 @@
       continue: 'Continue',
       start: 'Start',
       allSteps: 'All steps',
-      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar' },
+      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar', tones: 'Tones', initials: 'Initials', finals: 'Finals' },
       part: n => `Part ${n}`,
       backup: 'Back up or restore progress',
       backupNote: 'Progress is saved only in this browser. Copy a backup code to keep it safe or move it to another device.',
@@ -62,7 +62,7 @@
       continue: 'Continuer',
       start: 'Commencer',
       allSteps: 'Toutes les étapes',
-      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire' },
+      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire', tones: 'Tons', initials: 'Initiales', finals: 'Finales' },
       part: n => `Partie ${n}`,
       backup: 'Sauvegarder ou restaurer la progression',
       backupNote: 'La progression est enregistrée uniquement dans ce navigateur. Copiez un code de sauvegarde pour la garder ou la transférer sur un autre appareil.',
@@ -94,7 +94,7 @@
       continue: '继续',
       start: '开始',
       allSteps: '全部阶段',
-      kinds: { words: '词汇', chars: '汉字', grammar: '语法' },
+      kinds: { words: '词汇', chars: '汉字', grammar: '语法', tones: '声调', initials: '声母', finals: '韵母' },
       part: n => `第 ${n} 部分`,
       backup: '备份或恢复进度',
       backupNote: '进度只保存在这个浏览器里。复制备份码，可以妥善保存或转移到其他设备。',
@@ -126,7 +126,7 @@
       continue: '続ける',
       start: '始める',
       allSteps: 'すべてのステップ',
-      kinds: { words: '語彙', chars: '漢字', grammar: '文法' },
+      kinds: { words: '語彙', chars: '漢字', grammar: '文法', tones: '声調', initials: '声母', finals: '韻母' },
       part: n => `パート${n}`,
       backup: '進み具合のバックアップ・復元',
       backupNote: '進み具合はこのブラウザにだけ保存されます。バックアップコードをコピーしておけば、安全に保管したり別の端末に移したりできます。',
@@ -158,7 +158,7 @@
       continue: '이어서 하기',
       start: '시작하기',
       allSteps: '전체 단계',
-      kinds: { words: '어휘', chars: '한자', grammar: '문법' },
+      kinds: { words: '어휘', chars: '한자', grammar: '문법', tones: '성조', initials: '성모', finals: '운모' },
       part: n => `파트 ${n}`,
       backup: '진행 기록 백업·복원',
       backupNote: '진행 기록은 이 브라우저에만 저장돼요. 백업 코드를 복사해두면 안전하게 보관하거나 다른 기기로 옮길 수 있어요.',
@@ -251,13 +251,14 @@
       goal: { en: 'Step by step to HSK 6', fr: 'Pas à pas jusqu\'au HSK 6', 'zh-Hans': '一步步达到 HSK 6级', ja: 'HSK 6級まで一歩ずつ', ko: 'HSK 6급까지 한 단계씩' },
       steps: [
         {
-          id: 'pinyin',
+          id: 'pinyin', href: 'chinese/pinyin/',
+          parts: makeParts('chinese/study/', 'zh-pinyin', { tones: [45], initials: [23], finals: [38] }),
           name: { en: 'Pinyin and tones', fr: 'Pinyin et tons', 'zh-Hans': '拼音和声调', ja: 'ピンインと声調', ko: '병음과 성조' },
           desc: { en: 'Sounds and the four tones', fr: 'Les sons et les quatre tons', 'zh-Hans': '声母、韵母和四个声调', ja: '音と4つの声調', ko: '소리와 네 가지 성조' }
         },
         {
           id: 'hsk1', href: 'chinese/hsk1/',
-          parts: makeParts('chinese/study/', 'zh-hsk1', { words: [49, 49, 49, 49, 49, 49], chars: [50, 50, 50, 49, 49], grammar: [44] }),
+          parts: makeParts('chinese/study/', 'zh-hsk1', { words: [49, 49, 49, 49, 49, 49], chars: [44, 44, 44, 43], grammar: [44] }),
           name: { en: 'HSK 1', fr: 'HSK 1', 'zh-Hans': 'HSK 1级', ja: 'HSK 1級', ko: 'HSK 1급' },
           desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
         },
@@ -726,6 +727,7 @@
     const p = progressOf(step);
     document.title = `${pick(step.name)} · ${pick(course.name)} · Toybox`;
     const kinds = [...new Set(step.parts.map(part => part.kind))];
+    const single = kinds.every(k => step.parts.filter(part => part.kind === k).length === 1);
     const row = part => {
       const pp = progressOf(part);
       const finished = pp.done === pp.total;
@@ -734,7 +736,7 @@
           <span class="step-num" aria-hidden="true">${finished ? ICON_CHECK : part.n}</span>
           <a class="step-row" href="${root}${part.href}">
             <span class="step-text">
-              <span class="step-name">${T.part(part.n)}</span>
+              <span class="step-name">${single ? T.kinds[part.kind] : T.part(part.n)}</span>
               <span class="step-desc">${T.mastered(pp.done, pp.total)}</span>
             </span>
             ${finished ? `<span class="pill go">${T.done}</span>` : `<span class="step-pct">${pct(pp.done, pp.total)}%</span>`}
@@ -754,7 +756,9 @@
             <span>${T.mastered(p.done, p.total)}</span>
           </div>
         </section>
-        ${kinds.map(kind => `
+        ${single
+          ? `<h2 class="section-title">${T.allSteps}</h2><ol class="steps">${step.parts.map((part, i) => row({ ...part, n: i + 1 })).join('')}</ol>`
+          : kinds.map(kind => `
           <h2 class="section-title">${T.kinds[kind]}</h2>
           <ol class="steps">${step.parts.filter(part => part.kind === kind).map(row).join('')}</ol>`).join('')}
       </main>`;
