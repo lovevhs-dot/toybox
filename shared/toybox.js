@@ -275,7 +275,8 @@
           desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },
         {
-          id: 'hsk4',
+          id: 'hsk4', href: 'chinese/hsk4/',
+          parts: makeParts('chinese/study/', 'zh-hsk4', { words: [49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 48, 48, 48, 48, 48, 48, 48, 48], grammar: [31] }),
           name: { en: 'HSK 4', fr: 'HSK 4', 'zh-Hans': 'HSK 4级', ja: 'HSK 4級', ko: 'HSK 4급' },
           desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },

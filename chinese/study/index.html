@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
-  <link rel="stylesheet" href="../../shared/toybox.css?v=2026-10-31.10">
+  <link rel="stylesheet" href="../../shared/toybox.css?v=2026-10-31.11">
   <style>
     :root {
       --c: #0f8b6c;
@@ -113,6 +113,12 @@
     .speak svg { width: 18px; height: 18px; }
     .speak.big { padding: 18px 26px; font-size: 16px; }
     .speak.big svg { width: 28px; height: 28px; }
+    .after-py { color: var(--c); font-weight: 600; }
+    .opt-gloss { list-style: none; margin: 6px 0 0; padding: 8px 0 0; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+    .opt-gloss li { color: var(--text-2); }
+    .opt-gloss li.is-answer { color: var(--text); font-weight: 600; }
+    .opt-gloss li.is-answer::before { content: '✓ '; color: var(--good); }
+    .opt-gloss .opt-py { color: var(--c); }
     .pips { display: flex; gap: 6px; margin-top: 4px; }
     .pips span { width: 9px; height: 9px; border-radius: 50%; background: var(--line-strong); transition: background 0.25s, transform 0.25s var(--ease); }
     .pips .on { background: var(--good); transform: scale(1.15); }
@@ -268,7 +274,7 @@
           return { key: r[0], label: r[0], py: r[1], hz: r[2], mean: r.slice(3, 7) };
         }
         if (kind === 'grammar') {
-          return { key: `g${start + i + 1}`, label: r[0], sentence: r[1], zh: r[2], wrong: r[3], tr: r.slice(4, 8), note: r.slice(8, 12) };
+          return { key: `g${start + i + 1}`, label: r[0], sentence: r[1], zh: r[2], wrong: r[3], tr: r.slice(4, 8), note: r.slice(8, 12), py: r[12] || '' };
         }
         const it = { key: r[0], zh: r[0], py: r[1], mean: r.slice(2, 6) };
         return it;
@@ -458,6 +464,7 @@
           ${tick}
           <span class="label">${esc(it.label)}</span>
           <span class="sent" lang="zh-CN">${esc(it.sentence).replace('＿', `<b>${esc(it.zh)}</b>`)}</span>
+          <span class="py">${esc(it.py)}</span>
           <span class="mean">${esc(it.tr[LI[lang]])}</span>
           <span class="note">${esc(it.note[LI[lang]])}</span>
         </button>`;
@@ -528,7 +535,17 @@
         return `<div class="after"><span>${head} <span class="zh" lang="zh-CN">${esc(it.hz)}</span></span><span>${esc(meanOf(it))}</span></div>`;
       }
       if (kind === 'grammar') {
-        return `<div class="after"><span class="zh" lang="zh-CN">${esc(full(it))}</span><span><strong lang="zh-CN">${esc(it.label)}</strong> · ${esc(it.note[LI[lang]])}</span></div>`;
+        const opts = qz.options.map(o => {
+          const g = (D.gloss && D.gloss[o]) || [];
+          const mean = g[LI[lang] + 1] || '';
+          return `<li class="${o === it.zh ? 'is-answer' : ''}"><span class="zh" lang="zh-CN">${esc(o)}</span> <span class="opt-py">${esc(g[0] || '')}</span>${mean ? ` · ${esc(mean)}` : ''}</li>`;
+        }).join('');
+        return `<div class="after">
+          <span class="zh" lang="zh-CN">${esc(full(it))}</span>
+          ${it.py ? `<span class="after-py">${esc(it.py)}</span>` : ''}
+          <span><strong lang="zh-CN">${esc(it.label)}</strong> · ${esc(it.note[LI[lang]])}</span>
+          <ul class="opt-gloss">${opts}</ul>
+        </div>`;
       }
       return `<div class="after"><span><span class="zh" lang="zh-CN">${esc(it.zh)}</span> ${esc(it.py)} · ${esc(meanOf(it))}</span></div>`;
     }
@@ -705,7 +722,7 @@
     if (!m) { fail(T.notFound); return; }
     kind = m[2]; partNo = Number(m[3]); storageKey = `${setId}-v1`;
     const script = document.createElement('script');
-    script.src = `../${m[1]}/data.js?v=2026-10-31.5`;
+    script.src = `../${m[1]}/data.js?v=2026-10-31.6`;
     script.onload = () => {
       D = window.ZH_LEVEL;
       if (!D || !buildItems()) { D = null; fail(T.notFound); return; }
