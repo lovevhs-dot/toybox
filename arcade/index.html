@@ -82,6 +82,22 @@
     .diff[aria-pressed="true"] { box-shadow: 0 0 16px rgba(var(--neon-rgb), 0.45); }
     .diff-label { font-size: 12px; font-weight: 800; color: var(--text-2); letter-spacing: 0.06em; }
     .diff-hint { margin: -4px 0 0; color: var(--text-2); font-size: 13px; }
+    .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .mode { padding: 11px 6px; border-radius: 12px; background: var(--bg-2); font-weight: 800; font-size: 14px; color: var(--text-2); box-shadow: inset 0 0 0 1.5px var(--line); }
+    .mode[aria-pressed="true"] { color: var(--text); box-shadow: inset 0 0 0 2px var(--cyan), 0 0 14px rgba(46, 230, 214, 0.35); }
+    .best { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 14px; background: var(--bg-2); }
+    .best-rank { font-size: 30px; font-weight: 900; font-style: italic; min-width: 52px; text-align: center; }
+    .best-text { display: grid; gap: 2px; font-size: 13px; color: var(--text-2); font-weight: 700; }
+    .best-text b { color: var(--text); font-size: 18px; font-variant-numeric: tabular-nums; }
+    .track-best { flex: none; font-weight: 900; font-style: italic; font-size: 15px; min-width: 30px; text-align: center; }
+    .r-SSS { background: linear-gradient(90deg, var(--gold), var(--hot), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .r-S { color: var(--gold); } .r-A { color: var(--cyan); } .r-B { color: #8be36b; } .r-F { color: var(--miss); }
+    .score { position: absolute; top: 10px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 20px; font-variant-numeric: tabular-nums; letter-spacing: 0.04em; pointer-events: none; z-index: 0; opacity: 0.9; }
+    .newrec { justify-self: center; padding: 6px 14px; border-radius: 999px; font-weight: 900; letter-spacing: 0.1em; color: #0b0a12; background: linear-gradient(90deg, var(--cyan), var(--gold)); animation: rankIn 0.6s 0.45s both; }
+    .result-score { font-size: 40px; font-weight: 900; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+    .result-note { color: var(--text-2); font-size: 14px; margin: 0; }
+    .paused { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(11, 10, 18, 0.82); z-index: 4; font-weight: 900; font-size: 22px; text-align: center; padding: 20px; }
+    .paused[hidden] { display: none; }
     .detail { padding: 18px; border-radius: 20px; background: var(--panel); box-shadow: inset 0 0 0 1px var(--line); display: grid; gap: 12px; }
     .detail-lang { font-weight: 800; color: var(--text-2); }
     .detail-title { font-size: 30px; font-weight: 900; margin: 0; line-height: 1.1; }
@@ -229,13 +245,15 @@
       <div id="notes"></div>
       <div class="judge" id="judge" role="status"></div>
       <div class="count" id="count" aria-hidden="true"></div>
+      <div class="score" id="score" aria-hidden="true"></div>
+      <button type="button" class="paused" id="paused" hidden></button>
     </div>
     <div class="lanes" id="lanes"></div>
   </section>
 
   <section class="result" id="result" hidden aria-live="polite"></section>
 
-  <script src="i18n.js?v=2026-10-31.2"></script>
+  <script src="i18n.js?v=2026-10-31.4"></script>
   <script>
   (() => {
     'use strict';
@@ -301,6 +319,9 @@
     const DIFF_IDS = Object.keys(DIFFS);
     // Track level from its base tempo: 90 BPM is Lv.1, 150 BPM is Lv.7
     const lvOf = t => 1 + Math.round((t.bpm - 90) / 10);
+    // Card counts per track, filled in when a track's data has been loaded (shown as "…" before)
+    const COUNTS = {};
+    const lvCount = (c, t) => COUNTS[c.id + '/' + t.id] || 0;
     // How many beats a card takes to reach the line: longer prompts get more time
     const FALL_BEATS = { script: 6, tones: 6, zh: 8, sent: 14 };
 
@@ -320,7 +341,8 @@
     let lang = detectLang();
     let T = I18N.ui[lang];
     const reducedMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const prefs = Object.assign({ sound: true, music: true, calm: reducedMotion, diff: 'NORMAL' }, store.get(PREFS_KEY) || {});
+    const prefs = Object.assign({ sound: true, music: true, calm: reducedMotion, diff: 'NORMAL', mode: 'time' }, store.get(PREFS_KEY) || {});
+    if (!['time', 'all'].includes(prefs.mode)) prefs.mode = 'time';
     if (!DIFFS[prefs.diff]) prefs.diff = 'NORMAL';
     const bpmOf = t => Math.round(t.bpm * DIFFS[prefs.diff].bpm);
     const pick = f => f[lang] || f.en;
@@ -518,6 +540,7 @@
       else { window.ZH_LEVEL = null; data = await loadScript(`../chinese/${t.file}/data.js?v=${V_ZH}`, 'ZH_LEVEL'); }
       if (!data) throw new Error('no data');
       cache[key] = data;
+      COUNTS[key] = buildPool(c, t, data).rows.length;
       return data;
     }
 
@@ -547,30 +570,23 @@
         // Sentences that differ only in the key phrase: those phrases must not be wrong options for each other
         const frame = r => plain(r[col].replace(/\[[^\]]+\]/, '_')).toLowerCase();
         const byFrame = groupBy(rows, frame, r => chunkOf(r[col]));
-        return () => {
-          const r = rows[Math.floor(Math.random() * rows.length)];
+        return { rows, make: r => {
           const right = chunkOf(r[col]);
           return { label: T.qGap, html: esc(r[col]).replace(/\[[^\]]+\]/, '<span class="gap">&nbsp;</span>'), cls: 'long', sub: plain(r[tcol]),
             right, opts: shuffle([right, ...others(chunks, right, 3, byFrame.get(frame(r)))]), laneCls: 'small', lang: c.lang };
-        };
+        } };
       }
       if (t.kind === 'tones') {
         const rows = data.tones;
-        return () => {
-          const r = rows[Math.floor(Math.random() * rows.length)];
-          return { label: T.qTone, html: esc(r[1]), cls: 'big', sub: '', right: r[0], opts: shuffle(r[3].slice()), laneCls: 'big', lang: 'zh-CN' };
-        };
+        return { rows, make: r => ({ label: T.qTone, html: esc(r[1]), cls: 'big', sub: '', right: r[0], opts: shuffle(r[3].slice()), laneCls: 'big', lang: 'zh-CN' }) };
       }
       if (t.kind === 'script') {
         const rows = data[t.file];
         const readings = rows.map(r => r[1]), chars = rows.map(r => r[0]);
         const charLang = t.file === 'hangul' ? 'ko' : 'ja';
-        return () => {
-          const r = rows[Math.floor(Math.random() * rows.length)];
-          return Math.random() < 0.6
+        return { rows, make: r => Math.random() < 0.6
             ? { label: T.qReading, html: esc(r[0]), cls: 'big', sub: '', right: r[1], opts: shuffle([r[1], ...others(readings, r[1], 3)]), laneCls: 'big', lang: charLang, optLang: 'en' }
-            : { label: T.qChar, html: esc(r[1]), cls: 'big', sub: '', right: r[0], opts: shuffle([r[0], ...others(chars, r[0], 3)]), laneCls: 'big', lang: 'en', optLang: charLang };
-        };
+            : { label: T.qChar, html: esc(r[1]), cls: 'big', sub: '', right: r[0], opts: shuffle([r[0], ...others(chars, r[0], 3)]), laneCls: 'big', lang: 'en', optLang: charLang } };
       }
       // Chinese words (and chengyu): character to meaning, or meaning to character
       const chengyu = t.file === 'chengyu';
@@ -579,13 +595,53 @@
       // Words that share a meaning (or a word with several meanings) must not be wrong options for each other
       const byMean = groupBy(rows, r => zhMean(r, chengyu), r => r[0]);
       const byHz = groupBy(rows, r => r[0], r => zhMean(r, chengyu));
-      return () => {
-        const r = rows[Math.floor(Math.random() * rows.length)];
+      return { rows, make: r => {
         const m = zhMean(r, chengyu);
         return Math.random() < 0.5
           ? { label: T.qMeaning, html: esc(r[0]), cls: r[0].length <= 4 ? 'big' : '', sub: r[1], right: m, opts: shuffle([m, ...others(means, m, 3, byHz.get(r[0]))]), laneCls: 'small', lang: 'zh-CN', optLang: meanLang() }
           : { label: T.qWord, html: esc(m), cls: m.length > 40 ? 'long' : '', sub: '', right: r[0], opts: shuffle([r[0], ...others(hz, r[0], 3, byMean.get(m))]), laneCls: r[0].length <= 4 ? 'big' : '', lang: meanLang(), optLang: 'zh-CN' };
+      } };
+    }
+
+    // A shuffled deck: every card once, a missed card comes back once a few cards later.
+    // In the 60-second mode the deck reshuffles when it runs out; in the all-cards mode the round ends.
+    function makeDeck(pool, mode) {
+      const fresh = () => shuffle(pool.rows.map((_, i) => ({ i, retry: false })));
+      const d = { order: fresh(), total: pool.rows.length, done: 0, retried: new Set() };
+      d.next = () => {
+        if (!d.order.length) { if (mode === 'all') return null; d.order = fresh(); d.retried.clear(); }
+        const card = d.order.shift();
+        if (!card.retry) d.done++;
+        return Object.assign(pool.make(pool.rows[card.i]), { idx: card.i });
       };
+      d.requeue = i => {
+        if (d.retried.has(i)) return;
+        d.retried.add(i);
+        d.order.splice(Math.min(d.order.length, 3 + Math.floor(Math.random() * 4)), 0, { i, retry: true });
+      };
+      d.left = () => d.order.length;
+      return d;
+    }
+
+    // ---------- Records (this device only) ----------
+    const BEST_KEY = 'arcade-best-v1';
+    const RANKS = ['F', 'B', 'A', 'S', 'SSS'];
+    const bestKey = (t, diff, mode) => `${t.id}|${diff}|${mode}`;
+    const getBest = (t, diff, mode) => (store.get(BEST_KEY) || {})[bestKey(t, diff, mode)] || null;
+    function saveBest(t, diff, mode, rec) {
+      const all = store.get(BEST_KEY) || {};
+      const k = bestKey(t, diff, mode), old = all[k];
+      const isNew = !old || rec.score > old.score;
+      all[k] = {
+        score: Math.max(rec.score, old ? old.score : 0),
+        rank: old && RANKS.indexOf(old.rank) > RANKS.indexOf(rec.rank) ? old.rank : rec.rank,
+        acc: Math.max(rec.acc, old ? old.acc : 0),
+        combo: Math.max(rec.combo, old ? old.combo : 0),
+        fc: rec.fc || !!(old && old.fc),
+        date: isNew ? new Date().toISOString().slice(0, 10) : old.date
+      };
+      store.set(BEST_KEY, all);
+      return isNew;
     }
 
     // ---------- Lobby ----------
@@ -633,19 +689,25 @@
         return `<button type="button" class="track ${d === 0 ? 'sel' : ''}" data-track="${i}" style="transform:${tf};opacity:${Math.abs(d) > 2 ? 0 : 1 - Math.abs(d) * 0.22}" ${Math.abs(d) > 2 ? 'tabindex="-1"' : ''} aria-current="${d === 0}">
           <span class="track-num">${String(i + 1).padStart(2, '0')}</span>
           <span class="track-text"><span class="track-title">${esc(pick(x.name))}</span><span class="track-sub"><span class="lv">Lv.${lvOf(x)}</span>${esc(c.name)}</span></span>
+          ${(b => (b ? `<span class="track-best r-${b.rank}" aria-label="Best ${b.rank}">${b.rank}</span>` : ''))(getBest(x, prefs.diff, prefs.mode))}
           <span class="bpm">${bpmOf(x)}<small>BPM</small></span>
         </button>`;
       }).join('');
       $('detail').innerHTML = `
         <span class="detail-lang" lang="${c.lang}">${esc(c.name)}</span>
         <h2 class="detail-title">${esc(pick(t.name))}</h2>
-        <div class="detail-meta"><span class="lv">Lv.${lvOf(t)}</span><span class="dtag ${prefs.diff}">${prefs.diff}</span><span>${bpmOf(t)} BPM</span><span>· 60s</span></div>
+        <div class="detail-meta"><span class="lv">Lv.${lvOf(t)}</span><span class="dtag ${prefs.diff}">${prefs.diff}</span><span>${bpmOf(t)} BPM</span>${lvCount(c, t) ? `<span>· ${esc(T.items(lvCount(c, t)))}</span>` : ''}</div>
         <span class="diff-label">${esc(T.difficulty)}</span>
         <div class="diffs" role="group" aria-label="${esc(T.difficulty)}">${DIFF_IDS.map(d => `<button type="button" class="diff ${d}" data-diff="${d}" aria-pressed="${d === prefs.diff}">${d}</button>`).join('')}</div>
         <p class="diff-hint">${esc(T.diffHint[prefs.diff])}</p>
+        <div class="modes" role="group">${['time', 'all'].map(m => `<button type="button" class="mode" data-mode="${m}" aria-pressed="${m === prefs.mode}">${esc(m === 'time' ? T.modeTime : T.modeAll)}</button>`).join('')}</div>
+        <p class="diff-hint">${esc(prefs.mode === 'time' ? T.modeTimeHint : T.modeAllHint)}</p>
+        ${(b => `<div class="best">${b ? `<span class="best-rank r-${b.rank}">${b.rank}</span><span class="best-text">BEST <b>${b.score.toLocaleString()}</b>${esc(T.maxCombo)} ${b.combo} · ${b.acc}%${b.fc ? ' · FULL COMBO' : ''}</span>` : `<span class="best-text">BEST — ${esc(T.noRecord)}</span>`}</div>`)(getBest(t, prefs.diff, prefs.mode))}
         <p class="detail-how">${esc(T.how)}</p>
         <button type="button" class="play-btn" id="play">▶ ${esc(T.play)}</button>
         <a class="study-link" href="${c.study}">${esc(T.study)} →</a>`;
+      // Load the selected track's cards in the background: the count shows up and PLAY starts at once
+      if (!lvCount(c, t)) loadTrack(c, t).then(() => { if (COURSES[view.course] === c && c.tracks[view.track] === t && !$('lobby').hidden) renderLobby(); }).catch(() => {});
     }
     function moveTrack(d) {
       const c = COURSES[view.course];
@@ -673,11 +735,16 @@
       const beatMs = 60000 / bpm;
       const id = (G ? G.id : 0) + 1;
       Music.stop();
-      G = { id, c, t, bpm, diff: prefs.diff, win: D.win, next: buildPool(c, t, data), beatMs, fallMs: beatMs * FALL_BEATS[t.kind] * D.fall, start: 0, beat: -1, note: null, combo: 0, maxCombo: 0,
+      const pool = buildPool(c, t, data);
+      const deck = makeDeck(pool, prefs.mode);
+      G = { id, c, t, bpm, diff: prefs.diff, mode: prefs.mode, win: D.win, deck, next: deck.next, score: 0, beatMs, fallMs: beatMs * FALL_BEATS[t.kind] * D.fall, start: 0, beat: -1, note: null, combo: 0, maxCombo: 0,
         counts: { PERFECT: 0, GREAT: 0, GOOD: 0, MISS: 0 }, points: 0, total: 0, over: false, raf: 0, lock: false, fever: 0 };
       $('game').classList.remove('fever', 'fever2');
       $('notes').innerHTML = '';
-      renderCombo();
+      $('paused').hidden = true;
+      renderCombo(); renderScore();
+      $('time').textContent = G.mode === 'all' ? `0/${deck.total}` : '60';
+      $('timefill').style.transform = 'scaleX(1)';
       // A one-bar count-in on the beat
       for (let i = 0; i < 4; i++) setTimeout(() => {
         if (!G || G.over || G.id !== id) return;
@@ -696,6 +763,7 @@
     const lineY = () => $('stage').clientHeight * 0.86;
     function spawn(now) {
       const q = G.next();
+      if (!q) { finish(); return; }
       const el = document.createElement('div');
       el.className = 'note';
       el.innerHTML = `<span class="note-label">${esc(q.label)}</span><span class="note-main ${q.cls}" lang="${q.lang}">${q.html}</span>${q.sub ? `<span class="note-sub">${esc(q.sub)}</span>` : ''}`;
@@ -706,9 +774,14 @@
     function loop(now) {
       if (!G || G.over) return;
       const el = now - G.start;
-      const left = Math.max(0, ROUND_MS - el);
-      $('timefill').style.transform = `scaleX(${left / ROUND_MS})`;
-      $('time').textContent = Math.ceil(left / 1000);
+      const left = G.mode === 'all' ? 1 : Math.max(0, ROUND_MS - el);
+      if (G.mode === 'all') {
+        $('timefill').style.transform = `scaleX(${1 - (G.deck.done - (G.note ? 1 : 0)) / G.deck.total})`;
+        $('time').textContent = `${G.deck.done}/${G.deck.total}`;
+      } else {
+        $('timefill').style.transform = `scaleX(${left / ROUND_MS})`;
+        $('time').textContent = Math.ceil(left / 1000);
+      }
       // Beat pulse: kick on every beat, hi-hat on the off-beat
       const b = Math.floor(el / G.beatMs);
       if (b !== G.beat) {
@@ -717,7 +790,7 @@
         if (!Music.playing()) { Audio.kick(); setTimeout(() => { if (G && !G.over) Audio.hat(); }, G.beatMs / 2); }
         const hl = $('hitline'); hl.classList.remove('pulse'); void hl.offsetWidth; hl.classList.add('pulse');
         // New cards spawn on a beat
-        if (!G.note && !G.lock) spawn(now);
+        if (!G.note && !G.lock) { spawn(now); if (G.over) return; }
       }
       if (G.note && !G.note.done) {
         const f = (now - G.note.born) / G.fallMs;
@@ -745,6 +818,9 @@
       const rightIdx = n.q.opts.indexOf(n.q.right);
       if (ok) {
         G.combo++; G.maxCombo = Math.max(G.maxCombo, G.combo);
+        // Score: the grade, times a combo bonus of +10% per 10 in a row (up to x2)
+        G.score += Math.round({ PERFECT: 1000, GREAT: 700, GOOD: 400 }[grade] * (1 + Math.min(Math.floor(G.combo / 10), 10) * 0.1));
+        renderScore();
         Audio.hit(G.combo);
         n.el.classList.add('hit');
         lanes[lane].classList.add('right');
@@ -756,6 +832,7 @@
       } else {
         if (G.combo >= 5) shatter(G.combo);
         G.combo = 0;
+        G.deck.requeue(n.q.idx);
         Audio.scratch();
         n.el.classList.add('missed');
         if (lane !== null) lanes[lane].classList.add('wrong');
@@ -780,6 +857,7 @@
       $('game').classList.toggle('fever', lvl >= 1);
       $('game').classList.toggle('fever2', lvl >= 2);
     }
+    function renderScore() { $('score').textContent = G.score.toLocaleString(); }
     function renderCombo() {
       const el = $('combo');
       el.innerHTML = G.combo >= 2 ? `<b>${G.combo}</b><small>${esc(T.combo)}</small>` : '';
@@ -827,7 +905,8 @@
       if (acc >= 60) return 'B';
       return 'F';
     }
-    function finish() {
+    function finish(stopped) {
+      if (!G || G.over) return;
       G.over = true;
       cancelAnimationFrame(G.raf);
       $('game').hidden = true;
@@ -835,11 +914,18 @@
       const acc = G.total ? Math.round(G.points / G.total) : 0;
       const fc = G.total > 0 && G.counts.MISS === 0;
       const rank = rankOf(acc, fc);
+      // Records count finished runs only (an all-cards run stopped early doesn't)
+      const counted = !stopped && G.total > 0;
+      const prev = getBest(G.t, G.diff, G.mode);
+      const isNew = counted && saveBest(G.t, G.diff, G.mode, { score: G.score, rank, acc, combo: G.maxCombo, fc });
       $('result').hidden = false;
       $('result').innerHTML = `<div class="result-card">
         <span class="result-track">${esc(G.c.name)} · ${esc(pick(G.t.name))} · <span class="dtag ${G.diff}">${G.diff}</span> ${G.bpm} BPM</span>
         <div class="rank ${rank}" aria-label="Rank ${rank}">${rank}</div>
-        ${fc ? '<span class="fc">FULL COMBO!</span>' : ''}
+        <div class="result-score">${G.score.toLocaleString()}</div>
+        ${fc && counted ? '<span class="fc">FULL COMBO!</span>' : ''}
+        ${isNew ? '<span class="newrec">NEW RECORD!</span>' : prev ? `<p class="result-note">BEST ${prev.score.toLocaleString()} · ${prev.rank}</p>` : ''}
+        ${stopped ? `<p class="result-note">${esc(T.stoppedAt(G.deck.done, G.deck.total))}</p>` : ''}
         <div class="stats">
           <div class="stat"><b>${G.maxCombo}</b><span>${esc(T.maxCombo)}</span></div>
           <div class="stat"><b>${acc}%</b><span>${esc(T.accuracy)}</span></div>
@@ -870,7 +956,12 @@
       if (tr && suppressClick) return;
       if (tr) { const i = Number(tr.dataset.track); if (i === view.track) start(); else moveTrack(i - view.track); return; }
       if (e.target.closest('#play') || e.target.closest('#again')) { start(); return; }
-      if (e.target.closest('#back') || e.target.closest('#quit')) { toLobby(); return; }
+      // Quitting an all-cards run shows how far it got; a 60-second round just goes back
+      if (e.target.closest('#quit')) { if (G && !G.over && G.mode === 'all' && G.start) finish(true); else toLobby(); return; }
+      if (e.target.closest('#back')) { toLobby(); return; }
+      if (e.target.closest('#paused')) { resume(); return; }
+      const md = e.target.closest('[data-mode]');
+      if (md && ['time', 'all'].includes(md.dataset.mode)) { if (md.dataset.mode !== prefs.mode) { prefs.mode = md.dataset.mode; store.set(PREFS_KEY, prefs); Audio.tick(true); renderLobby(); } return; }
       if (e.target.closest('#up')) { moveTrack(-1); return; }
       if (e.target.closest('#down')) { moveTrack(1); return; }
     });
@@ -884,6 +975,7 @@
     document.addEventListener('keydown', e => {
       if (e.altKey || e.ctrlKey || e.metaKey || (e.target.closest && e.target.closest('select'))) return;
       const k = e.key.toLowerCase();
+      if (G && G.pausedAt) { e.preventDefault(); resume(); return; }
       if (!$('game').hidden && G && G.note && !G.note.done && k in KEYS) {
         e.preventDefault();
         const b = document.querySelector(`[data-lane="${KEYS[k]}"]`);
@@ -954,9 +1046,32 @@
     });
     window.addEventListener('hashchange', () => { applyHash(); if (!$('lobby').hidden) renderLobby(); });
     // Leaving the tab pauses nothing; it simply ends the round so no stale timers run
+    // Leaving the tab pauses the round; a tap continues it on the next beat
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) { if (G && !G.over && G.start) finish(); Music.stop(); }
+      if (!document.hidden) return;
+      Music.stop();
+      if (G && !G.over && G.start && !G.pausedAt) {
+        G.pausedAt = performance.now();
+        cancelAnimationFrame(G.raf);
+        $('paused').textContent = T.paused;
+        $('paused').hidden = false;
+      }
     });
+    function resume() {
+      if (!G || G.over || !G.pausedAt) return;
+      Audio.init();
+      const gap = performance.now() - G.pausedAt;
+      G.start += gap;
+      if (G.note) G.note.born += gap;
+      G.pausedAt = null;
+      $('paused').hidden = true;
+      if (prefs.music && Audio.ctx) {
+        const el = performance.now() - G.start;
+        Music.start(G.bpm, 'game', Audio.ctx.currentTime + (G.beatMs - (el % G.beatMs)) / 1000);
+        Music.fever = G.fever;
+      }
+      G.raf = requestAnimationFrame(loop);
+    }
 
     applyHash();
     renderChrome();

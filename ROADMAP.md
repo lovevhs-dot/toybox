@@ -102,9 +102,15 @@ Music: a synthesized Am-F-C-G loop at the shown BPM, soft in the lobby and a ful
 line over a few beats (6 for characters, 8 for words, 14 for sentences); 4 lanes answer it (keys 1-4
 or D F J K). Faster right answers score PERFECT / GREAT / GOOD; a wrong answer or a card reaching the
 line is MISS and shows the right lane. Web Audio only (kick and hi-hat on the beat, a hit that climbs
-C4-D4-E4… with the combo, a scratch on a miss). Combo 10 and 20 start Fever. Result after 60 s:
+C4-D4-E4… with the combo, a scratch on a miss). Combo 10 and 20 start Fever. Result:
 SSS (full combo and 95%+), S 90%+, A 80%+, B 60%+, F; max combo, accuracy, FULL COMBO.
-- Nothing about play is saved (only the sound and calm-mode choices). Study apps keep their progress.
+- Modes: 60 seconds, or all cards (every card once to the end; progress n/N; quitting shows the result
+  so far). Cards come from a shuffled deck: no repeats until it runs out (60 s reshuffles), and a missed
+  card comes back once, 3-6 cards later (retrieval practice).
+- Score: PERFECT 1000, GREAT 700, GOOD 400, times +10% per 10 combo (up to x2).
+- Best records per track, difficulty and mode in `arcade-best-v1` (score, best rank, accuracy, max
+  combo, full combo, ISO date); only finished runs count. They travel in the home page backup code
+  (an extra `arcade-best-v1` entry; restoring keeps the better of each). Leaving the tab pauses a round.
 - Calm mode (on by default with prefers-reduced-motion) turns off glow pulses, shaking and sparks.
 - Wrong options never include another answer that is also right (sentences sharing a frame, words
   sharing a meaning). Chengyu show only the explanation, as in the study app.

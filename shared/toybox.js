@@ -25,11 +25,12 @@
       confirmRestore: 'Restore the progress in this link? It is added to what is already here.',
       share: 'Share',
       restoredList: list => `Restored: ${list}`,
+      arcadeRecords: n => `Arcade records ${n}`,
       emptyCode: 'This code has no saved progress in it. Make a new code on the device where you practiced.',
       nothingHere: 'No progress is saved in this browser yet.',
       continue: 'Continue',
       arcade: 'Arcade',
-      arcadeSub: '60-second rounds for every language. Nothing is saved, so just play.',
+      arcadeSub: '60-second rounds or every card, in every language, with your best records.',
       arcadeCourse: 'Play in the arcade',
       start: 'Start',
       allSteps: 'All steps',
@@ -60,11 +61,12 @@
       confirmRestore: 'Restaurer la progression de ce lien ? Elle s\'ajoute à celle déjà présente.',
       share: 'Partager',
       restoredList: list => `Restauré : ${list}`,
+      arcadeRecords: n => `Records d'arcade ${n}`,
       emptyCode: 'Ce code ne contient aucune progression. Créez un nouveau code sur l\'appareil où vous avez pratiqué.',
       nothingHere: 'Aucune progression n\'est encore enregistrée dans ce navigateur.',
       continue: 'Continuer',
       arcade: 'Arcade',
-      arcadeSub: 'Des manches de 60 secondes dans chaque langue. Rien n\'est enregistré : il suffit de jouer.',
+      arcadeSub: 'Des manches de 60 secondes ou toutes les cartes, dans chaque langue, avec vos records.',
       arcadeCourse: 'Jouer dans l\'arcade',
       start: 'Commencer',
       allSteps: 'Toutes les étapes',
@@ -95,11 +97,12 @@
       confirmRestore: '要恢复这个链接里的进度吗？会与这里已有的进度合并。',
       share: '分享',
       restoredList: list => `已恢复：${list}`,
+      arcadeRecords: n => `街机记录 ${n}`,
       emptyCode: '这个代码里没有进度。请在练习过的设备上重新生成。',
       nothingHere: '这个浏览器里还没有保存进度。',
       continue: '继续',
       arcade: '街机',
-      arcadeSub: '每种语言都有 60 秒一局的挑战，不保存任何记录，尽管玩。',
+      arcadeSub: '每种语言都能玩 60 秒一局或全部卡片，还有最高记录。',
       arcadeCourse: '去街机玩',
       start: '开始',
       allSteps: '全部阶段',
@@ -130,11 +133,12 @@
       confirmRestore: 'このリンクの進み具合を復元しますか？今ある進み具合に追加されます。',
       share: '共有',
       restoredList: list => `復元しました：${list}`,
+      arcadeRecords: n => `アーケード記録 ${n}`,
       emptyCode: 'このコードには進み具合が入っていません。練習した端末で新しくコードを作ってください。',
       nothingHere: 'このブラウザにはまだ進み具合が保存されていません。',
       continue: '続ける',
       arcade: 'アーケード',
-      arcadeSub: 'どの言語も1ラウンド60秒。記録は残らないので、気軽にどうぞ。',
+      arcadeSub: 'どの言語も60秒ラウンドか全カードで。ベスト記録も残ります。',
       arcadeCourse: 'アーケードで遊ぶ',
       start: '始める',
       allSteps: 'すべてのステップ',
@@ -165,11 +169,12 @@
       confirmRestore: '이 링크의 진행 기록을 복원할까요? 지금 있는 기록에 더해져요.',
       share: '공유',
       restoredList: list => `복원했어요: ${list}`,
+      arcadeRecords: n => `아케이드 기록 ${n}`,
       emptyCode: '이 코드에는 진행 기록이 없어요. 연습했던 기기에서 코드를 새로 만들어 주세요.',
       nothingHere: '이 브라우저에는 아직 저장된 진행 기록이 없어요.',
       continue: '이어서 하기',
       arcade: '아케이드',
-      arcadeSub: '모든 언어를 60초 한 판으로. 아무것도 저장되지 않으니 마음껏 즐기세요.',
+      arcadeSub: '모든 언어를 60초 한 판, 또는 전부 풀기로. 최고 기록도 남아요.',
       arcadeCourse: '아케이드에서 플레이',
       start: '시작하기',
       allSteps: '전체 단계',
@@ -548,6 +553,7 @@
     return new Uint8Array(out);
   }
 
+  const ARCADE_BEST = 'arcade-best-v1';
   function savedData() {
     const data = {};
     appKeys().forEach(k => {
@@ -556,6 +562,11 @@
         if (v && Array.isArray(v.mastered) && v.mastered.length) data[k] = { mastered: v.mastered };
       } catch (e) {}
     });
+    // Arcade best records travel in the same code (older versions ignore the extra entry)
+    try {
+      const best = JSON.parse(localStorage.getItem(ARCADE_BEST));
+      if (best && typeof best === 'object' && Object.keys(best).length) data[ARCADE_BEST] = best;
+    } catch (e) {}
     return Object.keys(data).length ? data : null;
   }
 
@@ -590,6 +601,26 @@
     const { data, error } = readCode(code);
     if (error) return { error };
     const found = [];
+    let arcade = 0;
+    // Arcade records: keep the better of each (higher score, best rank, longest combo)
+    if (data[ARCADE_BEST] && typeof data[ARCADE_BEST] === 'object') {
+      try {
+        const RANKS = ['F', 'B', 'A', 'S', 'SSS'];
+        const local = JSON.parse(localStorage.getItem(ARCADE_BEST)) || {};
+        Object.entries(data[ARCADE_BEST]).forEach(([k, r]) => {
+          if (!r || typeof r.score !== 'number') return;
+          arcade++;
+          const o = local[k];
+          local[k] = !o ? r : {
+            score: Math.max(o.score, r.score),
+            rank: RANKS.indexOf(r.rank) > RANKS.indexOf(o.rank) ? r.rank : o.rank,
+            acc: Math.max(o.acc || 0, r.acc || 0), combo: Math.max(o.combo || 0, r.combo || 0),
+            fc: !!(o.fc || r.fc), date: r.score > o.score ? r.date : o.date
+          };
+        });
+        localStorage.setItem(ARCADE_BEST, JSON.stringify(local));
+      } catch (e) {}
+    }
     allUnits().forEach(step => {
       const k = step.storageKey;
       const incoming = data[k];
@@ -604,12 +635,14 @@
         localStorage.setItem(k, JSON.stringify({ ...local, mastered }));
       } catch (e) {}
     });
-    return { found };
+    return { found, arcade };
   }
 
-  function restoredMessage(found) {
+  function restoredMessage(found, arcade) {
     const T = TEXT[lang];
-    return T.restoredList(found.map(([step, n]) => `${unitName(step)} ${n}`).join(' · '));
+    const parts = found.map(([step, n]) => `${unitName(step)} ${n}`);
+    if (arcade) parts.push(T.arcadeRecords(arcade));
+    return T.restoredList(parts.join(' · '));
   }
 
   // Opening a backup link restores it after asking once
@@ -618,8 +651,8 @@
     const link = location.hash;
     history.replaceState(null, '', location.pathname + location.search);
     if (!window.confirm(TEXT[lang].confirmRestore)) return;
-    const { found, error } = restoreCode(link);
-    backupMessage = error ? `${TEXT[lang].invalid} (${error})` : found.length ? restoredMessage(found) : TEXT[lang].emptyCode;
+    const { found, arcade, error } = restoreCode(link);
+    backupMessage = error ? `${TEXT[lang].invalid} (${error})` : found.length || arcade ? restoredMessage(found, arcade) : TEXT[lang].emptyCode;
     backupOpen = true;
   }
 
@@ -949,10 +982,10 @@
     });
 
     app.querySelector('[data-act="apply"]').addEventListener('click', () => {
-      const { found, error } = restoreCode(box.value);
+      const { found, arcade, error } = restoreCode(box.value);
       if (error) return say(`${T.invalid} (${error})`, true);
-      if (!found.length) return say(T.emptyCode, true);
-      backupMessage = restoredMessage(found);
+      if (!found.length && !arcade) return say(T.emptyCode, true);
+      backupMessage = restoredMessage(found, arcade);
       render();
     });
   }
