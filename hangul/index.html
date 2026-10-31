@@ -1247,7 +1247,7 @@
 
   <div class="sheet-backdrop" id="backdrop"></div>
 
-  <script src="i18n.js?v=2026-10-31.1"></script>
+  <script src="i18n.js?v=2026-10-31.2"></script>
   <script>
     // All 40 letters (basic and compound vowels, basic and double consonants)
     // plus starter syllables (consonant + ㅏ).
@@ -1397,12 +1397,12 @@
 
     function detectLang() {
       try {
-        const stored = localStorage.getItem(LANG_KEY);
+        const stored = (localStorage.getItem(LANG_KEY) || '').replace(/^zh-Hant$/, 'zh-Hant-HK');
         if (stored && I18N.ui[stored]) return stored;
       } catch (e) {}
       for (const l of navigator.languages || [navigator.language || 'en']) {
         const x = l.toLowerCase();
-        const id = x.startsWith('zh') ? (/hant|tw|hk|mo/.test(x) ? 'zh-Hant' : 'zh-Hans') : x.split('-')[0];
+        const id = x.startsWith('zh') ? (/hant|tw|hk|mo/.test(x) ? 'zh-Hant-HK' : 'zh-Hans') : x.split('-')[0];
         if (I18N.ui[id]) return id;
       }
       return 'en';

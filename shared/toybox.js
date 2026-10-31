@@ -6,7 +6,7 @@
     { id: 'en', name: 'English' },
     { id: 'fr', name: 'Français' },
     { id: 'zh-Hans', name: '中文（简体）' },
-    { id: 'zh-Hant', name: '中文（繁體）' },
+    { id: 'zh-Hant-HK', name: '中文（香港）' },
     { id: 'ja', name: '日本語' },
     { id: 'ko', name: '한국어' }
   ];
@@ -102,7 +102,7 @@
       invalid: '这个代码好像不对。',
       iosTip: '在 iPhone 上，请把 Toybox 添加到主屏幕。一周没打开的话，Safari 可能会清除进度。'
     },
-    'zh-Hant': {
+    'zh-Hant-HK': {
       tagline: '好玩又好用的小東西。',
       learn: '學語言',
       ready: (r, t) => `${t} 個階段中已開放 ${r} 個`,
@@ -116,7 +116,7 @@
       confirmRestore: '要還原這個連結裡的進度嗎？會與這裡已有的進度合併。',
       share: '分享',
       restoredList: list => `已還原：${list}`,
-      emptyCode: '這個代碼裡沒有進度。請在練習過的裝置上重新產生。',
+      emptyCode: '這個代碼裡沒有進度。請在練習過的裝置上重新建立。',
       nothingHere: '這個瀏覽器裡還沒有儲存進度。',
       continue: '繼續',
       start: '開始',
@@ -130,7 +130,7 @@
       copied: '已複製。請存放在安全的地方，例如備忘錄或傳給自己的訊息。',
       copyFailed: '請複製這段代碼並妥善保存：',
       invalid: '這個代碼好像不對。',
-      iosTip: '在 iPhone 上，請把 Toybox 加入主畫面。一週沒打開的話，Safari 可能會清除進度。'
+      iosTip: '在 iPhone 上，請把 Toybox 加入主畫面。一星期沒有打開的話，Safari 可能會清除進度。'
     },
     ja: {
       tagline: '遊んだり使ったりできる小さなもの。',
@@ -201,33 +201,33 @@
       glyph: 'あ',
       glyphClass: 'glyph-ja',
       color: '#d9452b',
-      name: { en: 'Japanese', fr: 'Japonais', 'zh-Hans': '日语', 'zh-Hant': '日語', ja: '日本語', ko: '일본어' },
-      goal: { en: 'Step by step to JLPT N5', fr: 'Pas à pas jusqu\'au JLPT N5', 'zh-Hans': '一步步达到 JLPT N5', 'zh-Hant': '一步步達到 JLPT N5', ja: 'JLPT N5 まで一歩ずつ', ko: 'JLPT N5까지 한 단계씩' },
+      name: { en: 'Japanese', fr: 'Japonais', 'zh-Hans': '日语', 'zh-Hant-HK': '日語', ja: '日本語', ko: '일본어' },
+      goal: { en: 'Step by step to JLPT N5', fr: 'Pas à pas jusqu\'au JLPT N5', 'zh-Hans': '一步步达到 JLPT N5', 'zh-Hant-HK': '一步步達到 JLPT N5', ja: 'JLPT N5 まで一歩ずつ', ko: 'JLPT N5까지 한 단계씩' },
       steps: [
         {
           id: 'hiragana', href: 'hiragana/', storageKey: 'hiragana-studio-v1', total: 55,
-          name: { en: 'Hiragana', fr: 'Hiragana', 'zh-Hans': '平假名', 'zh-Hant': '平假名', ja: 'ひらがな', ko: '히라가나' },
-          desc: { en: 'The basic Japanese script', fr: 'L\'écriture japonaise de base', 'zh-Hans': '日语的基本文字', 'zh-Hant': '日語的基本文字', ja: '日本語の基本の文字', ko: '일본어의 기본 문자' }
+          name: { en: 'Hiragana', fr: 'Hiragana', 'zh-Hans': '平假名', 'zh-Hant-HK': '平假名', ja: 'ひらがな', ko: '히라가나' },
+          desc: { en: 'The basic Japanese script', fr: 'L\'écriture japonaise de base', 'zh-Hans': '日语的基本文字', 'zh-Hant-HK': '日語的基本文字', ja: '日本語の基本の文字', ko: '일본어의 기본 문자' }
         },
         {
           id: 'katakana',
-          name: { en: 'Katakana', fr: 'Katakana', 'zh-Hans': '片假名', 'zh-Hant': '片假名', ja: 'カタカナ', ko: '가타카나' },
-          desc: { en: 'The script for foreign words', fr: 'L\'écriture des mots étrangers', 'zh-Hans': '用于外来词的文字', 'zh-Hant': '用於外來詞的文字', ja: '外来語に使う文字', ko: '외래어에 쓰는 문자' }
+          name: { en: 'Katakana', fr: 'Katakana', 'zh-Hans': '片假名', 'zh-Hant-HK': '片假名', ja: 'カタカナ', ko: '가타카나' },
+          desc: { en: 'The script for foreign words', fr: 'L\'écriture des mots étrangers', 'zh-Hans': '用于外来词的文字', 'zh-Hant-HK': '用於外來詞的文字', ja: '外来語に使う文字', ko: '외래어에 쓰는 문자' }
         },
         {
           id: 'n5-words',
-          name: { en: 'N5 words', fr: 'Vocabulaire N5', 'zh-Hans': 'N5 词汇', 'zh-Hant': 'N5 詞彙', ja: 'N5 単語', ko: 'N5 단어' },
-          desc: { en: 'About 800 everyday words', fr: 'Environ 800 mots courants', 'zh-Hans': '约 800 个常用词', 'zh-Hant': '約 800 個常用詞', ja: 'よく使う約800語', ko: '자주 쓰는 단어 약 800개' }
+          name: { en: 'N5 words', fr: 'Vocabulaire N5', 'zh-Hans': 'N5 词汇', 'zh-Hant-HK': 'N5 詞彙', ja: 'N5 単語', ko: 'N5 단어' },
+          desc: { en: 'About 800 everyday words', fr: 'Environ 800 mots courants', 'zh-Hans': '约 800 个常用词', 'zh-Hant-HK': '約 800 個常用詞', ja: 'よく使う約800語', ko: '자주 쓰는 단어 약 800개' }
         },
         {
           id: 'n5-kanji',
-          name: { en: 'N5 kanji', fr: 'Kanji N5', 'zh-Hans': 'N5 汉字', 'zh-Hant': 'N5 漢字', ja: 'N5 漢字', ko: 'N5 한자' },
-          desc: { en: 'About 100 basic kanji', fr: 'Environ 100 kanji de base', 'zh-Hans': '约 100 个基础汉字', 'zh-Hant': '約 100 個基礎漢字', ja: '基本の漢字 約100字', ko: '기초 한자 약 100자' }
+          name: { en: 'N5 kanji', fr: 'Kanji N5', 'zh-Hans': 'N5 汉字', 'zh-Hant-HK': 'N5 漢字', ja: 'N5 漢字', ko: 'N5 한자' },
+          desc: { en: 'About 100 basic kanji', fr: 'Environ 100 kanji de base', 'zh-Hans': '约 100 个基础汉字', 'zh-Hant-HK': '約 100 個基礎漢字', ja: '基本の漢字 約100字', ko: '기초 한자 약 100자' }
         },
         {
           id: 'n5-grammar',
-          name: { en: 'N5 grammar', fr: 'Grammaire N5', 'zh-Hans': 'N5 语法', 'zh-Hant': 'N5 語法', ja: 'N5 文法', ko: 'N5 문법' },
-          desc: { en: 'Basic sentence patterns', fr: 'Structures de phrase de base', 'zh-Hans': '基础句型', 'zh-Hant': '基礎句型', ja: '基本の文型', ko: '기본 문형' }
+          name: { en: 'N5 grammar', fr: 'Grammaire N5', 'zh-Hans': 'N5 语法', 'zh-Hant-HK': 'N5 語法', ja: 'N5 文法', ko: 'N5 문법' },
+          desc: { en: 'Basic sentence patterns', fr: 'Structures de phrase de base', 'zh-Hans': '基础句型', 'zh-Hant-HK': '基礎句型', ja: '基本の文型', ko: '기본 문형' }
         }
       ]
     },
@@ -236,48 +236,48 @@
       glyph: '中',
       glyphClass: 'glyph-zh',
       color: '#0f8b6c',
-      name: { en: 'Chinese', fr: 'Chinois', 'zh-Hans': '中文', 'zh-Hant': '中文', ja: '中国語', ko: '중국어' },
-      goal: { en: 'Step by step toward HSK 6', fr: 'Pas à pas vers le HSK 6', 'zh-Hans': '一步步迈向 HSK 6', 'zh-Hant': '一步步邁向 HSK 6', ja: 'HSK 6級まで一歩ずつ', ko: 'HSK 6급까지 한 단계씩' },
+      name: { en: 'Chinese', fr: 'Chinois', 'zh-Hans': '中文', 'zh-Hant-HK': '中文', ja: '中国語', ko: '중국어' },
+      goal: { en: 'Step by step toward HSK 6', fr: 'Pas à pas vers le HSK 6', 'zh-Hans': '一步步迈向 HSK 6', 'zh-Hant-HK': '一步步邁向 HSK 6', ja: 'HSK 6級まで一歩ずつ', ko: 'HSK 6급까지 한 단계씩' },
       steps: [
         {
           id: 'pinyin',
-          name: { en: 'Pinyin and tones', fr: 'Pinyin et tons', 'zh-Hans': '拼音和声调', 'zh-Hant': '拼音和聲調', ja: 'ピンインと声調', ko: '병음과 성조' },
-          desc: { en: 'Sounds and the four tones', fr: 'Les sons et les quatre tons', 'zh-Hans': '声母、韵母和四个声调', 'zh-Hant': '聲母、韻母和四個聲調', ja: '音と4つの声調', ko: '소리와 네 가지 성조' }
+          name: { en: 'Pinyin and tones', fr: 'Pinyin et tons', 'zh-Hans': '拼音和声调', 'zh-Hant-HK': '拼音和聲調', ja: 'ピンインと声調', ko: '병음과 성조' },
+          desc: { en: 'Sounds and the four tones', fr: 'Les sons et les quatre tons', 'zh-Hans': '声母、韵母和四个声调', 'zh-Hant-HK': '聲母、韻母和四個聲調', ja: '音と4つの声調', ko: '소리와 네 가지 성조' }
         },
         {
           id: 'zh-words-1',
-          name: { en: 'Words 1', fr: 'Mots 1', 'zh-Hans': '词语 1', 'zh-Hant': '詞語 1', ja: '単語 1', ko: '단어 1' },
-          desc: { en: 'Ordering food, asking how people are', fr: 'Commander, prendre des nouvelles', 'zh-Hans': '点餐、问候', 'zh-Hant': '點餐、問候', ja: '注文、あいさつ', ko: '주문, 안부' }
+          name: { en: 'Words 1', fr: 'Mots 1', 'zh-Hans': '词语 1', 'zh-Hant-HK': '詞語 1', ja: '単語 1', ko: '단어 1' },
+          desc: { en: 'Ordering food, asking how people are', fr: 'Commander, prendre des nouvelles', 'zh-Hans': '点餐、问候', 'zh-Hant-HK': '點餐、問候', ja: '注文、あいさつ', ko: '주문, 안부' }
         },
         {
           id: 'zh-words-2',
-          name: { en: 'Words 2', fr: 'Mots 2', 'zh-Hans': '词语 2', 'zh-Hant': '詞語 2', ja: '単語 2', ko: '단어 2' },
-          desc: { en: 'Hobbies and travel', fr: 'Loisirs et voyages', 'zh-Hans': '爱好、旅行', 'zh-Hant': '愛好、旅行', ja: '趣味、旅行', ko: '취미, 여행' }
+          name: { en: 'Words 2', fr: 'Mots 2', 'zh-Hans': '词语 2', 'zh-Hant-HK': '詞語 2', ja: '単語 2', ko: '단어 2' },
+          desc: { en: 'Hobbies and travel', fr: 'Loisirs et voyages', 'zh-Hans': '爱好、旅行', 'zh-Hant-HK': '愛好、旅行', ja: '趣味、旅行', ko: '취미, 여행' }
         },
         {
           id: 'zh-words-3',
-          name: { en: 'Words 3', fr: 'Mots 3', 'zh-Hans': '词语 3', 'zh-Hant': '詞語 3', ja: '単語 3', ko: '단어 3' },
-          desc: { en: 'Weekends and health', fr: 'Week-end et santé', 'zh-Hans': '周末、看病', 'zh-Hant': '週末、看病', ja: '週末、病院', ko: '주말, 병원' }
+          name: { en: 'Words 3', fr: 'Mots 3', 'zh-Hans': '词语 3', 'zh-Hant-HK': '詞語 3', ja: '単語 3', ko: '단어 3' },
+          desc: { en: 'Weekends and health', fr: 'Week-end et santé', 'zh-Hans': '周末、看病', 'zh-Hant-HK': '週末、看病', ja: '週末、病院', ko: '주말, 병원' }
         },
         {
           id: 'zh-words-4',
-          name: { en: 'Words 4', fr: 'Mots 4', 'zh-Hans': '词语 4', 'zh-Hant': '詞語 4', ja: '単語 4', ko: '단어 4' },
-          desc: { en: 'Plans, calls and weather', fr: 'Rendez-vous, appels et météo', 'zh-Hans': '约会、打电话、天气', 'zh-Hant': '約會、打電話、天氣', ja: '約束、電話、天気', ko: '약속, 전화, 날씨' }
+          name: { en: 'Words 4', fr: 'Mots 4', 'zh-Hans': '词语 4', 'zh-Hant-HK': '詞語 4', ja: '単語 4', ko: '단어 4' },
+          desc: { en: 'Plans, calls and weather', fr: 'Rendez-vous, appels et météo', 'zh-Hans': '约会、打电话、天气', 'zh-Hant-HK': '約會、打電話、天氣', ja: '約束、電話、天気', ko: '약속, 전화, 날씨' }
         },
         {
           id: 'zh-sentences-1',
-          name: { en: 'Sentences 1', fr: 'Phrases 1', 'zh-Hans': '句子 1', 'zh-Hant': '句子 1', ja: '文 1', ko: '문장 1' },
-          desc: { en: 'Key patterns: 还是, 想, 得, 会, 过', fr: 'Structures clés : 还是, 想, 得, 会, 过', 'zh-Hans': '重点句型：还是、想、得、会、过', 'zh-Hant': '重點句型：還是、想、得、會、過', ja: '基本文型：还是・想・得・会・过', ko: '핵심 문형: 还是, 想, 得, 会, 过' }
+          name: { en: 'Sentences 1', fr: 'Phrases 1', 'zh-Hans': '句子 1', 'zh-Hant-HK': '句子 1', ja: '文 1', ko: '문장 1' },
+          desc: { en: 'Key patterns: 还是, 想, 得, 会, 过', fr: 'Structures clés : 还是, 想, 得, 会, 过', 'zh-Hans': '重点句型：还是、想、得、会、过', 'zh-Hant-HK': '重點句型：還是、想、得、會、過', ja: '基本文型：还是・想・得・会・过', ko: '핵심 문형: 还是, 想, 得, 会, 过' }
         },
         {
           id: 'zh-sentences-2',
-          name: { en: 'Sentences 2', fr: 'Phrases 2', 'zh-Hans': '句子 2', 'zh-Hant': '句子 2', ja: '文 2', ko: '문장 2' },
-          desc: { en: 'Key patterns: 了, 有点儿, 正在, 比', fr: 'Structures clés : 了, 有点儿, 正在, 比', 'zh-Hans': '重点句型：了、有点儿、正在、比', 'zh-Hant': '重點句型：了、有點兒、正在、比', ja: '基本文型：了・有点儿・正在・比', ko: '핵심 문형: 了, 有点儿, 正在, 比' }
+          name: { en: 'Sentences 2', fr: 'Phrases 2', 'zh-Hans': '句子 2', 'zh-Hant-HK': '句子 2', ja: '文 2', ko: '문장 2' },
+          desc: { en: 'Key patterns: 了, 有点儿, 正在, 比', fr: 'Structures clés : 了, 有点儿, 正在, 比', 'zh-Hans': '重点句型：了、有点儿、正在、比', 'zh-Hant-HK': '重點句型：了、有點兒、正在、比', ja: '基本文型：了・有点儿・正在・比', ko: '핵심 문형: 了, 有点儿, 正在, 比' }
         },
         {
           id: 'hsk-3-6',
-          name: { en: 'HSK 3–6', fr: 'HSK 3–6', 'zh-Hans': 'HSK 3–6', 'zh-Hant': 'HSK 3–6', ja: 'HSK 3–6', ko: 'HSK 3–6' },
-          desc: { en: 'Thousands more words, level by level', fr: 'Des milliers de mots, niveau par niveau', 'zh-Hans': '按级别学习数千个词', 'zh-Hant': '按級別學習數千個詞', ja: 'レベル別に数千語', ko: '급수별로 수천 단어' }
+          name: { en: 'HSK 3–6', fr: 'HSK 3–6', 'zh-Hans': 'HSK 3–6', 'zh-Hant-HK': 'HSK 3–6', ja: 'HSK 3–6', ko: 'HSK 3–6' },
+          desc: { en: 'Thousands more words, level by level', fr: 'Des milliers de mots, niveau par niveau', 'zh-Hans': '按级别学习数千个词', 'zh-Hant-HK': '按級別學習數千個詞', ja: 'レベル別に数千語', ko: '급수별로 수천 단어' }
         }
       ]
     },
@@ -286,28 +286,28 @@
       glyph: '한',
       glyphClass: 'glyph-ko',
       color: '#2f5bd3',
-      name: { en: 'Korean', fr: 'Coréen', 'zh-Hans': '韩语', 'zh-Hant': '韓語', ja: '韓国語', ko: '한국어' },
-      goal: { en: 'Step by step to TOPIK I level 1', fr: 'Pas à pas jusqu\'au TOPIK I niveau 1', 'zh-Hans': '一步步达到 TOPIK I 一级', 'zh-Hant': '一步步達到 TOPIK I 一級', ja: 'TOPIK I 1級まで一歩ずつ', ko: 'TOPIK I 1급까지 한 단계씩' },
+      name: { en: 'Korean', fr: 'Coréen', 'zh-Hans': '韩语', 'zh-Hant-HK': '韓語', ja: '韓国語', ko: '한국어' },
+      goal: { en: 'Step by step to TOPIK I level 1', fr: 'Pas à pas jusqu\'au TOPIK I niveau 1', 'zh-Hans': '一步步达到 TOPIK I 一级', 'zh-Hant-HK': '一步步達到 TOPIK I 一級', ja: 'TOPIK I 1級まで一歩ずつ', ko: 'TOPIK I 1급까지 한 단계씩' },
       steps: [
         {
           id: 'hangul', href: 'hangul/', storageKey: 'hangul-studio-v1', total: 54,
-          name: { en: 'Hangul', fr: 'Hangul', 'zh-Hans': '韩文字母', 'zh-Hant': '韓文字母', ja: 'ハングル', ko: '한글' },
-          desc: { en: 'All 40 letters and first syllables', fr: 'Les 40 lettres et les premières syllabes', 'zh-Hans': '全部 40 个字母和基础音节', 'zh-Hant': '全部 40 個字母和基礎音節', ja: '全40文字と基本の音節', ko: '자모 40개와 기본 음절' }
+          name: { en: 'Hangul', fr: 'Hangul', 'zh-Hans': '韩文字母', 'zh-Hant-HK': '韓文字母', ja: 'ハングル', ko: '한글' },
+          desc: { en: 'All 40 letters and first syllables', fr: 'Les 40 lettres et les premières syllabes', 'zh-Hans': '全部 40 个字母和基础音节', 'zh-Hant-HK': '全部 40 個字母和基礎音節', ja: '全40文字と基本の音節', ko: '자모 40개와 기본 음절' }
         },
         {
           id: 'batchim',
-          name: { en: 'Batchim', fr: 'Batchim', 'zh-Hans': '收音', 'zh-Hant': '收音', ja: 'パッチム', ko: '받침' },
-          desc: { en: 'Consonants at the end of a syllable', fr: 'Les consonnes en fin de syllabe', 'zh-Hans': '音节末尾的辅音', 'zh-Hant': '音節末尾的輔音', ja: '音節の終わりの子音', ko: '음절의 끝소리' }
+          name: { en: 'Batchim', fr: 'Batchim', 'zh-Hans': '收音', 'zh-Hant-HK': '收音', ja: 'パッチム', ko: '받침' },
+          desc: { en: 'Consonants at the end of a syllable', fr: 'Les consonnes en fin de syllabe', 'zh-Hans': '音节末尾的辅音', 'zh-Hant-HK': '音節末尾的輔音', ja: '音節の終わりの子音', ko: '음절의 끝소리' }
         },
         {
           id: 'topik1-words',
-          name: { en: 'TOPIK I words', fr: 'Vocabulaire TOPIK I', 'zh-Hans': 'TOPIK I 词汇', 'zh-Hant': 'TOPIK I 詞彙', ja: 'TOPIK I 単語', ko: 'TOPIK I 단어' },
-          desc: { en: 'About 800 everyday words', fr: 'Environ 800 mots courants', 'zh-Hans': '约 800 个常用词', 'zh-Hant': '約 800 個常用詞', ja: 'よく使う約800語', ko: '자주 쓰는 단어 약 800개' }
+          name: { en: 'TOPIK I words', fr: 'Vocabulaire TOPIK I', 'zh-Hans': 'TOPIK I 词汇', 'zh-Hant-HK': 'TOPIK I 詞彙', ja: 'TOPIK I 単語', ko: 'TOPIK I 단어' },
+          desc: { en: 'About 800 everyday words', fr: 'Environ 800 mots courants', 'zh-Hans': '约 800 个常用词', 'zh-Hant-HK': '約 800 個常用詞', ja: 'よく使う約800語', ko: '자주 쓰는 단어 약 800개' }
         },
         {
           id: 'ko-grammar',
-          name: { en: 'Basic grammar', fr: 'Grammaire de base', 'zh-Hans': '基础语法', 'zh-Hant': '基礎語法', ja: '基本文法', ko: '기초 문법' },
-          desc: { en: 'Particles and sentence endings', fr: 'Particules et terminaisons', 'zh-Hans': '助词和词尾', 'zh-Hant': '助詞和詞尾', ja: '助詞と語尾', ko: '조사와 어미' }
+          name: { en: 'Basic grammar', fr: 'Grammaire de base', 'zh-Hans': '基础语法', 'zh-Hant-HK': '基礎語法', ja: '基本文法', ko: '기초 문법' },
+          desc: { en: 'Particles and sentence endings', fr: 'Particules et terminaisons', 'zh-Hans': '助词和词尾', 'zh-Hant-HK': '助詞和詞尾', ja: '助詞と語尾', ko: '조사와 어미' }
         }
       ]
     }
@@ -329,12 +329,12 @@
 
   function detectLang() {
     try {
-      const stored = localStorage.getItem(LANG_KEY);
+      const stored = (localStorage.getItem(LANG_KEY) || '').replace(/^zh-Hant$/, 'zh-Hant-HK');
       if (stored && TEXT[stored]) return stored;
     } catch (e) {}
     for (const l of navigator.languages || [navigator.language || 'en']) {
       const x = l.toLowerCase();
-      const id = x.startsWith('zh') ? (/hant|tw|hk|mo/.test(x) ? 'zh-Hant' : 'zh-Hans') : x.split('-')[0];
+      const id = x.startsWith('zh') ? (/hant|tw|hk|mo/.test(x) ? 'zh-Hant-HK' : 'zh-Hans') : x.split('-')[0];
       if (TEXT[id]) return id;
     }
     return 'en';
