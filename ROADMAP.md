@@ -9,6 +9,7 @@ and what to build next, so any new session can continue without the earlier conv
 |---|---|---|
 | `/` | Home | Continue card, course cards, backup links |
 | `japanese/` | Course page | Step 1 Hiragana live, later steps "coming soon" |
+| `chinese/` | Course page | Pinyin and HSK 1-6 steps, all "coming soon"; word lists in `chinese/data/` |
 | `korean/` | Course page | Step 1 Hangul live, later steps "coming soon" |
 | `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/zh-Hant-HK/ko, readings in each UI language's own spelling (Cantonese for 中文（香港）) |
 | `hangul/` | Hangul Studio | 54 cards (40 jamo + 14 syllables), UI en/fr/zh-Hans/zh-Hant-HK/ja |
@@ -33,41 +34,44 @@ and what to build next, so any new session can continue without the earlier conv
   preinstalled) at mobile (390x844) and desktop widths, light and dark, and with Google Fonts blocked.
   Report anything not tested (e.g. real Safari) instead of claiming it works.
 
-## Next: Chinese course (`chinese/`)
+## Next: Chinese course (`chinese/`), following the HSK standard
 
+The course follows HSK, the international Chinese proficiency standard, using the 2025 syllabus
+for levels 1-6 (regular exams from December 2026). No textbook is followed.
 UI languages: English, Français, 日本語, 한국어 (no 中文, since the course teaches Chinese).
-Color and glyph: pick a new course color; glyph 中 with system Chinese fonts.
+Course color #0f8b6c, glyph 中 with system Chinese fonts. Speech uses `zh-CN`.
 
-Steps, each about 50 cards so it stays easy to finish:
+Course steps (already listed in `shared/toybox.js`, all "coming soon"):
 
-1. **Pinyin and tones** (`pinyin/`): 4 tones + neutral tone, 21 initials, the main finals.
-   Each card has an example syllable with a character for speech, e.g. mā 妈 / má 麻 / mǎ 马 / mà 骂.
+| Step | Content | Data |
+|---|---|---|
+| Pinyin and tones (`pinyin/`) | 4 tones + neutral tone, 21 initials, main finals, about 50 cards | written by hand |
+| HSK 1 (`hsk1`) | 294 words, 6 parts | `chinese/data/hsk1.tsv` |
+| HSK 2 (`hsk2`) | 197 words, 4 parts | `chinese/data/hsk2.tsv` |
+| HSK 3 (`hsk3`) | 487 words, 10 parts | `chinese/data/hsk3.tsv` |
+| HSK 4 (`hsk4`) | 972 words, 20 parts | `chinese/data/hsk4.tsv` |
+| HSK 5 (`hsk5`) | 1,547 words, 31 parts | `chinese/data/hsk5.tsv` |
+| HSK 6 (`hsk6`) | 1,684 words, 34 parts | `chinese/data/hsk6.tsv` |
+
+How to build it:
+
+1. **Pinyin app** first: example syllable plus character for speech (mā 妈 / má 麻 / mǎ 马 / mà 骂).
    Practice: hear a syllable and pick its tone; see pinyin and pick the sound.
-2. **Words 1-4** (`zh-words-1/` ... `zh-words-4/`): from `chinese/data/book2-words.tsv`
-   (196 words). Split by lessons 1-2 (54), 3-4 (45), 5-6 (48), 7-8 (49).
-   Practice: character to meaning, audio to character, look-alike characters.
-   The TSV has English only; add French, Japanese and Korean meanings together.
-3. **Sentences 1-2** (`zh-sentences-1/`, `zh-sentences-2/`): about 45 each, covering lessons 1-4
-   and 5-8. Write original sentences with the same words and grammar points below. Never copy
-   the textbook's sentences or translations into this public repo.
-   Practice: sentence to meaning, and fill in the key word (e.g. 你想吃包子___饺子？ → 还是).
+2. **One shared word app** (`chinese/words/`) instead of one folder per part: the URL picks the
+   level and part, e.g. `chinese/words/?hsk=1&part=2`. Parts are about 50 words in the TSV order
+   (most frequent first), so every part stays easy to finish. Each part saves its own progress
+   (`zh-hsk<N>-<part>-v1`).
+3. A level step opens a level page listing its parts with progress, like a course page. Add
+   `parts` support to steps in `shared/toybox.js` (progress = sum of the parts) and make backups
+   include every part key.
+4. **Meanings**: write short meanings in en, fr, ja and ko together for each part when it is built
+   (store them next to the list, e.g. `chinese/data/hsk1-meanings.tsv`). Do not copy dictionary
+   definitions (CC-CEDICT is CC BY-SA). Check words that list other readings.
+5. Practice per word: character to meaning, audio to character, meaning to character; look-alike
+   characters as distractors. Later, per level: a short grammar-pattern part with original
+   example sentences.
 
-Grammar points by lesson (for writing sentences):
-1 `A 还是 B` questions, `想` · 2 subject-predicate predicates (`他工作很忙`), `忙不忙` questions ·
-3 degree complement `得`, `会` · 4 experience `过`, verb reduplication (`看看`) ·
-5 completed `了`, serial verbs (`去郊区滑雪`), pivotal sentences (`请你去`) ·
-6 `有点儿` + adjective, change `了`, `能` · 7 progressive `正在……呢`, `给`, `得(děi)` ·
-8 comparison `比`, approximate `多`.
-
-## Later: HSK levels up to 6
-
-- Follow the HSK 3.0 word lists (2021 standard) level by level; they include the older HSK 2.0
-  words, so both exam versions are covered. Check current exam formats when starting.
-- Store each level as `chinese/data/hsk<N>.tsv` (hanzi, pinyin, English, French, Japanese, Korean).
-  Official lists are facts and fine to use; check the license of any third-party file before copying.
-- Split each level into apps of about 50 words, ordered by topic or frequency.
-- `shared/toybox.js` lists steps flat today. Before adding many HSK apps, add an optional
-  `section` field (e.g. "HSK 3") and group steps by section on the course page.
+Levels 7-9 (advanced band, about 5,600 more words) can follow the same way later.
 
 ## Resuming in a new session
 

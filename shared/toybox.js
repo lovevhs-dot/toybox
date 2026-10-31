@@ -245,39 +245,34 @@
           desc: { en: 'Sounds and the four tones', fr: 'Les sons et les quatre tons', 'zh-Hans': '声母、韵母和四个声调', 'zh-Hant-HK': '聲母、韻母和四個聲調', ja: '音と4つの声調', ko: '소리와 네 가지 성조' }
         },
         {
-          id: 'zh-words-1',
-          name: { en: 'Words 1', fr: 'Mots 1', 'zh-Hans': '词语 1', 'zh-Hant-HK': '詞語 1', ja: '単語 1', ko: '단어 1' },
-          desc: { en: 'Ordering food, asking how people are', fr: 'Commander, prendre des nouvelles', 'zh-Hans': '点餐、问候', 'zh-Hant-HK': '點餐、問候', ja: '注文、あいさつ', ko: '주문, 안부' }
+          id: 'hsk1',
+          name: { en: 'HSK 1', fr: 'HSK 1', 'zh-Hans': 'HSK 1', 'zh-Hant-HK': 'HSK 1', ja: 'HSK 1', ko: 'HSK 1' },
+          desc: { en: '300 first words', fr: '300 premiers mots', 'zh-Hans': '最初的 300 个词', 'zh-Hant-HK': '最初的 300 個詞語', ja: '最初の300語', ko: '첫 단어 300개' }
         },
         {
-          id: 'zh-words-2',
-          name: { en: 'Words 2', fr: 'Mots 2', 'zh-Hans': '词语 2', 'zh-Hant-HK': '詞語 2', ja: '単語 2', ko: '단어 2' },
-          desc: { en: 'Hobbies and travel', fr: 'Loisirs et voyages', 'zh-Hans': '爱好、旅行', 'zh-Hant-HK': '愛好、旅行', ja: '趣味、旅行', ko: '취미, 여행' }
+          id: 'hsk2',
+          name: { en: 'HSK 2', fr: 'HSK 2', 'zh-Hans': 'HSK 2', 'zh-Hant-HK': 'HSK 2', ja: 'HSK 2', ko: 'HSK 2' },
+          desc: { en: '+200 words · 500 in total', fr: '+200 mots · 500 au total', 'zh-Hans': '新增 200 词 · 累计 500', 'zh-Hant-HK': '新增 200 個詞語 · 累計 500', ja: '+200語 · 累計500語', ko: '단어 200개 추가 · 누적 500개' }
         },
         {
-          id: 'zh-words-3',
-          name: { en: 'Words 3', fr: 'Mots 3', 'zh-Hans': '词语 3', 'zh-Hant-HK': '詞語 3', ja: '単語 3', ko: '단어 3' },
-          desc: { en: 'Weekends and health', fr: 'Week-end et santé', 'zh-Hans': '周末、看病', 'zh-Hant-HK': '週末、看病', ja: '週末、病院', ko: '주말, 병원' }
+          id: 'hsk3',
+          name: { en: 'HSK 3', fr: 'HSK 3', 'zh-Hans': 'HSK 3', 'zh-Hant-HK': 'HSK 3', ja: 'HSK 3', ko: 'HSK 3' },
+          desc: { en: '+500 words · 1,000 in total', fr: '+500 mots · 1 000 au total', 'zh-Hans': '新增 500 词 · 累计 1,000', 'zh-Hant-HK': '新增 500 個詞語 · 累計 1,000', ja: '+500語 · 累計1,000語', ko: '단어 500개 추가 · 누적 1,000개' }
         },
         {
-          id: 'zh-words-4',
-          name: { en: 'Words 4', fr: 'Mots 4', 'zh-Hans': '词语 4', 'zh-Hant-HK': '詞語 4', ja: '単語 4', ko: '단어 4' },
-          desc: { en: 'Plans, calls and weather', fr: 'Rendez-vous, appels et météo', 'zh-Hans': '约会、打电话、天气', 'zh-Hant-HK': '約會、打電話、天氣', ja: '約束、電話、天気', ko: '약속, 전화, 날씨' }
+          id: 'hsk4',
+          name: { en: 'HSK 4', fr: 'HSK 4', 'zh-Hans': 'HSK 4', 'zh-Hant-HK': 'HSK 4', ja: 'HSK 4', ko: 'HSK 4' },
+          desc: { en: '+1,000 words · 2,000 in total', fr: '+1 000 mots · 2 000 au total', 'zh-Hans': '新增 1,000 词 · 累计 2,000', 'zh-Hant-HK': '新增 1,000 個詞語 · 累計 2,000', ja: '+1,000語 · 累計2,000語', ko: '단어 1,000개 추가 · 누적 2,000개' }
         },
         {
-          id: 'zh-sentences-1',
-          name: { en: 'Sentences 1', fr: 'Phrases 1', 'zh-Hans': '句子 1', 'zh-Hant-HK': '句子 1', ja: '文 1', ko: '문장 1' },
-          desc: { en: 'Key patterns: 还是, 想, 得, 会, 过', fr: 'Structures clés : 还是, 想, 得, 会, 过', 'zh-Hans': '重点句型：还是、想、得、会、过', 'zh-Hant-HK': '重點句型：還是、想、得、會、過', ja: '基本文型：还是・想・得・会・过', ko: '핵심 문형: 还是, 想, 得, 会, 过' }
+          id: 'hsk5',
+          name: { en: 'HSK 5', fr: 'HSK 5', 'zh-Hans': 'HSK 5', 'zh-Hant-HK': 'HSK 5', ja: 'HSK 5', ko: 'HSK 5' },
+          desc: { en: '+1,600 words · 3,600 in total', fr: '+1 600 mots · 3 600 au total', 'zh-Hans': '新增 1,600 词 · 累计 3,600', 'zh-Hant-HK': '新增 1,600 個詞語 · 累計 3,600', ja: '+1,600語 · 累計3,600語', ko: '단어 1,600개 추가 · 누적 3,600개' }
         },
         {
-          id: 'zh-sentences-2',
-          name: { en: 'Sentences 2', fr: 'Phrases 2', 'zh-Hans': '句子 2', 'zh-Hant-HK': '句子 2', ja: '文 2', ko: '문장 2' },
-          desc: { en: 'Key patterns: 了, 有点儿, 正在, 比', fr: 'Structures clés : 了, 有点儿, 正在, 比', 'zh-Hans': '重点句型：了、有点儿、正在、比', 'zh-Hant-HK': '重點句型：了、有點兒、正在、比', ja: '基本文型：了・有点儿・正在・比', ko: '핵심 문형: 了, 有点儿, 正在, 比' }
-        },
-        {
-          id: 'hsk-3-6',
-          name: { en: 'HSK 3–6', fr: 'HSK 3–6', 'zh-Hans': 'HSK 3–6', 'zh-Hant-HK': 'HSK 3–6', ja: 'HSK 3–6', ko: 'HSK 3–6' },
-          desc: { en: 'Thousands more words, level by level', fr: 'Des milliers de mots, niveau par niveau', 'zh-Hans': '按级别学习数千个词', 'zh-Hant-HK': '按級別學習數千個詞', ja: 'レベル別に数千語', ko: '급수별로 수천 단어' }
+          id: 'hsk6',
+          name: { en: 'HSK 6', fr: 'HSK 6', 'zh-Hans': 'HSK 6', 'zh-Hant-HK': 'HSK 6', ja: 'HSK 6', ko: 'HSK 6' },
+          desc: { en: '+1,800 words · 5,400 in total', fr: '+1 800 mots · 5 400 au total', 'zh-Hans': '新增 1,800 词 · 累计 5,400', 'zh-Hant-HK': '新增 1,800 個詞語 · 累計 5,400', ja: '+1,800語 · 累計5,400語', ko: '단어 1,800개 추가 · 누적 5,400개' }
         }
       ]
     },

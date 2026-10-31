@@ -23,7 +23,8 @@ This repository is public. Never put personal or sensitive information in it:
   (Hepburn for Japanese, Revised Romanization for Korean, Hanyu Pinyin for Chinese).
   When no standard exists, use the most common practice and note the choice.
 - Courses and their steps are listed in shared/toybox.js; the home page and each course page
-  (japanese/, korean/) render from it. A new app gets its own folder and an entry there.
+  (japanese/, chinese/, korean/) render from it. A new app gets its own folder and an entry
+  there; a series of similar parts (e.g. HSK word lists) shares one app that takes the part from the URL.
   Keep each app small (about 50 cards) so progress stays easy to finish.
 - GitHub Pages caches files for about 10 minutes, so pages load shared/*.css, shared/*.js and
   each app's i18n.js with a `?v=YYYY-MM-DD.N` query. Whenever one of those files changes, bump
