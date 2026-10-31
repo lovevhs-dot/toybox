@@ -258,34 +258,34 @@
         },
         {
           id: 'hsk1', href: 'chinese/hsk1/',
-          parts: makeParts('chinese/study/', 'zh-hsk1', { words: [49, 49, 49, 49, 49, 49], chars: [44, 44, 44, 43], grammar: [44] }),
+          parts: makeParts('chinese/study/', 'zh-hsk1', { words: [49, 49, 49, 49, 49, 49], grammar: [44] }),
           name: { en: 'HSK 1', fr: 'HSK 1', 'zh-Hans': 'HSK 1级', ja: 'HSK 1級', ko: 'HSK 1급' },
-          desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
+          desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },
         {
           id: 'hsk2',
           name: { en: 'HSK 2', fr: 'HSK 2', 'zh-Hans': 'HSK 2级', ja: 'HSK 2級', ko: 'HSK 2급' },
-          desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
+          desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },
         {
           id: 'hsk3',
           name: { en: 'HSK 3', fr: 'HSK 3', 'zh-Hans': 'HSK 3级', ja: 'HSK 3級', ko: 'HSK 3급' },
-          desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
+          desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },
         {
           id: 'hsk4',
           name: { en: 'HSK 4', fr: 'HSK 4', 'zh-Hans': 'HSK 4级', ja: 'HSK 4級', ko: 'HSK 4급' },
-          desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
+          desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },
         {
           id: 'hsk5',
           name: { en: 'HSK 5', fr: 'HSK 5', 'zh-Hans': 'HSK 5级', ja: 'HSK 5級', ko: 'HSK 5급' },
-          desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
+          desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },
         {
           id: 'hsk6',
           name: { en: 'HSK 6', fr: 'HSK 6', 'zh-Hans': 'HSK 6级', ja: 'HSK 6級', ko: 'HSK 6급' },
-          desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
+          desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         }
       ]
     },

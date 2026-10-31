@@ -11,7 +11,7 @@ and what to build next, so any new session can continue without the earlier conv
 | `japanese/` | Course page | Hiragana live; Hiragana 2, Katakana 1-2, JLPT N5-N1 "coming soon" |
 | `chinese/` | Course page | Pinyin and HSK 1-6 steps; Pinyin and HSK 1 live |
 | `chinese/pinyin/` | Pinyin level page | Tones (45: 10 syllables x 4 tones + 5 neutral), initials (23), finals (38), each with hints in every UI language |
-| `chinese/hsk1/` | HSK 1 level page | 6 word parts (294), 4 character parts (175), 1 grammar part (44); data in `data.js` |
+| `chinese/hsk1/` | HSK 1 level page | 6 word parts (294), 1 grammar part (44); characters are practiced inside the words; data in `data.js` |
 | `chinese/study/` | Shared study app | `?set=zh-hsk1-words-1` etc.; list + mastery practice; UI en/fr/ja/ko |
 | `korean/` | Course page | Hangul live; Batchim, TOPIK 1-6 "coming soon" |
 | `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/ko, readings in each UI language's own spelling |
@@ -45,7 +45,7 @@ Every course has the same shape, so they stay consistent:
    Katakana 2; Chinese Pinyin and tones; Korean Hangul, Batchim.
 2. **One step per official exam level**, up to the top of that exam: JLPT N5-N1, HSK 1-6,
    TOPIK 1-6. Each level step opens a level page with parts of about 50 items: words first, then
-   characters (kanji or hanzi, not for Korean), then grammar patterns with original example sentences.
+   kanji (Japanese only; Chinese practices characters inside words), then grammar patterns with original example sentences.
 3. One shared word app per language takes the level and part from the URL (see the Chinese plan
    below); the same app and level page serve Japanese and Korean.
 4. Readings: Hepburn, Hanyu Pinyin and Revised Romanization, plus a notation switch in each app
@@ -93,14 +93,13 @@ How to build it:
    `shared/toybox.js` with the same part sizes. Parts stay about 50 items, in frequency order.
    - Words: meanings in en, fr, ja and ko written together; never copy dictionary definitions
      (CC-CEDICT is CC BY-SA). Check words that list other readings and fix the TSV.
-   - Characters: only those used inside the level's words of two or more characters (single-character
-     words are already in the word parts), each with the words that use it. Practice fills the
-     missing character of a word, so it never repeats the word parts.
+   - Characters: no separate parts for Chinese (they repeated the word parts). Word practice includes
+     "fill in the missing character" for words of two or more characters.
    - Grammar: the level's patterns as fill-in-the-blank cards with original sentences, wrong
      options that are clearly wrong, a translation and a one-line note in every UI language.
 3. The study app (`chinese/study/`) handles every kind: list view, then practice with
-   character to meaning, meaning to character and audio to character (when a Chinese voice
-   exists). Progress per part is saved as `zh-hsk<N>-<kind>-<part>-v1`; home, course, level page
+   character to meaning, meaning to character, audio to character (when a Chinese voice
+   exists) and the missing character of a word. Progress per part is saved as `zh-hsk<N>-<kind>-<part>-v1`; home, course, level page
    and backups read it through the step's `parts`.
 
 Levels 7-9 (advanced band, about 5,600 more words) can follow the same way later.
