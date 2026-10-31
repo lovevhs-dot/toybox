@@ -10,7 +10,7 @@ and what to build next, so any new session can continue without the earlier conv
 | `/` | Home | Continue card, course cards, backup links |
 | `japanese/` | Course page | Step 1 Hiragana live, later steps "coming soon" |
 | `korean/` | Course page | Step 1 Hangul live, later steps "coming soon" |
-| `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/zh-Hant/ko, readings in each UI language's own spelling |
+| `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/zh-Hant/ko, readings in each UI language's own spelling (Cantonese for 中文（繁體）) |
 | `hangul/` | Hangul Studio | 54 cards (40 jamo + 14 syllables), UI en/fr/zh-Hans/zh-Hant/ja |
 | `shared/` | Catalog, home/course rendering, shared CSS | Courses and steps live in `shared/toybox.js` |
 
