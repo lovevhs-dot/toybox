@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Sentences · Toybox</title>
+  <meta name="description" content="Learn English and French through everyday sentences, level by level (CEFR).">
+  <meta name="theme-color" content="#f7f4ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#151412" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sentences · Toybox">
+  <meta property="og:description" content="Learn English and French through everyday sentences, level by level (CEFR).">
+  <meta property="og:image" content="https://nanyan4.github.io/toybox/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="32x32" href="/toybox/toybox-icon-32.png?v=4">
+  <link rel="icon" type="image/png" sizes="180x180" href="/toybox/toybox-icon-180.png?v=4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/toybox/toybox-icon-180.png?v=4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+  <link rel="stylesheet" href="../shared/toybox.css?v=2026-10-31.12">
+    <style>
+    :root {
+      --c: #6d4bd8;
+      --c-rgb: 109, 75, 216;
+      --ff-zh: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', sans-serif;
+    }
+    body { --c-soft: rgba(var(--c-rgb), 0.13); }
+    button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+    button:disabled { cursor: default; }
+    .zh { font-family: var(--ff-zh); }
+    [hidden] { display: none !important; }
+
+    .bar {
+      position: sticky; top: 0; z-index: 5;
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
+      background: rgba(var(--bg-rgb, 247, 244, 238), 0.92);
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+    }
+    .icon-btn {
+      flex: none; width: 38px; height: 38px; display: grid; place-items: center;
+      border-radius: 50%; background: var(--surface); box-shadow: var(--shadow-1); color: var(--text-2);
+    }
+    .icon-btn svg { width: 18px; height: 18px; }
+    .bar-title { flex: 1; min-width: 0; }
+    .bar-title strong { display: block; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bar-title span { font-size: 12px; color: var(--text-2); }
+
+    .settings {
+      max-width: 720px; margin: 0 auto; padding: 4px 16px 12px;
+      display: grid; gap: 8px;
+    }
+    .set-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 10px 14px; border-radius: 14px; background: var(--surface); box-shadow: var(--shadow-1);
+      font-size: 14px; font-weight: 600;
+    }
+    .set-row select { font: inherit; color: inherit; background: var(--surface-2); border: 0; border-radius: 10px; padding: 6px 10px; }
+    .switch { position: relative; width: 44px; height: 26px; flex: none; }
+    .switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+    .switch span { position: absolute; inset: 0; border-radius: 999px; background: var(--line-strong); transition: background 0.2s; pointer-events: none; }
+    .switch span::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s var(--ease); }
+    .switch input:checked + span { background: var(--c); }
+    .switch input:checked + span::after { transform: translateX(18px); }
+    .switch input:focus-visible + span { outline: 2px solid var(--text); outline-offset: 2px; }
+    .link-btn { color: var(--bad); font-weight: 600; font-size: 14px; }
+
+    .page { max-width: 720px; margin: 0 auto; padding: 14px 16px 64px; }
+    .tabs { display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--surface-2); margin-bottom: 14px; }
+    .tabs button { flex: 1; padding: 8px; border-radius: 999px; font-weight: 700; font-size: 14px; color: var(--text-2); }
+    .tabs button[aria-selected="true"] { background: var(--surface); color: var(--text); box-shadow: var(--shadow-1); }
+    .progress { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-2); margin-bottom: 14px; }
+    .progress .meter { flex: 1; }
+    .progress .meter-fill { background: var(--c); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+    .grid.wide { grid-template-columns: 1fr; }
+    .card {
+      position: relative; text-align: left; padding: 14px; border-radius: 16px;
+      background: var(--surface); box-shadow: var(--shadow-1); display: grid; gap: 4px; align-content: start;
+    }
+    .card:hover { box-shadow: var(--shadow-2); }
+    .card .zh-big { font-family: var(--ff-zh); font-size: 28px; font-weight: 600; line-height: 1.2; }
+    .card .py { font-size: 14px; color: var(--c); font-weight: 600; }
+    .card .mean { font-size: 14px; color: var(--text-2); }
+    .card .ex { font-size: 13px; color: var(--text-3); }
+    .card .tick { position: absolute; top: 10px; right: 10px; width: 20px; height: 20px; border-radius: 50%; background: var(--c); color: #fff; display: grid; place-items: center; }
+    .card .tick svg { width: 12px; height: 12px; }
+    .card .label { font-size: 12px; font-weight: 700; color: var(--c); text-transform: none; }
+    .card .sent { font-family: var(--ff-zh); font-size: 20px; }
+    .card .sent b { color: var(--c); }
+    .card .note { font-size: 13px; color: var(--text-2); }
+    .hide-py .py { display: none; }
+    .card .py-big { font-size: 26px; font-weight: 700; line-height: 1.2; }
+    .card .py-ex { font-size: 14px; color: var(--c); font-weight: 600; }
+    .card .py-ex .zh { color: var(--text-2); }
+    .q-pyb { font-size: 48px; font-weight: 700; line-height: 1.15; }
+
+    .quiz { display: grid; gap: 14px; }
+    .q-card { padding: 22px 18px; border-radius: 20px; background: var(--surface); box-shadow: var(--shadow-1); text-align: center; display: grid; gap: 8px; justify-items: center; }
+    .q-label { font-size: 13px; font-weight: 700; color: var(--text-2); }
+    .q-zh { font-family: var(--ff-zh); font-size: 52px; font-weight: 600; line-height: 1.15; }
+    .q-sent { font-family: var(--ff-zh); font-size: 26px; line-height: 1.5; }
+    .q-zh .blank { display: inline-block; min-width: 1em; border-bottom: 3px solid var(--c); color: var(--c); }
+    .q-sent .blank { display: inline-block; min-width: 2.2em; border-bottom: 2px solid var(--c); color: var(--c); }
+    .q-mean { font-size: 22px; font-weight: 700; }
+    .q-sub { font-size: 15px; color: var(--text-2); }
+    .q-py { font-size: 16px; color: var(--c); font-weight: 600; }
+    .speak { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: var(--c-soft); color: var(--c); font-weight: 700; font-size: 14px; }
+    .speak svg { width: 18px; height: 18px; }
+    .speak.big { padding: 18px 26px; font-size: 16px; }
+    .speak.big svg { width: 28px; height: 28px; }
+    .after-py { color: var(--c); font-weight: 600; }
+    .opt-gloss { list-style: none; margin: 6px 0 0; padding: 8px 0 0; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+    .opt-gloss li { color: var(--text-2); }
+    .opt-gloss li.is-answer { color: var(--text); font-weight: 600; }
+    .opt-gloss li.is-answer::before { content: '✓ '; color: var(--good); }
+    .opt-gloss .opt-py { color: var(--c); }
+    .pips { display: flex; gap: 6px; margin-top: 4px; }
+    .pips span { width: 9px; height: 9px; border-radius: 50%; background: var(--line-strong); transition: background 0.25s, transform 0.25s var(--ease); }
+    .pips .on { background: var(--good); transform: scale(1.15); }
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .opt {
+      position: relative; min-height: 64px; padding: 12px 12px 12px 34px; border-radius: 16px;
+      background: var(--surface); box-shadow: var(--shadow-1); font-size: 16px; font-weight: 600; text-align: left;
+      transition: transform 0.15s var(--ease);
+    }
+    .opt .num { position: absolute; left: 12px; top: 12px; font-size: 12px; color: var(--text-3); font-weight: 700; }
+    .opt.zh-opt { font-family: var(--ff-zh); font-size: 24px; }
+    .opt:not(:disabled):hover { transform: translateY(-1px); }
+    .opt.right { background: rgba(31, 138, 91, 0.14); box-shadow: inset 0 0 0 2px var(--good); }
+    .opt.wrong { background: rgba(201, 53, 43, 0.12); box-shadow: inset 0 0 0 2px var(--bad); }
+    .feedback { min-height: 24px; text-align: center; font-weight: 700; }
+    .feedback.good { color: var(--good); }
+    .feedback.bad { color: var(--bad); }
+    .after { padding: 14px; border-radius: 16px; background: var(--surface-2); font-size: 14px; display: grid; gap: 4px; }
+    .after .zh { font-size: 18px; }
+    .next-btn { justify-self: center; padding: 12px 28px; border-radius: 999px; background: var(--c); color: #fff; font-weight: 700; }
+    .hint { text-align: center; font-size: 12px; color: var(--text-3); }
+    .hint kbd { font-family: inherit; padding: 1px 5px; border-radius: 5px; background: var(--surface-2); }
+    @media (hover: none) { .hint { display: none; } }
+
+    .done { text-align: center; padding: 28px 18px; border-radius: 20px; background: var(--surface); box-shadow: var(--shadow-1); display: grid; gap: 10px; justify-items: center; }
+    .done h2 { margin: 0; font-size: 22px; }
+    .done p { margin: 0; color: var(--text-2); font-size: 14px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .btn-solid { padding: 11px 20px; border-radius: 999px; background: var(--c); color: #fff; font-weight: 700; }
+    .btn-soft { padding: 11px 20px; border-radius: 999px; background: var(--c-soft); color: var(--c); font-weight: 700; }
+    .msg { text-align: center; color: var(--text-2); padding: 40px 0; }
+    @media (max-width: 420px) { .q-zh { font-size: 44px; } .opt.zh-opt { font-size: 21px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
+    .how { font-size: 13px; color: var(--text-2); margin: 0 0 12px; }
+    .sent-card .sent-target { font-size: 18px; font-weight: 600; line-height: 1.4; }
+    .sent-card .sent-target b, .after-target b { color: var(--c); }
+    .q-target { font-size: 22px; font-weight: 600; line-height: 1.5; }
+    .q-target .blank { display: inline-block; min-width: 3em; border-bottom: 2px solid var(--c); color: var(--c); }
+    .sent-options { grid-template-columns: 1fr; }
+    .sent-options .opt { min-height: 52px; font-size: 16px; }
+    .build { min-height: 58px; padding: 10px; border-radius: 16px; background: var(--surface); box-shadow: inset 0 0 0 2px var(--line); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .build.is-right { box-shadow: inset 0 0 0 2px var(--good); }
+    .build.is-wrong { box-shadow: inset 0 0 0 2px var(--bad); }
+    .build .end { margin-left: -4px; font-size: 18px; font-weight: 700; color: var(--text-2); }
+    .tiles { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; min-height: 44px; }
+    .wtile { padding: 9px 13px; border-radius: 12px; background: var(--surface); box-shadow: var(--shadow-1); font-size: 16px; font-weight: 600; }
+    .wtile.on { background: var(--c-soft); color: var(--c); box-shadow: none; }
+    .typed { width: 100%; font: inherit; font-size: 18px; padding: 14px; border-radius: 14px; border: 0; background: var(--surface); color: var(--text); box-shadow: inset 0 0 0 2px var(--line); }
+    .typed:focus { outline: none; box-shadow: inset 0 0 0 2px var(--c); }
+    .typed.is-right { box-shadow: inset 0 0 0 2px var(--good); }
+    .typed.is-wrong { box-shadow: inset 0 0 0 2px var(--bad); }
+    .quiz .actions { display: flex; gap: 8px; justify-content: center; }
+    .btn-solid:disabled { opacity: 0.45; }
+    .after-target { font-size: 17px; font-weight: 600; }
+    .after .speak { justify-self: start; margin-top: 4px; }
+  </style>
+
+</head>
+<body>
+  <header class="bar">
+    <a class="icon-btn" id="back" href="../"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 3-5 5 5 5"/></svg></a>
+    <div class="bar-title"><strong id="title">Sentences</strong><span id="subtitle"></span></div>
+    <button type="button" class="icon-btn" id="sound-btn"></button>
+    <button type="button" class="icon-btn" id="settings-btn" aria-expanded="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 4.5h7M12 4.5h2M2 11.5h2M7 11.5h7"/><circle cx="10.5" cy="4.5" r="1.5"/><circle cx="5.5" cy="11.5" r="1.5"/></svg></button>
+  </header>
+  <div class="settings" id="settings" hidden>
+    <label class="set-row"><span id="lang-label">Language</span><select id="lang"></select></label>
+    <div class="set-row"><button type="button" class="link-btn" id="reset"></button></div>
+  </div>
+  <main class="page" id="page"><p class="msg">…</p></main>
+
+  <script src="i18n.js?v=2026-10-31.1"></script>
+  <script>
+  (() => {
+    'use strict';
+
+    const STEPS = 4;           // choose, fill in, order, type
+    const ACTIVE_SIZE = 5;     // sentences practiced at a time
+    const REVIEW_SIZE = 10;
+    const LANG_KEY = 'toybox-lang';
+    const PREFS_KEY = 'sentences-prefs';
+    const COURSE = {
+      en: { col: 0, speech: 'en-GB', color: '#6d4bd8', rgb: '109, 75, 216', dir: 'english' },
+      fr: { col: 1, speech: 'fr-FR', color: '#1f7a8c', rgb: '31, 122, 140', dir: 'french' }
+    };
+    const COL = { en: 0, fr: 1, 'zh-Hans': 2, ja: 3, ko: 4 };
+
+    const ICON_CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"/></svg>';
+    const ICON_SPEAK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+    const ICON_SOUND_ON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>';
+    const ICON_SOUND_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="m16 9 5 6M21 9l-5 6"/></svg>';
+
+    const $ = id => document.getElementById(id);
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+    const store = {
+      get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+      set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+    };
+
+    // ---------- Which part ----------
+    const setId = new URLSearchParams(location.search).get('set') || '';
+    const m = setId.match(/^(en|fr)-(a1|a2|b1|b2|c1)-([a-z]+)-(\d{1,2})$/);
+    const taught = m ? m[1] : 'en';
+    const C = COURSE[taught];
+    document.documentElement.style.setProperty('--c', C.color);
+    document.documentElement.style.setProperty('--c-rgb', C.rgb);
+
+    // ---------- Language (never the one being learned) ----------
+    const LANGS = I18N.langs.filter(l => l.id !== taught);
+    const LANG_IDS = LANGS.map(l => l.id);
+    function detectLang() {
+      let stored = null;
+      try { stored = localStorage.getItem(LANG_KEY); } catch (e) {}
+      if (stored && LANG_IDS.includes(stored)) return stored;
+      for (const l of navigator.languages || [navigator.language || 'en']) {
+        const x = l.toLowerCase();
+        const id = x.startsWith('zh') ? 'zh-Hans' : x.split('-')[0];
+        if (LANG_IDS.includes(id)) return id;
+      }
+      return LANG_IDS[0];
+    }
+    let lang = detectLang();
+    let T = I18N.ui[lang];
+    const prefs = Object.assign({ sound: true }, store.get(PREFS_KEY) || {});
+
+    // ---------- Sound ----------
+    const Sound = {
+      ctx: null,
+      tone(freqs, dur = 0.14, type = 'sine', gap = 0.09, vol = 0.07) {
+        if (!prefs.sound) return;
+        try {
+          this.ctx = this.ctx || new (window.AudioContext || window.webkitAudioContext)();
+          const t0 = this.ctx.currentTime;
+          freqs.forEach((f, i) => {
+            const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+            o.type = type; o.frequency.value = f;
+            const t = t0 + i * gap;
+            g.gain.setValueAtTime(0, t);
+            g.gain.linearRampToValueAtTime(vol, t + 0.01);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+            o.connect(g).connect(this.ctx.destination);
+            o.start(t); o.stop(t + dur + 0.02);
+          });
+        } catch (e) {}
+      },
+      correct() { this.tone([660, 880]); },
+      wrong() { this.tone([220], 0.18, 'triangle', 0, 0.06); },
+      mastered() { this.tone([660, 880, 1175], 0.18); },
+      complete() { this.tone([523, 659, 784, 1047], 0.3, 'sine', 0.12); },
+      voice() {
+        const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+        const want = C.speech.toLowerCase().replace('_', '-');
+        return vs.find(v => v.lang.toLowerCase().replace('_', '-') === want) || vs.find(v => v.lang.toLowerCase().startsWith(taught)) || null;
+      },
+      canSpeak() { return !!(window.speechSynthesis && this.voice()); },
+      say(text) {
+        if (!window.speechSynthesis || !prefs.sound) return;
+        try {
+          speechSynthesis.cancel();
+          const u = new SpeechSynthesisUtterance(text);
+          u.lang = C.speech;
+          const v = this.voice();
+          if (v) u.voice = v;
+          u.rate = 0.9;
+          speechSynthesis.speak(u);
+        } catch (e) {}
+      }
+    };
+    if (window.speechSynthesis) speechSynthesis.onvoiceschanged = () => {};
+
+    // ---------- Sentences ----------
+    const plain = s => s.replace(/[[\]]/g, '');
+    const chunkOf = s => (s.match(/\[([^\]]+)\]/) || [, ''])[1];
+    // Words for the ordering step: punctuation stays out of the tiles
+    const wordsOf = s => plain(s).replace(/\s+([?!:;])/g, '$1').split(/\s+/).map(w => w.replace(/[.,!?;:]+$/, '')).filter(Boolean);
+    const endPunct = s => (plain(s).trim().match(/[.?!]$/) || [''])[0];
+
+    const CONTRACTIONS = {
+      "i'm": 'i am', "you're": 'you are', "it's": 'it is', "what's": 'what is', "that's": 'that is', "there's": 'there is',
+      "he's": 'he is', "she's": 'she is', "we're": 'we are', "they're": 'they are', "don't": 'do not', "doesn't": 'does not',
+      "isn't": 'is not', "aren't": 'are not', "can't": 'cannot', 'can not': 'cannot', "i'd": 'i would', "i'll": 'i will',
+      "i've": 'i have', "let's": 'let us', "won't": 'will not'
+    };
+    function norm(s, keepAccents) {
+      let x = s.toLowerCase().replace(/[’‘`´]/g, "'").replace(/[.,!?;:«»"()  ]/g, ' ').replace(/\s+/g, ' ').trim();
+      if (taught === 'en') {
+        Object.entries(CONTRACTIONS).forEach(([a, b]) => { x = x.replace(new RegExp(`(^| )${a.replace("'", "'")}(?= |$)`, 'g'), `$1${b}`); });
+      }
+      if (!keepAccents) x = x.normalize('NFD').replace(/[̀-ͯ]/g, '');
+      return x;
+    }
+    // French adjectives agree with the speaker: accept fatigué / fatiguée, étudiant / étudiante
+    function sameWords(a, b) {
+      const A = a.split(' '), B = b.split(' ');
+      if (A.length !== B.length) return false;
+      return A.every((w, i) => w === B[i] || (taught === 'fr' && (w === B[i] + 'e' || B[i] === w + 'e')));
+    }
+    function checkTyped(input, target) {
+      if (sameWords(norm(input, true), norm(target, true))) return 'right';
+      if (sameWords(norm(input, false), norm(target, false))) return 'accents';
+      return 'wrong';
+    }
+
+    let D = null, kind = '', partNo = 0, items = [], storageKey = '';
+    function buildItems() {
+      const rows = D.rows[kind];
+      const sizes = D.parts[kind];
+      if (!rows || !sizes || partNo < 1 || partNo > sizes.length) return false;
+      const start = sizes.slice(0, partNo - 1).reduce((a, b) => a + b, 0);
+      items = rows.slice(start, start + sizes[partNo - 1]).map((r, i) => ({
+        key: `s${start + i + 1}`, raw: r[C.col], text: plain(r[C.col]), chunk: chunkOf(r[C.col]), tr: r
+      }));
+      return true;
+    }
+    const trOf = it => plain(it.tr[COL[lang]]);
+
+    // ---------- Progress ----------
+    let mastered = new Set();
+    function loadProgress() {
+      const saved = store.get(storageKey) || {};
+      mastered = new Set((saved.mastered || []).filter(k => items.some(it => it.key === k)));
+    }
+    function persist() {
+      const saved = store.get(storageKey) || {};
+      store.set(storageKey, Object.assign(saved, { mastered: [...mastered] }));
+    }
+    function markRecent() { try { localStorage.setItem('toybox-recent', storageKey); } catch (e) {} }
+
+    // ---------- State ----------
+    const state = { mode: 'list', settings: false };
+    const qz = { active: [], stage: {}, last: null, current: null, type: null, options: [], answered: false, ok: null, chosen: null,
+      built: [], tiles: [], typed: '', result: null, answers: 0, right: 0, review: null, seq: 0 };
+    function resetQuiz() {
+      Object.assign(qz, { active: [], stage: {}, last: null, current: null, options: [], answered: false, ok: null, chosen: null,
+        built: [], tiles: [], typed: '', result: null, answers: 0, right: 0, review: null });
+    }
+    function fillActive() {
+      qz.active = qz.active.filter(k => !mastered.has(k));
+      const pool = shuffle(items.filter(it => !mastered.has(it.key) && !qz.active.includes(it.key)).map(it => it.key));
+      while (qz.active.length < ACTIVE_SIZE && pool.length) qz.active.push(pool.pop());
+    }
+    const stageOf = it => qz.stage[it.key] || 0;
+
+    function typeFor(it, stage) {
+      if (stage === 0) return Sound.canSpeak() && prefs.sound && Math.random() < 0.5 ? 'listen' : 'pick';
+      if (stage === 1) return 'cloze';
+      if (stage === 2) return wordsOf(it.raw).length > 1 ? 'order' : 'type';
+      return 'type';
+    }
+    function pickOthers(it, f) {
+      const seen = new Set([f(it).toLowerCase()]);
+      const out = [];
+      for (const x of shuffle(items.filter(x => x !== it))) {
+        if (out.length === 3) break;
+        const v = f(x);
+        if (!v || seen.has(v.toLowerCase())) continue;
+        seen.add(v.toLowerCase()); out.push(v);
+      }
+      return out;
+    }
+
+    function pickQuestion() {
+      let it, stage;
+      if (qz.review) {
+        it = qz.review.list[qz.review.i];
+        stage = Math.floor(Math.random() * 3);
+      } else {
+        fillActive();
+        if (!qz.active.length) { qz.current = null; return; }
+        const choices = qz.active.filter(k => k !== qz.last);
+        const list = choices.length ? choices : qz.active;
+        const key = list[Math.floor(Math.random() * list.length)];
+        it = items.find(x => x.key === key);
+        stage = stageOf(it);
+      }
+      qz.current = it;
+      qz.type = typeFor(it, stage);
+      qz.answered = false; qz.ok = null; qz.chosen = null; qz.result = null; qz.typed = ''; qz.built = [];
+      if (qz.type === 'pick' || qz.type === 'listen') qz.options = shuffle([it.text, ...pickOthers(it, x => x.text)]);
+      if (qz.type === 'cloze') qz.options = shuffle([it.chunk, ...pickOthers(it, x => x.chunk)]);
+      if (qz.type === 'order') {
+        const w = wordsOf(it.raw);
+        let tiles;
+        do { tiles = shuffle(w.map((t, i) => ({ t, i }))); } while (w.length > 1 && tiles.every((x, i) => x.t === w[i]));
+        qz.tiles = tiles;
+      }
+      qz.seq++;
+      if (qz.type === 'listen') setTimeout(() => Sound.say(it.text), 250);
+    }
+
+    function finish(ok) {
+      const it = qz.current;
+      qz.answered = true; qz.ok = ok;
+      if (qz.review) {
+        if (ok) qz.review.score++; else qz.review.missed.add(it.key);
+        ok ? Sound.correct() : Sound.wrong();
+      } else {
+        qz.answers++;
+        markRecent();
+        if (ok) {
+          qz.right++;
+          qz.stage[it.key] = stageOf(it) + (qz.type === 'type' && stageOf(it) === 2 ? 2 : 1);
+          if (qz.stage[it.key] >= STEPS) {
+            mastered.add(it.key); persist();
+            mastered.size === items.length ? Sound.complete() : Sound.mastered();
+          } else Sound.correct();
+        } else {
+          qz.stage[it.key] = Math.max(0, stageOf(it) - 1);
+          Sound.wrong();
+        }
+        qz.last = it.key;
+      }
+      update();
+      const seq = qz.seq;
+      setTimeout(() => { if (seq === qz.seq && qz.answered) Sound.say(it.text); }, ok ? 350 : 500);
+    }
+
+    function choose(i) {
+      if (qz.answered || !qz.current || !['pick', 'listen', 'cloze'].includes(qz.type)) return;
+      qz.chosen = i;
+      const ans = qz.type === 'cloze' ? qz.current.chunk : qz.current.text;
+      finish(qz.options[i] === ans);
+    }
+    function checkOrder() {
+      if (qz.answered || qz.type !== 'order') return;
+      const target = wordsOf(qz.current.raw);
+      finish(qz.built.map(b => qz.tiles[b].t).join(' ') === target.join(' '));
+    }
+    function checkType(giveUp) {
+      if (qz.answered || qz.type !== 'type') return;
+      const input = ($('typed') || {}).value || '';
+      qz.typed = input;
+      qz.result = giveUp ? 'wrong' : checkTyped(input, qz.current.text);
+      finish(qz.result !== 'wrong');
+    }
+    function next() {
+      if (!qz.answered) return;
+      if (qz.review) {
+        qz.review.i++;
+        if (qz.review.i >= qz.review.list.length) { qz.current = null; update(); return; }
+      }
+      pickQuestion();
+      update();
+    }
+    function startReview(list) {
+      resetQuiz();
+      qz.review = { list: shuffle(list.slice()).slice(0, REVIEW_SIZE), i: 0, score: 0, missed: new Set() };
+      state.mode = 'practice';
+      pickQuestion();
+      update();
+    }
+
+    // ---------- Rendering ----------
+    const highlight = raw => esc(raw).replace(/\[([^\]]+)\]/, '<b>$1</b>');
+    function cardHtml(it) {
+      const tick = mastered.has(it.key) ? `<span class="tick">${ICON_CHECK}</span>` : '';
+      return `<button type="button" class="card sent-card" data-say="${esc(it.text)}" aria-label="${esc(T.play)}: ${esc(it.text)}">
+        ${tick}<span class="sent-target" lang="${taught}">${highlight(it.raw)}</span>
+        <span class="mean" lang="${lang}">${esc(trOf(it))}</span>
+      </button>`;
+    }
+    function progressHtml() {
+      const pct = Math.round((mastered.size / items.length) * 100);
+      const left = items.length - mastered.size;
+      return `<div class="progress"><span class="meter"><span class="meter-fill" style="width:${pct}%"></span></span>
+        <span>${esc(T.mastered(mastered.size, items.length))}${left ? ' · ' + esc(T.toGo(left)) : ''}</span></div>`;
+    }
+    function listHtml() {
+      return `${progressHtml()}<p class="how">${esc(T.how)}</p><div class="grid wide">${items.map(cardHtml).join('')}</div>`;
+    }
+    function pipsHtml(it) {
+      if (qz.review) return '';
+      const have = mastered.has(it.key) ? STEPS : Math.min(stageOf(it), STEPS);
+      const dots = Array.from({ length: STEPS }, (_, i) => `<span class="${i < have ? 'on' : ''}"></span>`).join('');
+      return `<span class="pips" role="img" aria-label="${esc(T.steps(Math.min(have + 1, STEPS), STEPS))}">${dots}</span>`;
+    }
+    function promptHtml(it) {
+      const tr = `<span class="q-mean" lang="${lang}">${esc(trOf(it))}</span>`;
+      if (qz.type === 'pick') return `<span class="q-label">${esc(T.qPick)}</span>${tr}`;
+      if (qz.type === 'listen') return `<span class="q-label">${esc(T.qListen)}</span>
+        <button type="button" class="speak big" data-say="${esc(it.text)}" aria-label="${esc(T.play)}">${ICON_SPEAK}</button>`;
+      if (qz.type === 'cloze') {
+        const blank = `<span class="blank">${qz.answered ? esc(it.chunk) : '&nbsp;'}</span>`;
+        return `<span class="q-label">${esc(T.qCloze)}</span>
+          <span class="q-target" lang="${taught}">${esc(it.raw).replace(/\[[^\]]+\]/, blank)}</span>
+          <span class="q-sub" lang="${lang}">${esc(trOf(it))}</span>`;
+      }
+      if (qz.type === 'order') return `<span class="q-label">${esc(T.qOrder)}</span>${tr}`;
+      return `<span class="q-label">${esc(T.qType)}</span>${tr}`;
+    }
+    function answerHtml(it) {
+      const ans = qz.type === 'cloze' ? it.chunk : it.text;
+      if (qz.type === 'order') {
+        const built = qz.built.map(b => `<button type="button" class="wtile on" data-unbuild="${b}" ${qz.answered ? 'disabled' : ''}>${esc(qz.tiles[b].t)}</button>`).join('');
+        const left = qz.tiles.map((x, i) => qz.built.includes(i) ? '' : `<button type="button" class="wtile" data-build="${i}" ${qz.answered ? 'disabled' : ''}>${esc(x.t)}</button>`).join('');
+        return `<div class="build ${qz.answered ? (qz.ok ? 'is-right' : 'is-wrong') : ''}" lang="${taught}">${built || '&nbsp;'}<span class="end">${esc(endPunct(it.raw))}</span></div>
+          <div class="tiles" lang="${taught}">${left}</div>
+          ${qz.answered ? '' : `<div class="actions"><button type="button" class="btn-soft" id="clear">${esc(T.clear)}</button><button type="button" class="btn-solid" id="check" ${qz.built.length === qz.tiles.length ? '' : 'disabled'}>${esc(T.check)}</button></div>`}`;
+      }
+      if (qz.type === 'type') {
+        return `<input type="text" id="typed" class="typed ${qz.answered ? (qz.ok ? 'is-right' : 'is-wrong') : ''}" lang="${taught}" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="${esc(T.typeHere)}" value="${esc(qz.typed)}" ${qz.answered ? 'disabled' : ''}>
+          ${qz.answered ? '' : `<div class="actions"><button type="button" class="btn-soft" id="giveup">${esc(T.dontKnow)}</button><button type="button" class="btn-solid" id="check">${esc(T.check)}</button></div>`}`;
+      }
+      return `<div class="options sent-options">${qz.options.map((o, i) => {
+        let cls = 'opt';
+        if (qz.answered && o === ans) cls += ' right';
+        else if (qz.answered && i === qz.chosen) cls += ' wrong';
+        return `<button type="button" class="${cls}" data-opt="${i}" lang="${taught}" ${qz.answered ? 'disabled' : ''}><span class="num">${i + 1}</span>${esc(o)}</button>`;
+      }).join('')}</div>`;
+    }
+    function feedbackHtml(it) {
+      if (!qz.answered) return '<div class="feedback" role="status"></div>';
+      let msg;
+      if (qz.ok && qz.result === 'accents') msg = `<div class="feedback good" role="status">${esc(T.almost)}</div>`;
+      else if (qz.ok) msg = `<div class="feedback good" role="status">${esc(T.correct)}</div>`;
+      else msg = `<div class="feedback bad" role="status">${esc(T.answer)}</div>`;
+      return `${msg}<div class="after"><span class="after-target" lang="${taught}">${highlight(it.raw)}</span>
+        <span lang="${lang}">${esc(trOf(it))}</span>
+        <button type="button" class="speak" data-say="${esc(it.text)}">${ICON_SPEAK}${esc(T.play)}</button></div>`;
+    }
+    function quizHtml() {
+      if (!qz.current) return qz.review ? reviewDoneHtml() : doneHtml();
+      const it = qz.current;
+      const head = qz.review
+        ? `<div class="progress"><span class="meter"><span class="meter-fill" style="width:${Math.round((qz.review.i / qz.review.list.length) * 100)}%"></span></span><span>${esc(T.reviewOf(qz.review.i + 1, qz.review.list.length))}</span></div>`
+        : progressHtml();
+      return `${head}<div class="quiz">
+        <div class="q-card">${promptHtml(it)}${pipsHtml(it)}</div>
+        ${answerHtml(it)}
+        ${feedbackHtml(it)}
+        ${qz.answered ? `<button type="button" class="next-btn" id="next">${esc(T.next)}</button>` : ''}
+      </div>`;
+    }
+    function nextPartHref() {
+      const kinds = Object.keys(D.parts);
+      const sizes = D.parts[kind];
+      if (partNo < sizes.length) return `?set=${taught}-${D.id}-${kind}-${partNo + 1}`;
+      const k = kinds[kinds.indexOf(kind) + 1];
+      return k ? `?set=${taught}-${D.id}-${k}-1` : null;
+    }
+    const levelHref = () => `../${C.dir}/${D.id}/`;
+    function doneHtml() {
+      const nextHref = nextPartHref();
+      const stats = qz.answers ? `<p>${esc(T.stats(qz.answers, Math.round((qz.right / qz.answers) * 100)))}</p>` : '';
+      return `<div class="done"><h2>${esc(T.allMastered(items.length))}</h2>${stats}
+        <div class="actions">
+          ${nextHref ? `<a class="btn-solid" href="${nextHref}">${esc(T.nextPart)}</a>` : ''}
+          <button type="button" class="btn-soft" id="review">${esc(T.review)}</button>
+          <a class="btn-soft" href="${levelHref()}">${esc(T.allParts)}</a>
+        </div><p>${esc(T.reviewNote)}</p></div>`;
+    }
+    function reviewDoneHtml() {
+      const r = qz.review;
+      return `<div class="done"><h2>${esc(T.reviewScore(r.score, r.list.length))}</h2>
+        <div class="actions"><button type="button" class="btn-solid" id="review">${esc(T.review)}</button>
+        <a class="btn-soft" href="${levelHref()}">${esc(T.allParts)}</a></div><p>${esc(T.reviewNote)}</p></div>`;
+    }
+    function render() {
+      if (!D) return;
+      if (state.mode === 'practice' && !qz.review && !qz.current && mastered.size < items.length) pickQuestion();
+      $('page').innerHTML = `
+        <div class="tabs" role="tablist">
+          <button type="button" role="tab" data-mode="list" aria-selected="${state.mode === 'list'}">${esc(T.list)}</button>
+          <button type="button" role="tab" data-mode="practice" aria-selected="${state.mode === 'practice'}">${esc(T.practice)}</button>
+        </div>
+        ${state.mode === 'list' ? listHtml() : quizHtml()}`;
+      const focus = $('next') || (state.mode === 'practice' && qz.type === 'type' && !qz.answered && $('typed'));
+      if (focus) focus.focus({ preventScroll: true });
+    }
+    function syncChrome() {
+      document.documentElement.lang = lang;
+      const title = D ? `${T.course[taught]} ${D.name} · ${T.kinds[kind] || kind}` : T.course[taught];
+      $('title').textContent = title;
+      document.title = `${title} · Toybox`;
+      $('subtitle').textContent = D ? T.mastered(mastered.size, items.length) : '';
+      $('back').setAttribute('aria-label', T.back);
+      $('back').href = D ? levelHref() : `../${C.dir}/`;
+      $('settings-btn').setAttribute('aria-label', T.settings);
+      $('lang-label').textContent = T.language;
+      $('reset').textContent = T.reset;
+      $('sound-btn').innerHTML = prefs.sound ? ICON_SOUND_ON : ICON_SOUND_OFF;
+      $('sound-btn').setAttribute('aria-label', prefs.sound ? T.soundOn : T.soundOff);
+      $('sound-btn').setAttribute('aria-pressed', String(prefs.sound));
+      $('lang').innerHTML = LANGS.map(l => `<option value="${l.id}" ${l.id === lang ? 'selected' : ''}>${l.name}</option>`).join('');
+    }
+    function update() { syncChrome(); render(); }
+
+    // ---------- Events ----------
+    $('page').addEventListener('click', e => {
+      const tab = e.target.closest('[data-mode]');
+      if (tab) { state.mode = tab.dataset.mode; if (state.mode === 'practice' && qz.review && !qz.current) resetQuiz(); update(); return; }
+      const opt = e.target.closest('[data-opt]');
+      if (opt) { choose(Number(opt.dataset.opt)); return; }
+      const b = e.target.closest('[data-build]');
+      if (b && !qz.answered) { qz.built.push(Number(b.dataset.build)); render(); return; }
+      const u = e.target.closest('[data-unbuild]');
+      if (u && !qz.answered) { qz.built = qz.built.filter(x => x !== Number(u.dataset.unbuild)); render(); return; }
+      if (e.target.closest('#clear')) { qz.built = []; render(); return; }
+      if (e.target.closest('#check')) { qz.type === 'order' ? checkOrder() : checkType(false); return; }
+      if (e.target.closest('#giveup')) { checkType(true); return; }
+      if (e.target.closest('#next')) { next(); return; }
+      if (e.target.closest('#review')) { startReview(qz.review && qz.review.missed.size ? items.filter(it => qz.review.missed.has(it.key)) : items); return; }
+      const say = e.target.closest('[data-say]');
+      if (say) Sound.say(say.dataset.say);
+    });
+    $('page').addEventListener('input', e => { if (e.target.id === 'typed') qz.typed = e.target.value; });
+    document.addEventListener('keydown', e => {
+      if (state.mode !== 'practice' || e.altKey || e.ctrlKey || e.metaKey) return;
+      const inTyped = e.target && e.target.id === 'typed';
+      if (inTyped) { if (e.key === 'Enter') { checkType(false); e.preventDefault(); } return; }
+      if (e.target.closest && e.target.closest('select, input')) return;
+      if (/^[1-4]$/.test(e.key) && !qz.answered) { choose(Number(e.key) - 1); e.preventDefault(); }
+      else if (e.key === 'Enter' && !qz.answered && qz.type === 'order' && qz.built.length === qz.tiles.length) { checkOrder(); e.preventDefault(); }
+      else if ((e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') && qz.answered) {
+        if (document.activeElement && document.activeElement.id === 'next' && e.key !== 'ArrowRight') return;
+        next(); e.preventDefault();
+      }
+    });
+    $('settings-btn').addEventListener('click', () => {
+      state.settings = !state.settings;
+      $('settings').hidden = !state.settings;
+      $('settings-btn').setAttribute('aria-expanded', String(state.settings));
+    });
+    $('lang').addEventListener('change', e => {
+      lang = e.target.value; T = I18N.ui[lang];
+      try { localStorage.setItem(LANG_KEY, lang); } catch (err) {}
+      update();
+    });
+    $('sound-btn').addEventListener('click', () => {
+      prefs.sound = !prefs.sound; store.set(PREFS_KEY, prefs);
+      if (!prefs.sound && window.speechSynthesis) speechSynthesis.cancel();
+      syncChrome();
+    });
+    $('reset').addEventListener('click', () => {
+      if (!D || !window.confirm(T.confirmReset)) return;
+      mastered = new Set(); persist(); resetQuiz(); update();
+    });
+
+    // ---------- Start ----------
+    function fail(msg) {
+      syncChrome();
+      $('page').innerHTML = `<p class="msg">${esc(msg)}</p>`;
+    }
+    if (!m) { fail(T.notFound); return; }
+    kind = m[3]; partNo = Number(m[4]); storageKey = `${setId}-v1`;
+    const script = document.createElement('script');
+    script.src = `data/${m[2]}.js?v=2026-10-31.1`;
+    script.onload = () => {
+      D = window.SENTENCES;
+      if (!D || !buildItems()) { D = null; fail(T.notFound); return; }
+      loadProgress();
+      try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
+      update();
+    };
+    script.onerror = () => fail(T.loadFailed);
+    document.head.appendChild(script);
+  })();
+  </script>
+</body>
+</html>

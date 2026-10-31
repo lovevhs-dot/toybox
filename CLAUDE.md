@@ -14,14 +14,15 @@ This repository is public. Never put personal or sensitive information in it:
 - Language pickers list languages by their own names: Latin-script names first in
   alphabetical order, then other scripts in Unicode order. Currently: English, Français,
   中文（简体）, 日本語, 한국어. English is the default. A learning app leaves out
-  the language it teaches (Hiragana Studio has no 日本語, Hangul Studio has no 한국어).
+  the language it teaches (Hiragana Studio has no 日本語, Hangul Studio has no 한국어, the English
+  course has no English and the French course no Français).
 - Follow international standards and widely accepted conventions wherever one exists, e.g.
   BCP 47 language tags (en, fr, zh-Hans, ja, ko), ISO 8601 dates, ISO 639/3166 codes,
   Unicode and UTF-8, WCAG accessibility, semantic HTML, and established romanization systems
   (Hepburn for Japanese, Revised Romanization for Korean, Hanyu Pinyin for Chinese).
   When no standard exists, use the most common practice and note the choice.
 - Courses and their steps are listed in shared/toybox.js; the home page and each course page
-  (japanese/, chinese/, korean/) render from it. A new app gets its own folder and an entry
+  (japanese/, chinese/, korean/, english/, french/) render from it. A new app gets its own folder and an entry
   there; a series of similar parts (e.g. HSK word lists) shares one app that takes the part from the URL.
   Keep each app small (about 50 cards) so progress stays easy to finish.
 - GitHub Pages caches files for about 10 minutes, so pages load shared/*.css, shared/*.js and

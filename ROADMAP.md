@@ -19,6 +19,8 @@ and what to build next, so any new session can continue without the earlier conv
 | `korean/` | Course page | Hangul live; Batchim, TOPIK 1-6 "coming soon" |
 | `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/ko, readings in each UI language's own spelling |
 | `hangul/` | Hangul Studio | 54 cards (40 jamo + 14 syllables), UI en/fr/zh-Hans/ja |
+| `english/`, `french/` | Course pages | CEFR steps A1-C1; A1 live (3 parts of 40 sentences) |
+| `sentences/` | Shared sentence app | `?set=en-a1-meet-1` or `fr-a1-meet-1`; data in `sentences/data/<level>.js` |
 | `shared/` | Catalog, home/course rendering, shared CSS | Courses and steps live in `shared/toybox.js` |
 
 ## How a studio app works (copy `hangul/` for a new one)
@@ -36,7 +38,31 @@ and what to build next, so any new session can continue without the earlier conv
 - Speech: `Sound.utterance()` sets the language tag (`ja-JP`, `ko-KR`; Chinese uses `zh-CN`).
 - After changing `shared/*` or an `i18n.js`, bump `?v=YYYY-MM-DD.N` everywhere it is loaded.
 - Fonts load without blocking (mainland China blocks Google Fonts); color tints use `rgba(var(--c-rgb))`.
-- Test locally: `python3 -m http.server 8765` in the repo root, then Playwright (Chromium is
+- Test locally: `python3 -m http.server 8765` in the repo root, ## English and French courses (sentence based)
+
+Words alone are too easy for these learners (many basic words are known or shared between English
+and French), so these courses teach everyday sentences, grouped by CEFR level (A1-C1, the
+international framework) and by situation. No exam names are used.
+
+- One sentence set serves both courses: each line of `sentences/src/<level>.txt` is
+  `part|English|French|Chinese|Japanese|Korean`, with the key phrase in [brackets] in English and
+  French. The English course shows the other four as translations; the French course likewise.
+  Write all five together; sentences are original (never from textbooks or exams).
+- Build `sentences/data/<level>.js` from the source (see the A1 build in git history: rows grouped by
+  part, `parts: {part: [count]}`), add the level step with `href` and
+  `makeParts('sentences/', 'en-<level>', {...})` (and `fr-`) in `shared/toybox.js`, copy
+  `english/a1/` and `french/a1/` to the new level, and add the part names to `kinds` in
+  `shared/toybox.js` and `sentences/i18n.js` in every language.
+- Practice: each sentence goes through 4 steps (choose it from the meaning or by ear, fill in the
+  key phrase, put the words in order, type it). A mistake goes back one step; the dots show the
+  step. Typing ignores case and punctuation, accepts English contractions both ways, accepts French
+  answers without accents (with a reminder) and either gender ending (fatigué/fatiguée).
+- Review is the same as in the other apps (a 10-question review of the part that keeps progress).
+- Speech: en-GB for English (British spelling, e.g. favourite), fr-FR for French.
+- Plan per level: A1 meet/daily/out (done); then A2 and up with more situations (work, health,
+  travel problems, opinions, past and future events), about 40-50 sentences per part.
+
+then Playwright (Chromium is
   preinstalled) at mobile (390x844) and desktop widths, light and dark, and with Google Fonts blocked.
   Report anything not tested (e.g. real Safari) instead of claiming it works.
 

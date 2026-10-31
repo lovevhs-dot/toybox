@@ -30,7 +30,7 @@
       continue: 'Continue',
       start: 'Start',
       allSteps: 'All steps',
-      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar', tones: 'Tones', initials: 'Initials', finals: 'Finals' },
+      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar', tones: 'Tones', initials: 'Initials', finals: 'Finals', meet: 'Meeting people', daily: 'Daily life', out: 'Out and about' },
       part: n => `Part ${n}`,
       backup: 'Back up or restore progress',
       backupNote: 'Progress is saved only in this browser. Copy a backup code to keep it safe or move it to another device.',
@@ -62,7 +62,7 @@
       continue: 'Continuer',
       start: 'Commencer',
       allSteps: 'Toutes les étapes',
-      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire', tones: 'Tons', initials: 'Initiales', finals: 'Finales' },
+      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire', tones: 'Tons', initials: 'Initiales', finals: 'Finales', meet: 'Faire connaissance', daily: 'La vie quotidienne', out: 'En ville' },
       part: n => `Partie ${n}`,
       backup: 'Sauvegarder ou restaurer la progression',
       backupNote: 'La progression est enregistrée uniquement dans ce navigateur. Copiez un code de sauvegarde pour la garder ou la transférer sur un autre appareil.',
@@ -94,7 +94,7 @@
       continue: '继续',
       start: '开始',
       allSteps: '全部阶段',
-      kinds: { words: '词汇', chars: '汉字', grammar: '语法', tones: '声调', initials: '声母', finals: '韵母' },
+      kinds: { words: '词汇', chars: '汉字', grammar: '语法', tones: '声调', initials: '声母', finals: '韵母', meet: '认识新朋友', daily: '日常生活', out: '出门在外' },
       part: n => `第 ${n} 部分`,
       backup: '备份或恢复进度',
       backupNote: '进度只保存在这个浏览器里。复制备份码，可以妥善保存或转移到其他设备。',
@@ -126,7 +126,7 @@
       continue: '続ける',
       start: '始める',
       allSteps: 'すべてのステップ',
-      kinds: { words: '語彙', chars: '漢字', grammar: '文法', tones: '声調', initials: '声母', finals: '韻母' },
+      kinds: { words: '語彙', chars: '漢字', grammar: '文法', tones: '声調', initials: '声母', finals: '韻母', meet: '人と知り合う', daily: '毎日の生活', out: '外出先で' },
       part: n => `パート${n}`,
       backup: '進み具合のバックアップ・復元',
       backupNote: '進み具合はこのブラウザにだけ保存されます。バックアップコードをコピーしておけば、安全に保管したり別の端末に移したりできます。',
@@ -158,7 +158,7 @@
       continue: '이어서 하기',
       start: '시작하기',
       allSteps: '전체 단계',
-      kinds: { words: '어휘', chars: '한자', grammar: '문법', tones: '성조', initials: '성모', finals: '운모' },
+      kinds: { words: '어휘', chars: '한자', grammar: '문법', tones: '성조', initials: '성모', finals: '운모', meet: '사람 만나기', daily: '일상생활', out: '밖에서' },
       part: n => `파트 ${n}`,
       backup: '진행 기록 백업·복원',
       backupNote: '진행 기록은 이 브라우저에만 저장돼요. 백업 코드를 복사해두면 안전하게 보관하거나 다른 기기로 옮길 수 있어요.',
@@ -339,6 +339,78 @@
           id: 'topik6',
           name: { en: 'TOPIK 6', fr: 'TOPIK 6', 'zh-Hans': 'TOPIK 6级', ja: 'TOPIK 6級', ko: 'TOPIK 6급' },
           desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
+        }
+      ]
+    },
+    {
+      id: 'english',
+      glyph: 'Aa',
+      glyphClass: 'glyph-latin',
+      color: '#6d4bd8',
+      name: { en: 'English', fr: 'Anglais', 'zh-Hans': '英语', ja: '英語', ko: '영어' },
+      goal: { en: 'Everyday sentences, A1 to C1', fr: 'Phrases du quotidien, de A1 à C1', 'zh-Hans': '日常句子，从 A1 到 C1', ja: '日常のフレーズ、A1からC1まで', ko: '일상 문장, A1부터 C1까지' },
+      steps: [
+        {
+          id: 'en-a1', href: 'english/a1/',
+          parts: makeParts('sentences/', 'en-a1', { meet: [40], daily: [40], out: [40] }),
+          name: { en: 'A1', fr: 'A1', 'zh-Hans': 'A1', ja: 'A1', ko: 'A1' },
+          desc: { en: 'Beginner · everyday sentences', fr: 'Débutant · phrases du quotidien', 'zh-Hans': '入门 · 日常句子', ja: '入門 · 日常のフレーズ', ko: '입문 · 일상 문장' }
+        },
+        {
+          id: 'en-a2',
+          name: { en: 'A2', fr: 'A2', 'zh-Hans': 'A2', ja: 'A2', ko: 'A2' },
+          desc: { en: 'Elementary · everyday sentences', fr: 'Élémentaire · phrases du quotidien', 'zh-Hans': '初级 · 日常句子', ja: '初級 · 日常のフレーズ', ko: '초급 · 일상 문장' }
+        },
+        {
+          id: 'en-b1',
+          name: { en: 'B1', fr: 'B1', 'zh-Hans': 'B1', ja: 'B1', ko: 'B1' },
+          desc: { en: 'Intermediate · everyday sentences', fr: 'Intermédiaire · phrases du quotidien', 'zh-Hans': '中级 · 日常句子', ja: '中級 · 日常のフレーズ', ko: '중급 · 일상 문장' }
+        },
+        {
+          id: 'en-b2',
+          name: { en: 'B2', fr: 'B2', 'zh-Hans': 'B2', ja: 'B2', ko: 'B2' },
+          desc: { en: 'Upper intermediate · everyday sentences', fr: 'Intermédiaire avancé · phrases du quotidien', 'zh-Hans': '中高级 · 日常句子', ja: '中上級 · 日常のフレーズ', ko: '중상급 · 일상 문장' }
+        },
+        {
+          id: 'en-c1',
+          name: { en: 'C1', fr: 'C1', 'zh-Hans': 'C1', ja: 'C1', ko: 'C1' },
+          desc: { en: 'Advanced · everyday sentences', fr: 'Avancé · phrases du quotidien', 'zh-Hans': '高级 · 日常句子', ja: '上級 · 日常のフレーズ', ko: '고급 · 일상 문장' }
+        }
+      ]
+    },
+    {
+      id: 'french',
+      glyph: 'Éé',
+      glyphClass: 'glyph-latin',
+      color: '#1f7a8c',
+      name: { en: 'French', fr: 'Français', 'zh-Hans': '法语', ja: 'フランス語', ko: '프랑스어' },
+      goal: { en: 'Everyday sentences, A1 to C1', fr: 'Phrases du quotidien, de A1 à C1', 'zh-Hans': '日常句子，从 A1 到 C1', ja: '日常のフレーズ、A1からC1まで', ko: '일상 문장, A1부터 C1까지' },
+      steps: [
+        {
+          id: 'fr-a1', href: 'french/a1/',
+          parts: makeParts('sentences/', 'fr-a1', { meet: [40], daily: [40], out: [40] }),
+          name: { en: 'A1', fr: 'A1', 'zh-Hans': 'A1', ja: 'A1', ko: 'A1' },
+          desc: { en: 'Beginner · everyday sentences', fr: 'Débutant · phrases du quotidien', 'zh-Hans': '入门 · 日常句子', ja: '入門 · 日常のフレーズ', ko: '입문 · 일상 문장' }
+        },
+        {
+          id: 'fr-a2',
+          name: { en: 'A2', fr: 'A2', 'zh-Hans': 'A2', ja: 'A2', ko: 'A2' },
+          desc: { en: 'Elementary · everyday sentences', fr: 'Élémentaire · phrases du quotidien', 'zh-Hans': '初级 · 日常句子', ja: '初級 · 日常のフレーズ', ko: '초급 · 일상 문장' }
+        },
+        {
+          id: 'fr-b1',
+          name: { en: 'B1', fr: 'B1', 'zh-Hans': 'B1', ja: 'B1', ko: 'B1' },
+          desc: { en: 'Intermediate · everyday sentences', fr: 'Intermédiaire · phrases du quotidien', 'zh-Hans': '中级 · 日常句子', ja: '中級 · 日常のフレーズ', ko: '중급 · 일상 문장' }
+        },
+        {
+          id: 'fr-b2',
+          name: { en: 'B2', fr: 'B2', 'zh-Hans': 'B2', ja: 'B2', ko: 'B2' },
+          desc: { en: 'Upper intermediate · everyday sentences', fr: 'Intermédiaire avancé · phrases du quotidien', 'zh-Hans': '中高级 · 日常句子', ja: '中上級 · 日常のフレーズ', ko: '중상급 · 일상 문장' }
+        },
+        {
+          id: 'fr-c1',
+          name: { en: 'C1', fr: 'C1', 'zh-Hans': 'C1', ja: 'C1', ko: 'C1' },
+          desc: { en: 'Advanced · everyday sentences', fr: 'Avancé · phrases du quotidien', 'zh-Hans': '高级 · 日常句子', ja: '上級 · 日常のフレーズ', ko: '고급 · 일상 문장' }
         }
       ]
     }
