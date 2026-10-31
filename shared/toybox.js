@@ -269,7 +269,8 @@
           desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },
         {
-          id: 'hsk3',
+          id: 'hsk3', href: 'chinese/hsk3/',
+          parts: makeParts('chinese/study/', 'zh-hsk3', { words: [49, 49, 49, 49, 49, 49, 49, 48, 48, 48], grammar: [33] }),
           name: { en: 'HSK 3', fr: 'HSK 3', 'zh-Hans': 'HSK 3级', ja: 'HSK 3級', ko: 'HSK 3급' },
           desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },
