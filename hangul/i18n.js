@@ -58,6 +58,9 @@ window.I18N = {
       relearn: 'Practice this one again'
     },
     fr: {
+      scriptLabel: 'Notation',
+      nativeGlyph: 'Fr',
+      nativeName: 'Graphie française',
       subtitle: 'Apprenez les lettres, puis testez-vous',
       chart: 'Tableau',
       practice: 'Pratique',
@@ -106,6 +109,9 @@ window.I18N = {
       relearn: 'Revoir ce caractère'
     },
     'zh-Hans': {
+      scriptLabel: '读音标注',
+      nativeGlyph: '拼',
+      nativeName: '拼音式读音',
       subtitle: '先认字母，再自我测验',
       chart: '字表',
       practice: '练习',
@@ -154,6 +160,9 @@ window.I18N = {
       relearn: '重新练习这个'
     },
     ja: {
+      scriptLabel: '読みの表記',
+      nativeGlyph: 'カ',
+      nativeName: 'カタカナ',
       subtitle: '文字を覚えて、腕試し',
       chart: '一覧',
       practice: '練習',

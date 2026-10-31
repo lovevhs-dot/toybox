@@ -171,7 +171,7 @@
       glyphClass: 'glyph-ja',
       color: '#d9452b',
       name: { en: 'Japanese', fr: 'Japonais', 'zh-Hans': '日语', ja: '日本語', ko: '일본어' },
-      goal: { en: 'Step by step to JLPT N5', fr: 'Pas à pas jusqu\'au JLPT N5', 'zh-Hans': '一步步达到 JLPT N5', ja: 'JLPT N5 まで一歩ずつ', ko: 'JLPT N5까지 한 단계씩' },
+      goal: { en: 'Step by step to JLPT N1', fr: 'Pas à pas jusqu\'au JLPT N1', 'zh-Hans': '一步步达到 JLPT N1', ja: 'JLPT N1 まで一歩ずつ', ko: 'JLPT N1까지 한 단계씩' },
       steps: [
         {
           id: 'hiragana', href: 'hiragana/', storageKey: 'hiragana-studio-v1', total: 55,
@@ -179,24 +179,44 @@
           desc: { en: 'The basic Japanese script', fr: 'L\'écriture japonaise de base', 'zh-Hans': '日语的基本文字', ja: '日本語の基本の文字', ko: '일본어의 기본 문자' }
         },
         {
+          id: 'hiragana-2',
+          name: { en: 'Hiragana 2', fr: 'Hiragana 2', 'zh-Hans': '平假名 2', ja: 'ひらがな 2', ko: '히라가나 2' },
+          desc: { en: 'Voiced sounds and combinations', fr: 'Sons voisés et combinaisons', 'zh-Hans': '浊音和拗音', ja: '濁音・半濁音と拗音', ko: '탁음과 요음' }
+        },
+        {
           id: 'katakana',
           name: { en: 'Katakana', fr: 'Katakana', 'zh-Hans': '片假名', ja: 'カタカナ', ko: '가타카나' },
           desc: { en: 'The script for foreign words', fr: 'L\'écriture des mots étrangers', 'zh-Hans': '用于外来词的文字', ja: '外来語に使う文字', ko: '외래어에 쓰는 문자' }
         },
         {
-          id: 'n5-words',
-          name: { en: 'N5 words', fr: 'Vocabulaire N5', 'zh-Hans': 'N5 词汇', ja: 'N5 単語', ko: 'N5 단어' },
-          desc: { en: 'About 800 everyday words', fr: 'Environ 800 mots courants', 'zh-Hans': '约 800 个常用词', ja: 'よく使う約800語', ko: '자주 쓰는 단어 약 800개' }
+          id: 'katakana-2',
+          name: { en: 'Katakana 2', fr: 'Katakana 2', 'zh-Hans': '片假名 2', ja: 'カタカナ 2', ko: '가타카나 2' },
+          desc: { en: 'Voiced sounds and combinations', fr: 'Sons voisés et combinaisons', 'zh-Hans': '浊音和拗音', ja: '濁音・半濁音と拗音', ko: '탁음과 요음' }
         },
         {
-          id: 'n5-kanji',
-          name: { en: 'N5 kanji', fr: 'Kanji N5', 'zh-Hans': 'N5 汉字', ja: 'N5 漢字', ko: 'N5 한자' },
-          desc: { en: 'About 100 basic kanji', fr: 'Environ 100 kanji de base', 'zh-Hans': '约 100 个基础汉字', ja: '基本の漢字 約100字', ko: '기초 한자 약 100자' }
+          id: 'jlpt-n5',
+          name: { en: 'JLPT N5', fr: 'JLPT N5', 'zh-Hans': 'JLPT N5', ja: 'JLPT N5', ko: 'JLPT N5' },
+          desc: { en: 'Words, kanji and grammar', fr: 'Vocabulaire, kanji et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
         },
         {
-          id: 'n5-grammar',
-          name: { en: 'N5 grammar', fr: 'Grammaire N5', 'zh-Hans': 'N5 语法', ja: 'N5 文法', ko: 'N5 문법' },
-          desc: { en: 'Basic sentence patterns', fr: 'Structures de phrase de base', 'zh-Hans': '基础句型', ja: '基本の文型', ko: '기본 문형' }
+          id: 'jlpt-n4',
+          name: { en: 'JLPT N4', fr: 'JLPT N4', 'zh-Hans': 'JLPT N4', ja: 'JLPT N4', ko: 'JLPT N4' },
+          desc: { en: 'Words, kanji and grammar', fr: 'Vocabulaire, kanji et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
+        },
+        {
+          id: 'jlpt-n3',
+          name: { en: 'JLPT N3', fr: 'JLPT N3', 'zh-Hans': 'JLPT N3', ja: 'JLPT N3', ko: 'JLPT N3' },
+          desc: { en: 'Words, kanji and grammar', fr: 'Vocabulaire, kanji et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
+        },
+        {
+          id: 'jlpt-n2',
+          name: { en: 'JLPT N2', fr: 'JLPT N2', 'zh-Hans': 'JLPT N2', ja: 'JLPT N2', ko: 'JLPT N2' },
+          desc: { en: 'Words, kanji and grammar', fr: 'Vocabulaire, kanji et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
+        },
+        {
+          id: 'jlpt-n1',
+          name: { en: 'JLPT N1', fr: 'JLPT N1', 'zh-Hans': 'JLPT N1', ja: 'JLPT N1', ko: 'JLPT N1' },
+          desc: { en: 'Words, kanji and grammar', fr: 'Vocabulaire, kanji et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
         }
       ]
     },
@@ -206,7 +226,7 @@
       glyphClass: 'glyph-zh',
       color: '#0f8b6c',
       name: { en: 'Chinese', fr: 'Chinois', 'zh-Hans': '中文', ja: '中国語', ko: '중국어' },
-      goal: { en: 'Step by step toward HSK 6', fr: 'Pas à pas vers le HSK 6', 'zh-Hans': '一步步迈向 HSK 6', ja: 'HSK 6級まで一歩ずつ', ko: 'HSK 6급까지 한 단계씩' },
+      goal: { en: 'Step by step to HSK 6', fr: 'Pas à pas jusqu\'au HSK 6', 'zh-Hans': '一步步达到 HSK 6级', ja: 'HSK 6級まで一歩ずつ', ko: 'HSK 6급까지 한 단계씩' },
       steps: [
         {
           id: 'pinyin',
@@ -215,33 +235,33 @@
         },
         {
           id: 'hsk1',
-          name: { en: 'HSK 1', fr: 'HSK 1', 'zh-Hans': 'HSK 1', ja: 'HSK 1', ko: 'HSK 1' },
-          desc: { en: '300 first words', fr: '300 premiers mots', 'zh-Hans': '最初的 300 个词', ja: '最初の300語', ko: '첫 단어 300개' }
+          name: { en: 'HSK 1', fr: 'HSK 1', 'zh-Hans': 'HSK 1级', ja: 'HSK 1級', ko: 'HSK 1급' },
+          desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
         },
         {
           id: 'hsk2',
-          name: { en: 'HSK 2', fr: 'HSK 2', 'zh-Hans': 'HSK 2', ja: 'HSK 2', ko: 'HSK 2' },
-          desc: { en: '+200 words · 500 in total', fr: '+200 mots · 500 au total', 'zh-Hans': '新增 200 词 · 累计 500', ja: '+200語 · 累計500語', ko: '단어 200개 추가 · 누적 500개' }
+          name: { en: 'HSK 2', fr: 'HSK 2', 'zh-Hans': 'HSK 2级', ja: 'HSK 2級', ko: 'HSK 2급' },
+          desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
         },
         {
           id: 'hsk3',
-          name: { en: 'HSK 3', fr: 'HSK 3', 'zh-Hans': 'HSK 3', ja: 'HSK 3', ko: 'HSK 3' },
-          desc: { en: '+500 words · 1,000 in total', fr: '+500 mots · 1 000 au total', 'zh-Hans': '新增 500 词 · 累计 1,000', ja: '+500語 · 累計1,000語', ko: '단어 500개 추가 · 누적 1,000개' }
+          name: { en: 'HSK 3', fr: 'HSK 3', 'zh-Hans': 'HSK 3级', ja: 'HSK 3級', ko: 'HSK 3급' },
+          desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
         },
         {
           id: 'hsk4',
-          name: { en: 'HSK 4', fr: 'HSK 4', 'zh-Hans': 'HSK 4', ja: 'HSK 4', ko: 'HSK 4' },
-          desc: { en: '+1,000 words · 2,000 in total', fr: '+1 000 mots · 2 000 au total', 'zh-Hans': '新增 1,000 词 · 累计 2,000', ja: '+1,000語 · 累計2,000語', ko: '단어 1,000개 추가 · 누적 2,000개' }
+          name: { en: 'HSK 4', fr: 'HSK 4', 'zh-Hans': 'HSK 4级', ja: 'HSK 4級', ko: 'HSK 4급' },
+          desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
         },
         {
           id: 'hsk5',
-          name: { en: 'HSK 5', fr: 'HSK 5', 'zh-Hans': 'HSK 5', ja: 'HSK 5', ko: 'HSK 5' },
-          desc: { en: '+1,600 words · 3,600 in total', fr: '+1 600 mots · 3 600 au total', 'zh-Hans': '新增 1,600 词 · 累计 3,600', ja: '+1,600語 · 累計3,600語', ko: '단어 1,600개 추가 · 누적 3,600개' }
+          name: { en: 'HSK 5', fr: 'HSK 5', 'zh-Hans': 'HSK 5级', ja: 'HSK 5級', ko: 'HSK 5급' },
+          desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
         },
         {
           id: 'hsk6',
-          name: { en: 'HSK 6', fr: 'HSK 6', 'zh-Hans': 'HSK 6', ja: 'HSK 6', ko: 'HSK 6' },
-          desc: { en: '+1,800 words · 5,400 in total', fr: '+1 800 mots · 5 400 au total', 'zh-Hans': '新增 1,800 词 · 累计 5,400', ja: '+1,800語 · 累計5,400語', ko: '단어 1,800개 추가 · 누적 5,400개' }
+          name: { en: 'HSK 6', fr: 'HSK 6', 'zh-Hans': 'HSK 6级', ja: 'HSK 6級', ko: 'HSK 6급' },
+          desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
         }
       ]
     },
@@ -251,7 +271,7 @@
       glyphClass: 'glyph-ko',
       color: '#2f5bd3',
       name: { en: 'Korean', fr: 'Coréen', 'zh-Hans': '韩语', ja: '韓国語', ko: '한국어' },
-      goal: { en: 'Step by step to TOPIK I level 1', fr: 'Pas à pas jusqu\'au TOPIK I niveau 1', 'zh-Hans': '一步步达到 TOPIK I 一级', ja: 'TOPIK I 1級まで一歩ずつ', ko: 'TOPIK I 1급까지 한 단계씩' },
+      goal: { en: 'Step by step to TOPIK level 6', fr: 'Pas à pas jusqu\'au TOPIK niveau 6', 'zh-Hans': '一步步达到 TOPIK 6级', ja: 'TOPIK 6級まで一歩ずつ', ko: 'TOPIK 6급까지 한 단계씩' },
       steps: [
         {
           id: 'hangul', href: 'hangul/', storageKey: 'hangul-studio-v1', total: 54,
@@ -264,14 +284,34 @@
           desc: { en: 'Consonants at the end of a syllable', fr: 'Les consonnes en fin de syllabe', 'zh-Hans': '音节末尾的辅音', ja: '音節の終わりの子音', ko: '음절의 끝소리' }
         },
         {
-          id: 'topik1-words',
-          name: { en: 'TOPIK I words', fr: 'Vocabulaire TOPIK I', 'zh-Hans': 'TOPIK I 词汇', ja: 'TOPIK I 単語', ko: 'TOPIK I 단어' },
-          desc: { en: 'About 800 everyday words', fr: 'Environ 800 mots courants', 'zh-Hans': '约 800 个常用词', ja: 'よく使う約800語', ko: '자주 쓰는 단어 약 800개' }
+          id: 'topik1',
+          name: { en: 'TOPIK 1', fr: 'TOPIK 1', 'zh-Hans': 'TOPIK 1级', ja: 'TOPIK 1級', ko: 'TOPIK 1급' },
+          desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },
         {
-          id: 'ko-grammar',
-          name: { en: 'Basic grammar', fr: 'Grammaire de base', 'zh-Hans': '基础语法', ja: '基本文法', ko: '기초 문법' },
-          desc: { en: 'Particles and sentence endings', fr: 'Particules et terminaisons', 'zh-Hans': '助词和词尾', ja: '助詞と語尾', ko: '조사와 어미' }
+          id: 'topik2',
+          name: { en: 'TOPIK 2', fr: 'TOPIK 2', 'zh-Hans': 'TOPIK 2级', ja: 'TOPIK 2級', ko: 'TOPIK 2급' },
+          desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
+        },
+        {
+          id: 'topik3',
+          name: { en: 'TOPIK 3', fr: 'TOPIK 3', 'zh-Hans': 'TOPIK 3级', ja: 'TOPIK 3級', ko: 'TOPIK 3급' },
+          desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
+        },
+        {
+          id: 'topik4',
+          name: { en: 'TOPIK 4', fr: 'TOPIK 4', 'zh-Hans': 'TOPIK 4级', ja: 'TOPIK 4級', ko: 'TOPIK 4급' },
+          desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
+        },
+        {
+          id: 'topik5',
+          name: { en: 'TOPIK 5', fr: 'TOPIK 5', 'zh-Hans': 'TOPIK 5级', ja: 'TOPIK 5級', ko: 'TOPIK 5급' },
+          desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
+        },
+        {
+          id: 'topik6',
+          name: { en: 'TOPIK 6', fr: 'TOPIK 6', 'zh-Hans': 'TOPIK 6级', ja: 'TOPIK 6級', ko: 'TOPIK 6급' },
+          desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         }
       ]
     }

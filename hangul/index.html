@@ -1189,6 +1189,30 @@
 
 
 
+    .script-toggle {
+      flex: none;
+      display: flex;
+      padding: 2px;
+      border-radius: 999px;
+      background: var(--surface-2);
+    }
+
+    .script-toggle[hidden] { display: none; }
+
+    .script-toggle button {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-3);
+    }
+
+    .script-toggle button[aria-pressed="true"] {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow-1);
+    }
+
     @media (max-width: 480px) {
       .brand-text { display: none; }
     }
@@ -1233,6 +1257,13 @@
             <span class="switch-track"></span>
           </label>
         </div>
+        <div class="set-row" id="script-row" hidden>
+          <span id="script-label"></span>
+          <div class="script-toggle" id="script">
+            <button type="button" data-script="romaji" aria-label="Romanization">abc</button>
+            <button type="button" data-script="native" id="native-btn"></button>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -1247,7 +1278,7 @@
 
   <div class="sheet-backdrop" id="backdrop"></div>
 
-  <script src="i18n.js?v=2026-10-31.3"></script>
+  <script src="i18n.js?v=2026-10-31.4"></script>
   <script>
     // All 40 letters (basic and compound vowels, basic and double consonants)
     // plus starter syllables (consonant + ㅏ).
@@ -1432,8 +1463,12 @@
     }
 
     // English readers get the standard romanization; others get a hint in their own system
+    function nativeMode() {
+      return state.script === 'native' && !!I18N.sound[lang];
+    }
+
     function reading(item) {
-      return lang === 'en' ? item.romaji : I18N.sound[lang][item.char];
+      return nativeMode() ? I18N.sound[lang][item.char] : item.romaji;
     }
 
     function catLabel(id) {
@@ -1464,7 +1499,7 @@
 
     function persist() {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ mastered: [...mastered], sound: Sound.on }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ mastered: [...mastered], sound: Sound.on, script: state.script }));
       } catch (e) {}
     }
 
@@ -1560,6 +1595,7 @@
       mode: 'explore',
       category: 'vowels',
       showRomaji: true,
+      script: saved.script === 'romaji' ? 'romaji' : 'native',
       selectedChar: 'ㅏ',
       sheetOpen: false,
       quiz: {
@@ -1584,6 +1620,7 @@
     const $chips = document.getElementById('chips');
     const $mode = document.getElementById('mode');
     const $switch = document.getElementById('romaji-switch');
+    const $script = document.getElementById('script');
     const $sound = document.getElementById('sound');
     const $lang = document.getElementById('lang');
 
@@ -1638,6 +1675,14 @@
       $sound.setAttribute('aria-pressed', String(Sound.on));
       $sound.setAttribute('aria-label', Sound.on ? T.soundOn : T.soundOff);
       $sound.innerHTML = Sound.on ? ICON_SOUND_ON : ICON_SOUND_OFF;
+      document.getElementById('script-row').hidden = !I18N.sound[lang];
+      document.getElementById('script-label').textContent = T.scriptLabel || '';
+      const $native = document.getElementById('native-btn');
+      $native.textContent = T.nativeGlyph || '';
+      $native.setAttribute('aria-label', T.nativeName || '');
+      $script.querySelectorAll('button').forEach(btn => {
+        btn.setAttribute('aria-pressed', String(btn.dataset.script === state.script));
+      });
     }
 
     // Text that lives in the static markup
@@ -1748,7 +1793,7 @@
         <div class="paper"><span class="big ${c.char.length > 1 ? 'long' : ''}">${c.char}</span></div>
         <div class="reading">
           <span>${reading(c)}</span>
-          ${lang !== 'en' ? `<span class="reading-sub">${c.romaji}</span>` : ''}
+          ${nativeMode() ? `<span class="reading-sub">${c.romaji}</span>` : ''}
           <button type="button" class="icon-btn speak-btn" data-speak="${c.say}" aria-label="${T.play}">${ICON_SPEAK}</button>
         </div>
         <div class="block">
@@ -2169,6 +2214,16 @@
     $switch.addEventListener('change', e => {
       state.showRomaji = e.target.checked;
       syncChrome();
+    });
+
+    $script.addEventListener('click', e => {
+      const btn = e.target.closest('button[data-script]');
+      if (!btn || btn.dataset.script === state.script) return;
+      state.script = btn.dataset.script;
+      // Options were picked for the old notation, so pick a fresh question
+      if (state.quiz.current && !state.quiz.isAnswered) pickQuestion();
+      persist();
+      render();
     });
 
     $lang.addEventListener('change', e => setLang(e.target.value));

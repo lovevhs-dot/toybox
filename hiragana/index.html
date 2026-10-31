@@ -1297,7 +1297,7 @@
 
   <div class="sheet-backdrop" id="backdrop"></div>
 
-  <script src="i18n.js?v=2026-10-31.4"></script>
+  <script src="i18n.js?v=2026-10-31.5"></script>
   <script>
     const HIRAGANA_DATA = [
       // Vowels & K / S
@@ -1623,7 +1623,7 @@
       mode: 'explore',
       category: 'basic_1',
       showRomaji: true,
-      script: saved.script === 'native' || saved.script === 'hangul' ? 'native' : 'romaji',
+      script: saved.script === 'romaji' ? 'romaji' : 'native',
       selectedKana: 'あ',
       sheetOpen: false,
       quiz: {
