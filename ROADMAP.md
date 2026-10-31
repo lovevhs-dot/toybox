@@ -18,7 +18,7 @@ and what to build next, so any new session can continue without the earlier conv
 | `chinese/hsk5/` | HSK 5 level page | 31 word parts (1,547), 1 grammar part (30) |
 | `chinese/hsk6/` | HSK 6 level page | 34 word parts (1,684), 1 grammar part (30) |
 | `chinese/chengyu/` | Idioms and sayings | 3 parts of chengyu (150), 1 part of sayings and colloquial words (50); not in the HSK 1-6 lists |
-| `chinese/study/` | Shared study app | `?set=zh-hsk1-words-1` etc.; list + mastery practice; UI en/fr/ja/ko |
+| `chinese/study/` | Shared study app | `?set=zh-hsk1-words-1` etc.; list + mastery practice; UI en/fr/ja/ko; grammar alternates fill-in and word order (tiles built by `build_level.py`); optional traditional characters |
 | `korean/` | Course page | Hangul live; Batchim, TOPIK 1-6 "coming soon" |
 | `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/ko, readings in each UI language's own spelling |
 | `hangul/` | Hangul Studio | 54 cards (40 jamo + 14 syllables), UI en/fr/zh-Hans/ja |
@@ -77,6 +77,16 @@ grouped by situation. No exam names are used.
 then Playwright (Chromium is
   preinstalled) at mobile (390x844) and desktop widths, light and dark, and with Google Fonts blocked.
   Report anything not tested (e.g. real Safari) instead of claiming it works.
+
+## Guiding principle (all five languages)
+
+Learning should feel fresh and quick, not like exam drill: keep the tempo fast, vary the question
+types, and keep bringing in something new that wakes the brain up. Exams (HSK, JLPT, TOPIK, CEFR)
+set the scope, but every new step should also pass this check: is it short, varied and fun?
+- Right answers move on by themselves (after the word or sentence is spoken); a wrong answer waits
+  for Next so the learner can read the correction. All four practice apps do this.
+- Prefer new question types made from existing content (e.g. putting a grammar sentence's words in
+  order) over more of the same.
 
 ## Course design (same for all three languages)
 

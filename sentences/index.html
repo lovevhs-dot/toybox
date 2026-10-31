@@ -276,17 +276,25 @@
         return vs.find(v => v.lang.toLowerCase().replace('_', '-') === want) || vs.find(v => v.lang.toLowerCase().startsWith(taught)) || null;
       },
       canSpeak() { return !!(window.speechSynthesis && this.voice()); },
+      // Speaks and resolves true once finished (or after a time limit), false when it can't speak
       say(text) {
-        if (!window.speechSynthesis || !prefs.sound) return;
-        try {
-          speechSynthesis.cancel();
-          const u = new SpeechSynthesisUtterance(text);
-          u.lang = C.speech;
-          const v = this.voice();
-          if (v) u.voice = v;
-          u.rate = 0.9;
-          speechSynthesis.speak(u);
-        } catch (e) {}
+        return new Promise(resolve => {
+          if (!window.speechSynthesis || !prefs.sound) return resolve(false);
+          let done = false;
+          const end = () => { if (!done) { done = true; resolve(true); } };
+          try {
+            speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = C.speech;
+            const v = this.voice();
+            if (v) u.voice = v;
+            u.rate = 0.9;
+            u.onend = end; u.onerror = end;
+            // Some browsers never fire onend, so don't wait forever
+            setTimeout(end, Math.min(8000, 1500 + text.length * 90));
+            speechSynthesis.speak(u);
+          } catch (e) { resolve(false); }
+        });
       }
     };
     if (window.speechSynthesis) speechSynthesis.onvoiceschanged = () => {};
@@ -445,8 +453,17 @@
         qz.last = it.key;
       }
       update();
+      // Say the sentence; after a right answer move on by itself to keep the pace (a wrong one waits for Next)
       const seq = qz.seq;
-      setTimeout(() => { if (seq === qz.seq && qz.answered) Sound.say(it.text); }, ok ? 350 : 500);
+      const still = () => seq === qz.seq && qz.answered && qz.current === it;
+      setTimeout(() => {
+        if (!still()) return;
+        const started = Date.now();
+        Sound.say(it.text).then(spoke => {
+          if (!ok || qz.result === 'accents' || !still()) return;
+          setTimeout(() => { if (still()) next(); }, spoke ? 250 : Math.max(0, 900 - (Date.now() - started)));
+        });
+      }, ok ? 350 : 500);
     }
 
     function choose(i) {

@@ -76,18 +76,43 @@ def py_sentence(t):
             words[k]='Bú' if words[k][0]=='B' else 'bú'
     s2=' '.join(words)
     return s2[:1].upper()+s2[1:]
+# Word tiles for the "put the words in order" question: the answer stays one tile, the rest are
+# words from the lists, grouped within each clause so a sentence has about 6 tiles; punctuation is left out
+PUNCT='，。？！：；、'
+PARTICLES=set('的了着过地得吗呢吧啊')
+def tiles(g):
+    before, after = g[1].split('＿')
+    def clauses(t):
+        # Clauses split at punctuation; particles (的 了 得 …) stay with the word before them
+        out, cur = [], []
+        for w in cut(t):
+            if w in PUNCT:
+                if cur: out.append(cur); cur = []
+            elif w in PARTICLES and cur: cur[-1] += w
+            else: cur.append(w)
+        if cur: out.append(cur)
+        return out
+    b, a = clauses(before), clauses(after)
+    n = sum(map(len, b + a))
+    size = 1 if n <= 6 else -(-n // 5)
+    group = lambda cl: [''.join(cl[i:i + size]) for i in range(0, len(cl), size)]
+    return [t for cl in b for t in group(cl)] + [g[2]] + [t for cl in a for t in group(cl)]
 gloss={}
 for g in grow:
     g.append(py_sentence(g[1].replace('＿', g[2])))
+    g.append(tiles(g))
     for o in [g[2]]+g[3]:
         gloss[o]=gl.get(o) or [py_word(o),'','','','']
+# Traditional characters from the word list, kept only where they differ (shown with a setting)
+trad={l.split('\t')[0]: l.split('\t')[1] for l in open(tsvp) if not l.startswith('#')}
+W=[w[:6]+[trad.get(w[0],'') if trad.get(w[0],'')!=w[0] else ''] for w in W]
 q,r=divmod(len(W),nparts); sizes=[q+1]*r+[q]*(nparts-r)
 data={'id':f'hsk{n}','name':f'HSK {n}','words':W,'grammar':grow,'gloss':gloss,'parts':{'words':sizes,'grammar':[len(grow)]}}
 with open(f'chinese/hsk{n}/data.js','w') as o:
     o.write(f'// HSK {n} (2025 syllabus): words and grammar patterns. Characters are practiced inside the words.\n'
             f'// Word list: chinese/data/hsk{n}.tsv. Meanings and example sentences are original to this repo.\n'
-            '// Rows: words [hanzi, pinyin, en, fr, ja, ko];\n'
-            '// grammar [pattern, sentence with ＿, answer, [wrong options], en, fr, ja, ko, note en, note fr, note ja, note ko, sentence pinyin];\n'
+            '// Rows: words [hanzi, pinyin, en, fr, ja, ko, traditional (empty when the same)];\n'
+            '// grammar [pattern, sentence with ＿, answer, [wrong options], en, fr, ja, ko, note en, note fr, note ja, note ko, sentence pinyin, [word tiles]];\n'
             '// gloss: grammar options {word: [pinyin, en, fr, ja, ko]} (empty meanings when not in the word lists).\n'
             'window.ZH_LEVEL = '+json.dumps(data,ensure_ascii=False,separators=(',',':')).replace('],[','],\n[')+';\n')
 wmap={w[0]:w for w in W}; out=[]
