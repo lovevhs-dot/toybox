@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Arcade · Toybox</title>
+  <meta name="description" content="60-second language rounds: tap the right answer before the card hits the line. Nothing is saved.">
+  <meta name="theme-color" content="#0b0a12">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Arcade · Toybox">
+  <meta property="og:description" content="60-second language rounds: tap the right answer before the card hits the line.">
+  <meta property="og:url" content="https://nanyan4.github.io/toybox/arcade/">
+  <meta property="og:image" content="https://nanyan4.github.io/toybox/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="32x32" href="/toybox/toybox-icon-32.png?v=4">
+  <link rel="icon" type="image/png" sizes="180x180" href="/toybox/toybox-icon-180.png?v=4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/toybox/toybox-icon-180.png?v=4">
+  <style>
+    :root {
+      --bg: #0b0a12; --bg-2: #15131f; --panel: #1c1a29; --line: #2c2940; --text: #f4f2ff; --text-2: #a9a4c4;
+      --neon: #7c5cff; --neon-rgb: 124, 92, 255; --hot: #ff4fa3; --cyan: #2ee6d6; --gold: #ffd23f; --miss: #ff5d5d;
+      --ff: 'Inter', system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Hiragino Sans', 'Noto Sans CJK SC', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      --beat: 0.5s;
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body { background: var(--bg); color: var(--text); font-family: var(--ff); -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
+    button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+    button:focus-visible, a:focus-visible, select:focus-visible { outline: 3px solid var(--cyan); outline-offset: 2px; }
+    a { color: inherit; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    /* ---------- Top bar ---------- */
+    .top { display: flex; align-items: center; gap: 8px; padding: 12px 16px; max-width: 960px; margin: 0 auto; }
+    .home { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 800; padding: 6px 10px 6px 6px; border-radius: 12px; }
+    .home:hover { background: var(--bg-2); }
+    .home svg { width: 18px; height: 18px; }
+    .spacer { flex: 1; }
+    .pill-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; background: var(--bg-2); font-size: 13px; font-weight: 700; color: var(--text-2); }
+    .pill-btn[aria-pressed="true"] { color: var(--text); box-shadow: inset 0 0 0 1.5px var(--cyan); }
+    .pill-btn svg { width: 16px; height: 16px; }
+    .pill-btn { white-space: nowrap; }
+    @media (max-width: 520px) { .pill-btn .txt { display: none; } .pill-btn { padding: 8px 11px; font-size: 15px; } }
+    .lang-sel { background: var(--bg-2); color: var(--text-2); border: 0; border-radius: 999px; padding: 8px 10px; font: inherit; font-size: 13px; font-weight: 700; }
+
+    /* ---------- Lobby ---------- */
+    .lobby { max-width: 960px; margin: 0 auto; padding: 0 16px 32px; }
+    .lobby h1 { font-size: clamp(34px, 9vw, 64px); line-height: 1; margin: 12px 0 6px; letter-spacing: -0.03em; font-weight: 900; font-style: italic;
+      background: linear-gradient(90deg, var(--cyan), var(--neon), var(--hot)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .tagline { color: var(--text-2); margin: 0 0 18px; }
+    .lang-tabs { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 10px; scrollbar-width: none; }
+    .lang-tabs::-webkit-scrollbar { display: none; }
+    .lang-tab { flex: none; padding: 10px 16px; border-radius: 14px; background: var(--bg-2); font-weight: 800; font-size: 16px; color: var(--text-2); transition: transform 0.15s, box-shadow 0.15s; }
+    .lang-tab[aria-selected="true"] { color: var(--text); box-shadow: inset 0 0 0 2px var(--neon), 0 0 18px rgba(var(--neon-rgb), 0.45); }
+    .lang-tab:hover { transform: translateY(-1px); }
+
+    .wheel-wrap { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 8px; }
+    @media (min-width: 760px) { .wheel-wrap { grid-template-columns: 1.2fr 1fr; align-items: center; } }
+    .wheel { position: relative; height: 380px; overflow: hidden; perspective: 900px; touch-action: pan-x;
+      mask-image: linear-gradient(transparent, #000 18%, #000 82%, transparent); -webkit-mask-image: linear-gradient(transparent, #000 18%, #000 82%, transparent); }
+    .track { position: absolute; left: 8px; right: 8px; top: 50%; height: 76px; margin-top: -38px; display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+      border-radius: 16px; background: var(--panel); text-align: left; transform-origin: left center; transition: transform 0.28s cubic-bezier(.2,.8,.2,1), opacity 0.28s, box-shadow 0.2s;
+      box-shadow: inset 0 0 0 1px var(--line); }
+    .track.sel { box-shadow: inset 0 0 0 2px var(--neon), 0 0 28px rgba(var(--neon-rgb), 0.55); animation: neon var(--beat) ease-in-out infinite alternate; }
+    .track:hover { box-shadow: inset 0 0 0 2px var(--cyan); }
+    @keyframes neon { to { box-shadow: inset 0 0 0 2px var(--hot), 0 0 38px rgba(255, 79, 163, 0.55); } }
+    .track-num { width: 34px; font-weight: 900; font-size: 20px; color: var(--text-2); font-variant-numeric: tabular-nums; font-style: italic; }
+    .track-text { flex: 1; min-width: 0; }
+    .track-title { display: block; font-weight: 800; font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .track-sub { display: block; color: var(--text-2); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bpm { flex: none; text-align: right; font-weight: 900; font-style: italic; font-size: 22px; line-height: 1; font-variant-numeric: tabular-nums; }
+    .bpm small { display: block; font-size: 10px; letter-spacing: 0.12em; color: var(--text-2); font-style: normal; }
+    .tier { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 900; letter-spacing: 0.08em; margin-right: 6px; color: #0b0a12; }
+    .tier.EASY { background: var(--cyan); } .tier.NORMAL { background: #8be36b; } .tier.HARD { background: var(--gold); }
+    .tier.EXPERT { background: var(--hot); } .tier.MASTER { background: linear-gradient(90deg, var(--gold), var(--hot), var(--neon)); color: #fff; }
+    .detail { padding: 18px; border-radius: 20px; background: var(--panel); box-shadow: inset 0 0 0 1px var(--line); display: grid; gap: 12px; }
+    .detail-lang { font-weight: 800; color: var(--text-2); }
+    .detail-title { font-size: 30px; font-weight: 900; margin: 0; line-height: 1.1; }
+    .detail-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--text-2); font-weight: 700; }
+    .detail-how { margin: 0; color: var(--text-2); font-size: 14px; line-height: 1.5; }
+    .play-btn { padding: 18px; border-radius: 18px; font-size: 22px; font-weight: 900; letter-spacing: 0.08em; color: #fff;
+      background: linear-gradient(90deg, var(--neon), var(--hot)); box-shadow: 0 0 30px rgba(255, 79, 163, 0.45); animation: glow var(--beat) ease-in-out infinite alternate; }
+    @keyframes glow { to { box-shadow: 0 0 46px rgba(124, 92, 255, 0.7); } }
+    .study-link { justify-self: center; color: var(--text-2); font-size: 14px; font-weight: 700; }
+    .wheel-nav { display: flex; gap: 8px; justify-content: center; }
+    .wheel-nav button { width: 44px; height: 44px; border-radius: 12px; background: var(--bg-2); font-size: 18px; }
+
+    /* ---------- Game ---------- */
+    .game { position: fixed; inset: 0; display: grid; grid-template-rows: auto 1fr auto; background: radial-gradient(ellipse at 50% 120%, rgba(var(--neon-rgb), 0.25), transparent 60%), var(--bg);
+      padding: env(safe-area-inset-top) 0 calc(env(safe-area-inset-bottom) + 10px); }
+    .game[hidden] { display: none; }
+    .hud { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 12px 16px 6px; max-width: 760px; width: 100%; margin: 0 auto; }
+    .hud-close { width: 40px; height: 40px; border-radius: 12px; background: var(--bg-2); font-size: 18px; }
+    .timebar { height: 8px; border-radius: 99px; background: var(--bg-2); overflow: hidden; }
+    .timebar span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--cyan), var(--neon), var(--hot)); transform-origin: left; }
+    .hud-time { font-weight: 900; font-variant-numeric: tabular-nums; min-width: 34px; text-align: right; }
+    .stage { position: relative; overflow: hidden; max-width: 760px; width: 100%; margin: 0 auto; }
+    .lanes-bg { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(4, 1fr); pointer-events: none; opacity: 0.5; }
+    .lanes-bg i { border-left: 1px solid rgba(255,255,255,0.05); }
+    .hitline { position: absolute; left: 12px; right: 12px; height: 4px; border-radius: 4px; background: var(--hot); box-shadow: 0 0 14px var(--hot); }
+    .hitline.pulse { animation: hl 0.18s ease-out; }
+    @keyframes hl { from { transform: scaleY(2.6); box-shadow: 0 0 30px var(--hot); } }
+    .note { position: absolute; z-index: 1; left: 50%; top: 0; width: min(560px, calc(100% - 32px)); transform: translate(-50%, 0); padding: 14px 18px; border-radius: 18px;
+      background: linear-gradient(180deg, #262340, #1c1a2c); box-shadow: inset 0 0 0 2px rgba(var(--neon-rgb), 0.8), 0 10px 30px rgba(0,0,0,0.4); text-align: center; will-change: transform; }
+    .note-label { display: block; font-size: 12px; font-weight: 800; letter-spacing: 0.06em; color: var(--cyan); text-transform: uppercase; }
+    .note-main { display: block; font-weight: 800; font-size: clamp(22px, 6vw, 34px); line-height: 1.3; word-break: break-word; }
+    .note-main.big { font-size: clamp(44px, 14vw, 72px); line-height: 1.1; }
+    .note-main.long { font-size: clamp(17px, 4.6vw, 22px); }
+    .note-main .gap { display: inline-block; min-width: 3em; border-bottom: 3px solid var(--hot); }
+    .note-sub { display: block; margin-top: 6px; color: var(--text-2); font-size: 14px; }
+    .note.hit { animation: noteHit 0.28s ease-out forwards; }
+    .note.missed { animation: noteMiss 0.45s ease-in forwards; }
+    @keyframes noteHit { to { transform: translate(-50%, var(--y)) scale(1.15); opacity: 0; } }
+    @keyframes noteMiss { to { transform: translate(-50%, calc(var(--y) + 40px)) rotate(4deg); opacity: 0; filter: grayscale(1); } }
+    .judge { position: absolute; z-index: 2; left: 0; right: 0; text-align: center; font-weight: 900; font-style: italic; font-size: clamp(32px, 10vw, 54px); pointer-events: none; letter-spacing: 0.02em; }
+    .judge.show { animation: pop 0.55s cubic-bezier(.2,1.6,.4,1) forwards; }
+    @keyframes pop { 0% { transform: scale(0.4); opacity: 0; } 25% { transform: scale(1.15); opacity: 1; } 70% { transform: scale(1); opacity: 1; } 100% { transform: scale(1) translateY(-14px); opacity: 0; } }
+    .judge.PERFECT { color: var(--gold); text-shadow: 0 0 18px rgba(255, 210, 63, 0.7); }
+    .judge.GREAT { color: var(--cyan); text-shadow: 0 0 14px rgba(46, 230, 214, 0.6); }
+    .judge.GOOD { color: #8be36b; }
+    .judge.MISS { color: var(--miss); }
+    .combo { position: absolute; top: 46%; right: 16px; z-index: 0; opacity: 0.85; text-align: right; font-weight: 900; font-style: italic; line-height: 1; pointer-events: none; }
+    .combo b { display: block; font-size: 44px; font-variant-numeric: tabular-nums; }
+    .combo small { font-size: 12px; letter-spacing: 0.15em; color: var(--text-2); }
+    .combo.bump b { animation: bump 0.18s ease-out; }
+    @keyframes bump { from { transform: scale(1.35); } }
+    .shard { position: absolute; font-weight: 900; font-style: italic; font-size: 44px; color: var(--miss); pointer-events: none; animation: shard 0.6s ease-in forwards; }
+    @keyframes shard { to { transform: translate(var(--dx), var(--dy)) rotate(var(--r)); opacity: 0; } }
+    .fever-tag { position: absolute; top: 12px; left: 16px; font-weight: 900; font-style: italic; letter-spacing: 0.1em; color: var(--gold); opacity: 0; pointer-events: none; }
+    .lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px 12px 0; max-width: 760px; width: 100%; margin: 0 auto; }
+    @media (min-width: 700px) { .lanes { grid-template-columns: repeat(4, 1fr); } }
+    .lane { position: relative; min-height: 76px; padding: 10px 12px 10px 30px; border-radius: 18px; background: var(--panel); box-shadow: inset 0 0 0 1.5px var(--line), 0 4px 0 #09080f;
+      font-weight: 800; font-size: 17px; line-height: 1.25; text-align: center; word-break: break-word; transition: transform 0.06s; display: flex; align-items: center; justify-content: center; }
+    .lane:active, .lane.down { transform: translateY(3px); box-shadow: inset 0 0 0 1.5px var(--neon), 0 1px 0 #09080f; }
+    .lane .key { position: absolute; left: 10px; top: 8px; font-size: 11px; color: var(--text-2); font-weight: 900; }
+    .lane.big { font-size: 28px; }
+    .lane.small { font-size: 14px; }
+    .lane.right { box-shadow: inset 0 0 0 2.5px var(--cyan), 0 0 22px rgba(46, 230, 214, 0.45); }
+    .lane.wrong { box-shadow: inset 0 0 0 2.5px var(--miss); }
+    .spark { position: fixed; width: 6px; height: 6px; border-radius: 50%; pointer-events: none; z-index: 5; animation: spark 0.6s ease-out forwards; }
+    @keyframes spark { to { transform: translate(var(--dx), var(--dy)) scale(0.2); opacity: 0; } }
+    .count { position: absolute; inset: 0; display: grid; place-items: center; font-size: 96px; font-weight: 900; font-style: italic; pointer-events: none; }
+    .count span { animation: pop 0.5s ease-out forwards; }
+    .shake { animation: shake 0.15s linear; }
+    @keyframes shake { 25% { transform: translate(2px, -1px); } 50% { transform: translate(-2px, 1px); } 75% { transform: translate(1px, 2px); } }
+
+    /* Fever: high contrast, a border that glows on the beat */
+    .game.fever { background: #000; }
+    .game.fever .stage::after { content: ''; position: absolute; inset: 0; border-radius: 14px; pointer-events: none; box-shadow: inset 0 0 0 3px var(--gold), inset 0 0 40px rgba(255, 210, 63, 0.35); animation: feverGlow var(--beat) ease-in-out infinite alternate; }
+    .game.fever2 .stage::after { box-shadow: inset 0 0 0 4px var(--hot), inset 0 0 60px rgba(255, 79, 163, 0.45); }
+    @keyframes feverGlow { from { opacity: 0.35; } to { opacity: 1; } }
+    .game.fever .fever-tag { opacity: 1; }
+    .game.fever .note { background: #000; box-shadow: inset 0 0 0 2px var(--gold); }
+    .game.fever .lane { background: #000; box-shadow: inset 0 0 0 1.5px #fff, 0 4px 0 #333; }
+
+    /* ---------- Result ---------- */
+    .result { position: fixed; inset: 0; display: grid; place-items: center; padding: 24px 16px; background: radial-gradient(ellipse at 50% 30%, rgba(var(--neon-rgb), 0.35), transparent 60%), var(--bg); overflow-y: auto; }
+    .result[hidden] { display: none; }
+    .result-card { width: min(440px, 100%); text-align: center; display: grid; gap: 14px; }
+    .result-track { color: var(--text-2); font-weight: 800; }
+    .rank { font-size: clamp(110px, 34vw, 170px); font-weight: 900; font-style: italic; line-height: 0.9; animation: rankIn 0.7s cubic-bezier(.2,1.5,.4,1) both; }
+    @keyframes rankIn { from { transform: scale(2.4) rotate(-12deg); opacity: 0; filter: blur(8px); } }
+    .rank.SSS { background: linear-gradient(90deg, var(--gold), var(--hot), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .rank.S { color: var(--gold); text-shadow: 0 0 30px rgba(255, 210, 63, 0.5); }
+    .rank.A { color: var(--cyan); } .rank.B { color: #8be36b; } .rank.F { color: var(--miss); }
+    .fc { justify-self: center; padding: 6px 14px; border-radius: 999px; font-weight: 900; letter-spacing: 0.1em; color: #0b0a12; background: linear-gradient(90deg, var(--gold), var(--hot)); animation: rankIn 0.6s 0.3s both; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat { padding: 14px; border-radius: 16px; background: var(--panel); }
+    .stat b { display: block; font-size: 30px; font-weight: 900; font-variant-numeric: tabular-nums; }
+    .stat span { color: var(--text-2); font-size: 13px; font-weight: 700; }
+    .again { padding: 20px; border-radius: 20px; font-size: 24px; font-weight: 900; letter-spacing: 0.06em; color: #fff; background: linear-gradient(90deg, var(--neon), var(--hot));
+      box-shadow: 0 0 36px rgba(255, 79, 163, 0.55); animation: glow 0.55s ease-in-out infinite alternate; }
+    .again small { display: block; font-size: 12px; opacity: 0.8; letter-spacing: 0.15em; }
+    .to-tracks { color: var(--text-2); font-weight: 700; }
+    .msg { color: var(--text-2); text-align: center; padding: 24px; }
+
+    /* Calm mode (and reduced-motion users): no flashing, shaking or sparks */
+    .calm .track.sel, .calm .play-btn, .calm .again { animation: none; }
+    .calm .game.fever .stage::after { animation: none; opacity: 0.8; }
+    .calm .judge.show { animation: fadeJudge 0.5s forwards; }
+    @keyframes fadeJudge { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
+    .calm .hitline.pulse, .calm .combo.bump b, .calm .rank, .calm .fc { animation: none; }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <a class="home" href="../" id="home"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg><span>Toybox</span></a>
+    <span class="spacer"></span>
+    <button type="button" class="pill-btn" id="sound-btn" aria-pressed="true"></button>
+    <button type="button" class="pill-btn" id="calm-btn" aria-pressed="false"></button>
+    <select class="lang-sel" id="lang" aria-label="Language"></select>
+  </header>
+
+  <main class="lobby" id="lobby">
+    <h1>ARCADE</h1>
+    <p class="tagline" id="tagline"></p>
+    <div class="lang-tabs" role="tablist" id="tabs"></div>
+    <div class="wheel-wrap">
+      <div>
+        <div class="wheel" id="wheel" aria-live="polite"></div>
+        <div class="wheel-nav"><button type="button" id="up" aria-label="Previous">▲</button><button type="button" id="down" aria-label="Next">▼</button></div>
+      </div>
+      <div class="detail" id="detail"></div>
+    </div>
+  </main>
+
+  <section class="game" id="game" hidden aria-label="Game">
+    <div class="hud">
+      <button type="button" class="hud-close" id="quit" aria-label="Tracks">✕</button>
+      <div class="timebar" aria-hidden="true"><span id="timefill"></span></div>
+      <span class="hud-time" id="time">60</span>
+    </div>
+    <div class="stage" id="stage">
+      <div class="lanes-bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <span class="fever-tag" aria-hidden="true">FEVER</span>
+      <div class="combo" id="combo" aria-hidden="true"></div>
+      <div class="hitline" id="hitline" aria-hidden="true"></div>
+      <div id="notes"></div>
+      <div class="judge" id="judge" role="status"></div>
+      <div class="count" id="count" aria-hidden="true"></div>
+    </div>
+    <div class="lanes" id="lanes"></div>
+  </section>
+
+  <section class="result" id="result" hidden aria-live="polite"></section>
+
+  <script src="i18n.js?v=2026-10-31.1"></script>
+  <script>
+  (() => {
+    'use strict';
+    const I18N = window.ARCADE_I18N;
+    const ROUND_MS = 60000;
+    const LANG_KEY = 'toybox-lang';
+    const PREFS_KEY = 'arcade-prefs';
+    // Versions of the data files, kept in step with the study apps that load them
+    const V_SENT = '2026-10-31.3', V_ZH = '2026-10-31.9';
+
+    const $ = id => document.getElementById(id);
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+    const store = {
+      get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+      set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+    };
+
+    // ---------- Courses and tracks ----------
+    // Course tabs use each language's own name: Latin script first (alphabetical), then other scripts in Unicode order
+    const N = (en, fr, zh, ja, ko) => ({ en, fr, 'zh-Hans': zh, ja, ko });
+    const COURSES = [
+      { id: 'english', name: 'English', lang: 'en', study: '../english/', tracks: [
+        { id: 'en-a1', bpm: 95, kind: 'sent', file: 'a1', name: N('First steps', 'Premiers pas', '起步', 'はじめの一歩', '첫걸음') },
+        { id: 'en-a2', bpm: 105, kind: 'sent', file: 'a2', name: N('Everyday life', 'Au quotidien', '日常生活', '毎日の暮らし', '일상생활') },
+        { id: 'en-b1', bpm: 115, kind: 'sent', file: 'b1', name: N('Sharing your views', 'Dire ce qu\'on pense', '表达想法', '自分の考えを話す', '내 생각 말하기') },
+        { id: 'en-b2', bpm: 125, kind: 'sent', file: 'b2', name: N('Arguing your case', 'Défendre ses idées', '据理力争', '主張を展開する', '내 주장 펼치기') },
+        { id: 'en-idioms', bpm: 135, kind: 'sent', file: 'idioms', name: N('Idioms', 'Expressions idiomatiques', '惯用语', '慣用句', '관용 표현') },
+        { id: 'en-writing', bpm: 145, kind: 'sent', file: 'writing', name: N('Writing well', 'Bien écrire', '写好文章', '上手に書く', '글 잘 쓰기') }
+      ] },
+      { id: 'french', name: 'Français', lang: 'fr', study: '../french/', tracks: [
+        { id: 'fr-a1', bpm: 95, kind: 'sent', file: 'a1', name: N('First steps', 'Premiers pas', '起步', 'はじめの一歩', '첫걸음') },
+        { id: 'fr-a2', bpm: 105, kind: 'sent', file: 'a2', name: N('Everyday life', 'Au quotidien', '日常生活', '毎日の暮らし', '일상생활') },
+        { id: 'fr-b1', bpm: 115, kind: 'sent', file: 'b1', name: N('Sharing your views', 'Dire ce qu\'on pense', '表达想法', '自分の考えを話す', '내 생각 말하기') },
+        { id: 'fr-b2', bpm: 125, kind: 'sent', file: 'b2', name: N('Arguing your case', 'Défendre ses idées', '据理力争', '主張を展開する', '내 주장 펼치기') },
+        { id: 'fr-idioms', bpm: 135, kind: 'sent', file: 'idioms', name: N('Idioms', 'Expressions idiomatiques', '惯用语', '慣用句', '관용 표현') },
+        { id: 'fr-writing', bpm: 145, kind: 'sent', file: 'writing', name: N('Writing well', 'Bien écrire', '写好文章', '上手に書く', '글 잘 쓰기') }
+      ] },
+      { id: 'chinese', name: '中文', lang: 'zh', study: '../chinese/', tracks: [
+        { id: 'pinyin', bpm: 90, kind: 'tones', file: 'pinyin', name: N('Pinyin tones', 'Tons du pinyin', '拼音声调', 'ピンインの声調', '병음 성조') },
+        { id: 'hsk1', bpm: 100, kind: 'zh', file: 'hsk1', name: N('HSK 1', 'HSK 1', 'HSK 1级', 'HSK 1級', 'HSK 1급') },
+        { id: 'hsk2', bpm: 110, kind: 'zh', file: 'hsk2', name: N('HSK 2', 'HSK 2', 'HSK 2级', 'HSK 2級', 'HSK 2급') },
+        { id: 'hsk3', bpm: 120, kind: 'zh', file: 'hsk3', name: N('HSK 3', 'HSK 3', 'HSK 3级', 'HSK 3級', 'HSK 3급') },
+        { id: 'hsk4', bpm: 130, kind: 'zh', file: 'hsk4', name: N('HSK 4', 'HSK 4', 'HSK 4级', 'HSK 4級', 'HSK 4급') },
+        { id: 'hsk5', bpm: 140, kind: 'zh', file: 'hsk5', name: N('HSK 5', 'HSK 5', 'HSK 5级', 'HSK 5級', 'HSK 5급') },
+        { id: 'hsk6', bpm: 150, kind: 'zh', file: 'hsk6', name: N('HSK 6', 'HSK 6', 'HSK 6级', 'HSK 6級', 'HSK 6급') },
+        { id: 'chengyu', bpm: 145, kind: 'zh', file: 'chengyu', name: N('Idioms and sayings', 'Expressions et dictons', '成语和俗语', '成語とことわざ', '성어와 속담') }
+      ] },
+      { id: 'japanese', name: '日本語', lang: 'ja', study: '../japanese/', tracks: [
+        { id: 'hiragana', bpm: 100, kind: 'script', file: 'hiragana', name: N('Hiragana', 'Hiragana', '平假名', 'ひらがな', '히라가나') }
+      ] },
+      { id: 'korean', name: '한국어', lang: 'ko', study: '../korean/', tracks: [
+        { id: 'hangul', bpm: 100, kind: 'script', file: 'hangul', name: N('Hangul', 'Hangul', '韩文字母', 'ハングル', '한글') }
+      ] }
+    ];
+    const tierOf = bpm => (bpm < 100 ? 'EASY' : bpm < 120 ? 'NORMAL' : bpm < 135 ? 'HARD' : bpm < 150 ? 'EXPERT' : 'MASTER');
+    // How many beats a card takes to reach the line: longer prompts get more time
+    const FALL_BEATS = { script: 6, tones: 6, zh: 8, sent: 14 };
+
+    // ---------- Language and prefs ----------
+    const LANG_IDS = I18N.langs.map(l => l.id);
+    function detectLang() {
+      let stored = null;
+      try { stored = localStorage.getItem(LANG_KEY); } catch (e) {}
+      if (stored && LANG_IDS.includes(stored)) return stored;
+      for (const l of navigator.languages || [navigator.language || 'en']) {
+        const x = l.toLowerCase();
+        const id = x.startsWith('zh') ? 'zh-Hans' : x.split('-')[0];
+        if (LANG_IDS.includes(id)) return id;
+      }
+      return 'en';
+    }
+    let lang = detectLang();
+    let T = I18N.ui[lang];
+    const reducedMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefs = Object.assign({ sound: true, calm: reducedMotion }, store.get(PREFS_KEY) || {});
+    const pick = f => f[lang] || f.en;
+
+    // ---------- Sound (Web Audio, synthesized; no files) ----------
+    const SCALE = [261.63, 293.66, 329.63, 349.23, 392.0, 440.0, 493.88]; // C4 D4 E4 F4 G4 A4 B4
+    const Audio = {
+      ctx: null, noiseBuf: null,
+      init() {
+        if (this.ctx) { if (this.ctx.state === 'suspended') this.ctx.resume(); return; }
+        try {
+          this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const len = this.ctx.sampleRate * 0.5;
+          this.noiseBuf = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
+          const d = this.noiseBuf.getChannelData(0);
+          for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+        } catch (e) { this.ctx = null; }
+      },
+      env(node, t, vol, dur) {
+        const g = this.ctx.createGain();
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(vol, t + 0.005);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        node.connect(g).connect(this.ctx.destination);
+        return g;
+      },
+      noise(t, dur, vol, type, freq) {
+        const s = this.ctx.createBufferSource(); s.buffer = this.noiseBuf;
+        const f = this.ctx.createBiquadFilter(); f.type = type; f.frequency.value = freq;
+        s.connect(f); this.env(f, t, vol, dur); s.start(t); s.stop(t + dur + 0.02);
+        return f;
+      },
+      ok() { return prefs.sound && this.ctx; },
+      kick() {
+        if (!this.ok()) return;
+        const t = this.ctx.currentTime, o = this.ctx.createOscillator();
+        o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(45, t + 0.12);
+        this.env(o, t, 0.16, 0.14); o.start(t); o.stop(t + 0.16);
+      },
+      hat() { if (this.ok()) this.noise(this.ctx.currentTime, 0.04, 0.03, 'highpass', 7000); },
+      // A drum hit whose pitch climbs one scale step per combo (C4, D4, E4, …)
+      hit(combo) {
+        if (!this.ok()) return;
+        const t = this.ctx.currentTime, step = Math.min(combo - 1, 20);
+        const freq = SCALE[step % 7] * Math.pow(2, Math.floor(step / 7));
+        const o = this.ctx.createOscillator(); o.type = 'triangle'; o.frequency.value = freq;
+        this.env(o, t, 0.22, 0.2); o.start(t); o.stop(t + 0.22);
+        this.noise(t, 0.03, 0.08, 'bandpass', 3000);
+      },
+      // A record-scratch: noise and a falling saw, swept down
+      scratch() {
+        if (!this.ok()) return;
+        const t = this.ctx.currentTime;
+        const f = this.noise(t, 0.3, 0.18, 'bandpass', 2400);
+        f.frequency.exponentialRampToValueAtTime(180, t + 0.3); f.Q.value = 4;
+        const o = this.ctx.createOscillator(); o.type = 'sawtooth';
+        o.frequency.setValueAtTime(420, t); o.frequency.exponentialRampToValueAtTime(70, t + 0.28);
+        this.env(o, t, 0.06, 0.3); o.start(t); o.stop(t + 0.32);
+      },
+      fever() {
+        if (!this.ok()) return;
+        const t = this.ctx.currentTime;
+        [523.25, 659.25, 783.99, 1046.5].forEach((fq, i) => {
+          const o = this.ctx.createOscillator(); o.type = 'square'; o.frequency.value = fq;
+          const g = this.ctx.createGain(); g.gain.setValueAtTime(0.0001, t + i * 0.06);
+          g.gain.exponentialRampToValueAtTime(0.05, t + i * 0.06 + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + i * 0.06 + 0.15);
+          o.connect(g).connect(this.ctx.destination); o.start(t + i * 0.06); o.stop(t + i * 0.06 + 0.17);
+        });
+      }
+    };
+
+    // ---------- Loading track data ----------
+    const cache = {};
+    function loadScript(src, global) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = () => { const v = window[global]; resolve(v); };
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+    async function loadTrack(c, t) {
+      const key = c.id + '/' + t.id;
+      if (cache[key]) return cache[key];
+      let data;
+      if (t.kind === 'sent') { window.SENTENCES = null; data = await loadScript(`../sentences/data/${t.file}.js?v=${V_SENT}`, 'SENTENCES'); }
+      else if (t.kind === 'script') data = window.ARCADE_SCRIPTS || await loadScript('data/scripts.js?v=2026-10-31.1', 'ARCADE_SCRIPTS');
+      else { window.ZH_LEVEL = null; data = await loadScript(`../chinese/${t.file}/data.js?v=${V_ZH}`, 'ZH_LEVEL'); }
+      if (!data) throw new Error('no data');
+      cache[key] = data;
+      return data;
+    }
+
+    // ---------- Questions ----------
+    // Meaning columns: sentences [en, fr, zh, ja, ko]; Chinese words [hanzi, pinyin, en, fr, ja, ko]
+    const SCOL = { en: 0, fr: 1, 'zh-Hans': 2, ja: 3, ko: 4 };
+    const ZCOL = { en: 2, fr: 3, ja: 4, ko: 5 };
+    const plain = s => s.replace(/[[\]]/g, '');
+    const chunkOf = s => (s.match(/\[([^\]]+)\]/) || [, ''])[1];
+    // Chengyu meanings start with the same-character idiom ("一挙両得：…"); questions show only the explanation
+    const meanLang = () => (ZCOL[lang] ? lang : 'en');
+    const zhMean = (r, chengyu) => { const m = r[ZCOL[lang] || 2]; return chengyu ? m.replace(/^[^:：]{1,20}[:：]\s*/, '') : m; };
+    // Wrong options: distinct, and never another answer that would also be right (banned)
+    function others(pool, right, n, banned) {
+      const out = [], seen = new Set([right]);
+      for (const v of shuffle(pool.slice())) { if (out.length === n) break; if (v && !seen.has(v) && !(banned && banned.has(v))) { seen.add(v); out.push(v); } }
+      return out;
+    }
+    const groupBy = (rows, key, val) => { const m = new Map(); rows.forEach(r => { const k = key(r); if (!m.has(k)) m.set(k, new Set()); m.get(k).add(val(r)); }); return m; };
+    function buildPool(c, t, data) {
+      if (t.kind === 'sent') {
+        const col = c.lang === 'en' ? 0 : 1;
+        // The translation shown under the sentence: the UI language, or English when the UI is the language being played
+        const tcol = SCOL[lang] === col ? (col === 0 ? 1 : 0) : SCOL[lang];
+        const rows = Object.values(data.rows).flat();
+        const chunks = rows.map(r => chunkOf(r[col]));
+        // Sentences that differ only in the key phrase: those phrases must not be wrong options for each other
+        const frame = r => plain(r[col].replace(/\[[^\]]+\]/, '_')).toLowerCase();
+        const byFrame = groupBy(rows, frame, r => chunkOf(r[col]));
+        return () => {
+          const r = rows[Math.floor(Math.random() * rows.length)];
+          const right = chunkOf(r[col]);
+          return { label: T.qGap, html: esc(r[col]).replace(/\[[^\]]+\]/, '<span class="gap">&nbsp;</span>'), cls: 'long', sub: plain(r[tcol]),
+            right, opts: shuffle([right, ...others(chunks, right, 3, byFrame.get(frame(r)))]), laneCls: 'small', lang: c.lang };
+        };
+      }
+      if (t.kind === 'tones') {
+        const rows = data.tones;
+        return () => {
+          const r = rows[Math.floor(Math.random() * rows.length)];
+          return { label: T.qTone, html: esc(r[1]), cls: 'big', sub: '', right: r[0], opts: shuffle(r[3].slice()), laneCls: 'big', lang: 'zh-CN' };
+        };
+      }
+      if (t.kind === 'script') {
+        const rows = data[t.file];
+        const readings = rows.map(r => r[1]), chars = rows.map(r => r[0]);
+        const charLang = t.file === 'hangul' ? 'ko' : 'ja';
+        return () => {
+          const r = rows[Math.floor(Math.random() * rows.length)];
+          return Math.random() < 0.6
+            ? { label: T.qReading, html: esc(r[0]), cls: 'big', sub: '', right: r[1], opts: shuffle([r[1], ...others(readings, r[1], 3)]), laneCls: 'big', lang: charLang, optLang: 'en' }
+            : { label: T.qChar, html: esc(r[1]), cls: 'big', sub: '', right: r[0], opts: shuffle([r[0], ...others(chars, r[0], 3)]), laneCls: 'big', lang: 'en', optLang: charLang };
+        };
+      }
+      // Chinese words (and chengyu): character to meaning, or meaning to character
+      const chengyu = t.file === 'chengyu';
+      const rows = chengyu ? [...data.idioms, ...data.phrases] : data.words;
+      const means = rows.map(r => zhMean(r, chengyu)), hz = rows.map(r => r[0]);
+      // Words that share a meaning (or a word with several meanings) must not be wrong options for each other
+      const byMean = groupBy(rows, r => zhMean(r, chengyu), r => r[0]);
+      const byHz = groupBy(rows, r => r[0], r => zhMean(r, chengyu));
+      return () => {
+        const r = rows[Math.floor(Math.random() * rows.length)];
+        const m = zhMean(r, chengyu);
+        return Math.random() < 0.5
+          ? { label: T.qMeaning, html: esc(r[0]), cls: r[0].length <= 4 ? 'big' : '', sub: r[1], right: m, opts: shuffle([m, ...others(means, m, 3, byHz.get(r[0]))]), laneCls: 'small', lang: 'zh-CN', optLang: meanLang() }
+          : { label: T.qWord, html: esc(m), cls: m.length > 40 ? 'long' : '', sub: '', right: r[0], opts: shuffle([r[0], ...others(hz, r[0], 3, byMean.get(m))]), laneCls: r[0].length <= 4 ? 'big' : '', lang: meanLang(), optLang: 'zh-CN' };
+      };
+    }
+
+    // ---------- Lobby ----------
+    const view = { course: 0, track: 0 };
+    function applyHash() {
+      const h = location.hash.slice(1);
+      COURSES.forEach((c, i) => {
+        if (c.id === h) { view.course = i; view.track = 0; }
+        const j = c.tracks.findIndex(t => t.id === h);
+        if (j >= 0) { view.course = i; view.track = j; }
+      });
+    }
+    function renderChrome() {
+      document.documentElement.lang = lang;
+      document.body.classList.toggle('calm', prefs.calm);
+      $('tagline').textContent = T.tagline;
+      $('home').querySelector('span').textContent = T.home;
+      $('sound-btn').innerHTML = `<span aria-hidden="true">${prefs.sound ? '♪' : '♪̸'}</span><span class="txt">${esc(T.sound)}</span>`;
+      $('sound-btn').setAttribute('aria-label', T.sound);
+      $('sound-btn').title = T.sound;
+      $('sound-btn').setAttribute('aria-pressed', String(prefs.sound));
+      $('calm-btn').innerHTML = `<span aria-hidden="true">☾</span><span class="txt">${esc(T.calm)}</span>`;
+      $('calm-btn').setAttribute('aria-label', `${T.calm}: ${T.calmHint}`);
+      $('calm-btn').title = T.calmHint;
+      $('calm-btn').setAttribute('aria-pressed', String(prefs.calm));
+      $('lang').setAttribute('aria-label', T.language);
+      $('lang').innerHTML = I18N.langs.map(l => `<option value="${l.id}" ${l.id === lang ? 'selected' : ''}>${l.name}</option>`).join('');
+      $('quit').setAttribute('aria-label', T.tracks);
+      $('up').setAttribute('aria-label', T.prev);
+      $('down').setAttribute('aria-label', T.next);
+    }
+    function renderLobby() {
+      const c = COURSES[view.course];
+      const t = c.tracks[view.track];
+      document.documentElement.style.setProperty('--beat', `${60 / t.bpm}s`);
+      $('tabs').innerHTML = COURSES.map((x, i) => `<button type="button" class="lang-tab" role="tab" aria-selected="${i === view.course}" data-course="${i}" lang="${x.lang}">${esc(x.name)}</button>`).join('');
+      $('wheel').innerHTML = c.tracks.map((x, i) => {
+        const d = i - view.track;
+        // An angled wheel: cards tilt and slide right the further they are from the selected one
+        const tf = `translate(${Math.abs(d) * 18}px, ${d * 84}px) rotateZ(${d * -3}deg) scale(${d === 0 ? 1 : 0.92})`;
+        return `<button type="button" class="track ${d === 0 ? 'sel' : ''}" data-track="${i}" style="transform:${tf};opacity:${Math.abs(d) > 2 ? 0 : 1 - Math.abs(d) * 0.22}" ${Math.abs(d) > 2 ? 'tabindex="-1"' : ''} aria-current="${d === 0}">
+          <span class="track-num">${String(i + 1).padStart(2, '0')}</span>
+          <span class="track-text"><span class="track-title">${esc(pick(x.name))}</span><span class="track-sub"><span class="tier ${tierOf(x.bpm)}">${tierOf(x.bpm)}</span>${esc(c.name)}</span></span>
+          <span class="bpm">${x.bpm}<small>BPM</small></span>
+        </button>`;
+      }).join('');
+      $('detail').innerHTML = `
+        <span class="detail-lang" lang="${c.lang}">${esc(c.name)}</span>
+        <h2 class="detail-title">${esc(pick(t.name))}</h2>
+        <div class="detail-meta"><span class="tier ${tierOf(t.bpm)}">${tierOf(t.bpm)}</span><span>${t.bpm} BPM</span><span>· 60s</span></div>
+        <p class="detail-how">${esc(T.how)}</p>
+        <button type="button" class="play-btn" id="play">▶ ${esc(T.play)}</button>
+        <a class="study-link" href="${c.study}">${esc(T.study)} →</a>`;
+    }
+    function moveTrack(d) {
+      const c = COURSES[view.course];
+      view.track = Math.max(0, Math.min(c.tracks.length - 1, view.track + d));
+      history.replaceState(null, '', '#' + c.tracks[view.track].id);
+      renderLobby();
+    }
+
+    // ---------- Game ----------
+    let G = null;
+    async function start() {
+      Audio.init();
+      const c = COURSES[view.course], t = c.tracks[view.track];
+      $('lobby').hidden = true; $('result').hidden = true; $('game').hidden = false;
+      $('notes').innerHTML = `<p class="msg">${esc(T.loading)}</p>`;
+      $('lanes').innerHTML = '';
+      let data;
+      try { data = await loadTrack(c, t); }
+      catch (e) { $('notes').innerHTML = `<p class="msg">${esc(T.loadFailed)}</p>`; return; }
+      const beatMs = 60000 / t.bpm;
+      const id = (G ? G.id : 0) + 1;
+      G = { id, c, t, next: buildPool(c, t, data), beatMs, fallMs: beatMs * FALL_BEATS[t.kind], start: 0, beat: -1, note: null, combo: 0, maxCombo: 0,
+        counts: { PERFECT: 0, GREAT: 0, GOOD: 0, MISS: 0 }, points: 0, total: 0, over: false, raf: 0, lock: false, fever: 0 };
+      $('game').classList.remove('fever', 'fever2');
+      $('notes').innerHTML = '';
+      renderCombo();
+      layoutHitline();
+      // A one-bar count-in on the beat
+      for (let i = 0; i < 4; i++) setTimeout(() => {
+        if (!G || G.over || G.id !== id) return;
+        Audio.kick();
+        $('count').innerHTML = `<span>${i < 3 ? 3 - i : 'GO'}</span>`;
+      }, i * beatMs);
+      setTimeout(() => { if (G && !G.over && G.id === id) { $('count').innerHTML = ''; G.start = performance.now(); G.raf = requestAnimationFrame(loop); } }, 4 * beatMs);
+    }
+    function layoutHitline() {
+      const h = $('stage').clientHeight;
+      $('hitline').style.top = `${Math.round(h * 0.86)}px`;
+      $('judge').style.top = `${Math.round(h * 0.86) - 70}px`;
+    }
+    function spawn(now) {
+      const q = G.next();
+      const el = document.createElement('div');
+      el.className = 'note';
+      el.innerHTML = `<span class="note-label">${esc(q.label)}</span><span class="note-main ${q.cls}" lang="${q.lang}">${q.html}</span>${q.sub ? `<span class="note-sub">${esc(q.sub)}</span>` : ''}`;
+      $('notes').appendChild(el);
+      G.note = { q, el, born: now, done: false };
+      $('lanes').innerHTML = q.opts.map((o, i) => `<button type="button" class="lane ${q.laneCls}" data-lane="${i}" ${q.optLang ? `lang="${q.optLang}"` : ''}><span class="key">${i + 1}</span>${esc(o)}</button>`).join('');
+    }
+    function loop(now) {
+      if (!G || G.over) return;
+      const el = now - G.start;
+      const left = Math.max(0, ROUND_MS - el);
+      $('timefill').style.transform = `scaleX(${left / ROUND_MS})`;
+      $('time').textContent = Math.ceil(left / 1000);
+      // Beat pulse: kick on every beat, hi-hat on the off-beat
+      const b = Math.floor(el / G.beatMs);
+      if (b !== G.beat) {
+        G.beat = b; Audio.kick();
+        const hl = $('hitline'); hl.classList.remove('pulse'); void hl.offsetWidth; hl.classList.add('pulse');
+        setTimeout(() => { if (G && !G.over) Audio.hat(); }, G.beatMs / 2);
+        // New cards spawn on a beat
+        if (!G.note && !G.lock) spawn(now);
+      }
+      if (G.note && !G.note.done) {
+        const f = (now - G.note.born) / G.fallMs;
+        const line = parseFloat($('hitline').style.top) - G.note.el.offsetHeight;
+        const y = Math.max(0, line) * Math.min(f, 1);
+        G.note.el.style.transform = `translate(-50%, ${y}px)`;
+        G.note.el.style.setProperty('--y', `${y}px`);
+        if (f >= 1) judge(null);
+      }
+      if (left <= 0) return finish();
+      G.raf = requestAnimationFrame(loop);
+    }
+    function judge(lane) {
+      const n = G.note;
+      if (!n || n.done) return;
+      n.done = true;
+      const f = (performance.now() - n.born) / G.fallMs;
+      const picked = lane === null ? null : n.q.opts[lane];
+      const ok = picked === n.q.right;
+      const grade = !ok ? 'MISS' : f < 0.35 ? 'PERFECT' : f < 0.65 ? 'GREAT' : 'GOOD';
+      G.counts[grade]++; G.total++;
+      G.points += { PERFECT: 100, GREAT: 80, GOOD: 50, MISS: 0 }[grade];
+      const lanes = [...document.querySelectorAll('.lane')];
+      lanes.forEach(b => { b.disabled = true; });
+      const rightIdx = n.q.opts.indexOf(n.q.right);
+      if (ok) {
+        G.combo++; G.maxCombo = Math.max(G.maxCombo, G.combo);
+        Audio.hit(G.combo);
+        n.el.classList.add('hit');
+        lanes[lane].classList.add('right');
+        sparks(lanes[lane]);
+        if (grade === 'PERFECT') {
+          if (!prefs.calm) { const s = $('stage'); s.classList.remove('shake'); void s.offsetWidth; s.classList.add('shake'); }
+          try { if (navigator.vibrate) navigator.vibrate(12); } catch (e) {}
+        }
+      } else {
+        if (G.combo >= 5) shatter(G.combo);
+        G.combo = 0;
+        Audio.scratch();
+        n.el.classList.add('missed');
+        if (lane !== null) lanes[lane].classList.add('wrong');
+        // Show the right answer for a moment: learning beats speed here
+        if (rightIdx >= 0) lanes[rightIdx].classList.add('right');
+      }
+      setFever();
+      renderCombo();
+      showJudge(grade);
+      G.lock = true;
+      const id = G.id;
+      setTimeout(() => {
+        if (!G || G.over || G.id !== id) return;
+        n.el.remove(); G.note = null; G.lock = false;
+      }, ok ? 260 : 700);
+    }
+    function setFever() {
+      const lvl = G.combo >= 20 ? 2 : G.combo >= 10 ? 1 : 0;
+      if (lvl > G.fever) Audio.fever();
+      G.fever = lvl;
+      $('game').classList.toggle('fever', lvl >= 1);
+      $('game').classList.toggle('fever2', lvl >= 2);
+    }
+    function renderCombo() {
+      const el = $('combo');
+      el.innerHTML = G.combo >= 2 ? `<b>${G.combo}</b><small>${esc(T.combo)}</small>` : '';
+      el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+    }
+    function showJudge(g) {
+      const j = $('judge');
+      j.className = 'judge'; void j.offsetWidth;
+      j.textContent = g === 'MISS' ? `MISS · ${T.answer}: ${G.note ? G.note.q.right : ''}` : g + '!';
+      j.className = `judge show ${g}`;
+    }
+    function sparks(btn) {
+      if (prefs.calm) return;
+      const r = btn.getBoundingClientRect();
+      const n = G.fever >= 2 ? 22 : G.fever ? 14 : 7;
+      const colors = ['#ffd23f', '#ff4fa3', '#2ee6d6', '#7c5cff'];
+      for (let i = 0; i < n; i++) {
+        const s = document.createElement('span');
+        s.className = 'spark';
+        const a = Math.random() * Math.PI * 2, d = 40 + Math.random() * 70;
+        s.style.left = `${r.left + r.width / 2}px`; s.style.top = `${r.top + r.height / 2}px`;
+        s.style.background = colors[i % 4];
+        s.style.setProperty('--dx', `${Math.cos(a) * d}px`); s.style.setProperty('--dy', `${Math.sin(a) * d - 30}px`);
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 650);
+      }
+    }
+    // The combo number breaks into pieces on a miss
+    function shatter(num) {
+      if (prefs.calm) return;
+      const box = $('combo').getBoundingClientRect(), st = $('stage').getBoundingClientRect();
+      String(num).split('').forEach((ch, i) => {
+        const s = document.createElement('span');
+        s.className = 'shard'; s.textContent = ch;
+        s.style.left = `${box.left - st.left + i * 26}px`; s.style.top = `${box.top - st.top}px`;
+        s.style.setProperty('--dx', `${(Math.random() - 0.5) * 120}px`); s.style.setProperty('--dy', `${60 + Math.random() * 80}px`); s.style.setProperty('--r', `${(Math.random() - 0.5) * 90}deg`);
+        $('stage').appendChild(s);
+        setTimeout(() => s.remove(), 650);
+      });
+    }
+    function rankOf(acc, fc) {
+      if (fc && acc >= 95) return 'SSS';
+      if (acc >= 90) return 'S';
+      if (acc >= 80) return 'A';
+      if (acc >= 60) return 'B';
+      return 'F';
+    }
+    function finish() {
+      G.over = true;
+      cancelAnimationFrame(G.raf);
+      $('game').hidden = true;
+      const acc = G.total ? Math.round(G.points / G.total) : 0;
+      const fc = G.total > 0 && G.counts.MISS === 0;
+      const rank = rankOf(acc, fc);
+      $('result').hidden = false;
+      $('result').innerHTML = `<div class="result-card">
+        <span class="result-track">${esc(G.c.name)} · ${esc(pick(G.t.name))} · ${G.t.bpm} BPM</span>
+        <div class="rank ${rank}" aria-label="Rank ${rank}">${rank}</div>
+        ${fc ? '<span class="fc">FULL COMBO!</span>' : ''}
+        <div class="stats">
+          <div class="stat"><b>${G.maxCombo}</b><span>${esc(T.maxCombo)}</span></div>
+          <div class="stat"><b>${acc}%</b><span>${esc(T.accuracy)}</span></div>
+        </div>
+        <button type="button" class="again" id="again">${esc(T.playAgain)}<small>SPACE</small></button>
+        <button type="button" class="to-tracks" id="back">← ${esc(T.tracks)}</button>
+      </div>`;
+      $('again').focus({ preventScroll: true });
+    }
+    function toLobby() {
+      if (G) { G.over = true; cancelAnimationFrame(G.raf); }
+      G = null;
+      $('game').hidden = true; $('result').hidden = true; $('lobby').hidden = false;
+      $('game').classList.remove('fever', 'fever2');
+      renderLobby();
+    }
+
+    // ---------- Events ----------
+    document.addEventListener('click', e => {
+      const tab = e.target.closest('[data-course]');
+      if (tab) { view.course = Number(tab.dataset.course); view.track = 0; history.replaceState(null, '', '#' + COURSES[view.course].id); renderLobby(); return; }
+      const tr = e.target.closest('[data-track]');
+      if (tr) { const i = Number(tr.dataset.track); if (i === view.track) start(); else moveTrack(i - view.track); return; }
+      if (e.target.closest('#play') || e.target.closest('#again')) { start(); return; }
+      if (e.target.closest('#back') || e.target.closest('#quit')) { toLobby(); return; }
+      if (e.target.closest('#up')) { moveTrack(-1); return; }
+      if (e.target.closest('#down')) { moveTrack(1); return; }
+    });
+    // Lanes answer on pointer-down for a quick response
+    $('lanes').addEventListener('pointerdown', e => {
+      const b = e.target.closest('[data-lane]');
+      if (b && G && !G.over && G.note && !G.note.done) { e.preventDefault(); judge(Number(b.dataset.lane)); }
+    });
+    const KEYS = { '1': 0, '2': 1, '3': 2, '4': 3, d: 0, f: 1, j: 2, k: 3 };
+    document.addEventListener('keydown', e => {
+      if (e.altKey || e.ctrlKey || e.metaKey || (e.target.closest && e.target.closest('select'))) return;
+      const k = e.key.toLowerCase();
+      if (!$('game').hidden && G && G.note && !G.note.done && k in KEYS) {
+        e.preventDefault();
+        const b = document.querySelector(`[data-lane="${KEYS[k]}"]`);
+        if (b) { b.classList.add('down'); setTimeout(() => b.classList.remove('down'), 90); judge(KEYS[k]); }
+        return;
+      }
+      if (k === 'escape' && (!$('game').hidden || !$('result').hidden)) { toLobby(); return; }
+      if (k === ' ' && !$('result').hidden) { e.preventDefault(); start(); return; }
+      if (!$('lobby').hidden) {
+        if (k === 'arrowup') { e.preventDefault(); moveTrack(-1); }
+        else if (k === 'arrowdown') { e.preventDefault(); moveTrack(1); }
+        else if ((k === 'enter' || k === ' ') && !(e.target.closest && e.target.closest('button, a'))) { e.preventDefault(); start(); }
+      }
+    });
+    // Mouse wheel and swipe move the track wheel
+    let wheelLock = 0;
+    $('wheel').addEventListener('wheel', e => {
+      e.preventDefault();
+      const now = Date.now();
+      if (now - wheelLock < 180) return;
+      wheelLock = now;
+      moveTrack(e.deltaY > 0 ? 1 : -1);
+    }, { passive: false });
+    let touchY = null;
+    $('wheel').addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
+    $('wheel').addEventListener('touchend', e => {
+      if (touchY === null) return;
+      const dy = e.changedTouches[0].clientY - touchY;
+      if (Math.abs(dy) > 30) moveTrack(dy < 0 ? 1 : -1);
+      touchY = null;
+    });
+    $('sound-btn').addEventListener('click', () => { prefs.sound = !prefs.sound; store.set(PREFS_KEY, prefs); renderChrome(); });
+    $('calm-btn').addEventListener('click', () => { prefs.calm = !prefs.calm; store.set(PREFS_KEY, prefs); renderChrome(); });
+    $('lang').addEventListener('change', e => {
+      lang = e.target.value; T = I18N.ui[lang];
+      try { localStorage.setItem(LANG_KEY, lang); } catch (err) {}
+      renderChrome(); renderLobby();
+    });
+    window.addEventListener('resize', () => { if (G) layoutHitline(); });
+    window.addEventListener('hashchange', () => { applyHash(); if (!$('lobby').hidden) renderLobby(); });
+    // Leaving the tab pauses nothing; it simply ends the round so no stale timers run
+    document.addEventListener('visibilitychange', () => { if (document.hidden && G && !G.over && G.start) finish(); });
+
+    applyHash();
+    renderChrome();
+    renderLobby();
+  })();
+  </script>
+</body>
+</html>

@@ -25,6 +25,7 @@ and what to build next, so any new session can continue without the earlier conv
 | `english/`, `french/` | Course pages | 6 steps, all live: First steps, Everyday life, Sharing your views, Arguing your case (CEFR A1-B2, 3 parts of 40 each), Idioms and Writing well (advanced, 4 parts of 40 each) |
 | `sentences/` | Shared sentence app | `?set=en-a1-meet-1` or `fr-a1-meet-1`; data in `sentences/data/<level>.js` |
 | `shared/` | Catalog, home/course rendering, shared CSS | Courses and steps live in `shared/toybox.js` |
+| `arcade/` | Arcade | 60-second rhythm rounds for every live track; lobby with a track wheel; nothing saved |
 
 ## How a studio app works (copy `hangul/` for a new one)
 
@@ -88,6 +89,24 @@ set the scope, but every new step should also pass this check: is it short, vari
   switch in settings (on by default, saved per app).
 - Prefer new question types made from existing content (e.g. putting a grammar sentence's words in
   order) over more of the same.
+
+## Arcade (`arcade/`)
+
+A rhythm-game mode on top of the same content, linked from the home page and each course page
+(`arcade/#chinese`, `arcade/#hsk3`). Lobby: course tabs by endonym, an angled track wheel with BPM
+and tier (EASY < 100, NORMAL < 120, HARD < 135, EXPERT < 150, MASTER). Game: a card falls to the
+line over a few beats (6 for characters, 8 for words, 14 for sentences); 4 lanes answer it (keys 1-4
+or D F J K). Faster right answers score PERFECT / GREAT / GOOD; a wrong answer or a card reaching the
+line is MISS and shows the right lane. Web Audio only (kick and hi-hat on the beat, a hit that climbs
+C4-D4-E4… with the combo, a scratch on a miss). Combo 10 and 20 start Fever. Result after 60 s:
+SSS (full combo and 95%+), S 90%+, A 80%+, B 60%+, F; max combo, accuracy, FULL COMBO.
+- Nothing about play is saved (only the sound and calm-mode choices). Study apps keep their progress.
+- Calm mode (on by default with prefers-reduced-motion) turns off glow pulses, shaking and sparks.
+- Wrong options never include another answer that is also right (sentences sharing a frame, words
+  sharing a meaning). Chengyu show only the explanation, as in the study app.
+- Track list and BPM live in `arcade/index.html` (`COURSES`); add a track there when a step goes live.
+  It loads the study apps' data files with `V_SENT` and `V_ZH`: bump them with those apps' versions.
+  Hiragana and Hangul cards come from the apps via `node arcade/tools/build_scripts.js`.
 
 ## Course design (same for all three languages)
 
