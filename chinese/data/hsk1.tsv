@@ -1,8 +1,8 @@
 # HSK 1 words (2025 syllabus), most frequent first. Source and license: README.md
 # Columns: simplified	traditional	pinyin	part-of-speech	other-readings
-# Readings were picked automatically; check words with other-readings when building a part.
-的	的	de	u,n	dì/dí/dī
-了	了	le	y,u,v	liǎo
+# Readings checked by hand for this level (一 and 不 shown with their tone change).
+的	的	de	u,n	
+了	了	le	y,u,v	
 我	我	wǒ	r	
 是	是	shì	v	
 你	你	nǐ	r	
@@ -13,285 +13,285 @@
 这	這	zhè	r	
 个	個	gè	q,g	
 人	人	rén	n	
-和	和	hé	cc,p,v,qv,g,n	huò/huó/hè/hú
-我们	我們	wǒ men	r	
-要	要	yāo	v	yào
-说	說	shuì	v,g	shuō
-好	好	hǎo	a,d,v	hào
+和	和	hé	cc,p,v,qv,g,n	
+我们	我們	wǒmen	r	
+要	要	yào	v	
+说	說	shuō	v,g	
+好	好	hǎo	a,d,v	
 一	一	yī	m,d,t	
 也	也	yě	d,y,u,b	
-会	會	huì	v,n	kuài
-都	都	dōu	d,g	dū
+会	會	huì	v,n	
+都	都	dōu	d,g	
 对	對	duì	p,v,q,a	
 上	上	shàng	f,v,g	
 到	到	dào	v,p	
 来	來	lái	v,f,m,u,y	
 很	很	hěn	d	
-还	還	hái	d,v	huán
+还	還	hái	d,v	
 去	去	qù	v	
 她	她	tā	r	
 想	想	xiǎng	v	
-没有	沒有	méi yǒu	v,d	
-给	給	gěi	p,v,u	jǐ
+没有	沒有	méiyǒu	v,d	
+给	給	gěi	p,v,u	
 能	能	néng	v,g	
-那	那	nà	r,c	nuó
-他们	他們	tā men	r	
-看	看	kān	v,u	kàn
+那	那	nà	r,c	
+他们	他們	tāmen	r	
+看	看	kàn	v,u	
 做	做	zuò	v	
-什么	什麼	shén me	r	
-可以	可以	kě yǐ	v	
-吧	吧	ba	y	biā/bā
+什么	什麼	shénme	r	
+可以	可以	kěyǐ	v	
+吧	吧	ba	y	
 点	點	diǎn	qt,n,t,v	
 大	大	dà	a,d,n,g	
 下	下	xià	v,f,qt,g	
 里	裡	lǐ	f,q	
 真	真	zhēn	d,a,g	
-现在	現在	xiàn zài	t	
+现在	現在	xiànzài	t	
 年	年	nián	qt,t,n	
 多	多	duō	a,m,ad,d,v,g	
 两	兩	liǎng	m,t	
-吗	嗎	ma	y	má
+吗	嗎	ma	y	
 天	天	tiān	qt,n	
 太	太	tài	d,b	
 再	再	zài	d,g	
-呢	呢	ne	y	ní
-只	只	zhǐ	d,q	zhī
+呢	呢	ne	y	
+只	只	zhǐ	d,q	
 小	小	xiǎo	a,ad	
-知道	知道	zhī dào	v	
-时候	時候	shí hou	n	
-问题	問題	wèn tí	n	
-工作	工作	gōng zuò	vn,v,n	
+知道	知道	zhīdào	v	
+时候	時候	shíhou	n	
+问题	問題	wèntí	n	
+工作	工作	gōngzuò	vn,v,n	
 事	事	shì	n,g	
 它	它	tā	r	
 后	后	hòu	f,g,t	
 家	家	jiā	n,q	
-你们	你們	nǐ men	r	
+你们	你們	nǐmen	r	
 前	前	qián	f,v	
-时间	時間	shí jiān	n	
-怎么	怎麼	zěn me	r	
+时间	時間	shíjiān	n	
+怎么	怎麼	zěnme	r	
 爱	愛	ài	v,vn,b	
-这些	這些	zhè xiē	r	
-喜欢	喜歡	xǐ huan	v,vn	
+这些	這些	zhèxiē	r	
+喜欢	喜歡	xǐhuan	v,vn	
 吃	吃	chī	v	
 谁	誰	shéi	r	
 新	新	xīn	a,d,b	
 找	找	zhǎo	v	
-今天	今天	jīn tiān	t	
+今天	今天	jīntiān	t	
 月	月	yuè	n,t	
-觉得	覺得	jué de	v	
-几	几	jī	m,d	jǐ
-见	見	jiàn	v,g	xiàn
-车	車	chē	n,q	jū
-一些	一些	yī xiē	mq	
-大家	大家	dà jiā	r,n	
-听	听	yǐn	v	tīng
-非常	非常	fēi cháng	d,b	
+觉得	覺得	juéde	v	
+几	几	jǐ	m,d	
+见	見	jiàn	v,g	
+车	車	chē	n,q	
+一些	一些	yìxiē	mq	
+大家	大家	dàjiā	r,n	
+听	听	tīng	v	
+非常	非常	fēicháng	d,b	
 开	開	kāi	v,q	
 叫	叫	jiào	v,p,n	
-孩子	孩子	hái zi	n	
-这里	這裡	zhè lǐ	r	
+孩子	孩子	háizi	n	
+这里	這裡	zhèlǐ	r	
 请	請	qǐng	v	
 钱	錢	qián	n,nr	
-公司	公司	gōng sī	n	
-不要	不要	bù yào	d	
+公司	公司	gōngsī	n	
+不要	不要	búyào	d	
 本	本	běn	r,q,d,n	
 回	回	huí	v,qv	
-东西	東西	dōng xī	n,f,nr	dōng xi
+东西	東西	dōngxi	n,f,nr	
 三	三	sān	m,t	
 买	買	mǎi	v	
 问	問	wèn	v,g,vn	
 岁	歲	suì	qt	
-号	號	háo	q,n,v	hào
+号	號	hào	q,n,v	
 住	住	zhù	v	
-朋友	朋友	péng you	n	
+朋友	朋友	péngyou	n	
 件	件	jiàn	q,g	
-那些	那些	nà xiē	r	
+那些	那些	nàxiē	r	
 水	水	shuǐ	n	
 写	寫	xiě	v	
 您	您	nín	r	
-电话	電話	diàn huà	n	
+电话	電話	diànhuà	n	
 女	女	nǚ	b,g	
-分	分	fēn	t,qt,v,g,n,d	fèn
-小时	小時	xiǎo shí	n,q	
-有些	有些	yǒu xiē	r	
+分	分	fēn	t,qt,v,g,n,d	
+小时	小時	xiǎoshí	n,q	
+有些	有些	yǒuxiē	r	
 日	日	rì	t,g,b,qt	
 玩	玩	wán	v	
-正在	正在	zhèng zài	d	
-喝	喝	hē	g,vn	hè
-学校	學校	xué xiào	n	
+正在	正在	zhèngzài	d	
+喝	喝	hē	g,vn	
+学校	學校	xuéxiào	n	
 穿	穿	chuān	v	
 坐	坐	zuò	v	
 早	早	zǎo	ad,a,tg	
 们	們	men	k	
-认识	認識	rèn shi	v,n,vn	
+认识	認識	rènshi	v,n,vn	
 睡	睡	shuì	v,vn	
-分钟	分鐘	fēn zhōng	qt	
-明天	明天	míng tiān	t	
+分钟	分鐘	fēnzhōng	qt	
+明天	明天	míngtiān	t	
 四	四	sì	m,t	
 块	塊	kuài	q,g	
 外	外	wài	f	
-晚上	晚上	wǎn shang	t	
-谢谢	謝謝	xiè xie	v	
+晚上	晚上	wǎnshang	t	
+谢谢	謝謝	xièxie	v	
 学	學	xué	v,g	
-多少	多少	duō shǎo	r	duō shao
-妈妈	媽媽	mā ma	n	
-少	少	shǎo	a,ad,v,d,g	shào
-电影	電影	diàn yǐng	n	
-哪	哪	na	r,y	něi/nǎ
-昨天	昨天	zuó tiān	t	
+多少	多少	duōshao	r	
+妈妈	媽媽	māma	n	
+少	少	shǎo	a,ad,v,d,g	
+电影	電影	diànyǐng	n	
+哪	哪	nǎ	r,y	
+昨天	昨天	zuótiān	t	
 晚	晚	wǎn	tg,a,ad	
 书	書	shū	n,g	
 五	五	wǔ	m,t	
-先生	先生	xiān sheng	n	
+先生	先生	xiānsheng	n	
 男	男	nán	b,g	
 卖	賣	mài	v	
-医院	醫院	yī yuàn	n	
+医院	醫院	yīyuàn	n	
 些	些	xiē	q	
 狗	狗	gǒu	n	
 口	口	kǒu	q,n	
-学生	學生	xué sheng	n	
+学生	學生	xuésheng	n	
 二	二	èr	m,t	
-儿子	兒子	ér zi	n	
+儿子	兒子	érzi	n	
 歌	歌	gē	n,g	
 半	半	bàn	m	
-中国	中國	Zhōng guó	ns	
+中国	中國	Zhōngguó	ns	
 店	店	diàn	n	
 元	元	yuán	q,tg	
-哪里	哪裏	nǎ lǐ	r	
-那里	那裏	nà li	r	
-电视	電視	diàn shì	n	
-下午	下午	xià wǔ	t	
-学习	學習	xué xí	v,vn	
-它们	它們	tā men	r	
-老师	老師	lǎo shī	n	
+哪里	哪裏	nǎlǐ	r	
+那里	那裏	nàli	r	
+电视	電視	diànshì	n	
+下午	下午	xiàwǔ	t	
+学习	學習	xuéxí	v,vn	
+它们	它們	tāmen	r	
+老师	老師	lǎoshī	n	
 六	六	liù	m,t	
-边	邊	biān	k,d,n	bian
+边	邊	biān	k,d,n	
 唱	唱	chàng	v	
-大学	大學	dà xué	n	
-医生	醫生	yī shēng	n	
+大学	大學	dàxué	n	
+医生	醫生	yīshēng	n	
 病	病	bìng	n,v	
-名字	名字	míng zi	n	
-她们	她們	tā men	r	
-今年	今年	jīn nián	t	
-手机	手機	shǒu jī	n	
+名字	名字	míngzi	n	
+她们	她們	tāmen	r	
+今年	今年	jīnnián	t	
+手机	手機	shǒujī	n	
 忙	忙	máng	v,a,ad,g,an	
 十	十	shí	m,t	
-看见	看見	kàn jiàn	v	
-女儿	女兒	nǚ ér	n	
-说话	說話	shuō huà	v,vn	
-爸爸	爸爸	bà ba	n	
+看见	看見	kànjiàn	v	
+女儿	女兒	nǚ'ér	n	
+说话	說話	shuōhuà	v,vn	
+爸爸	爸爸	bàba	n	
 字	字	zì	n	
-漂亮	漂亮	piào liang	a	
-高兴	高興	gāo xìng	a,an	
-去年	去年	qù nián	t	
+漂亮	漂亮	piàoliang	a	
+高兴	高興	gāoxìng	a,an	
+去年	去年	qùnián	t	
 热	熱	rè	a,n,k,v,ad,an	
-睡觉	睡覺	shuì jiào	v	
-电脑	電腦	diàn nǎo	n	
+睡觉	睡覺	shuìjiào	v	
+电脑	電腦	diànnǎo	n	
 第	第	dì	m	
-读	讀	dòu	v	dú
+读	讀	dú	v	
 冷	冷	lěng	a,ad,g	
-飞机	飛機	fēi jī	n	
-早上	早上	zǎo shang	t	
+飞机	飛機	fēijī	n	
+早上	早上	zǎoshang	t	
 猫	貓	māo	n,v	
-打电话	打電話	dǎ diàn huà	v	
-休息	休息	xiū xi	v,vn	
-有的	有的	yǒu de	r	
-喂	喂	wéi	v,e	wèi
-房间	房間	fáng jiān	n	
+打电话	打電話	dǎ diànhuà	v	
+休息	休息	xiūxi	v,vn	
+有的	有的	yǒude	r	
+喂	喂	wéi	v,e	
+房间	房間	fángjiān	n	
 八	八	bā	m,t	
-怎么样	怎麼樣	zěn me yàng	r	
+怎么样	怎麼樣	zěnmeyàng	r	
 七	七	qī	m,t	
 菜	菜	cài	n	
-衣服	衣服	yī fu	n	
-上班	上班	shàng bān	v,vn	
-姐姐	姐姐	jiě jie	n	
+衣服	衣服	yīfu	n	
+上班	上班	shàngbān	v,vn	
+姐姐	姐姐	jiějie	n	
 课	課	kè	n	
 国	國	guó	n	
 饭	飯	fàn	n	
-一半	一半	yī bàn	m	
-家人	家人	jiā rén	n,nr	
-对不起	對不起	duì bu qǐ	v	
-哥哥	哥哥	gē ge	n	
-天气	天氣	tiān qì	n	
+一半	一半	yíbàn	m	
+家人	家人	jiārén	n,nr	
+对不起	對不起	duìbuqǐ	v	
+哥哥	哥哥	gēge	n	
+天气	天氣	tiānqì	n	
 千	千	qiān	m,t	
-同学	同學	tóng xué	n	
-好看	好看	hǎo kàn	a	
+同学	同學	tóngxué	n	
+好看	好看	hǎokàn	a	
 茶	茶	chá	n,g	
-雨	雨	yǔ	n,g	yù
-星期	星期	xīng qī	n	
+雨	雨	yǔ	n,g	
+星期	星期	xīngqī	n	
 雪	雪	xuě	n	
 九	九	jiǔ	m,t,b	
-妹妹	妹妹	mèi mei	n	
-女士	女士	nǚ shì	n	
-上午	上午	shàng wǔ	t	
+妹妹	妹妹	mèimei	n	
+女士	女士	nǚshì	n	
+上午	上午	shàngwǔ	t	
 贵	貴	guì	a,r,b,g	
-那边	那邊	nà bian	r	
-弟弟	弟弟	dì di	n	
+那边	那邊	nàbian	r	
+弟弟	弟弟	dìdi	n	
 百	百	bǎi	m,t	
-好吃	好吃	hǎo chī	a	hào chī
-再见	再見	zài jiàn	v	
-明年	明年	míng nián	t	
-这儿	這兒	zhè r	r	
-哪儿	哪兒	nǎ r	r	
-苹果	蘋果	píng guǒ	n	
-中午	中午	zhōng wǔ	t	
-起床	起床	qǐ chuáng	v	
-开车	開車	kāi chē	v,vn	
-出租车	出租車	chū zū chē	n	
-这边	這邊	zhè biān	r	
-火车	火車	huǒ chē	n	
-便宜	便宜	biàn yí	a,v,an	pián yi
-上学	上學	shàng xué	v	
-牛奶	牛奶	niú nǎi	n	
-女朋友	女朋友	nǚ péng you	n	
-上课	上課	shàng kè	v,vn	
-听见	聽見	tīng jiàn	v	
-男朋友	男朋友	nán péng you	n	
-下班	下班	xià bān	v,vn	
-水果	水果	shuǐ guǒ	n	
-读书	讀書	dú shū	v,vn	
-那儿	那兒	nà r	r	
-商店	商店	shāng diàn	n	
-鸡蛋	雞蛋	jī dàn	n	
-没关系	沒關係	méi guān xi	v	
+好吃	好吃	hǎochī	a	
+再见	再見	zàijiàn	v	
+明年	明年	míngnián	t	
+这儿	這兒	zhèr	r	
+哪儿	哪兒	nǎr	r	
+苹果	蘋果	píngguǒ	n	
+中午	中午	zhōngwǔ	t	
+起床	起床	qǐchuáng	v	
+开车	開車	kāichē	v,vn	
+出租车	出租車	chūzūchē	n	
+这边	這邊	zhèbian	r	
+火车	火車	huǒchē	n	
+便宜	便宜	piányi	a,v,an	
+上学	上學	shàngxué	v	
+牛奶	牛奶	niúnǎi	n	
+女朋友	女朋友	nǚpéngyou	n	
+上课	上課	shàngkè	v,vn	
+听见	聽見	tīngjiàn	v	
+男朋友	男朋友	nánpéngyou	n	
+下班	下班	xiàbān	v,vn	
+水果	水果	shuǐguǒ	n	
+读书	讀書	dúshū	v,vn	
+那儿	那兒	nàr	r	
+商店	商店	shāngdiàn	n	
+鸡蛋	雞蛋	jīdàn	n	
+没关系	沒關係	méi guānxi	v	
 零	零	líng	m,t,g	
-桌子	桌子	zhuō zi	n	
-白天	白天	bái tiān	t	
-请问	請問	qǐng wèn	v	
-哪些	哪些	nǎ xiē	r	
-晚饭	晚飯	wǎn fàn	n	
-小学	小學	xiǎo xué	n	
-饭店	飯店	fàn diàn	n	
-中学	中學	zhōng xué	n	
-面包	麵包	miàn bāo	n	
-生病	生病	shēng bìng	v	
-好听	好聽	hǎo tīng	a	
-大学生	大學生	dà xué shēng	n	
-超市	超市	chāo shì	n	
-椅子	椅子	yǐ zi	n	
-小朋友	小朋友	xiǎo péng yǒu	n	
-午饭	午飯	wǔ fàn	n	
-做饭	做飯	zuò fàn	v	
-下雨	下雨	xià yǔ	v	
-杯子	杯子	bēi zi	n	
-中文	中文	Zhōng wén	nz	
-早饭	早飯	zǎo fàn	n	
-一点儿	一點兒	yī diǎn r	mq	
-书店	書店	shū diàn	n	
-星期天	星期天	Xīng qī tiān	t	
-看病	看病	kàn bìng	v,vn	
-电影院	電影院	diàn yǐng yuàn	n	
-下课	下課	xià kè	v,vn	
-米饭	米飯	mǐ fàn	n	
-有点儿	有點兒	yǒu diǎn r		
-饺子	餃子	jiǎo zi	n	
-小学生	小學生	xiǎo xué shēng	n	
-外边	外邊	wài bian	f	
-中学生	中學生	zhōng xué shēng	n	
-星期日	星期日	Xīng qī rì	t	
-汉语	漢語	Hàn yǔ	nz	
-包子	包子	bāo zi	n	
-不客气	不客氣	bù kè qi		
-汉字	漢字	hàn zì	nz,n	
-好玩儿	好玩兒	hǎo wán r	a	
-面条儿	麵條兒	miàn tiáo r		
+桌子	桌子	zhuōzi	n	
+白天	白天	báitiān	t	
+请问	請問	qǐngwèn	v	
+哪些	哪些	nǎxiē	r	
+晚饭	晚飯	wǎnfàn	n	
+小学	小學	xiǎoxué	n	
+饭店	飯店	fàndiàn	n	
+中学	中學	zhōngxué	n	
+面包	麵包	miànbāo	n	
+生病	生病	shēngbìng	v	
+好听	好聽	hǎotīng	a	
+大学生	大學生	dàxuéshēng	n	
+超市	超市	chāoshì	n	
+椅子	椅子	yǐzi	n	
+小朋友	小朋友	xiǎopéngyǒu	n	
+午饭	午飯	wǔfàn	n	
+做饭	做飯	zuòfàn	v	
+下雨	下雨	xiàyǔ	v	
+杯子	杯子	bēizi	n	
+中文	中文	Zhōngwén	nz	
+早饭	早飯	zǎofàn	n	
+一点儿	一點兒	yìdiǎnr	mq	
+书店	書店	shūdiàn	n	
+星期天	星期天	xīngqītiān	t	
+看病	看病	kànbìng	v,vn	
+电影院	電影院	diànyǐngyuàn	n	
+下课	下課	xiàkè	v,vn	
+米饭	米飯	mǐfàn	n	
+有点儿	有點兒	yǒudiǎnr		
+饺子	餃子	jiǎozi	n	
+小学生	小學生	xiǎoxuéshēng	n	
+外边	外邊	wàibian	f	
+中学生	中學生	zhōngxuéshēng	n	
+星期日	星期日	xīngqīrì	t	
+汉语	漢語	Hànyǔ	nz	
+包子	包子	bāozi	n	
+不客气	不客氣	bú kèqi		
+汉字	漢字	Hànzì	nz,n	
+好玩儿	好玩兒	hǎowánr	a	
+面条儿	麵條兒	miàntiáor		

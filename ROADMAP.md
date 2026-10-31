@@ -9,7 +9,9 @@ and what to build next, so any new session can continue without the earlier conv
 |---|---|---|
 | `/` | Home | Continue card, course cards, backup links |
 | `japanese/` | Course page | Hiragana live; Hiragana 2, Katakana 1-2, JLPT N5-N1 "coming soon" |
-| `chinese/` | Course page | Pinyin and HSK 1-6 steps, all "coming soon"; word lists in `chinese/data/` |
+| `chinese/` | Course page | Pinyin and HSK 1-6 steps; HSK 1 live |
+| `chinese/hsk1/` | HSK 1 level page | 6 word parts (294), 5 character parts (248), 1 grammar part (44); data in `data.js` |
+| `chinese/study/` | Shared study app | `?set=zh-hsk1-words-1` etc.; list + mastery practice; UI en/fr/ja/ko |
 | `korean/` | Course page | Hangul live; Batchim, TOPIK 1-6 "coming soon" |
 | `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/ko, readings in each UI language's own spelling |
 | `hangul/` | Hangul Studio | 54 cards (40 jamo + 14 syllables), UI en/fr/zh-Hans/ja |
@@ -68,7 +70,7 @@ for levels 1-6 (regular exams from December 2026). No textbook is followed.
 UI languages: English, Français, 日本語, 한국어 (no 中文, since the course teaches Chinese).
 Course color #0f8b6c, glyph 中 with system Chinese fonts. Speech uses `zh-CN`.
 
-Course steps (already listed in `shared/toybox.js`, all "coming soon"):
+Course steps (listed in `shared/toybox.js`; HSK 1 is live):
 
 | Step | Content | Data |
 |---|---|---|
@@ -84,19 +86,19 @@ How to build it:
 
 1. **Pinyin app** first: example syllable plus character for speech (mā 妈 / má 麻 / mǎ 马 / mà 骂).
    Practice: hear a syllable and pick its tone; see pinyin and pick the sound.
-2. **One shared word app** (`chinese/words/`) instead of one folder per part: the URL picks the
-   level and part, e.g. `chinese/words/?hsk=1&part=2`. Parts are about 50 words in the TSV order
-   (most frequent first), so every part stays easy to finish. Each part saves its own progress
-   (`zh-hsk<N>-<part>-v1`).
-3. A level step opens a level page listing its parts with progress, like a course page. Add
-   `parts` support to steps in `shared/toybox.js` (progress = sum of the parts) and make backups
-   include every part key.
-4. **Meanings**: write short meanings in en, fr, ja and ko together for each part when it is built
-   (store them next to the list, e.g. `chinese/data/hsk1-meanings.tsv`). Do not copy dictionary
-   definitions (CC-CEDICT is CC BY-SA). Check words that list other readings.
-5. Practice per word: character to meaning, audio to character, meaning to character; look-alike
-   characters as distractors. Later, per level: a short grammar-pattern part with original
-   example sentences.
+2. **Done for HSK 1, repeat for each level:** copy `chinese/hsk1/` to `chinese/hsk<N>/` (level page
+   shell with `data-step="hsk<N>"`), write `chinese/hsk<N>/data.js` in the same shape as HSK 1
+   (words, chars, grammar, parts), then give the step `href` and `parts: makeParts(...)` in
+   `shared/toybox.js` with the same part sizes. Parts stay about 50 items, in frequency order.
+   - Words: meanings in en, fr, ja and ko written together; never copy dictionary definitions
+     (CC-CEDICT is CC BY-SA). Check words that list other readings and fix the TSV.
+   - Characters: the level's new characters in order of first use, each with an example word.
+   - Grammar: the level's patterns as fill-in-the-blank cards with original sentences, wrong
+     options that are clearly wrong, a translation and a one-line note in every UI language.
+3. The study app (`chinese/study/`) handles every kind: list view, then practice with
+   character to meaning, meaning to character and audio to character (when a Chinese voice
+   exists). Progress per part is saved as `zh-hsk<N>-<kind>-<part>-v1`; home, course, level page
+   and backups read it through the step's `parts`.
 
 Levels 7-9 (advanced band, about 5,600 more words) can follow the same way later.
 

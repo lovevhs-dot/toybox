@@ -30,6 +30,8 @@
       continue: 'Continue',
       start: 'Start',
       allSteps: 'All steps',
+      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar' },
+      part: n => `Part ${n}`,
       backup: 'Back up or restore progress',
       backupNote: 'Progress is saved only in this browser. Copy a backup code to keep it safe or move it to another device.',
       copy: 'Copy backup code',
@@ -60,6 +62,8 @@
       continue: 'Continuer',
       start: 'Commencer',
       allSteps: 'Toutes les étapes',
+      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire' },
+      part: n => `Partie ${n}`,
       backup: 'Sauvegarder ou restaurer la progression',
       backupNote: 'La progression est enregistrée uniquement dans ce navigateur. Copiez un code de sauvegarde pour la garder ou la transférer sur un autre appareil.',
       copy: 'Copier le code de sauvegarde',
@@ -90,6 +94,8 @@
       continue: '继续',
       start: '开始',
       allSteps: '全部阶段',
+      kinds: { words: '词汇', chars: '汉字', grammar: '语法' },
+      part: n => `第 ${n} 部分`,
       backup: '备份或恢复进度',
       backupNote: '进度只保存在这个浏览器里。复制备份码，可以妥善保存或转移到其他设备。',
       copy: '复制备份码',
@@ -120,6 +126,8 @@
       continue: '続ける',
       start: '始める',
       allSteps: 'すべてのステップ',
+      kinds: { words: '語彙', chars: '漢字', grammar: '文法' },
+      part: n => `パート${n}`,
       backup: '進み具合のバックアップ・復元',
       backupNote: '進み具合はこのブラウザにだけ保存されます。バックアップコードをコピーしておけば、安全に保管したり別の端末に移したりできます。',
       copy: 'バックアップコードをコピー',
@@ -150,6 +158,8 @@
       continue: '이어서 하기',
       start: '시작하기',
       allSteps: '전체 단계',
+      kinds: { words: '어휘', chars: '한자', grammar: '문법' },
+      part: n => `파트 ${n}`,
       backup: '진행 기록 백업·복원',
       backupNote: '진행 기록은 이 브라우저에만 저장돼요. 백업 코드를 복사해두면 안전하게 보관하거나 다른 기기로 옮길 수 있어요.',
       copy: '백업 코드 복사',
@@ -164,6 +174,18 @@
   };
 
   // Text fields are keyed by language id; English is the fallback
+  // A level step made of small parts (about 50 items each) that share one study app.
+  // counts: { words: [49, 49], chars: [50], grammar: [44] }
+  function makeParts(app, level, counts) {
+    return Object.entries(counts).flatMap(([kind, sizes]) => sizes.map((total, i) => ({
+      kind,
+      n: i + 1,
+      total,
+      storageKey: `${level}-${kind}-${i + 1}-v1`,
+      href: `${app}?set=${level}-${kind}-${i + 1}`
+    })));
+  }
+
   const COURSES = [
     {
       id: 'japanese',
@@ -234,7 +256,8 @@
           desc: { en: 'Sounds and the four tones', fr: 'Les sons et les quatre tons', 'zh-Hans': '声母、韵母和四个声调', ja: '音と4つの声調', ko: '소리와 네 가지 성조' }
         },
         {
-          id: 'hsk1',
+          id: 'hsk1', href: 'chinese/hsk1/',
+          parts: makeParts('chinese/study/', 'zh-hsk1', { words: [49, 49, 49, 49, 49, 49], chars: [50, 50, 50, 49, 49], grammar: [44] }),
           name: { en: 'HSK 1', fr: 'HSK 1', 'zh-Hans': 'HSK 1级', ja: 'HSK 1級', ko: 'HSK 1급' },
           desc: { en: 'Words, characters and grammar', fr: 'Vocabulaire, caractères et grammaire', 'zh-Hans': '词汇、汉字和语法', ja: '語彙・漢字・文法', ko: '어휘, 한자, 문법' }
         },
@@ -353,8 +376,18 @@
   /* ---------- Backup codes ---------- */
   // A code holds every app's saved progress, so it can be kept safe or moved to another device.
   // It travels as a link (#restore=...) or as text starting with TOYBOX2. (TOYBOX1: still works).
-  const appKeys = () => COURSES.flatMap(c => c.steps).filter(s => s.storageKey).map(s => s.storageKey);
-  const allSteps = () => COURSES.flatMap(c => c.steps).filter(s => s.storageKey);
+  // A step saves progress itself (storageKey) or through its parts
+  COURSES.forEach(c => c.steps.forEach(step => {
+    if (!step.parts) return;
+    step.parts.forEach(part => { part.parent = step; });
+    step.total = step.parts.reduce((n, part) => n + part.total, 0);
+  }));
+  const units = step => step.parts || (step.storageKey ? [step] : []);
+  const allUnits = () => COURSES.flatMap(c => c.steps).flatMap(units);
+  const appKeys = () => allUnits().map(u => u.storageKey);
+  const unitName = u => u.parent
+    ? `${pick(u.parent.name)} ${TEXT[lang].kinds[u.kind]} ${u.n}`
+    : pick(u.name);
 
   // URL-safe base64, done by hand so no browser quirk in atob/btoa can break a code
   const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
@@ -438,7 +471,7 @@
     const { data, error } = readCode(code);
     if (error) return { error };
     const found = [];
-    allSteps().forEach(step => {
+    allUnits().forEach(step => {
       const k = step.storageKey;
       const incoming = data[k];
       if (!incoming || !Array.isArray(incoming.mastered) || !incoming.mastered.length) return;
@@ -457,7 +490,7 @@
 
   function restoredMessage(found) {
     const T = TEXT[lang];
-    return T.restoredList(found.map(([step, n]) => `${pick(step.name)} ${n}`).join(' · '));
+    return T.restoredList(found.map(([step, n]) => `${unitName(step)} ${n}`).join(' · '));
   }
 
   // Opening a backup link restores it after asking once
@@ -477,6 +510,10 @@
 
   // Progress is read from each app's own saved data on this device
   function progressOf(step) {
+    if (step.parts) {
+      const done = step.parts.reduce((n, part) => n + progressOf(part).done, 0);
+      return { done, total: step.total };
+    }
     if (!step.storageKey) return null;
     let count = 0;
     try {
@@ -507,7 +544,9 @@
     try {
       key = localStorage.getItem('toybox-recent');
     } catch (e) {}
-    return allSteps().find(s => s.storageKey === key && progressOf(s).done < s.total) || null;
+    const unit = allUnits().find(u => u.storageKey === key);
+    const step = unit && (unit.parent || unit);
+    return step && progressOf(step).done < step.total ? step : null;
   }
 
   // What to suggest next in a course: the step practiced last, then a started one, then the first unfinished one
@@ -530,7 +569,9 @@
   }
 
   function topBar() {
-    const back = page === 'course'
+    const back = page === 'level'
+      ? `<a class="home-link" href="${root}${course.id}/">${ICON_BACK}${LOGO}<span>${pick(course.name)}</span></a>`
+      : page === 'course'
       ? `<a class="home-link" href="${root}">${ICON_BACK}${LOGO}<span>Toybox</span></a>`
       : `<span class="home-link">${LOGO}<span>Toybox</span></span>`;
     return `
@@ -678,10 +719,51 @@
       </main>`;
   }
 
+  // A level page lists the parts of one level step, grouped by kind
+  function renderLevel() {
+    const T = TEXT[lang];
+    const step = course.steps.find(s => s.id === document.body.dataset.step);
+    const p = progressOf(step);
+    document.title = `${pick(step.name)} · ${pick(course.name)} · Toybox`;
+    const kinds = [...new Set(step.parts.map(part => part.kind))];
+    const row = part => {
+      const pp = progressOf(part);
+      const finished = pp.done === pp.total;
+      return `
+        <li class="step ${finished ? 'done' : 'live'}">
+          <span class="step-num" aria-hidden="true">${finished ? ICON_CHECK : part.n}</span>
+          <a class="step-row" href="${root}${part.href}">
+            <span class="step-text">
+              <span class="step-name">${T.part(part.n)}</span>
+              <span class="step-desc">${T.mastered(pp.done, pp.total)}</span>
+            </span>
+            ${finished ? `<span class="pill go">${T.done}</span>` : `<span class="step-pct">${pct(pp.done, pp.total)}%</span>`}
+            ${ICON_CHEVRON}
+          </a>
+        </li>`;
+    };
+    return `
+      ${topBar()}
+      <main style="${colorVars(course)}">
+        <section class="banner">
+          <span class="banner-glyph ${course.glyphClass}" aria-hidden="true">${course.glyph}</span>
+          <h1>${pick(step.name)}</h1>
+          <p>${pick(step.desc)}</p>
+          <div class="banner-progress">
+            <span class="meter"><span class="meter-fill" style="width:${pct(p.done, p.total)}%"></span></span>
+            <span>${T.mastered(p.done, p.total)}</span>
+          </div>
+        </section>
+        ${kinds.map(kind => `
+          <h2 class="section-title">${T.kinds[kind]}</h2>
+          <ol class="steps">${step.parts.filter(part => part.kind === kind).map(row).join('')}</ol>`).join('')}
+      </main>`;
+  }
+
   function render() {
     document.documentElement.lang = lang;
     const app = document.getElementById('app');
-    app.innerHTML = page === 'course' ? renderCourse() : renderHome();
+    app.innerHTML = page === 'level' ? renderLevel() : page === 'course' ? renderCourse() : renderHome();
     app.querySelector('#lang').addEventListener('change', e => {
       lang = e.target.value;
       try {
