@@ -46,7 +46,7 @@ Steps, each about 50 cards so it stays easy to finish:
 2. **Words 1-4** (`zh-words-1/` ... `zh-words-4/`): from `chinese/data/book2-words.tsv`
    (196 words). Split by lessons 1-2 (54), 3-4 (45), 5-6 (48), 7-8 (49).
    Practice: character to meaning, audio to character, look-alike characters.
-   The TSV has English and Korean; add French and Japanese meanings.
+   The TSV has English only; add French, Japanese and Korean meanings together.
 3. **Sentences 1-2** (`zh-sentences-1/`, `zh-sentences-2/`): about 45 each, covering lessons 1-4
    and 5-8. Write original sentences with the same words and grammar points below. Never copy
    the textbook's sentences or translations into this public repo.
