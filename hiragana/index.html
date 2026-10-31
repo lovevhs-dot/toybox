@@ -1280,7 +1280,7 @@
           <span id="script-label"></span>
           <div class="script-toggle" id="script">
             <button type="button" data-script="romaji" aria-label="Romaji">abc</button>
-            <button type="button" data-script="hangul" aria-label="한글">가</button>
+            <button type="button" data-script="native" id="native-btn"></button>
           </div>
         </div>
       </div>
@@ -1297,7 +1297,7 @@
 
   <div class="sheet-backdrop" id="backdrop"></div>
 
-  <script src="i18n.js?v=2026-10-26.4"></script>
+  <script src="i18n.js?v=2026-10-31.1"></script>
   <script>
     const HIRAGANA_DATA = [
       // Vowels & K / S
@@ -1491,12 +1491,12 @@
       return lang === 'en' ? item.example.meaning : I18N.kana[lang][item.kana][1];
     }
 
-    function hangulMode() {
-      return lang === 'ko' && state.script === 'hangul';
+    function nativeMode() {
+      return state.script === 'native' && !!I18N.reading[lang];
     }
 
     function reading(item) {
-      return hangulMode() ? I18N.hangul[item.kana] : item.romaji;
+      return nativeMode() ? I18N.reading[lang][item.kana] : item.romaji;
     }
 
     function catLabel(id) {
@@ -1623,7 +1623,7 @@
       mode: 'explore',
       category: 'basic_1',
       showRomaji: true,
-      script: saved.script === 'hangul' ? 'hangul' : 'romaji',
+      script: saved.script === 'native' || saved.script === 'hangul' ? 'native' : 'romaji',
       selectedKana: 'あ',
       sheetOpen: false,
       quiz: {
@@ -1703,7 +1703,10 @@
       $sound.setAttribute('aria-pressed', String(Sound.on));
       $sound.setAttribute('aria-label', Sound.on ? T.soundOn : T.soundOff);
       $sound.innerHTML = Sound.on ? ICON_SOUND_ON : ICON_SOUND_OFF;
-      document.getElementById('script-row').hidden = lang !== 'ko';
+      document.getElementById('script-row').hidden = !I18N.reading[lang];
+      const $native = document.getElementById('native-btn');
+      $native.textContent = T.nativeGlyph || '';
+      $native.setAttribute('aria-label', T.nativeName || '');
       document.getElementById('script-label').textContent = T.scriptLabel || '';
       $script.querySelectorAll('button').forEach(btn => {
         btn.setAttribute('aria-pressed', String(btn.dataset.script === state.script));
@@ -1841,7 +1844,7 @@
         <div class="paper"><span class="big ${c.kana.length > 1 ? 'long' : ''}">${c.kana}</span></div>
         <div class="reading">
           <span>${reading(c)}</span>
-          ${hangulMode() ? `<span class="reading-sub">${c.romaji}</span>` : ''}
+          ${nativeMode() ? `<span class="reading-sub">${c.romaji}</span>` : ''}
           <button type="button" class="icon-btn speak-btn" data-speak="${c.kana}" aria-label="${T.play}">${ICON_SPEAK}</button>
         </div>
         <div class="block">
@@ -1951,7 +1954,7 @@
 
     function optionsFor(target) {
       // Look-alikes make the best distractors, then the same group, then anything
-      // Readings must be unique too, since two kana can share one Hangul spelling
+      // Readings must be unique too, since two kana can share one native spelling
       const used = new Set([target.kana]);
       const usedReadings = new Set([reading(target)]);
       const distractors = [];
