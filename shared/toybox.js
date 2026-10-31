@@ -263,7 +263,8 @@
           desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },
         {
-          id: 'hsk2',
+          id: 'hsk2', href: 'chinese/hsk2/',
+          parts: makeParts('chinese/study/', 'zh-hsk2', { words: [50, 49, 49, 49], grammar: [32] }),
           name: { en: 'HSK 2', fr: 'HSK 2', 'zh-Hans': 'HSK 2级', ja: 'HSK 2級', ko: 'HSK 2급' },
           desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },

@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
-  <link rel="stylesheet" href="../../shared/toybox.css?v=2026-10-31.8">
+  <link rel="stylesheet" href="../../shared/toybox.css?v=2026-10-31.9">
   <style>
     :root {
       --c: #0f8b6c;
@@ -113,6 +113,9 @@
     .speak svg { width: 18px; height: 18px; }
     .speak.big { padding: 18px 26px; font-size: 16px; }
     .speak.big svg { width: 28px; height: 28px; }
+    .pips { display: flex; gap: 6px; margin-top: 4px; }
+    .pips span { width: 9px; height: 9px; border-radius: 50%; background: var(--line-strong); transition: background 0.25s, transform 0.25s var(--ease); }
+    .pips .on { background: var(--good); transform: scale(1.15); }
     .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .opt {
       position: relative; min-height: 64px; padding: 12px 12px 12px 34px; border-radius: 16px;
@@ -159,7 +162,7 @@
   </div>
   <main class="page" id="page"><p class="msg">…</p></main>
 
-  <script src="i18n.js?v=2026-10-31.4"></script>
+  <script src="i18n.js?v=2026-10-31.5"></script>
   <script>
   (() => {
     'use strict';
@@ -530,6 +533,15 @@
       return `<div class="after"><span><span class="zh" lang="zh-CN">${esc(it.zh)}</span> ${esc(it.py)} · ${esc(meanOf(it))}</span></div>`;
     }
 
+    // One dot per correct answer still needed to master this item (2, or 3 after a miss)
+    function pipsHtml(it) {
+      if (qz.review) return '';
+      const need = qz.missed.has(it.key) ? NEED_AFTER_MISS : NEED_FRESH;
+      const have = mastered.has(it.key) ? need : Math.min(qz.streak[it.key] || 0, need);
+      const dots = Array.from({ length: need }, (_, i) => `<span class="${i < have ? 'on' : ''}"></span>`).join('');
+      return `<span class="pips" role="img" aria-label="${esc(T.streak(have, need))}">${dots}</span>`;
+    }
+
     function quizHtml() {
       if (!qz.current) return qz.review ? reviewDoneHtml() : doneHtml();
       const it = qz.current;
@@ -553,7 +565,7 @@
         fb = '<div class="feedback" role="status"></div>';
       }
       return `${head}<div class="quiz">
-        <div class="q-card">${promptHtml(it)}</div>
+        <div class="q-card">${promptHtml(it)}${pipsHtml(it)}</div>
         <div class="options">${opts}</div>
         ${fb}
         ${afterHtml(it)}
@@ -693,7 +705,7 @@
     if (!m) { fail(T.notFound); return; }
     kind = m[2]; partNo = Number(m[3]); storageKey = `${setId}-v1`;
     const script = document.createElement('script');
-    script.src = `../${m[1]}/data.js?v=2026-10-31.3`;
+    script.src = `../${m[1]}/data.js?v=2026-10-31.4`;
     script.onload = () => {
       D = window.ZH_LEVEL;
       if (!D || !buildItems()) { D = null; fail(T.notFound); return; }
