@@ -798,7 +798,7 @@
     if (!m) { fail(T.notFound); return; }
     kind = m[2]; partNo = Number(m[3]); storageKey = `${setId}-v1`;
     const script = document.createElement('script');
-    script.src = `../${m[1]}/data.js?v=2026-10-31.8`;
+    script.src = `../${m[1]}/data.js?v=2026-10-31.9`;
     script.onload = () => {
       D = window.ZH_LEVEL;
       if (!D || !buildItems()) { D = null; fail(T.notFound); return; }

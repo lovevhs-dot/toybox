@@ -161,7 +161,8 @@ How to build it:
 
 Idioms and sayings (`chinese/chengyu/`): HSK 1-6 list hardly any chengyu, so this step adds them.
 `chinese/data/src/chengyu.txt` is `part|hanzi|pinyin|en|fr|ja|ko` (parts `idioms` and `phrases`); Japanese
-and Korean give the same-character idiom where one exists (一石二鳥, 일석이조). Build with
+and Korean give the same-character idiom where one exists (一石二鳥, 일석이조), always followed by a plain
+explanation; Korean leaves out hanja so the Chinese characters don't give the answer away. Build with
 `python3 chinese/tools/build_chengyu.py` (checks duplicates, punctuation and overlap with HSK 1-6). The study
 app treats `idioms` and `phrases` like words. Avoid short-lived internet slang; sayings use 普通话.
 
