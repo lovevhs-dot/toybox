@@ -10,6 +10,8 @@ window.ARCADE_I18N = {
   ],
   ui: {
     en: {
+      difficulty: 'DIFFICULTY', music: 'Music',
+      diffHint: { EASY: 'Slower, with more time to read', NORMAL: 'The track\'s own tempo', HARD: 'Faster, with less time', EXTREME: 'Very fast, with tight timing' },
       tagline: '60-second rounds. Nothing is saved, so just play.',
       play: 'PLAY', playAgain: 'PLAY AGAIN', tracks: 'Tracks', home: 'Toybox',
       calm: 'Calm mode', calmHint: 'No flashing, shaking or sparks', sound: 'Sound', language: 'Language',
@@ -20,6 +22,8 @@ window.ARCADE_I18N = {
       study: 'Study mode', prev: 'Previous track', next: 'Next track', answer: 'Answer'
     },
     fr: {
+      difficulty: 'DIFFICULTÉ', music: 'Musique',
+      diffHint: { EASY: 'Plus lent, plus de temps pour lire', NORMAL: 'Le tempo normal de la piste', HARD: 'Plus rapide, moins de temps', EXTREME: 'Très rapide, timing serré' },
       tagline: 'Des manches de 60 secondes. Rien n\'est enregistré : il suffit de jouer.',
       play: 'JOUER', playAgain: 'REJOUER', tracks: 'Pistes', home: 'Toybox',
       calm: 'Mode calme', calmHint: 'Ni clignotements, ni secousses, ni étincelles', sound: 'Son', language: 'Langue',
@@ -30,6 +34,8 @@ window.ARCADE_I18N = {
       study: 'Mode étude', prev: 'Piste précédente', next: 'Piste suivante', answer: 'Réponse'
     },
     'zh-Hans': {
+      difficulty: '难度', music: '音乐',
+      diffHint: { EASY: '更慢，阅读时间更多', NORMAL: '曲目本来的速度', HARD: '更快，时间更少', EXTREME: '极快，判定更严' },
       tagline: '每局 60 秒，不保存任何记录，尽管玩。',
       play: '开始', playAgain: '再来一局', tracks: '曲目', home: 'Toybox',
       calm: '平静模式', calmHint: '不闪烁、不震动、无火花', sound: '声音', language: '语言',
@@ -40,6 +46,8 @@ window.ARCADE_I18N = {
       study: '学习模式', prev: '上一首', next: '下一首', answer: '答案'
     },
     ja: {
+      difficulty: '難易度', music: '音楽',
+      diffHint: { EASY: 'ゆっくり、読む時間が長い', NORMAL: 'トラック本来のテンポ', HARD: '速く、時間が短い', EXTREME: 'とても速く、判定が厳しい' },
       tagline: '1ラウンド60秒。記録は残らないので、気軽にどうぞ。',
       play: 'プレイ', playAgain: 'もう一回', tracks: 'トラック', home: 'Toybox',
       calm: 'おだやかモード', calmHint: '点滅・揺れ・火花なし', sound: 'サウンド', language: '言語',
@@ -50,6 +58,8 @@ window.ARCADE_I18N = {
       study: '学習モード', prev: '前のトラック', next: '次のトラック', answer: '答え'
     },
     ko: {
+      difficulty: '난이도', music: '음악',
+      diffHint: { EASY: '느리고 읽을 시간이 많아요', NORMAL: '트랙 원래 속도', HARD: '빠르고 시간이 짧아요', EXTREME: '아주 빠르고 판정이 엄격해요' },
       tagline: '한 판 60초. 아무것도 저장되지 않으니 마음껏 즐기세요.',
       play: '플레이', playAgain: '한 판 더', tracks: '트랙', home: 'Toybox',
       calm: '차분한 모드', calmHint: '깜빡임, 흔들림, 불꽃 없음', sound: '소리', language: '언어',

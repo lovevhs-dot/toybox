@@ -93,8 +93,12 @@ set the scope, but every new step should also pass this check: is it short, vari
 ## Arcade (`arcade/`)
 
 A rhythm-game mode on top of the same content, linked from the home page and each course page
-(`arcade/#chinese`, `arcade/#hsk3`). Lobby: course tabs by endonym, an angled track wheel with BPM
-and tier (EASY < 100, NORMAL < 120, HARD < 135, EXPERT < 150, MASTER). Game: a card falls to the
+(`arcade/#chinese`, `arcade/#hsk3`). Lobby: course tabs by endonym, an angled track wheel (drag,
+mouse wheel or arrows; a click sound per step) with each track's level (Lv.1 at 90 BPM to Lv.7 at 150).
+The player picks EASY / NORMAL / HARD / EXTREME (saved): tempo x0.8 / 1 / 1.15 / 1.3, fall time
+x1.5 / 1 / 0.8 / 0.62, PERFECT and GREAT windows 45-75% / 35-65% / 30-60% / 25-50% of the fall.
+Music: a synthesized Am-F-C-G loop at the shown BPM, soft in the lobby and a full beat in the game
+(more layers in Fever); it has its own switch next to sound effects. Game: a card falls to the
 line over a few beats (6 for characters, 8 for words, 14 for sentences); 4 lanes answer it (keys 1-4
 or D F J K). Faster right answers score PERFECT / GREAT / GOOD; a wrong answer or a card reaching the
 line is MISS and shows the right lane. Web Audio only (kick and hi-hat on the beat, a hit that climbs
