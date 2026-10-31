@@ -19,7 +19,7 @@ and what to build next, so any new session can continue without the earlier conv
 | `korean/` | Course page | Hangul live; Batchim, TOPIK 1-6 "coming soon" |
 | `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/ko, readings in each UI language's own spelling |
 | `hangul/` | Hangul Studio | 54 cards (40 jamo + 14 syllables), UI en/fr/zh-Hans/ja |
-| `english/`, `french/` | Course pages | CEFR steps A1-C1; A1-B2 live (3 parts of 40 sentences per level), C1 coming soon |
+| `english/`, `french/` | Course pages | 6 steps, all live: First steps, Everyday life, Sharing your views, Arguing your case (CEFR A1-B2, 3 parts of 40 each), Idioms and Writing well (advanced, 4 parts of 40 each) |
 | `sentences/` | Shared sentence app | `?set=en-a1-meet-1` or `fr-a1-meet-1`; data in `sentences/data/<level>.js` |
 | `shared/` | Catalog, home/course rendering, shared CSS | Courses and steps live in `shared/toybox.js` |
 
@@ -41,8 +41,13 @@ and what to build next, so any new session can continue without the earlier conv
 - Test locally: `python3 -m http.server 8765` in the repo root, ## English and French courses (sentence based)
 
 Words alone are too easy for these learners (many basic words are known or shared between English
-and French), so these courses teach everyday sentences, grouped by CEFR level (A1-C1, the
-international framework) and by situation. No exam names are used.
+and French), so these courses teach everyday sentences. Steps carry plain names instead of level
+codes; internally (ids, folders, data files, saved progress) they keep the CEFR codes:
+a1 First steps, a2 Everyday life, b1 Sharing your views, b2 Arguing your case. Then two advanced
+(around C1) steps: `idioms` (160: each English idiom paired with a French idiom of the same meaning,
+e.g. raining cats and dogs / il pleut des cordes) and `writing` (160 long sentences: linking words,
+essays, emails, reports). The first four follow the CEFR (the international framework); parts are
+grouped by situation. No exam names are used.
 
 - One sentence set serves both courses: each line of `sentences/src/<level>.txt` is
   `part|English|French|Chinese|Japanese|Korean`, with the key phrase in [brackets] in English and
@@ -50,7 +55,7 @@ international framework) and by situation. No exam names are used.
   Write all five together; sentences are original (never from textbooks or exams).
 - Build with `python3 sentences/tools/build.py <levels>` (checks brackets and duplicates), add the level step with `href` and
   `makeParts('sentences/', 'en-<level>', {...})` (and `fr-`) in `shared/toybox.js`, copy
-  `english/a1/` and `french/a1/` to the new level, and add the part names to `kinds` in
+  `english/a1/` and `french/a1/` to the new level, add the level id to the `set` pattern in `sentences/index.html`, and add the part names to `kinds` in
   `shared/toybox.js` and `sentences/i18n.js` in every language.
 - Practice: each sentence goes through 4 steps (choose it from the meaning or by ear, fill in the
   key phrase, put the words in order, type it). A mistake goes back one step; the dots show the
@@ -58,8 +63,13 @@ international framework) and by situation. No exam names are used.
   answers without accents (with a reminder) and either gender ending (fatigué/fatiguée).
 - Review is the same as in the other apps (a 10-question review of the part that keeps progress).
 - Speech: en-GB for English (British spelling, e.g. favourite), fr-FR for French.
-- Done: A1 meet/daily/out, A2 past/plans/health, B1 opinions/work/stories, B2 debate/society/tact.
-  Next: C1 (for example idioms and register, abstract topics, hedging and nuance), 40 per part.
+- Long sentences (more than 12 words, `LONG_WORDS` in the app and `LONG` in build.py): the typing
+  step asks only for the key phrase, and the ordering step keeps the key phrase as one tile and
+  groups the other words (at most about 12 tiles). build.py checks that brackets sit on word boundaries there.
+- Step names live in `shared/toybox.js` (steps) and `sentences/i18n.js` (`levels`, used in the app title).
+- Done: A1 meet/daily/out, A2 past/plans/health, B1 opinions/work/stories, B2 debate/society/tact,
+  idioms feelings/effort/chatter/sayings, writing linking/essays/emails/reports.
+  Next ideas: a listening-only review, or more advanced parts (abstract topics, hedging and nuance), 40 per part.
 
 then Playwright (Chromium is
   preinstalled) at mobile (390x844) and desktop widths, light and dark, and with Google Fonts blocked.

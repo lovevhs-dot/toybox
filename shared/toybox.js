@@ -30,7 +30,7 @@
       continue: 'Continue',
       start: 'Start',
       allSteps: 'All steps',
-      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar', tones: 'Tones', initials: 'Initials', finals: 'Finals', meet: 'Meeting people', daily: 'Daily life', out: 'Out and about', past: 'The past', plans: 'Plans and invitations', health: 'Health and services', opinions: 'Opinions and feelings', work: 'Work and studies', stories: 'Telling stories', debate: 'Making a case', society: 'Society and the world', tact: 'Tact and polite requests' },
+      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar', tones: 'Tones', initials: 'Initials', finals: 'Finals', meet: 'Meeting people', daily: 'Daily life', out: 'Out and about', past: 'The past', plans: 'Plans and invitations', health: 'Health and services', opinions: 'Opinions and feelings', work: 'Work and studies', stories: 'Telling stories', debate: 'Making a case', society: 'Society and the world', tact: 'Tact and polite requests', feelings: 'Feelings and people', effort: 'Work, effort and money', chatter: 'Conversation and daily life', sayings: 'Sayings and proverbs', linking: 'Linking ideas', essays: 'Essays and arguments', emails: 'Emails and letters', reports: 'Reports and summaries' },
       part: n => `Part ${n}`,
       backup: 'Back up or restore progress',
       backupNote: 'Progress is saved only in this browser. Copy a backup code to keep it safe or move it to another device.',
@@ -62,7 +62,7 @@
       continue: 'Continuer',
       start: 'Commencer',
       allSteps: 'Toutes les étapes',
-      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire', tones: 'Tons', initials: 'Initiales', finals: 'Finales', meet: 'Faire connaissance', daily: 'La vie quotidienne', out: 'En ville', past: 'Le passé', plans: 'Projets et invitations', health: 'Santé et services', opinions: 'Opinions et sentiments', work: 'Travail et études', stories: 'Raconter', debate: 'Argumenter', society: 'La société et le monde', tact: 'Tact et politesse' },
+      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire', tones: 'Tons', initials: 'Initiales', finals: 'Finales', meet: 'Faire connaissance', daily: 'La vie quotidienne', out: 'En ville', past: 'Le passé', plans: 'Projets et invitations', health: 'Santé et services', opinions: 'Opinions et sentiments', work: 'Travail et études', stories: 'Raconter', debate: 'Argumenter', society: 'La société et le monde', tact: 'Tact et politesse', feelings: 'Sentiments et relations', effort: 'Travail, effort et argent', chatter: 'Conversation et vie quotidienne', sayings: 'Dictons et proverbes', linking: 'Relier les idées', essays: 'Dissertations et arguments', emails: 'E-mails et lettres', reports: 'Rapports et synthèses' },
       part: n => `Partie ${n}`,
       backup: 'Sauvegarder ou restaurer la progression',
       backupNote: 'La progression est enregistrée uniquement dans ce navigateur. Copiez un code de sauvegarde pour la garder ou la transférer sur un autre appareil.',
@@ -94,7 +94,7 @@
       continue: '继续',
       start: '开始',
       allSteps: '全部阶段',
-      kinds: { words: '词汇', chars: '汉字', grammar: '语法', tones: '声调', initials: '声母', finals: '韵母', meet: '认识新朋友', daily: '日常生活', out: '出门在外', past: '过去的事', plans: '计划和邀请', health: '健康和服务', opinions: '观点和感受', work: '工作和学习', stories: '讲故事', debate: '阐述观点', society: '社会与世界', tact: '委婉与礼貌' },
+      kinds: { words: '词汇', chars: '汉字', grammar: '语法', tones: '声调', initials: '声母', finals: '韵母', meet: '认识新朋友', daily: '日常生活', out: '出门在外', past: '过去的事', plans: '计划和邀请', health: '健康和服务', opinions: '观点和感受', work: '工作和学习', stories: '讲故事', debate: '阐述观点', society: '社会与世界', tact: '委婉与礼貌', feelings: '情感与人际', effort: '工作、努力和金钱', chatter: '聊天与日常', sayings: '俗语和谚语', linking: '连接观点', essays: '议论文', emails: '邮件和书信', reports: '报告和总结' },
       part: n => `第 ${n} 部分`,
       backup: '备份或恢复进度',
       backupNote: '进度只保存在这个浏览器里。复制备份码，可以妥善保存或转移到其他设备。',
@@ -126,7 +126,7 @@
       continue: '続ける',
       start: '始める',
       allSteps: 'すべてのステップ',
-      kinds: { words: '語彙', chars: '漢字', grammar: '文法', tones: '声調', initials: '声母', finals: '韻母', meet: '人と知り合う', daily: '毎日の生活', out: '外出先で', past: '過去のこと', plans: '予定と誘い', health: '健康とサービス', opinions: '意見と気持ち', work: '仕事と勉強', stories: '話を語る', debate: '主張する', society: '社会と世界', tact: '丁寧な頼み方' },
+      kinds: { words: '語彙', chars: '漢字', grammar: '文法', tones: '声調', initials: '声母', finals: '韻母', meet: '人と知り合う', daily: '毎日の生活', out: '外出先で', past: '過去のこと', plans: '予定と誘い', health: '健康とサービス', opinions: '意見と気持ち', work: '仕事と勉強', stories: '話を語る', debate: '主張する', society: '社会と世界', tact: '丁寧な頼み方', feelings: '気持ちと人間関係', effort: '仕事・努力・お金', chatter: '会話と日常', sayings: 'ことわざと決まり文句', linking: '考えをつなぐ', essays: '小論文と論証', emails: 'メールと手紙', reports: 'レポートと要約' },
       part: n => `パート${n}`,
       backup: '進み具合のバックアップ・復元',
       backupNote: '進み具合はこのブラウザにだけ保存されます。バックアップコードをコピーしておけば、安全に保管したり別の端末に移したりできます。',
@@ -158,7 +158,7 @@
       continue: '이어서 하기',
       start: '시작하기',
       allSteps: '전체 단계',
-      kinds: { words: '어휘', chars: '한자', grammar: '문법', tones: '성조', initials: '성모', finals: '운모', meet: '사람 만나기', daily: '일상생활', out: '밖에서', past: '지난 일', plans: '계획과 초대', health: '건강과 서비스', opinions: '의견과 감정', work: '일과 공부', stories: '이야기하기', debate: '논리적으로 말하기', society: '사회와 세계', tact: '정중하게 말하기' },
+      kinds: { words: '어휘', chars: '한자', grammar: '문법', tones: '성조', initials: '성모', finals: '운모', meet: '사람 만나기', daily: '일상생활', out: '밖에서', past: '지난 일', plans: '계획과 초대', health: '건강과 서비스', opinions: '의견과 감정', work: '일과 공부', stories: '이야기하기', debate: '논리적으로 말하기', society: '사회와 세계', tact: '정중하게 말하기', feelings: '감정과 인간관계', effort: '일, 노력, 돈', chatter: '대화와 일상', sayings: '속담과 관용구', linking: '생각 잇기', essays: '에세이와 논증', emails: '이메일과 편지', reports: '보고서와 요약' },
       part: n => `파트 ${n}`,
       backup: '진행 기록 백업·복원',
       backupNote: '진행 기록은 이 브라우저에만 저장돼요. 백업 코드를 복사해두면 안전하게 보관하거나 다른 기기로 옮길 수 있어요.',
@@ -348,36 +348,43 @@
       glyphClass: 'glyph-latin',
       color: '#6d4bd8',
       name: { en: 'English', fr: 'Anglais', 'zh-Hans': '英语', ja: '英語', ko: '영어' },
-      goal: { en: 'Everyday sentences, A1 to C1', fr: 'Phrases du quotidien, de A1 à C1', 'zh-Hans': '日常句子，从 A1 到 C1', ja: '日常のフレーズ、A1からC1まで', ko: '일상 문장, A1부터 C1까지' },
+      goal: { en: 'From first words to writing well', fr: 'Des premiers mots à l\'écrit soigné', 'zh-Hans': '从第一句话到写好文章', ja: '最初の一言から上手な文章まで', ko: '첫마디부터 잘 쓴 글까지' },
       steps: [
         {
           id: 'en-a1', href: 'english/a1/',
           parts: makeParts('sentences/', 'en-a1', { meet: [40], daily: [40], out: [40] }),
-          name: { en: 'A1', fr: 'A1', 'zh-Hans': 'A1', ja: 'A1', ko: 'A1' },
-          desc: { en: 'Beginner · everyday sentences', fr: 'Débutant · phrases du quotidien', 'zh-Hans': '入门 · 日常句子', ja: '入門 · 日常のフレーズ', ko: '입문 · 일상 문장' }
+          name: { en: 'First steps', fr: 'Premiers pas', 'zh-Hans': '起步', ja: 'はじめの一歩', ko: '첫걸음' },
+          desc: { en: 'Beginner · greetings, introductions, daily errands', fr: 'Débutant · salutations, présentations, courses du quotidien', 'zh-Hans': '入门 · 问候、自我介绍、日常事务', ja: '入門 · あいさつ、自己紹介、日常の用事', ko: '입문 · 인사, 자기소개, 일상 용무' }
         },
         {
           id: 'en-a2', href: 'english/a2/',
           parts: makeParts('sentences/', 'en-a2', { past: [40], plans: [40], health: [40] }),
-          name: { en: 'A2', fr: 'A2', 'zh-Hans': 'A2', ja: 'A2', ko: 'A2' },
-          desc: { en: 'Elementary · everyday sentences', fr: 'Élémentaire · phrases du quotidien', 'zh-Hans': '初级 · 日常句子', ja: '初級 · 日常のフレーズ', ko: '초급 · 일상 문장' }
+          name: { en: 'Everyday life', fr: 'Au quotidien', 'zh-Hans': '日常生活', ja: '毎日の暮らし', ko: '일상생활' },
+          desc: { en: 'Elementary · the past, plans, appointments, services', fr: 'Élémentaire · le passé, projets, rendez-vous, services', 'zh-Hans': '初级 · 过去的事、计划、约定、服务', ja: '初級 · 過去のこと、予定、約束、サービス', ko: '초급 · 지난 일, 계획, 약속, 서비스' }
         },
         {
           id: 'en-b1', href: 'english/b1/',
           parts: makeParts('sentences/', 'en-b1', { opinions: [40], work: [40], stories: [40] }),
-          name: { en: 'B1', fr: 'B1', 'zh-Hans': 'B1', ja: 'B1', ko: 'B1' },
-          desc: { en: 'Intermediate · everyday sentences', fr: 'Intermédiaire · phrases du quotidien', 'zh-Hans': '中级 · 日常句子', ja: '中級 · 日常のフレーズ', ko: '중급 · 일상 문장' }
+          name: { en: 'Sharing your views', fr: 'Dire ce qu\'on pense', 'zh-Hans': '表达想法', ja: '自分の考えを話す', ko: '내 생각 말하기' },
+          desc: { en: 'Intermediate · opinions, work, experiences', fr: 'Intermédiaire · opinions, travail, expériences', 'zh-Hans': '中级 · 观点、工作、经历', ja: '中級 · 意見、仕事、経験', ko: '중급 · 의견, 일, 경험 이야기' }
         },
         {
           id: 'en-b2', href: 'english/b2/',
           parts: makeParts('sentences/', 'en-b2', { debate: [40], society: [40], tact: [40] }),
-          name: { en: 'B2', fr: 'B2', 'zh-Hans': 'B2', ja: 'B2', ko: 'B2' },
-          desc: { en: 'Upper intermediate · everyday sentences', fr: 'Intermédiaire avancé · phrases du quotidien', 'zh-Hans': '中高级 · 日常句子', ja: '中上級 · 日常のフレーズ', ko: '중상급 · 일상 문장' }
+          name: { en: 'Arguing your case', fr: 'Défendre ses idées', 'zh-Hans': '据理力争', ja: '主張を展開する', ko: '내 주장 펼치기' },
+          desc: { en: 'Upper intermediate · debate, society, polite phrasing', fr: 'Intermédiaire avancé · débats, société, formules polies', 'zh-Hans': '中高级 · 辩论、社会问题、礼貌表达', ja: '中上級 · 議論、社会問題、丁寧な表現', ko: '중상급 · 논쟁, 사회 문제, 정중한 표현' }
         },
         {
-          id: 'en-c1',
-          name: { en: 'C1', fr: 'C1', 'zh-Hans': 'C1', ja: 'C1', ko: 'C1' },
-          desc: { en: 'Advanced · everyday sentences', fr: 'Avancé · phrases du quotidien', 'zh-Hans': '高级 · 日常句子', ja: '上級 · 日常のフレーズ', ko: '고급 · 일상 문장' }
+          id: 'en-idioms', href: 'english/idioms/',
+          parts: makeParts('sentences/', 'en-idioms', { feelings: [40], effort: [40], chatter: [40], sayings: [40] }),
+          name: { en: 'Idioms', fr: 'Expressions idiomatiques', 'zh-Hans': '惯用语', ja: '慣用句', ko: '관용 표현' },
+          desc: { en: 'Advanced · 160 expressions native speakers use every day', fr: 'Avancé · 160 expressions que les natifs utilisent tous les jours', 'zh-Hans': '高级 · 母语者每天都用的 160 个表达', ja: '上級 · ネイティブが毎日使う160の表現', ko: '고급 · 원어민이 매일 쓰는 표현 160개' }
+        },
+        {
+          id: 'en-writing', href: 'english/writing/',
+          parts: makeParts('sentences/', 'en-writing', { linking: [40], essays: [40], emails: [40], reports: [40] }),
+          name: { en: 'Writing well', fr: 'Bien écrire', 'zh-Hans': '写好文章', ja: '上手に書く', ko: '글 잘 쓰기' },
+          desc: { en: 'Advanced · linking words and set phrases for essays and emails', fr: 'Avancé · connecteurs et formules pour dissertations et e-mails', 'zh-Hans': '高级 · 议论文和邮件中的连接词与固定表达', ja: '上級 · 小論文やメールの接続語と定型表現', ko: '고급 · 에세이·이메일용 연결어와 정형 표현' }
         }
       ]
     },
@@ -387,36 +394,43 @@
       glyphClass: 'glyph-latin',
       color: '#1f7a8c',
       name: { en: 'French', fr: 'Français', 'zh-Hans': '法语', ja: 'フランス語', ko: '프랑스어' },
-      goal: { en: 'Everyday sentences, A1 to C1', fr: 'Phrases du quotidien, de A1 à C1', 'zh-Hans': '日常句子，从 A1 到 C1', ja: '日常のフレーズ、A1からC1まで', ko: '일상 문장, A1부터 C1까지' },
+      goal: { en: 'From first words to writing well', fr: 'Des premiers mots à l\'écrit soigné', 'zh-Hans': '从第一句话到写好文章', ja: '最初の一言から上手な文章まで', ko: '첫마디부터 잘 쓴 글까지' },
       steps: [
         {
           id: 'fr-a1', href: 'french/a1/',
           parts: makeParts('sentences/', 'fr-a1', { meet: [40], daily: [40], out: [40] }),
-          name: { en: 'A1', fr: 'A1', 'zh-Hans': 'A1', ja: 'A1', ko: 'A1' },
-          desc: { en: 'Beginner · everyday sentences', fr: 'Débutant · phrases du quotidien', 'zh-Hans': '入门 · 日常句子', ja: '入門 · 日常のフレーズ', ko: '입문 · 일상 문장' }
+          name: { en: 'First steps', fr: 'Premiers pas', 'zh-Hans': '起步', ja: 'はじめの一歩', ko: '첫걸음' },
+          desc: { en: 'Beginner · greetings, introductions, daily errands', fr: 'Débutant · salutations, présentations, courses du quotidien', 'zh-Hans': '入门 · 问候、自我介绍、日常事务', ja: '入門 · あいさつ、自己紹介、日常の用事', ko: '입문 · 인사, 자기소개, 일상 용무' }
         },
         {
           id: 'fr-a2', href: 'french/a2/',
           parts: makeParts('sentences/', 'fr-a2', { past: [40], plans: [40], health: [40] }),
-          name: { en: 'A2', fr: 'A2', 'zh-Hans': 'A2', ja: 'A2', ko: 'A2' },
-          desc: { en: 'Elementary · everyday sentences', fr: 'Élémentaire · phrases du quotidien', 'zh-Hans': '初级 · 日常句子', ja: '初級 · 日常のフレーズ', ko: '초급 · 일상 문장' }
+          name: { en: 'Everyday life', fr: 'Au quotidien', 'zh-Hans': '日常生活', ja: '毎日の暮らし', ko: '일상생활' },
+          desc: { en: 'Elementary · the past, plans, appointments, services', fr: 'Élémentaire · le passé, projets, rendez-vous, services', 'zh-Hans': '初级 · 过去的事、计划、约定、服务', ja: '初級 · 過去のこと、予定、約束、サービス', ko: '초급 · 지난 일, 계획, 약속, 서비스' }
         },
         {
           id: 'fr-b1', href: 'french/b1/',
           parts: makeParts('sentences/', 'fr-b1', { opinions: [40], work: [40], stories: [40] }),
-          name: { en: 'B1', fr: 'B1', 'zh-Hans': 'B1', ja: 'B1', ko: 'B1' },
-          desc: { en: 'Intermediate · everyday sentences', fr: 'Intermédiaire · phrases du quotidien', 'zh-Hans': '中级 · 日常句子', ja: '中級 · 日常のフレーズ', ko: '중급 · 일상 문장' }
+          name: { en: 'Sharing your views', fr: 'Dire ce qu\'on pense', 'zh-Hans': '表达想法', ja: '自分の考えを話す', ko: '내 생각 말하기' },
+          desc: { en: 'Intermediate · opinions, work, experiences', fr: 'Intermédiaire · opinions, travail, expériences', 'zh-Hans': '中级 · 观点、工作、经历', ja: '中級 · 意見、仕事、経験', ko: '중급 · 의견, 일, 경험 이야기' }
         },
         {
           id: 'fr-b2', href: 'french/b2/',
           parts: makeParts('sentences/', 'fr-b2', { debate: [40], society: [40], tact: [40] }),
-          name: { en: 'B2', fr: 'B2', 'zh-Hans': 'B2', ja: 'B2', ko: 'B2' },
-          desc: { en: 'Upper intermediate · everyday sentences', fr: 'Intermédiaire avancé · phrases du quotidien', 'zh-Hans': '中高级 · 日常句子', ja: '中上級 · 日常のフレーズ', ko: '중상급 · 일상 문장' }
+          name: { en: 'Arguing your case', fr: 'Défendre ses idées', 'zh-Hans': '据理力争', ja: '主張を展開する', ko: '내 주장 펼치기' },
+          desc: { en: 'Upper intermediate · debate, society, polite phrasing', fr: 'Intermédiaire avancé · débats, société, formules polies', 'zh-Hans': '中高级 · 辩论、社会问题、礼貌表达', ja: '中上級 · 議論、社会問題、丁寧な表現', ko: '중상급 · 논쟁, 사회 문제, 정중한 표현' }
         },
         {
-          id: 'fr-c1',
-          name: { en: 'C1', fr: 'C1', 'zh-Hans': 'C1', ja: 'C1', ko: 'C1' },
-          desc: { en: 'Advanced · everyday sentences', fr: 'Avancé · phrases du quotidien', 'zh-Hans': '高级 · 日常句子', ja: '上級 · 日常のフレーズ', ko: '고급 · 일상 문장' }
+          id: 'fr-idioms', href: 'french/idioms/',
+          parts: makeParts('sentences/', 'fr-idioms', { feelings: [40], effort: [40], chatter: [40], sayings: [40] }),
+          name: { en: 'Idioms', fr: 'Expressions idiomatiques', 'zh-Hans': '惯用语', ja: '慣用句', ko: '관용 표현' },
+          desc: { en: 'Advanced · 160 expressions native speakers use every day', fr: 'Avancé · 160 expressions que les natifs utilisent tous les jours', 'zh-Hans': '高级 · 母语者每天都用的 160 个表达', ja: '上級 · ネイティブが毎日使う160の表現', ko: '고급 · 원어민이 매일 쓰는 표현 160개' }
+        },
+        {
+          id: 'fr-writing', href: 'french/writing/',
+          parts: makeParts('sentences/', 'fr-writing', { linking: [40], essays: [40], emails: [40], reports: [40] }),
+          name: { en: 'Writing well', fr: 'Bien écrire', 'zh-Hans': '写好文章', ja: '上手に書く', ko: '글 잘 쓰기' },
+          desc: { en: 'Advanced · linking words and set phrases for essays and emails', fr: 'Avancé · connecteurs et formules pour dissertations et e-mails', 'zh-Hans': '高级 · 议论文和邮件中的连接词与固定表达', ja: '上級 · 小論文やメールの接続語と定型表現', ko: '고급 · 에세이·이메일용 연결어와 정형 표현' }
         }
       ]
     }

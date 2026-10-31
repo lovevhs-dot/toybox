@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Sentences · Toybox</title>
-  <meta name="description" content="Learn English and French through everyday sentences, level by level (CEFR).">
+  <meta name="description" content="Learn English and French through everyday sentences, idioms and writing phrases.">
   <meta name="theme-color" content="#f7f4ee" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#151412" media="(prefers-color-scheme: dark)">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Sentences · Toybox">
-  <meta property="og:description" content="Learn English and French through everyday sentences, level by level (CEFR).">
+  <meta property="og:description" content="Learn English and French through everyday sentences, idioms and writing phrases.">
   <meta property="og:image" content="https://nanyan4.github.io/toybox/og.png">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="32x32" href="/toybox/toybox-icon-32.png?v=4">
@@ -190,7 +190,7 @@
   </div>
   <main class="page" id="page"><p class="msg">…</p></main>
 
-  <script src="i18n.js?v=2026-10-31.2"></script>
+  <script src="i18n.js?v=2026-10-31.3"></script>
   <script>
   (() => {
     'use strict';
@@ -198,6 +198,7 @@
     const STEPS = 4;           // choose, fill in, order, type
     const ACTIVE_SIZE = 5;     // sentences practiced at a time
     const REVIEW_SIZE = 10;
+    const LONG_WORDS = 12;     // longer sentences: type only the key phrase, order phrase tiles (see sentences/tools/build.py)
     const LANG_KEY = 'toybox-lang';
     const PREFS_KEY = 'sentences-prefs';
     const COURSE = {
@@ -221,7 +222,7 @@
 
     // ---------- Which part ----------
     const setId = new URLSearchParams(location.search).get('set') || '';
-    const m = setId.match(/^(en|fr)-(a1|a2|b1|b2|c1)-([a-z]+)-(\d{1,2})$/);
+    const m = setId.match(/^(en|fr)-(a1|a2|b1|b2|idioms|writing)-([a-z]+)-(\d{1,2})$/);
     const taught = m ? m[1] : 'en';
     const C = COURSE[taught];
     document.documentElement.style.setProperty('--c', C.color);
@@ -296,6 +297,17 @@
     // Words for the ordering step: punctuation stays out of the tiles
     const wordsOf = s => plain(s).replace(/\s+([?!:;])/g, '$1').split(/\s+/).map(w => w.replace(/[.,!?;:…]+$/, '')).filter(Boolean);
     const endPunct = s => (plain(s).trim().match(/(…|[.?!])$/) || [''])[0];
+    const isLong = it => wordsOf(it.raw).length > LONG_WORDS;
+    // Ordering tiles: single words, or for long sentences the key phrase as one tile and the rest in small groups
+    function tilesOf(raw) {
+      const all = wordsOf(raw);
+      if (all.length <= LONG_WORDS) return all;
+      const m = raw.match(/^(.*?)\[([^\]]+)\](.*)$/);
+      const before = wordsOf(m[1]), chunk = wordsOf(m[2]).join(' '), after = wordsOf(m[3]);
+      const size = Math.ceil((before.length + after.length) / 7);
+      const group = ws => { const out = []; for (let i = 0; i < ws.length; i += size) out.push(ws.slice(i, i + size).join(' ')); return out; };
+      return [...group(before), chunk, ...group(after)];
+    }
 
     const CONTRACTIONS = {
       "i'm": 'i am', "you're": 'you are', "it's": 'it is', "what's": 'what is', "that's": 'that is', "there's": 'there is',
@@ -366,7 +378,7 @@
     function typeFor(it, stage) {
       if (stage === 0) return Sound.canSpeak() && prefs.sound && Math.random() < 0.5 ? 'listen' : 'pick';
       if (stage === 1) return 'cloze';
-      if (stage === 2) return wordsOf(it.raw).length > 1 ? 'order' : 'type';
+      if (stage === 2) return tilesOf(it.raw).length > 1 ? 'order' : 'type';
       return 'type';
     }
     function pickOthers(it, f) {
@@ -401,7 +413,7 @@
       if (qz.type === 'pick' || qz.type === 'listen') qz.options = shuffle([it.text, ...pickOthers(it, x => x.text)]);
       if (qz.type === 'cloze') qz.options = shuffle([it.chunk, ...pickOthers(it, x => x.chunk)]);
       if (qz.type === 'order') {
-        const w = wordsOf(it.raw);
+        const w = tilesOf(it.raw);
         let tiles;
         do { tiles = shuffle(w.map((t, i) => ({ t, i }))); } while (w.length > 1 && tiles.every((x, i) => x.t === w[i]));
         qz.tiles = tiles;
@@ -445,14 +457,14 @@
     }
     function checkOrder() {
       if (qz.answered || qz.type !== 'order') return;
-      const target = wordsOf(qz.current.raw);
+      const target = tilesOf(qz.current.raw);
       finish(qz.built.map(b => qz.tiles[b].t).join(' ') === target.join(' '));
     }
     function checkType(giveUp) {
       if (qz.answered || qz.type !== 'type') return;
       const input = ($('typed') || {}).value || '';
       qz.typed = input;
-      qz.result = giveUp ? 'wrong' : checkTyped(input, qz.current.text);
+      qz.result = giveUp ? 'wrong' : checkTyped(input, isLong(qz.current) ? qz.current.chunk : qz.current.text);
       finish(qz.result !== 'wrong');
     }
     function next() {
@@ -508,6 +520,12 @@
           <span class="q-sub" lang="${lang}">${esc(trOf(it))}</span>`;
       }
       if (qz.type === 'order') return `<span class="q-label">${esc(T.qOrder)}</span>${tr}`;
+      if (isLong(it)) {
+        const blank = `<span class="blank">${qz.answered ? esc(it.chunk) : '&nbsp;'}</span>`;
+        return `<span class="q-label">${esc(T.qTypeKey)}</span>
+          <span class="q-target" lang="${taught}">${esc(it.raw).replace(/\[[^\]]+\]/, blank)}</span>
+          <span class="q-sub" lang="${lang}">${esc(trOf(it))}</span>`;
+      }
       return `<span class="q-label">${esc(T.qType)}</span>${tr}`;
     }
     function answerHtml(it) {
@@ -591,9 +609,9 @@
     }
     function syncChrome() {
       document.documentElement.lang = lang;
-      const title = D ? `${T.course[taught]} ${D.name} · ${T.kinds[kind] || kind}` : T.course[taught];
+      const title = D ? `${T.levels[D.id]} · ${T.kinds[kind] || kind}` : T.course[taught];
       $('title').textContent = title;
-      document.title = `${title} · Toybox`;
+      document.title = D ? `${title} · ${T.course[taught]} · Toybox` : `${title} · Toybox`;
       $('subtitle').textContent = D ? T.mastered(mastered.size, items.length) : '';
       $('back').setAttribute('aria-label', T.back);
       $('back').href = D ? levelHref() : `../${C.dir}/`;
@@ -666,7 +684,7 @@
     if (!m) { fail(T.notFound); return; }
     kind = m[3]; partNo = Number(m[4]); storageKey = `${setId}-v1`;
     const script = document.createElement('script');
-    script.src = `data/${m[2]}.js?v=2026-10-31.2`;
+    script.src = `data/${m[2]}.js?v=2026-10-31.3`;
     script.onload = () => {
       D = window.SENTENCES;
       if (!D || !buildItems()) { D = null; fail(T.notFound); return; }
