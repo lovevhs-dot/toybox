@@ -232,6 +232,56 @@
       ]
     },
     {
+      id: 'chinese',
+      glyph: '中',
+      glyphClass: 'glyph-zh',
+      color: '#0f8b6c',
+      name: { en: 'Chinese', fr: 'Chinois', 'zh-Hans': '中文', 'zh-Hant': '中文', ja: '中国語', ko: '중국어' },
+      goal: { en: 'Step by step toward HSK 6', fr: 'Pas à pas vers le HSK 6', 'zh-Hans': '一步步迈向 HSK 6', 'zh-Hant': '一步步邁向 HSK 6', ja: 'HSK 6級まで一歩ずつ', ko: 'HSK 6급까지 한 단계씩' },
+      steps: [
+        {
+          id: 'pinyin',
+          name: { en: 'Pinyin and tones', fr: 'Pinyin et tons', 'zh-Hans': '拼音和声调', 'zh-Hant': '拼音和聲調', ja: 'ピンインと声調', ko: '병음과 성조' },
+          desc: { en: 'Sounds and the four tones', fr: 'Les sons et les quatre tons', 'zh-Hans': '声母、韵母和四个声调', 'zh-Hant': '聲母、韻母和四個聲調', ja: '音と4つの声調', ko: '소리와 네 가지 성조' }
+        },
+        {
+          id: 'zh-words-1',
+          name: { en: 'Words 1', fr: 'Mots 1', 'zh-Hans': '词语 1', 'zh-Hant': '詞語 1', ja: '単語 1', ko: '단어 1' },
+          desc: { en: 'Ordering food, asking how people are', fr: 'Commander, prendre des nouvelles', 'zh-Hans': '点餐、问候', 'zh-Hant': '點餐、問候', ja: '注文、あいさつ', ko: '주문, 안부' }
+        },
+        {
+          id: 'zh-words-2',
+          name: { en: 'Words 2', fr: 'Mots 2', 'zh-Hans': '词语 2', 'zh-Hant': '詞語 2', ja: '単語 2', ko: '단어 2' },
+          desc: { en: 'Hobbies and travel', fr: 'Loisirs et voyages', 'zh-Hans': '爱好、旅行', 'zh-Hant': '愛好、旅行', ja: '趣味、旅行', ko: '취미, 여행' }
+        },
+        {
+          id: 'zh-words-3',
+          name: { en: 'Words 3', fr: 'Mots 3', 'zh-Hans': '词语 3', 'zh-Hant': '詞語 3', ja: '単語 3', ko: '단어 3' },
+          desc: { en: 'Weekends and health', fr: 'Week-end et santé', 'zh-Hans': '周末、看病', 'zh-Hant': '週末、看病', ja: '週末、病院', ko: '주말, 병원' }
+        },
+        {
+          id: 'zh-words-4',
+          name: { en: 'Words 4', fr: 'Mots 4', 'zh-Hans': '词语 4', 'zh-Hant': '詞語 4', ja: '単語 4', ko: '단어 4' },
+          desc: { en: 'Plans, calls and weather', fr: 'Rendez-vous, appels et météo', 'zh-Hans': '约会、打电话、天气', 'zh-Hant': '約會、打電話、天氣', ja: '約束、電話、天気', ko: '약속, 전화, 날씨' }
+        },
+        {
+          id: 'zh-sentences-1',
+          name: { en: 'Sentences 1', fr: 'Phrases 1', 'zh-Hans': '句子 1', 'zh-Hant': '句子 1', ja: '文 1', ko: '문장 1' },
+          desc: { en: 'Key patterns: 还是, 想, 得, 会, 过', fr: 'Structures clés : 还是, 想, 得, 会, 过', 'zh-Hans': '重点句型：还是、想、得、会、过', 'zh-Hant': '重點句型：還是、想、得、會、過', ja: '基本文型：还是・想・得・会・过', ko: '핵심 문형: 还是, 想, 得, 会, 过' }
+        },
+        {
+          id: 'zh-sentences-2',
+          name: { en: 'Sentences 2', fr: 'Phrases 2', 'zh-Hans': '句子 2', 'zh-Hant': '句子 2', ja: '文 2', ko: '문장 2' },
+          desc: { en: 'Key patterns: 了, 有点儿, 正在, 比', fr: 'Structures clés : 了, 有点儿, 正在, 比', 'zh-Hans': '重点句型：了、有点儿、正在、比', 'zh-Hant': '重點句型：了、有點兒、正在、比', ja: '基本文型：了・有点儿・正在・比', ko: '핵심 문형: 了, 有点儿, 正在, 比' }
+        },
+        {
+          id: 'hsk-3-6',
+          name: { en: 'HSK 3–6', fr: 'HSK 3–6', 'zh-Hans': 'HSK 3–6', 'zh-Hant': 'HSK 3–6', ja: 'HSK 3–6', ko: 'HSK 3–6' },
+          desc: { en: 'Thousands more words, level by level', fr: 'Des milliers de mots, niveau par niveau', 'zh-Hans': '按级别学习数千个词', 'zh-Hant': '按級別學習數千個詞', ja: 'レベル別に数千語', ko: '급수별로 수천 단어' }
+        }
+      ]
+    },
+    {
       id: 'korean',
       glyph: '한',
       glyphClass: 'glyph-ko',

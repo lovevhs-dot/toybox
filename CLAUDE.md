@@ -24,4 +24,5 @@ This repository is public. Never put personal or sensitive information in it:
 - GitHub Pages caches files for about 10 minutes, so pages load shared/*.css, shared/*.js and
   each app's i18n.js with a `?v=YYYY-MM-DD.N` query. Whenever one of those files changes, bump
   the version in every page that loads it.
+- ROADMAP.md tracks what exists and what to build next; keep it updated when a step goes live.
 - Check all of the above before every commit and push.
