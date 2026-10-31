@@ -98,7 +98,7 @@
     .stage { position: relative; overflow: hidden; max-width: 760px; width: 100%; margin: 0 auto; }
     .lanes-bg { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(4, 1fr); pointer-events: none; opacity: 0.5; }
     .lanes-bg i { border-left: 1px solid rgba(255,255,255,0.05); }
-    .hitline { position: absolute; left: 12px; right: 12px; height: 4px; border-radius: 4px; background: var(--hot); box-shadow: 0 0 14px var(--hot); }
+    .hitline { position: absolute; left: 12px; right: 12px; top: 86%; height: 4px; border-radius: 4px; background: var(--hot); box-shadow: 0 0 14px var(--hot); }
     .hitline.pulse { animation: hl 0.18s ease-out; }
     @keyframes hl { from { transform: scaleY(2.6); box-shadow: 0 0 30px var(--hot); } }
     .note { position: absolute; z-index: 1; left: 50%; top: 0; width: min(560px, calc(100% - 32px)); transform: translate(-50%, 0); padding: 14px 18px; border-radius: 18px;
@@ -113,13 +113,14 @@
     .note.missed { animation: noteMiss 0.45s ease-in forwards; }
     @keyframes noteHit { to { transform: translate(-50%, var(--y)) scale(1.15); opacity: 0; } }
     @keyframes noteMiss { to { transform: translate(-50%, calc(var(--y) + 40px)) rotate(4deg); opacity: 0; filter: grayscale(1); } }
-    .judge { position: absolute; z-index: 2; left: 0; right: 0; text-align: center; font-weight: 900; font-style: italic; font-size: clamp(32px, 10vw, 54px); pointer-events: none; letter-spacing: 0.02em; }
+    .judge { position: absolute; z-index: 2; left: 16px; right: 16px; top: 40%; transform-origin: center; text-align: center; font-weight: 900; font-style: italic; font-size: clamp(32px, 10vw, 54px); pointer-events: none; letter-spacing: 0.02em; }
     .judge.show { animation: pop 0.55s cubic-bezier(.2,1.6,.4,1) forwards; }
     @keyframes pop { 0% { transform: scale(0.4); opacity: 0; } 25% { transform: scale(1.15); opacity: 1; } 70% { transform: scale(1); opacity: 1; } 100% { transform: scale(1) translateY(-14px); opacity: 0; } }
     .judge.PERFECT { color: var(--gold); text-shadow: 0 0 18px rgba(255, 210, 63, 0.7); }
     .judge.GREAT { color: var(--cyan); text-shadow: 0 0 14px rgba(46, 230, 214, 0.6); }
     .judge.GOOD { color: #8be36b; }
     .judge.MISS { color: var(--miss); }
+    .judge .judge-ans { display: block; margin-top: 6px; font-size: 18px; font-style: normal; font-weight: 800; color: var(--text); letter-spacing: 0; word-break: break-word; }
     .combo { position: absolute; top: 46%; right: 16px; z-index: 0; opacity: 0.85; text-align: right; font-weight: 900; font-style: italic; line-height: 1; pointer-events: none; }
     .combo b { display: block; font-size: 44px; font-variant-numeric: tabular-nums; }
     .combo small { font-size: 12px; letter-spacing: 0.15em; color: var(--text-2); }
@@ -571,7 +572,6 @@
       $('game').classList.remove('fever', 'fever2');
       $('notes').innerHTML = '';
       renderCombo();
-      layoutHitline();
       // A one-bar count-in on the beat
       for (let i = 0; i < 4; i++) setTimeout(() => {
         if (!G || G.over || G.id !== id) return;
@@ -580,11 +580,8 @@
       }, i * beatMs);
       setTimeout(() => { if (G && !G.over && G.id === id) { $('count').innerHTML = ''; G.start = performance.now(); G.raf = requestAnimationFrame(loop); } }, 4 * beatMs);
     }
-    function layoutHitline() {
-      const h = $('stage').clientHeight;
-      $('hitline').style.top = `${Math.round(h * 0.86)}px`;
-      $('judge').style.top = `${Math.round(h * 0.86) - 70}px`;
-    }
+    // The line sits at 86% of the stage; read it each frame because the stage changes size (lanes, phone toolbars)
+    const lineY = () => $('stage').clientHeight * 0.86;
     function spawn(now) {
       const q = G.next();
       const el = document.createElement('div');
@@ -611,7 +608,7 @@
       }
       if (G.note && !G.note.done) {
         const f = (now - G.note.born) / G.fallMs;
-        const line = parseFloat($('hitline').style.top) - G.note.el.offsetHeight;
+        const line = lineY() - G.note.el.offsetHeight;
         const y = Math.max(0, line) * Math.min(f, 1);
         G.note.el.style.transform = `translate(-50%, ${y}px)`;
         G.note.el.style.setProperty('--y', `${y}px`);
@@ -677,7 +674,7 @@
     function showJudge(g) {
       const j = $('judge');
       j.className = 'judge'; void j.offsetWidth;
-      j.textContent = g === 'MISS' ? `MISS · ${T.answer}: ${G.note ? G.note.q.right : ''}` : g + '!';
+      j.innerHTML = g === 'MISS' ? `MISS<span class="judge-ans">${esc(T.answer)}: ${esc(G.note ? G.note.q.right : '')}</span>` : g + '!';
       j.className = `judge show ${g}`;
     }
     function sparks(btn) {
@@ -805,7 +802,6 @@
       try { localStorage.setItem(LANG_KEY, lang); } catch (err) {}
       renderChrome(); renderLobby();
     });
-    window.addEventListener('resize', () => { if (G) layoutHitline(); });
     window.addEventListener('hashchange', () => { applyHash(); if (!$('lobby').hidden) renderLobby(); });
     // Leaving the tab pauses nothing; it simply ends the round so no stale timers run
     document.addEventListener('visibilitychange', () => { if (document.hidden && G && !G.over && G.start) finish(); });
