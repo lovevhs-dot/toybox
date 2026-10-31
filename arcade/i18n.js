@@ -10,6 +10,8 @@ window.ARCADE_I18N = {
   ],
   ui: {
     en: {
+      about: x => { if (x < 59.5) { const m = Math.max(1, Math.round(x)); return `about ${m} min`; } const h = Math.floor(x / 60), m = Math.round((x % 60) / 5) * 5; return m === 60 ? (h => `about ${h} h`)(h + 1) : m ? `about ${h} h ${m} min` : `about ${h} h`; },
+      longRun: 'Long run: leaving the app pauses it, and ✕ shows how far you got.',
       modeTime: '60 seconds', modeAll: 'All cards', modeTimeHint: 'As many cards as you can in 60 seconds.', modeAllHint: 'Every card once, to the end. Misses come back later.',
       noRecord: 'no record yet', paused: 'Paused · tap to continue', stoppedAt: (n, t) => `Stopped at ${n}/${t}. Records count finished runs only.`,
       difficulty: 'DIFFICULTY', music: 'Music',
@@ -24,6 +26,8 @@ window.ARCADE_I18N = {
       study: 'Study mode', prev: 'Previous track', next: 'Next track', answer: 'Answer'
     },
     fr: {
+      about: x => { if (x < 59.5) { const m = Math.max(1, Math.round(x)); return `environ ${m} min`; } const h = Math.floor(x / 60), m = Math.round((x % 60) / 5) * 5; return m === 60 ? (h => `environ ${h} h`)(h + 1) : m ? `environ ${h} h ${m} min` : `environ ${h} h`; },
+      longRun: 'Partie longue : quitter l\'appli la met en pause, et ✕ montre où vous en êtes.',
       modeTime: '60 secondes', modeAll: 'Toutes les cartes', modeTimeHint: 'Le plus de cartes possible en 60 secondes.', modeAllHint: 'Chaque carte une fois, jusqu\'au bout. Les erreurs reviennent plus tard.',
       noRecord: 'pas encore de record', paused: 'En pause · touchez pour continuer', stoppedAt: (n, t) => `Arrêté à ${n}/${t}. Seules les parties terminées comptent pour les records.`,
       difficulty: 'DIFFICULTÉ', music: 'Musique',
@@ -38,6 +42,8 @@ window.ARCADE_I18N = {
       study: 'Mode étude', prev: 'Piste précédente', next: 'Piste suivante', answer: 'Réponse'
     },
     'zh-Hans': {
+      about: x => { if (x < 59.5) { const m = Math.max(1, Math.round(x)); return `约 ${m} 分钟`; } const h = Math.floor(x / 60), m = Math.round((x % 60) / 5) * 5; return m === 60 ? (h => `约 ${h} 小时`)(h + 1) : m ? `约 ${h} 小时 ${m} 分钟` : `约 ${h} 小时`; },
+      longRun: '时间较长：离开应用会自动暂停，点 ✕ 可以看到进度。',
       modeTime: '60 秒', modeAll: '全部卡片', modeTimeHint: '60 秒内尽量多答。', modeAllHint: '每张卡出现一次，直到全部完成。答错的稍后再出现。',
       noRecord: '还没有记录', paused: '已暂停 · 点一下继续', stoppedAt: (n, t) => `停在 ${n}/${t}。只有完成的一局才计入记录。`,
       difficulty: '难度', music: '音乐',
@@ -52,6 +58,8 @@ window.ARCADE_I18N = {
       study: '学习模式', prev: '上一首', next: '下一首', answer: '答案'
     },
     ja: {
+      about: x => { if (x < 59.5) { const m = Math.max(1, Math.round(x)); return `約${m}分`; } const h = Math.floor(x / 60), m = Math.round((x % 60) / 5) * 5; return m === 60 ? (h => `約${h}時間`)(h + 1) : m ? `約${h}時間${m}分` : `約${h}時間`; },
+      longRun: '長めです。アプリを離れると一時停止し、✕で途中結果を見られます。',
       modeTime: '60秒', modeAll: '全カード', modeTimeHint: '60秒でできるだけ多く。', modeAllHint: '全カードを1回ずつ最後まで。間違えたカードは後でもう一度。',
       noRecord: 'まだ記録なし', paused: '一時停止中 · タップで再開', stoppedAt: (n, t) => `${n}/${t}で終了。記録は最後までプレイした回だけ。`,
       difficulty: '難易度', music: '音楽',
@@ -66,6 +74,8 @@ window.ARCADE_I18N = {
       study: '学習モード', prev: '前のトラック', next: '次のトラック', answer: '答え'
     },
     ko: {
+      about: x => { if (x < 59.5) { const m = Math.max(1, Math.round(x)); return `약 ${m}분`; } const h = Math.floor(x / 60), m = Math.round((x % 60) / 5) * 5; return m === 60 ? (h => `약 ${h}시간`)(h + 1) : m ? `약 ${h}시간 ${m}분` : `약 ${h}시간`; },
+      longRun: '오래 걸려요. 앱을 나가면 일시 정지되고, ✕를 누르면 거기까지의 결과를 볼 수 있어요.',
       modeTime: '60초', modeAll: '전부 풀기', modeTimeHint: '60초 동안 최대한 많이.', modeAllHint: '모든 카드를 한 번씩 끝까지. 틀린 카드는 나중에 한 번 더 나와요.',
       noRecord: '아직 기록 없음', paused: '일시 정지 · 누르면 계속', stoppedAt: (n, t) => `${n}/${t}에서 멈췄어요. 기록은 끝까지 깬 판만 남아요.`,
       difficulty: '난이도', music: '음악',

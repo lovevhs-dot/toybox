@@ -84,6 +84,7 @@
     .diff-hint { margin: -4px 0 0; color: var(--text-2); font-size: 13px; }
     .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
     .mode { padding: 11px 6px; border-radius: 12px; background: var(--bg-2); font-weight: 800; font-size: 14px; color: var(--text-2); box-shadow: inset 0 0 0 1.5px var(--line); }
+    .mode-est { display: block; margin-top: 2px; font-size: 12px; font-weight: 700; color: var(--text-2); }
     .mode[aria-pressed="true"] { color: var(--text); box-shadow: inset 0 0 0 2px var(--cyan), 0 0 14px rgba(46, 230, 214, 0.35); }
     .best { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 14px; background: var(--bg-2); }
     .best-rank { font-size: 30px; font-weight: 900; font-style: italic; min-width: 52px; text-align: center; }
@@ -253,7 +254,7 @@
 
   <section class="result" id="result" hidden aria-live="polite"></section>
 
-  <script src="i18n.js?v=2026-10-31.4"></script>
+  <script src="i18n.js?v=2026-10-31.5"></script>
   <script>
   (() => {
     'use strict';
@@ -322,6 +323,14 @@
     // Card counts per track, filled in when a track's data has been loaded (shown as "…" before)
     const COUNTS = {};
     const lvCount = (c, t) => COUNTS[c.id + '/' + t.id] || 0;
+    // Rough playing time of an all-cards run: per card, half a beat waiting for the spawn, about 45% of
+    // the fall time to answer, and the short pause after a hit; plus ~10% for missed cards coming back
+    function estMinutes(c, t) {
+      const n = lvCount(c, t);
+      if (!n) return 0;
+      const beat = 60000 / bpmOf(t), fall = beat * FALL_BEATS[t.kind] * DIFFS[prefs.diff].fall;
+      return (n * 1.1 * (0.5 * beat + 0.45 * fall + 260)) / 60000;
+    }
     // How many beats a card takes to reach the line: longer prompts get more time
     const FALL_BEATS = { script: 6, tones: 6, zh: 8, sent: 14 };
 
@@ -700,8 +709,8 @@
         <span class="diff-label">${esc(T.difficulty)}</span>
         <div class="diffs" role="group" aria-label="${esc(T.difficulty)}">${DIFF_IDS.map(d => `<button type="button" class="diff ${d}" data-diff="${d}" aria-pressed="${d === prefs.diff}">${d}</button>`).join('')}</div>
         <p class="diff-hint">${esc(T.diffHint[prefs.diff])}</p>
-        <div class="modes" role="group">${['time', 'all'].map(m => `<button type="button" class="mode" data-mode="${m}" aria-pressed="${m === prefs.mode}">${esc(m === 'time' ? T.modeTime : T.modeAll)}</button>`).join('')}</div>
-        <p class="diff-hint">${esc(prefs.mode === 'time' ? T.modeTimeHint : T.modeAllHint)}</p>
+        <div class="modes" role="group">${['time', 'all'].map(m => `<button type="button" class="mode" data-mode="${m}" aria-pressed="${m === prefs.mode}">${esc(m === 'time' ? T.modeTime : T.modeAll)}${m === 'all' && estMinutes(c, t) ? `<small class="mode-est">${esc(T.about(estMinutes(c, t)))}</small>` : ''}</button>`).join('')}</div>
+        <p class="diff-hint">${esc(prefs.mode === 'time' ? T.modeTimeHint : T.modeAllHint)}${prefs.mode === 'all' && estMinutes(c, t) >= 15 ? ' ' + esc(T.longRun) : ''}</p>
         ${(b => `<div class="best">${b ? `<span class="best-rank r-${b.rank}">${b.rank}</span><span class="best-text">BEST <b>${b.score.toLocaleString()}</b>${esc(T.maxCombo)} ${b.combo} · ${b.acc}%${b.fc ? ' · FULL COMBO' : ''}</span>` : `<span class="best-text">BEST — ${esc(T.noRecord)}</span>`}</div>`)(getBest(t, prefs.diff, prefs.mode))}
         <p class="detail-how">${esc(T.how)}</p>
         <button type="button" class="play-btn" id="play">▶ ${esc(T.play)}</button>

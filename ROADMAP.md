@@ -105,7 +105,8 @@ line is MISS and shows the right lane. Web Audio only (kick and hi-hat on the be
 C4-D4-E4… with the combo, a scratch on a miss). Combo 10 and 20 start Fever. Result:
 SSS (full combo and 95%+), S 90%+, A 80%+, B 60%+, F; max combo, accuracy, FULL COMBO.
 - Modes: 60 seconds, or all cards (every card once to the end; progress n/N; quitting shows the result
-  so far). Cards come from a shuffled deck: no repeats until it runs out (60 s reshuffles), and a missed
+  so far; the button shows a rough playing time: per card half a beat + 45% of the fall + 0.26 s,
+  plus 10% for misses). Cards come from a shuffled deck: no repeats until it runs out (60 s reshuffles), and a missed
   card comes back once, 3-6 cards later (retrieval practice).
 - Score: PERFECT 1000, GREAT 700, GOOD 400, times +10% per 10 combo (up to x2).
 - Best records per track, difficulty and mode in `arcade-best-v1` (score, best rank, accuracy, max
