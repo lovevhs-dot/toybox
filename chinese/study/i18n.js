@@ -8,7 +8,7 @@ window.I18N = {
   ],
   ui: {
     en: {
-      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar', tones: 'Tones', initials: 'Initials', finals: 'Finals' },
+      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar', tones: 'Tones', initials: 'Initials', finals: 'Finals', idioms: 'Idioms (chengyu)', phrases: 'Sayings and slang' },
       toneNames: ['Neutral tone · light and short', '1st tone · high and level', '2nd tone · rising', '3rd tone · low, dipping', '4th tone · falling'],
       qTone: 'Which tone do you hear?',
       qToneName: 'Which tone is this?',
@@ -52,7 +52,7 @@ window.I18N = {
       loadFailed: 'Could not load this part. Check the connection and try again.'
     },
     fr: {
-      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire', tones: 'Tons', initials: 'Initiales', finals: 'Finales' },
+      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire', tones: 'Tons', initials: 'Initiales', finals: 'Finales', idioms: 'Expressions (chengyu)', phrases: 'Dictons et argot' },
       toneNames: ['Ton neutre · léger et bref', '1er ton · haut et plat', '2e ton · montant', '3e ton · bas, qui plonge', '4e ton · descendant'],
       qTone: 'Quel ton entendez-vous ?',
       qToneName: 'Quel est ce ton ?',
@@ -96,7 +96,7 @@ window.I18N = {
       loadFailed: 'Impossible de charger cette partie. Vérifiez la connexion et réessayez.'
     },
     ja: {
-      kinds: { words: '語彙', chars: '漢字', grammar: '文法', tones: '声調', initials: '声母', finals: '韻母' },
+      kinds: { words: '語彙', chars: '漢字', grammar: '文法', tones: '声調', initials: '声母', finals: '韻母', idioms: '成語', phrases: 'ことわざと口語' },
       toneNames: ['軽声 · 軽く短く', '第1声 · 高く平ら', '第2声 · 上がる', '第3声 · 低く抑える', '第4声 · 下がる'],
       qTone: '聞こえた声調はどれ？',
       qToneName: 'この声調はどれ？',
@@ -140,7 +140,7 @@ window.I18N = {
       loadFailed: 'このパートを読み込めませんでした。接続を確認してもう一度お試しください。'
     },
     ko: {
-      kinds: { words: '어휘', chars: '한자', grammar: '문법', tones: '성조', initials: '성모', finals: '운모' },
+      kinds: { words: '어휘', chars: '한자', grammar: '문법', tones: '성조', initials: '성모', finals: '운모', idioms: '성어', phrases: '속담과 구어' },
       toneNames: ['경성 · 가볍고 짧게', '1성 · 높고 평평하게', '2성 · 올라가게', '3성 · 낮게 눌러서', '4성 · 뚝 떨어지게'],
       qTone: '들리는 성조는?',
       qToneName: '이 성조는?',

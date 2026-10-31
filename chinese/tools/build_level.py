@@ -44,7 +44,12 @@ for k in range(1,7):
 # Fixed readings for phrases the word-list split gets wrong, and names
 OVR={'有时间':'yǒu shíjiān','天下雨':'tiān xiàyǔ','再说一遍':'zài shuō yí biàn','才能说好':'cái néng shuō hǎo',
      '长得':'zhǎng de','王小月':'Wáng Xiǎoyuè','北京':'Běijīng','这个':'zhège','那个':'nàge','十二':"shí'èr",'二十':'èrshí',
-     '慢慢':'mànmàn','中国人':'Zhōngguórén','早点儿':'zǎo diǎnr','快点儿':'kuài diǎnr','玩儿':'wánr','关上':'guānshang'}
+     '慢慢':'mànmàn','中国人':'Zhōngguórén','早点儿':'zǎo diǎnr','快点儿':'kuài diǎnr','玩儿':'wánr','关上':'guānshang',
+     '宁可':'nìngkě','何况':'hékuàng','难怪':'nánguài','幸亏':'xìngkuī','何必':'hébì','为中心':'wéi zhōngxīn',
+     '不免':'bùmiǎn','以至于':'yǐzhìyú','固然':'gùrán','何尝':'hécháng','岂不':'qǐbù','无非':'wúfēi','不惜':'bùxī',
+     '鉴于':'jiànyú','而言':'éryán','唯有':'wéiyǒu','才能成功':'cái néng chénggōng','新手':'xīnshǒu','并非':'bìngfēi',
+     '守时':'shǒushí','尚且':'shàngqiě','做不到':'zuò bu dào','大人':'dàrén','恨不得':'hènbude','偏偏':'piānpiān',
+     '未免':'wèimiǎn','有待':'yǒudài','免得':'miǎnde','乃至':'nǎizhì','迄今':'qìjīn','不得已':'bùdéyǐ'}
 def cut(t):
     # Fixed phrases first, then the longest match against the HSK word lists, else one character
     i=0

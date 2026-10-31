@@ -30,7 +30,7 @@
       continue: 'Continue',
       start: 'Start',
       allSteps: 'All steps',
-      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar', tones: 'Tones', initials: 'Initials', finals: 'Finals', meet: 'Meeting people', daily: 'Daily life', out: 'Out and about', past: 'The past', plans: 'Plans and invitations', health: 'Health and services', opinions: 'Opinions and feelings', work: 'Work and studies', stories: 'Telling stories', debate: 'Making a case', society: 'Society and the world', tact: 'Tact and polite requests', feelings: 'Feelings and people', effort: 'Work, effort and money', chatter: 'Conversation and daily life', sayings: 'Sayings and proverbs', linking: 'Linking ideas', essays: 'Essays and arguments', emails: 'Emails and letters', reports: 'Reports and summaries' },
+      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar', tones: 'Tones', initials: 'Initials', finals: 'Finals', meet: 'Meeting people', daily: 'Daily life', out: 'Out and about', past: 'The past', plans: 'Plans and invitations', health: 'Health and services', opinions: 'Opinions and feelings', work: 'Work and studies', stories: 'Telling stories', debate: 'Making a case', society: 'Society and the world', tact: 'Tact and polite requests', idioms: 'Idioms (chengyu)', phrases: 'Sayings and slang', feelings: 'Feelings and people', effort: 'Work, effort and money', chatter: 'Conversation and daily life', sayings: 'Sayings and proverbs', linking: 'Linking ideas', essays: 'Essays and arguments', emails: 'Emails and letters', reports: 'Reports and summaries' },
       part: n => `Part ${n}`,
       backup: 'Back up or restore progress',
       backupNote: 'Progress is saved only in this browser. Copy a backup code to keep it safe or move it to another device.',
@@ -62,7 +62,7 @@
       continue: 'Continuer',
       start: 'Commencer',
       allSteps: 'Toutes les étapes',
-      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire', tones: 'Tons', initials: 'Initiales', finals: 'Finales', meet: 'Faire connaissance', daily: 'La vie quotidienne', out: 'En ville', past: 'Le passé', plans: 'Projets et invitations', health: 'Santé et services', opinions: 'Opinions et sentiments', work: 'Travail et études', stories: 'Raconter', debate: 'Argumenter', society: 'La société et le monde', tact: 'Tact et politesse', feelings: 'Sentiments et relations', effort: 'Travail, effort et argent', chatter: 'Conversation et vie quotidienne', sayings: 'Dictons et proverbes', linking: 'Relier les idées', essays: 'Dissertations et arguments', emails: 'E-mails et lettres', reports: 'Rapports et synthèses' },
+      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire', tones: 'Tons', initials: 'Initiales', finals: 'Finales', meet: 'Faire connaissance', daily: 'La vie quotidienne', out: 'En ville', past: 'Le passé', plans: 'Projets et invitations', health: 'Santé et services', opinions: 'Opinions et sentiments', work: 'Travail et études', stories: 'Raconter', debate: 'Argumenter', society: 'La société et le monde', tact: 'Tact et politesse', idioms: 'Expressions (chengyu)', phrases: 'Dictons et argot', feelings: 'Sentiments et relations', effort: 'Travail, effort et argent', chatter: 'Conversation et vie quotidienne', sayings: 'Dictons et proverbes', linking: 'Relier les idées', essays: 'Dissertations et arguments', emails: 'E-mails et lettres', reports: 'Rapports et synthèses' },
       part: n => `Partie ${n}`,
       backup: 'Sauvegarder ou restaurer la progression',
       backupNote: 'La progression est enregistrée uniquement dans ce navigateur. Copiez un code de sauvegarde pour la garder ou la transférer sur un autre appareil.',
@@ -94,7 +94,7 @@
       continue: '继续',
       start: '开始',
       allSteps: '全部阶段',
-      kinds: { words: '词汇', chars: '汉字', grammar: '语法', tones: '声调', initials: '声母', finals: '韵母', meet: '认识新朋友', daily: '日常生活', out: '出门在外', past: '过去的事', plans: '计划和邀请', health: '健康和服务', opinions: '观点和感受', work: '工作和学习', stories: '讲故事', debate: '阐述观点', society: '社会与世界', tact: '委婉与礼貌', feelings: '情感与人际', effort: '工作、努力和金钱', chatter: '聊天与日常', sayings: '俗语和谚语', linking: '连接观点', essays: '议论文', emails: '邮件和书信', reports: '报告和总结' },
+      kinds: { words: '词汇', chars: '汉字', grammar: '语法', tones: '声调', initials: '声母', finals: '韵母', meet: '认识新朋友', daily: '日常生活', out: '出门在外', past: '过去的事', plans: '计划和邀请', health: '健康和服务', opinions: '观点和感受', work: '工作和学习', stories: '讲故事', debate: '阐述观点', society: '社会与世界', tact: '委婉与礼貌', idioms: '成语', phrases: '俗语和口语', feelings: '情感与人际', effort: '工作、努力和金钱', chatter: '聊天与日常', sayings: '俗语和谚语', linking: '连接观点', essays: '议论文', emails: '邮件和书信', reports: '报告和总结' },
       part: n => `第 ${n} 部分`,
       backup: '备份或恢复进度',
       backupNote: '进度只保存在这个浏览器里。复制备份码，可以妥善保存或转移到其他设备。',
@@ -126,7 +126,7 @@
       continue: '続ける',
       start: '始める',
       allSteps: 'すべてのステップ',
-      kinds: { words: '語彙', chars: '漢字', grammar: '文法', tones: '声調', initials: '声母', finals: '韻母', meet: '人と知り合う', daily: '毎日の生活', out: '外出先で', past: '過去のこと', plans: '予定と誘い', health: '健康とサービス', opinions: '意見と気持ち', work: '仕事と勉強', stories: '話を語る', debate: '主張する', society: '社会と世界', tact: '丁寧な頼み方', feelings: '気持ちと人間関係', effort: '仕事・努力・お金', chatter: '会話と日常', sayings: 'ことわざと決まり文句', linking: '考えをつなぐ', essays: '小論文と論証', emails: 'メールと手紙', reports: 'レポートと要約' },
+      kinds: { words: '語彙', chars: '漢字', grammar: '文法', tones: '声調', initials: '声母', finals: '韻母', meet: '人と知り合う', daily: '毎日の生活', out: '外出先で', past: '過去のこと', plans: '予定と誘い', health: '健康とサービス', opinions: '意見と気持ち', work: '仕事と勉強', stories: '話を語る', debate: '主張する', society: '社会と世界', tact: '丁寧な頼み方', idioms: '成語', phrases: 'ことわざと口語', feelings: '気持ちと人間関係', effort: '仕事・努力・お金', chatter: '会話と日常', sayings: 'ことわざと決まり文句', linking: '考えをつなぐ', essays: '小論文と論証', emails: 'メールと手紙', reports: 'レポートと要約' },
       part: n => `パート${n}`,
       backup: '進み具合のバックアップ・復元',
       backupNote: '進み具合はこのブラウザにだけ保存されます。バックアップコードをコピーしておけば、安全に保管したり別の端末に移したりできます。',
@@ -158,7 +158,7 @@
       continue: '이어서 하기',
       start: '시작하기',
       allSteps: '전체 단계',
-      kinds: { words: '어휘', chars: '한자', grammar: '문법', tones: '성조', initials: '성모', finals: '운모', meet: '사람 만나기', daily: '일상생활', out: '밖에서', past: '지난 일', plans: '계획과 초대', health: '건강과 서비스', opinions: '의견과 감정', work: '일과 공부', stories: '이야기하기', debate: '논리적으로 말하기', society: '사회와 세계', tact: '정중하게 말하기', feelings: '감정과 인간관계', effort: '일, 노력, 돈', chatter: '대화와 일상', sayings: '속담과 관용구', linking: '생각 잇기', essays: '에세이와 논증', emails: '이메일과 편지', reports: '보고서와 요약' },
+      kinds: { words: '어휘', chars: '한자', grammar: '문법', tones: '성조', initials: '성모', finals: '운모', meet: '사람 만나기', daily: '일상생활', out: '밖에서', past: '지난 일', plans: '계획과 초대', health: '건강과 서비스', opinions: '의견과 감정', work: '일과 공부', stories: '이야기하기', debate: '논리적으로 말하기', society: '사회와 세계', tact: '정중하게 말하기', idioms: '성어', phrases: '속담과 구어', feelings: '감정과 인간관계', effort: '일, 노력, 돈', chatter: '대화와 일상', sayings: '속담과 관용구', linking: '생각 잇기', essays: '에세이와 논증', emails: '이메일과 편지', reports: '보고서와 요약' },
       part: n => `파트 ${n}`,
       backup: '진행 기록 백업·복원',
       backupNote: '진행 기록은 이 브라우저에만 저장돼요. 백업 코드를 복사해두면 안전하게 보관하거나 다른 기기로 옮길 수 있어요.',
@@ -281,14 +281,22 @@
           desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },
         {
-          id: 'hsk5',
+          id: 'hsk5', href: 'chinese/hsk5/',
+          parts: makeParts('chinese/study/', 'zh-hsk5', { words: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 49, 49, 49], grammar: [30] }),
           name: { en: 'HSK 5', fr: 'HSK 5', 'zh-Hans': 'HSK 5级', ja: 'HSK 5級', ko: 'HSK 5급' },
           desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
         },
         {
-          id: 'hsk6',
+          id: 'hsk6', href: 'chinese/hsk6/',
+          parts: makeParts('chinese/study/', 'zh-hsk6', { words: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49, 49], grammar: [30] }),
           name: { en: 'HSK 6', fr: 'HSK 6', 'zh-Hans': 'HSK 6级', ja: 'HSK 6級', ko: 'HSK 6급' },
           desc: { en: 'Words and grammar', fr: 'Vocabulaire et grammaire', 'zh-Hans': '词汇和语法', ja: '語彙・文法', ko: '어휘, 문법' }
+        },
+        {
+          id: 'chengyu', href: 'chinese/chengyu/',
+          parts: makeParts('chinese/study/', 'zh-chengyu', { idioms: [50, 50, 50], phrases: [50] }),
+          name: { en: 'Idioms and sayings', fr: 'Expressions et dictons', 'zh-Hans': '成语和俗语', ja: '成語とことわざ', ko: '성어와 속담' },
+          desc: { en: '150 chengyu, 50 sayings and slang', fr: '150 chengyu, 50 dictons et mots d\'argot', 'zh-Hans': '150个成语，50个俗语和口语', ja: '成語150、ことわざと口語50', ko: '성어 150개, 속담과 구어 50개' }
         }
       ]
     },

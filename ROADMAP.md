@@ -9,12 +9,15 @@ and what to build next, so any new session can continue without the earlier conv
 |---|---|---|
 | `/` | Home | Continue card, course cards, backup links |
 | `japanese/` | Course page | Hiragana live; Hiragana 2, Katakana 1-2, JLPT N5-N1 "coming soon" |
-| `chinese/` | Course page | Pinyin and HSK 1-6 steps; Pinyin and HSK 1-4 live |
+| `chinese/` | Course page | Pinyin, HSK 1-6 and Idioms and sayings, all live |
 | `chinese/pinyin/` | Pinyin level page | Tones (45: 10 syllables x 4 tones + 5 neutral), initials (23), finals (38), each with hints in every UI language |
 | `chinese/hsk1/` | HSK 1 level page | 6 word parts (294), 1 grammar part (44); characters are practiced inside the words; data in `data.js` |
 | `chinese/hsk2/` | HSK 2 level page | 4 word parts (197), 1 grammar part (32) |
 | `chinese/hsk3/` | HSK 3 level page | 10 word parts (487), 1 grammar part (33) |
 | `chinese/hsk4/` | HSK 4 level page | 20 word parts (972), 1 grammar part (31) |
+| `chinese/hsk5/` | HSK 5 level page | 31 word parts (1,547), 1 grammar part (30) |
+| `chinese/hsk6/` | HSK 6 level page | 34 word parts (1,684), 1 grammar part (30) |
+| `chinese/chengyu/` | Idioms and sayings | 3 parts of chengyu (150), 1 part of sayings and colloquial words (50); not in the HSK 1-6 lists |
 | `chinese/study/` | Shared study app | `?set=zh-hsk1-words-1` etc.; list + mastery practice; UI en/fr/ja/ko |
 | `korean/` | Course page | Hangul live; Batchim, TOPIK 1-6 "coming soon" |
 | `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/ko, readings in each UI language's own spelling |
@@ -109,7 +112,7 @@ for levels 1-6 (regular exams from December 2026). No textbook is followed.
 UI languages: English, Français, 日本語, 한국어 (no 中文, since the course teaches Chinese).
 Course color #0f8b6c, glyph 中 with system Chinese fonts. Speech uses `zh-CN`.
 
-Course steps (listed in `shared/toybox.js`; Pinyin and HSK 1-4 are live):
+Course steps (listed in `shared/toybox.js`; all live):
 
 | Step | Content | Data |
 |---|---|---|
@@ -120,12 +123,13 @@ Course steps (listed in `shared/toybox.js`; Pinyin and HSK 1-4 are live):
 | HSK 4 (`hsk4`) | 972 words, 20 parts | `chinese/data/hsk4.tsv` |
 | HSK 5 (`hsk5`) | 1,547 words, 31 parts | `chinese/data/hsk5.tsv` |
 | HSK 6 (`hsk6`) | 1,684 words, 34 parts | `chinese/data/hsk6.tsv` |
+| Idioms and sayings (`chengyu`) | 150 chengyu, 50 sayings and slang | `chinese/data/src/chengyu.txt` |
 
 How to build it:
 
 1. **Pinyin** (done): tones by ear (or by name when no Chinese voice exists), initials and finals by
    ear or by description.
-2. **Done for HSK 1-4, repeat for HSK 5 and 6:** write `chinese/data/src/hsk<N>-words.txt` (one line per
+2. **Done for HSK 1-6 (repeat for levels 7-9):** write `chinese/data/src/hsk<N>-words.txt` (one line per
    word of `chinese/data/hsk<N>.tsv`, same order) and `hsk<N>-grammar.txt`, copy `chinese/hsk4/index.html`
    to `chinese/hsk<N>/` (change the step and titles), then run
    `python3 chinese/tools/build_level.py <N> <parts>` (parts of about 50 words). It writes `data.js`
@@ -145,7 +149,17 @@ How to build it:
    exists) and the missing character of a word. Progress per part is saved as `zh-hsk<N>-<kind>-<part>-v1`; home, course, level page
    and backups read it through the step's `parts`.
 
-Levels 7-9 (advanced band, about 5,600 more words) can follow the same way later.
+Idioms and sayings (`chinese/chengyu/`): HSK 1-6 list hardly any chengyu, so this step adds them.
+`chinese/data/src/chengyu.txt` is `part|hanzi|pinyin|en|fr|ja|ko` (parts `idioms` and `phrases`); Japanese
+and Korean give the same-character idiom where one exists (一石二鳥, 일석이조). Build with
+`python3 chinese/tools/build_chengyu.py` (checks duplicates, punctuation and overlap with HSK 1-6). The study
+app treats `idioms` and `phrases` like words. Avoid short-lived internet slang; sayings use 普通话.
+
+Grammar sentence pinyin: words outside the HSK lists are split syllable by syllable by pypinyin, so add
+them to `OVR` in `build_level.py` and check the output (done for HSK 5 and 6).
+
+Ideas for later: levels 7-9 (advanced band, about 5,600 more words), example sentences for words,
+short reading passages per level.
 
 ## Resuming in a new session
 

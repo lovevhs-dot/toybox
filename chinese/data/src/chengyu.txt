@@ -1,0 +1,203 @@
+# Chinese idioms (chengyu), sayings and everyday colloquial expressions, with meanings written for this repo.
+# Columns: part|hanzi|pinyin|en|fr|ja|ko. No punctuation in hanzi (the app blanks single characters).
+# Japanese and Korean give the same-character idiom in their language where one exists.
+idioms|一举两得|yìjǔ liǎngdé|kill two birds with one stone|faire d'une pierre deux coups|一挙両得|일거양득(一擧兩得)
+idioms|半途而废|bàntú'érfèi|to give up halfway|abandonner à mi-chemin|途中で投げ出す|중도에 그만두다
+idioms|马马虎虎|mǎmǎhūhū|so-so; careless|comme ci comme ça ; négligent|まあまあ；いい加減|그럭저럭; 대충대충
+idioms|一心一意|yìxīn yíyì|wholeheartedly|de tout son cœur|一心に|한마음 한뜻으로
+idioms|三心二意|sānxīn èryì|half-hearted; indecisive|indécis ; sans conviction|気が散って定まらない|이랬다저랬다 하다
+idioms|自相矛盾|zìxiāng máodùn|self-contradictory|contradictoire|自己矛盾|자기모순(自相矛盾)
+idioms|画蛇添足|huàshé tiānzú|to spoil something by adding too much|en faire trop et tout gâcher|蛇足|사족(畫蛇添足)
+idioms|守株待兔|shǒuzhū dàitù|to wait idly for luck|attendre passivement la chance|株を守りて兎を待つ|수주대토(守株待兔)
+idioms|亡羊补牢|wángyáng bǔláo|better late than never (fix it after a loss)|mieux vaut tard que jamais (réparer après une perte)|失敗の後でも手を打てば遅くない|망양보뢰(亡羊補牢): 늦더라도 고치면 된다 (한국어 '소 잃고 외양간 고친다'와 달리 긍정적)
+idioms|对牛弹琴|duìniú tánqín|to talk to a brick wall|parler à un mur|馬の耳に念仏|쇠귀에 경 읽기
+idioms|井底之蛙|jǐngdǐ zhī wā|frog at the bottom of a well (narrow view)|grenouille au fond du puits (vue étroite)|井の中の蛙|우물 안 개구리
+idioms|塞翁失马|sàiwēng shīmǎ|a blessing in disguise|à quelque chose malheur est bon|人間万事塞翁が馬|새옹지마(塞翁之馬)
+idioms|卧虎藏龙|wòhǔ cánglóng|hidden talents|talents cachés|隠れた逸材が多い|숨은 인재가 많다
+idioms|一石二鸟|yìshí èrniǎo|one stone, two birds|un coup, deux résultats|一石二鳥|일석이조(一石二鳥)
+idioms|千方百计|qiānfāng bǎijì|by every possible means|par tous les moyens|あらゆる手段を尽くして|온갖 방법을 다하여
+idioms|不知不觉|bùzhī bùjué|without realising|sans s'en rendre compte|知らず知らずのうちに|자기도 모르는 사이에
+idioms|一路平安|yílù píng'ān|have a safe journey|bon voyage|道中ご無事で|가시는 길 평안하시길
+idioms|一见钟情|yíjiàn zhōngqíng|love at first sight|coup de foudre|一目惚れ|첫눈에 반하다
+idioms|半信半疑|bànxìn bànyí|half-believing|mi-incrédule|半信半疑|반신반의(半信半疑)
+idioms|七上八下|qīshàng bāxià|on edge; anxious|inquiet ; anxieux|気が気でない|마음이 갈팡질팡하다
+idioms|乱七八糟|luànqībāzāo|in a mess|en pagaille|めちゃくちゃな|엉망진창
+idioms|东张西望|dōngzhāng xīwàng|to look around|regarder de tous côtés|きょろきょろする|두리번거리다
+idioms|莫名其妙|mòmíng qímiào|baffling|incompréhensible|わけがわからない|영문을 모르겠다
+idioms|津津有味|jīnjīn yǒuwèi|with great relish|avec délectation|興味津々に；おいしそうに|맛있게; 흥미진진하게
+idioms|兴高采烈|xìnggāo cǎiliè|in high spirits|fou de joie|大喜びで|신바람이 나다
+idioms|迫不及待|pòbùjídài|too impatient to wait|ne pas pouvoir attendre|待ちきれない|조급해서 기다리지 못하다
+idioms|一言为定|yìyán wéidìng|it's a deal|marché conclu|約束だよ|약속한 거야
+idioms|一干二净|yìgān èrjìng|completely; spotless|complètement ; impeccable|きれいさっぱり|깨끗이 (하나도 남김없이)
+idioms|全心全意|quánxīn quányì|heart and soul|corps et âme|誠心誠意|온 마음을 다하여
+idioms|五花八门|wǔhuā bāmén|all kinds of|de toutes sortes|種々雑多|각양각색
+idioms|一无所知|yìwú suǒzhī|to know nothing at all|ne rien savoir du tout|何も知らない|아무것도 모르다
+idioms|胡说八道|húshuō bādào|to talk nonsense|dire n'importe quoi|でたらめを言う|허튼소리를 하다
+idioms|不可思议|bùkě sīyì|inconceivable|inconcevable|不可思議|불가사의(不可思議)
+idioms|名不虚传|míngbùxūchuán|to live up to one's reputation|mériter sa réputation|名に恥じない|명불허전(名不虛傳)
+idioms|一目了然|yímù liǎorán|clear at a glance|clair au premier coup d'œil|一目瞭然|일목요연(一目瞭然)
+idioms|小题大做|xiǎotí dàzuò|to make a fuss over nothing|faire une montagne de rien|大げさに騒ぐ|작은 일을 크게 벌이다
+idioms|十全十美|shíquán shíměi|perfect|parfait|完全無欠|완전무결
+idioms|九牛一毛|jiǔniú yìmáo|a drop in the ocean|une goutte d'eau dans la mer|九牛の一毛|구우일모(九牛一毛)
+idioms|千钧一发|qiānjūn yífà|hanging by a thread|à un cheveu près|危機一髪|위기일발
+idioms|一举一动|yìjǔ yídòng|every move|le moindre geste|一挙一動|일거수일투족
+idioms|无可奈何|wúkě nàihé|helpless; no way out|impuissant|どうしようもない|어찌할 도리가 없다
+idioms|理所当然|lǐsuǒdāngrán|naturally; as it should be|tout naturel|当然のことだ|당연하다
+idioms|与众不同|yǔzhòng bùtóng|out of the ordinary|hors du commun|人並み外れた|남다르다
+idioms|各种各样|gèzhǒng gèyàng|all sorts|toutes sortes de|様々な|여러 가지
+idioms|不约而同|bùyuē'értóng|to do the same without arranging it|faire la même chose sans s'être concertés|期せずして一致する|약속이나 한 듯이
+idioms|想方设法|xiǎngfāng shèfǎ|to try every way|chercher tous les moyens|あれこれ手を尽くす|온갖 궁리를 다하다
+idioms|恍然大悟|huǎngrán dàwù|to suddenly understand|comprendre soudain|はっと悟る|문득 크게 깨닫다
+idioms|依依不舍|yīyī bùshě|reluctant to part|avoir du mal à se quitter|名残惜しい|헤어지기 아쉬워하다
+idioms|争先恐后|zhēngxiān kǒnghòu|to scramble to be first|se bousculer pour être le premier|先を争って|앞다투어
+idioms|聚精会神|jùjīng huìshén|to concentrate fully|être très concentré|精神を集中する|정신을 집중하다
+idioms|刻舟求剑|kèzhōu qiújiàn|to cling to old ways when things have changed|s'accrocher à une méthode dépassée|舟に刻みて剣を求む|각주구검(刻舟求劍)
+idioms|掩耳盗铃|yǎn'ěr dàolíng|to fool oneself|se mentir à soi-même|耳を掩いて鈴を盗む（自分を欺く）|엄이도령(掩耳盜鈴): 눈 가리고 아웅
+idioms|拔苗助长|bámiáo zhùzhǎng|to spoil things through haste|tout gâcher par excès de hâte|焦ってかえって台無しにする|발묘조장(拔苗助長)
+idioms|狐假虎威|hújiǎ hǔwēi|to borrow someone else's power to bully|se servir du pouvoir d'autrui|虎の威を借る狐|호가호위(狐假虎威)
+idioms|杞人忧天|qǐrén yōutiān|to worry needlessly|s'inquiéter pour rien|杞憂|기우(杞憂)
+idioms|叶公好龙|yègōng hàolóng|to profess a love one doesn't really have|aimer en paroles seulement|口先だけの愛好|섭공호룡(葉公好龍): 겉으로만 좋아하다
+idioms|三人成虎|sānrén chénghǔ|a rumour repeated becomes "truth"|une rumeur répétée devient « vérité »|三人市虎を成す|삼인성호(三人成虎)
+idioms|一鸣惊人|yìmíng jīngrén|to amaze everyone at the first try|étonner tout le monde d'un coup|一躍有名になる|한 번에 사람들을 놀라게 하다
+idioms|入乡随俗|rùxiāng suísú|when in Rome, do as the Romans do|à Rome, fais comme les Romains|郷に入っては郷に従え|입향순속(入鄕循俗)
+idioms|熟能生巧|shúnéng shēngqiǎo|practice makes perfect|c'est en forgeant qu'on devient forgeron|習うより慣れろ|익숙해지면 요령이 생긴다
+idioms|一败涂地|yíbài túdì|to suffer a crushing defeat|subir une défaite cuisante|完敗する|일패도지(一敗塗地)
+idioms|四面楚歌|sìmiàn chǔgē|surrounded by enemies|cerné de toutes parts|四面楚歌|사면초가(四面楚歌)
+idioms|卧薪尝胆|wòxīn chángdǎn|to endure hardship to achieve a goal|endurer les épreuves pour réussir|臥薪嘗胆|와신상담(臥薪嘗膽)
+idioms|破釜沉舟|pòfǔ chénzhōu|to burn one's boats|brûler ses vaisseaux|退路を断って決戦に臨む|파부침주(破釜沈舟)
+idioms|背水一战|bèishuǐ yízhàn|to fight with one's back to the wall|se battre dos au mur|背水の陣|배수진(背水陣)
+idioms|指鹿为马|zhǐlù wéimǎ|to deliberately call black white|faire passer le noir pour le blanc|鹿を指して馬となす|지록위마(指鹿爲馬)
+idioms|胸有成竹|xiōngyǒu chéngzhú|to have a plan in mind|avoir déjà son plan en tête|成算がある|이미 계획이 서 있다
+idioms|走马观花|zǒumǎ guānhuā|to look at things superficially|regarder en survolant|駆け足で見て回る|주마간산(走馬看山)
+idioms|画龙点睛|huàlóng diǎnjīng|the finishing touch|la touche finale|画竜点睛|화룡점정(畫龍點睛)
+idioms|雪中送炭|xuězhōng sòngtàn|help in time of need|aider quand on en a besoin|困った時に助ける|설중송탄(雪中送炭)
+idioms|锦上添花|jǐnshàng tiānhuā|the icing on the cake|la cerise sur le gâteau|錦上花を添える|금상첨화(錦上添花)
+idioms|同甘共苦|tónggān gòngkǔ|to share joys and sorrows|partager joies et peines|苦楽を共にする|동고동락(同苦同樂)
+idioms|门可罗雀|ménkěluóquè|deserted; with hardly any visitors|désert ; sans visiteurs|閑古鳥が鳴く|문 앞이 한산하다
+idioms|车水马龙|chēshuǐ mǎlóng|heavy traffic; bustling|circulation intense ; animé|車馬の往来が激しい|차와 사람이 붐비다
+idioms|人山人海|rénshān rénhǎi|a sea of people|une marée humaine|黒山の人だかり|인산인해(人山人海)
+idioms|风和日丽|fēnghé rìlì|fine and sunny weather|beau temps doux|うららかな天気|바람은 잔잔하고 햇볕은 따사롭다
+idioms|鸟语花香|niǎoyǔ huāxiāng|birds singing, flowers blooming|chants d'oiseaux et parfum des fleurs|鳥がさえずり花が香る|새가 지저귀고 꽃향기가 가득하다
+idioms|一刀两断|yìdāo liǎngduàn|to make a clean break|rompre définitivement|きっぱり縁を切る|일도양단(一刀兩斷)
+idioms|日新月异|rìxīn yuèyì|to change with each passing day|évoluer de jour en jour|日進月歩|나날이 새로워지다
+idioms|一丝不苟|yìsī bùgǒu|meticulous|méticuleux|少しもおろそかにしない|조금도 소홀히 하지 않다
+idioms|实事求是|shíshì qiúshì|to seek truth from facts|s'en tenir aux faits|事実に基づいて真実を求める|실사구시(實事求是)
+idioms|舍己为人|shějǐ wèirén|to sacrifice oneself for others|se sacrifier pour les autres|自分を犠牲にして人に尽くす|자신을 희생하여 남을 위하다
+idioms|见义勇为|jiànyì yǒngwéi|to step in bravely to do what is right|intervenir courageusement pour une juste cause|正義のために勇敢に行動する|의로운 일에 용감히 나서다
+idioms|助人为乐|zhùrén wéilè|to take pleasure in helping others|prendre plaisir à aider|人助けを喜びとする|남을 돕는 것을 즐거움으로 삼다
+idioms|自强不息|zìqiáng bùxī|to strive constantly|ne jamais cesser de s'améliorer|自ら努めてやまない|자강불식(自强不息)
+idioms|半斤八两|bànjīn bāliǎng|six of one and half a dozen of the other|c'est bonnet blanc et blanc bonnet|似たり寄ったり|피장파장; 거기서 거기
+idioms|大同小异|dàtóng xiǎoyì|largely the same|presque pareil|大同小異|대동소이(大同小異)
+idioms|天长地久|tiāncháng dìjiǔ|everlasting|éternel|天長地久；永遠に|천장지구(天長地久)
+idioms|海阔天空|hǎikuò tiānkōng|boundless; free-ranging|immense ; sans limites|広々として果てしない|끝없이 넓다
+idioms|心想事成|xīnxiǎng shìchéng|may your wishes come true|que tes souhaits se réalisent|願いがかないますように|바라는 일이 다 이루어지길
+idioms|万事如意|wànshì rúyì|may all go well|que tout aille bien|万事順調でありますように|만사형통하시길
+idioms|恭喜发财|gōngxǐ fācái|wishing you prosperity (New Year greeting)|meilleurs vœux de prospérité (Nouvel An)|金運に恵まれますように（新年のあいさつ）|부자 되세요 (새해 인사)
+idioms|年年有余|niánnián yǒuyú|may you have plenty every year|abondance chaque année|毎年ゆとりがありますように|해마다 풍족하시길
+idioms|老马识途|lǎomǎ shítú|experience is a good guide|l'expérience montre le chemin|老馬の智|노마지지(老馬之智)
+idioms|对症下药|duìzhèng xiàyào|to find the right remedy|trouver le bon remède|状況に合わせて適切に対処する|상황에 맞게 처방하다
+idioms|循序渐进|xúnxù jiànjìn|step by step|progressivement|順を追って一歩ずつ|순서대로 점진적으로
+idioms|一知半解|yìzhī bànjiě|a superficial understanding|une connaissance superficielle|生半可な知識|수박 겉 핥기식으로 알다
+idioms|温故知新|wēngù zhīxīn|to learn the new by reviewing the old|revoir l'ancien pour apprendre le nouveau|温故知新|온고지신(溫故知新)
+idioms|学以致用|xué yǐ zhì yòng|to put learning into practice|mettre en pratique ce qu'on apprend|学んだことを実際に生かす|배운 것을 실제로 활용하다
+idioms|举一反三|jǔyī fǎnsān|to infer much from one example|déduire beaucoup d'un seul exemple|一を聞いて十を知る|하나를 들으면 셋을 안다
+idioms|一意孤行|yíyì gūxíng|to insist on one's own way|n'en faire qu'à sa tête|独断専行|독단적으로 밀고 나가다
+idioms|七嘴八舌|qīzuǐ bāshé|everyone talking at once|tout le monde parle en même temps|口々に言い立てる|저마다 한마디씩 하다
+idioms|手忙脚乱|shǒumáng jiǎoluàn|flustered|débordé ; affolé|てんてこ舞い|허둥지둥하다
+idioms|目瞪口呆|mùdèng kǒudāi|dumbstruck|bouche bée|あっけにとられる|어안이 벙벙하다
+idioms|哭笑不得|kūxiào bùdé|not knowing whether to laugh or cry|ne pas savoir s'il faut rire ou pleurer|泣くに泣けず笑うに笑えず|울지도 웃지도 못하다
+idioms|忐忑不安|tǎntè bù'ān|uneasy; on tenterhooks|inquiet ; sur des charbons ardents|びくびくして落ち着かない|안절부절못하다
+idioms|心满意足|xīnmǎn yìzú|perfectly satisfied|pleinement satisfait|すっかり満足する|매우 만족하다
+idioms|垂头丧气|chuítóu sàngqì|dejected|abattu|しょんぼりする|풀이 죽다
+idioms|喜出望外|xǐchū wàngwài|overjoyed at an unexpected success|fou de joie (inattendue)|思いがけず大喜びする|뜻밖의 기쁨에 어쩔 줄 모르다
+idioms|大惊小怪|dàjīng xiǎoguài|to be alarmed over a trifle|s'affoler pour un rien|つまらないことで大騒ぎする|별것 아닌 일에 호들갑 떨다
+idioms|不慌不忙|bùhuāng bùmáng|calm and unhurried|calme et posé|落ち着き払って|침착하게
+idioms|有条不紊|yǒutiáo bùwěn|methodical; orderly|méthodique|整然と|질서 정연하게
+idioms|井井有条|jǐngjǐng yǒutiáo|in perfect order|parfaitement en ordre|きちんと整っている|조리 있고 가지런하다
+idioms|一无是处|yìwú shìchù|good for nothing|bon à rien|何の取り柄もない|아무 쓸모가 없다
+idioms|一事无成|yíshì wúchéng|to accomplish nothing|n'arriver à rien|何一つ成し遂げられない|아무것도 이루지 못하다
+idioms|得不偿失|débùchángshī|not worth it|ça n'en vaut pas la peine|割に合わない|득보다 실이 크다
+idioms|后来居上|hòulái jūshàng|latecomers overtake the early ones|les derniers venus dépassent les premiers|後から来た者が先を越す|나중에 온 사람이 앞서다
+idioms|青出于蓝|qīngchūyúlán|the pupil surpasses the master|l'élève dépasse le maître|青は藍より出でて藍より青し|청출어람(靑出於藍)
+idioms|后顾之忧|hòugù zhī yōu|worries left behind|soucis laissés derrière soi|後顧の憂い|뒷걱정
+idioms|不言而喻|bùyán'éryù|self-evident|évident|言うまでもない|말하지 않아도 알 수 있다
+idioms|显而易见|xiǎn'éryìjiàn|obvious|manifeste|明らかである|분명히 알 수 있다
+idioms|总而言之|zǒng'éryánzhī|in short|en somme|要するに|요컨대
+idioms|归根到底|guīgēn dàodǐ|in the final analysis|en fin de compte|結局のところ|결국; 근본적으로
+idioms|千真万确|qiānzhēn wànquè|absolutely true|absolument vrai|間違いなく本当だ|틀림없는 사실이다
+idioms|独一无二|dúyī wú'èr|unique|unique|唯一無二|유일무이(唯一無二)
+idioms|名列前茅|mínglièqiánmáo|among the best|parmi les premiers|上位に名を連ねる|상위권에 들다
+idioms|脱颖而出|tuōyǐng'érchū|to stand out|se distinguer|頭角を現す|두각을 나타내다
+idioms|出人意料|chūrén yìliào|unexpected|inattendu|意外な|예상 밖이다
+idioms|层出不穷|céngchū bùqióng|to emerge one after another|surgir sans cesse|次々と現れる|끊임없이 나타나다
+idioms|络绎不绝|luòyì bùjué|in an endless stream|en flot continu|ひっきりなしに続く|끊임없이 이어지다
+idioms|应有尽有|yīngyǒu jìnyǒu|everything one could want|tout ce qu'on peut souhaiter|何でもそろっている|있어야 할 것은 다 있다
+idioms|物美价廉|wùměi jiàlián|good quality at a low price|bon et pas cher|品物がよくて値段が安い|물건이 좋고 값이 싸다
+idioms|货真价实|huòzhēn jiàshí|genuine; the real thing|authentique|正真正銘|진짜배기
+idioms|讨价还价|tǎojià huánjià|to haggle|marchander|値段の駆け引きをする|흥정하다
+idioms|安居乐业|ānjū lèyè|to live and work in peace|vivre et travailler en paix|安らかに暮らし楽しく働く|안거낙업(安居樂業)
+idioms|丰衣足食|fēngyī zúshí|well fed and clothed|vivre dans l'aisance|衣食に不自由しない|의식이 풍족하다
+idioms|家喻户晓|jiāyù hùxiǎo|known to everyone|connu de tous|誰もが知っている|집집마다 다 알다
+idioms|脍炙人口|kuàizhì rénkǒu|on everyone's lips|sur toutes les lèvres|人口に膾炙する|회자되다
+idioms|来之不易|láizhī búyì|hard-won|durement gagné|苦労して手に入れた|쉽게 얻은 것이 아니다
+idioms|记忆犹新|jìyì yóuxīn|still fresh in one's memory|encore frais dans la mémoire|記憶に新しい|기억이 생생하다
+idioms|历历在目|lìlì zàimù|vividly before one's eyes|comme si c'était hier|ありありと目に浮かぶ|눈앞에 선하다
+idioms|情不自禁|qíngbùzìjīn|unable to help oneself|ne pas pouvoir se retenir|思わず|감정을 억누르지 못하다
+idioms|自由自在|zìyóu zìzài|free and unrestrained|libre et à l'aise|自由自在|자유자재(自由自在)
+idioms|无忧无虑|wúyōu wúlǜ|carefree|insouciant|何の心配もない|근심 걱정 없다
+idioms|悠然自得|yōurán zìdé|leisurely and content|serein et content|悠々自適|유유자적
+idioms|一劳永逸|yìláo yǒngyì|to solve once and for all|régler une fois pour toutes|一度の苦労で後が楽になる|한 번에 영원히 해결하다
+idioms|精益求精|jīngyì qiújīng|to keep improving|toujours viser mieux|さらに磨きをかける|더욱 완벽을 추구하다
+idioms|全力以赴|quánlì yǐfù|to go all out|donner le meilleur de soi|全力を尽くす|전력을 다하다
+idioms|坚持不懈|jiānchí búxiè|to persevere|persévérer|粘り強く続ける|꾸준히 끝까지 하다
+idioms|水滴石穿|shuǐdī shíchuān|constant effort brings success|la goutte d'eau finit par creuser la pierre|雨垂れ石を穿つ|낙숫물이 댓돌을 뚫는다
+phrases|百闻不如一见|bǎi wén bùrú yí jiàn|seeing is believing|il faut le voir pour le croire|百聞は一見にしかず|백문이 불여일견(百聞不如一見)
+phrases|三个臭皮匠顶个诸葛亮|sān ge chòupíjiàng, dǐng ge Zhūgě Liàng|two heads are better than one|plusieurs têtes valent mieux qu'une|三人寄れば文殊の知恵|백지장도 맞들면 낫다
+phrases|失败是成功之母|shībài shì chénggōng zhī mǔ|failure is the mother of success|l'échec est la mère du succès|失敗は成功のもと|실패는 성공의 어머니
+phrases|活到老学到老|huó dào lǎo, xué dào lǎo|you're never too old to learn|on apprend à tout âge|生きている限り学び続ける|배움에는 끝이 없다
+phrases|不入虎穴焉得虎子|bú rù hǔxué, yān dé hǔzǐ|nothing ventured, nothing gained|qui ne risque rien n'a rien|虎穴に入らずんば虎子を得ず|호랑이 굴에 들어가야 호랑이 새끼를 잡는다
+phrases|一寸光阴一寸金|yí cùn guāngyīn yí cùn jīn|time is money|le temps, c'est de l'argent|一寸の光陰軽んずべからず|시간은 금이다
+phrases|远亲不如近邻|yuǎnqīn bùrú jìnlín|a near neighbour is better than a distant relative|un voisin proche vaut mieux qu'un parent lointain|遠くの親類より近くの他人|먼 친척보다 가까운 이웃이 낫다
+phrases|病从口入|bìng cóng kǒu rù|illness comes in through the mouth|la maladie entre par la bouche|病は口より入る|병은 입으로 들어온다
+phrases|有志者事竟成|yǒu zhì zhě shì jìng chéng|where there's a will, there's a way|vouloir, c'est pouvoir|志ある者は事竟に成る|뜻이 있는 곳에 길이 있다
+phrases|天下没有免费的午餐|tiānxià méiyǒu miǎnfèi de wǔcān|there's no such thing as a free lunch|rien n'est gratuit|ただより高いものはない|세상에 공짜는 없다
+phrases|种瓜得瓜种豆得豆|zhòng guā dé guā, zhòng dòu dé dòu|you reap what you sow|on récolte ce que l'on sème|まいた種は自分で刈り取る|콩 심은 데 콩 나고 팥 심은 데 팥 난다
+phrases|好事不出门坏事传千里|hǎoshì bù chū mén, huàishì chuán qiān lǐ|bad news travels fast|les mauvaises nouvelles vont vite|悪事千里を走る|나쁜 소문은 빨리 퍼진다
+phrases|万事开头难|wànshì kāitóu nán|all beginnings are hard|il n'y a que le premier pas qui coûte|何事も始めが難しい|무슨 일이든 시작이 어렵다
+phrases|心急吃不了热豆腐|xīn jí chī bu liǎo rè dòufu|haste makes waste|rien ne sert de courir|急いては事を仕損じる|급할수록 돌아가라
+phrases|船到桥头自然直|chuán dào qiáotóu zìrán zhí|things will work themselves out|ça finira par s'arranger|何とかなるさ|어떻게든 잘 풀릴 것이다
+phrases|车到山前必有路|chē dào shān qián bì yǒu lù|there's always a way|il y a toujours une solution|窮すれば通ず|궁하면 통한다
+phrases|当局者迷旁观者清|dāngjúzhě mí, pángguānzhě qīng|onlookers see more clearly than players|les spectateurs voient mieux que les joueurs|岡目八目|훈수꾼이 더 잘 본다
+phrases|知己知彼百战不殆|zhī jǐ zhī bǐ, bǎi zhàn bú dài|know yourself and your opponent|connais-toi et connais ton adversaire|彼を知り己を知れば百戦殆うからず|지피지기면 백전불태(知彼知己 百戰不殆)
+phrases|一日之计在于晨|yí rì zhī jì zàiyú chén|the morning sets the day|tout se joue le matin|一日の計は朝にあり|하루의 계획은 아침에 있다
+phrases|情人眼里出西施|qíngrén yǎn lǐ chū Xīshī|beauty is in the eye of the beholder|l'amour rend aveugle|あばたもえくぼ|제 눈에 안경
+phrases|三天打鱼两天晒网|sān tiān dǎ yú, liǎng tiān shài wǎng|to lack perseverance|manquer de persévérance|三日坊主|작심삼일
+phrases|靠谱|kàopǔ|reliable; makes sense (informal)|fiable ; sérieux (familier)|頼りになる；まともな（口語）|믿을 만하다 (구어)
+phrases|吐槽|tǔcáo|to poke fun; to grumble (informal)|se moquer ; râler (familier)|ツッコむ；愚痴る（口語）|디스하다; 투덜대다 (구어)
+phrases|没门儿|méiménr|no way! (informal)|pas question ! (familier)|とんでもない（口語）|어림없어 (구어)
+phrases|搞定|gǎodìng|to get it sorted (informal)|régler ; c'est fait (familier)|片付ける；やり遂げる（口語）|해치우다 (구어)
+phrases|拜托|bàituō|please (I'm begging you)|s'il te plaît (je t'en prie)|お願い|부탁해
+phrases|凑合|còuhe|to make do; so-so|se débrouiller ; passable|間に合わせる；まあまあ|그럭저럭 때우다
+phrases|折腾|zhēteng|to toss and turn; to go to a lot of trouble|se tourner dans tous les sens ; se donner du mal|じたばたする；手間をかける|뒤척이다; 사서 고생하다
+phrases|磨蹭|móceng|to dawdle|lambiner|ぐずぐずする|꾸물거리다
+phrases|唠叨|láodao|to nag|rabâcher|くどくど言う|잔소리하다
+phrases|忽悠|hūyou|to con; to sweet-talk (informal)|embobiner (familier)|口車に乗せる（口語）|감언이설로 속이다 (구어)
+phrases|真牛|zhēn niú|so awesome (slang)|trop fort (argot)|すごい！（俗語）|대단하다! (속어)
+phrases|走神儿|zǒushénr|to drift off; to be absent-minded|être distrait|ぼんやりする|딴생각하다
+phrases|开夜车|kāi yèchē|to work late into the night|veiller tard pour travailler|徹夜で頑張る|밤샘하다
+phrases|吃醋|chīcù|to be jealous|être jaloux|やきもちを焼く|질투하다
+phrases|马大哈|mǎdàhā|scatterbrain|tête en l'air|おっちょこちょい|덜렁이
+phrases|半边天|bànbiāntiān|women (half the sky)|les femmes (la moitié du ciel)|女性（天の半分）|여성 (하늘의 절반)
+phrases|铁饭碗|tiěfànwǎn|a job for life|un emploi à vie|安定した職（鉄の茶碗）|철밥통
+phrases|炒鱿鱼|chǎo yóuyú|to fire someone (informal)|virer (familier)|クビにする（口語）|해고하다 (구어)
+phrases|走后门|zǒu hòumén|to pull strings|faire jouer ses relations|裏口から手を回す|연줄을 쓰다
+phrases|拍马屁|pāi mǎpì|to suck up to someone|lécher les bottes|ごまをする|아부하다
+phrases|碰钉子|pèng dīngzi|to meet with a rebuff|essuyer un refus|断られる；壁にぶつかる|거절당하다; 난관에 부딪히다
+phrases|打退堂鼓|dǎ tuìtánggǔ|to back out|se dégonfler|尻込みする|꽁무니를 빼다
+phrases|泼冷水|pō lěngshuǐ|to pour cold water on|doucher l'enthousiasme|水を差す|찬물을 끼얹다
+phrases|喝西北风|hē xīběifēng|to have nothing to eat|n'avoir rien à manger|食うに困る|쫄쫄 굶다
+phrases|开绿灯|kāi lǜdēng|to give the green light|donner le feu vert|ゴーサインを出す|청신호를 주다
+phrases|唱反调|chàng fǎndiào|to take the opposite view|prendre le contre-pied|異を唱える|반대 의견을 내다
+phrases|二百五|èrbǎiwǔ|idiot (rude slang)|idiot (argot grossier)|間抜け（失礼な言い方）|멍청이 (무례한 표현)
+phrases|小菜一碟|xiǎocài yì dié|a piece of cake|du gâteau|朝飯前|식은 죽 먹기
+phrases|一刀切|yìdāoqiē|one-size-fits-all|uniforme ; sans nuance|一律に処理する|일률적으로 처리하다

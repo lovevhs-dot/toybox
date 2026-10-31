@@ -168,7 +168,7 @@
   </div>
   <main class="page" id="page"><p class="msg">…</p></main>
 
-  <script src="i18n.js?v=2026-10-31.5"></script>
+  <script src="i18n.js?v=2026-10-31.6"></script>
   <script>
   (() => {
     'use strict';
@@ -211,8 +211,9 @@
 
     // ---------- Which part ----------
     const setId = new URLSearchParams(location.search).get('set') || '';
-    const m = setId.match(/^zh-(hsk[1-9]|pinyin)-(words|grammar|tones|initials|finals)-(\d{1,2})$/);
+    const m = setId.match(/^zh-(hsk[1-9]|pinyin|chengyu)-(words|grammar|tones|initials|finals|idioms|phrases)-(\d{1,2})$/);
     const PINYIN_KINDS = ['tones', 'initials', 'finals'];
+    const WORD_KINDS = ['words', 'idioms', 'phrases'];
     const prefs = Object.assign({ pinyin: true, sound: true }, store.get(PREFS_KEY) || {});
     let D = null, kind = null, partNo = 0, items = [], storageKey = '';
 
@@ -325,9 +326,9 @@
       if (kind === 'tones') return voice && Math.random() < 0.7 ? 'tone-listen' : 'tone-name';
       if (isPinyin()) return voice && Math.random() < 0.6 ? 'sound-listen' : 'hint';
       const types = ['meaning', 'hanzi'];
-      if (kind === 'words' && Sound.canSpeak() && prefs.sound) types.push('listen');
+      if (WORD_KINDS.includes(kind) && Sound.canSpeak() && prefs.sound) types.push('listen');
       // Words of two or more characters also practice their characters: fill in the missing one
-      if (kind === 'words' && it.zh.length > 1) types.push('complete');
+      if (WORD_KINDS.includes(kind) && it.zh.length > 1) types.push('complete');
       return types[Math.floor(Math.random() * types.length)];
     }
 
@@ -335,7 +336,7 @@
       if (type === 'blank') return shuffle([it.zh, ...it.wrong]);
       if (type === 'complete') {
         // Skip a character that would also make a real word in that spot
-        const known = new Set(D.words.map(w => w[0]));
+        const known = new Set((D.words || D[kind]).map(w => w[0]));
         const fits = c => known.has(it.zh.split(qz.blank).join(c));
         // Wrong options come from the characters of this part's words, so they look familiar
         const pool = [...new Set(items.flatMap(x => [...x.zh]))].filter(c => !it.zh.includes(c) && !fits(c));
@@ -722,7 +723,7 @@
     if (!m) { fail(T.notFound); return; }
     kind = m[2]; partNo = Number(m[3]); storageKey = `${setId}-v1`;
     const script = document.createElement('script');
-    script.src = `../${m[1]}/data.js?v=2026-10-31.6`;
+    script.src = `../${m[1]}/data.js?v=2026-10-31.7`;
     script.onload = () => {
       D = window.ZH_LEVEL;
       if (!D || !buildItems()) { D = null; fail(T.notFound); return; }
