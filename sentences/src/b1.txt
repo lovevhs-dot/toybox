@@ -1,0 +1,122 @@
+# B1 sentences, written in all five languages together. [brackets] mark the key phrase in English and French.
+# Columns: part|English|French|Chinese (Simplified)|Japanese|Korean
+opinions|[In my opinion], it's a good idea.|[À mon avis], c'est une bonne idée.|在我看来，这是个好主意。|私の意見では、いい考えだと思います。|제 생각에는 좋은 생각이에요.
+opinions|[I agree with you].|[Je suis d'accord avec toi].|我同意你的看法。|あなたに賛成です。|당신 말에 동의해요.
+opinions|[I don't agree at all].|[Je ne suis pas du tout d'accord].|我完全不同意。|まったく賛成できません。|전혀 동의하지 않아요.
+opinions|[I think that] cities are too noisy.|[Je trouve que] les villes sont trop bruyantes.|我觉得城市太吵了。|都会はうるさすぎると思います。|도시는 너무 시끄럽다고 생각해요.
+opinions|[It seems to me that] he is right.|[Il me semble qu'il] a raison.|我觉得他是对的。|彼が正しいような気がします。|그 사람 말이 맞는 것 같아요.
+opinions|[I'm not sure that] it's true.|[Je ne suis pas sûr que] ce soit vrai.|我不确定这是不是真的。|それが本当かどうかわかりません。|그게 사실인지 잘 모르겠어요.
+opinions|[What do you think of] this book?|[Qu'est-ce que tu penses de] ce livre ?|你觉得这本书怎么样？|この本をどう思いますか。|이 책 어떻게 생각해요?
+opinions|[To be honest], I didn't like it.|[Pour être honnête], je ne l'ai pas aimé.|说实话，我不喜欢。|正直に言うと、好きではありませんでした。|솔직히 말하면 별로였어요.
+opinions|[I'm glad that] you came.|[Je suis content que] tu sois venu.|你来了我很高兴。|来てくれてうれしいです。|와 줘서 기뻐요.
+opinions|[I'm worried about] my exams.|[Je m'inquiète pour] mes examens.|我很担心我的考试。|試験が心配です。|시험이 걱정돼요.
+opinions|[It makes me happy] to see you.|[Ça me fait plaisir] de te voir.|见到你我很开心。|会えてうれしいです。|만나서 기뻐요.
+opinions|[I'm fed up with] this rain.|[J'en ai marre de] cette pluie.|这雨我受够了。|この雨にはうんざりです。|이 비 정말 지긋지긋해요.
+opinions|[I prefer] living in the country.|[Je préfère] vivre à la campagne.|我更喜欢住在乡下。|田舎に住むほうが好きです。|저는 시골에 사는 게 더 좋아요.
+opinions|[It's better to] book in advance.|[Il vaut mieux] réserver à l'avance.|最好提前预订。|前もって予約したほうがいいです。|미리 예약하는 게 좋아요.
+opinions|[The problem is that] it's too expensive.|[Le problème, c'est que] c'est trop cher.|问题是太贵了。|問題は高すぎることです。|문제는 너무 비싸다는 거예요.
+opinions|[On the other hand], it's quite ugly.|[D'un autre côté], c'est assez moche.|另一方面，它挺难看的。|一方で、かなり見た目が悪いです。|한편으로는 꽤 보기 안 좋아요.
+opinions|[I'm surprised that] he didn't call.|[Je suis surpris qu'il] n'ait pas appelé.|他没打电话，我很意外。|彼が電話してこなかったのは意外です。|그가 전화하지 않아서 놀랐어요.
+opinions|[It's a shame that] you can't come.|[C'est dommage que] tu ne puisses pas venir.|你不能来，真遗憾。|来られないのは残念です。|못 온다니 아쉬워요.
+opinions|[I'm proud of] my team.|[Je suis fier de] mon équipe.|我为我的团队感到骄傲。|自分のチームを誇りに思います。|우리 팀이 자랑스러워요.
+opinions|[I can't stand] waiting.|[Je ne supporte pas] d'attendre.|我受不了等待。|待つのは耐えられません。|기다리는 건 못 참겠어요.
+opinions|[It's not worth it].|[Ça ne vaut pas la peine].|不值得。|その価値はありません。|그럴 가치가 없어요.
+opinions|[I'd rather] stay here.|[Je préférerais] rester ici.|我宁愿待在这儿。|むしろここにいたいです。|차라리 여기 있을래요.
+opinions|[You're right].|[Tu as raison].|你说得对。|そのとおりです。|당신 말이 맞아요.
+opinions|[I think you're wrong].|[Je pense que tu as tort].|我觉得你错了。|あなたは間違っていると思います。|당신이 틀린 것 같아요.
+opinions|[That depends on] the situation.|[Ça dépend de] la situation.|这要看情况。|状況によります。|상황에 따라 달라요.
+opinions|[I feel like] going out tonight.|[J'ai envie de] sortir ce soir.|我今晚想出去。|今夜は出かけたい気分です。|오늘 밤에 나가고 싶어요.
+opinions|[I'm not in the mood].|[Je ne suis pas d'humeur].|我没心情。|そういう気分じゃありません。|그럴 기분이 아니에요.
+opinions|[What I like is] the atmosphere.|[Ce que j'aime, c'est] l'ambiance.|我喜欢的是这里的气氛。|私が好きなのは雰囲気です。|제가 좋아하는 건 분위기예요.
+opinions|[It's not my cup of tea].|[Ce n'est pas mon truc].|这不是我喜欢的。|それは私の好みではありません。|제 취향이 아니에요.
+opinions|[I'm excited about] the concert.|[J'ai hâte d'aller] au concert.|我很期待那场音乐会。|コンサートが楽しみです。|콘서트가 정말 기대돼요.
+opinions|[It doesn't matter].|[Peu importe].|没关系。|構いません。|아무래도 괜찮아요.
+opinions|[I have the impression that] nobody listens.|[J'ai l'impression que] personne n'écoute.|我感觉没有人在听。|誰も聞いていない気がします。|아무도 안 듣는 것 같아요.
+opinions|[I'm against] this project.|[Je suis contre] ce projet.|我反对这个计划。|この計画には反対です。|저는 이 계획에 반대해요.
+opinions|[I'm in favour of] more cycle lanes.|[Je suis pour] plus de pistes cyclables.|我赞成多修自行车道。|自転車専用道路を増やすことに賛成です。|자전거 도로를 늘리는 데 찬성해요.
+opinions|[It's obvious that] he's tired.|[Il est évident qu'il] est fatigué.|很明显他累了。|彼が疲れているのは明らかです。|그가 피곤한 게 분명해요.
+opinions|[I'm afraid that] it's too late.|[J'ai peur que] ce soit trop tard.|恐怕太晚了。|もう遅すぎるのではないかと心配です。|너무 늦은 것 같아 걱정이에요.
+opinions|[I'm sorry to hear that].|[Je suis désolé d'apprendre ça].|听到这个消息我很难过。|それはお気の毒です。|그 얘기를 들으니 안타까워요.
+opinions|[What a pity]!|[Quel dommage] !|真可惜！|残念！|아쉽네요!
+opinions|[I don't mind].|[Ça m'est égal].|我无所谓。|どちらでもいいです。|저는 상관없어요.
+opinions|[Personally], I love it.|[Personnellement], j'adore ça.|我个人非常喜欢。|個人的には大好きです。|개인적으로는 정말 좋아요.
+work|[I'm applying for] a job in a bank.|[Je postule pour] un poste dans une banque.|我在申请一家银行的工作。|銀行の仕事に応募しています。|은행 일자리에 지원하고 있어요.
+work|[I have an interview] on Monday.|[J'ai un entretien] lundi.|我星期一有面试。|月曜日に面接があります。|월요일에 면접이 있어요.
+work|[I've been working here] for five years.|[Je travaille ici depuis] cinq ans.|我在这里工作五年了。|ここで五年間働いています。|여기서 5년째 일하고 있어요.
+work|[I'm in charge of] the marketing team.|[Je suis responsable de] l'équipe marketing.|我负责市场部团队。|マーケティングチームを担当しています。|마케팅 팀을 맡고 있어요.
+work|[I work from home] twice a week.|[Je fais du télétravail] deux fois par semaine.|我每周在家办公两天。|週に二回在宅勤務をしています。|일주일에 두 번 재택근무를 해요.
+work|[The meeting has been moved] to Thursday.|[La réunion a été déplacée] à jeudi.|会议改到星期四了。|会議は木曜日に変更されました。|회의가 목요일로 옮겨졌어요.
+work|[Could you send me] the report?|[Tu pourrais m'envoyer] le rapport ?|你能把报告发给我吗？|報告書を送ってもらえますか。|보고서 좀 보내 줄 수 있어요?
+work|[I'll get back to you] by Friday.|[Je vous recontacte] d'ici vendredi.|我星期五之前给您回复。|金曜日までにご連絡します。|금요일까지 다시 연락드릴게요.
+work|[The deadline is] next week.|[La date limite est] la semaine prochaine.|截止日期是下个星期。|締め切りは来週です。|마감은 다음 주예요.
+work|[I'm swamped at the moment].|[Je suis débordé en ce moment].|我最近特别忙。|今とても忙しいです。|요즘 정말 바빠요.
+work|[My boss asked me to] stay late.|[Mon chef m'a demandé de] rester tard.|老板让我留下来加班。|上司に残業を頼まれました。|상사가 늦게까지 남아 달라고 했어요.
+work|[I got a promotion]!|[J'ai eu une promotion] !|我升职了！|昇進しました！|승진했어요!
+work|[I'm looking for a job] in tourism.|[Je cherche un emploi] dans le tourisme.|我在找旅游业的工作。|観光業の仕事を探しています。|관광 분야 일자리를 찾고 있어요.
+work|[I'd like to work] abroad.|[J'aimerais travailler] à l'étranger.|我想去国外工作。|海外で働きたいです。|해외에서 일하고 싶어요.
+work|[I'm studying] law at university.|[J'étudie] le droit à l'université.|我在大学学法律。|大学で法律を勉強しています。|대학에서 법을 공부하고 있어요.
+work|[I have an exam] tomorrow morning.|[J'ai un examen] demain matin.|我明天上午有考试。|明日の朝、試験があります。|내일 아침에 시험이 있어요.
+work|[I passed] my driving test!|[J'ai réussi] mon permis !|我通过驾照考试了！|運転免許試験に合格しました！|운전면허 시험에 붙었어요!
+work|[I failed] the exam.|[J'ai raté] l'examen.|我考试没及格。|試験に落ちました。|시험에 떨어졌어요.
+work|[I need to improve] my French.|[Je dois améliorer] mon français.|我得提高我的法语水平。|フランス語を上達させなければなりません。|프랑스어 실력을 늘려야 해요.
+work|[I'm taking an evening class] in photography.|[Je suis un cours du soir] de photographie.|我在上摄影夜校。|写真の夜間講座を受けています。|사진 야간 강좌를 듣고 있어요.
+work|[What does your job involve]?|[En quoi consiste] ton travail ?|你的工作具体做什么？|仕事の内容は何ですか。|어떤 일을 하는 거예요?
+work|[I deal with] customers all day.|[Je m'occupe des] clients toute la journée.|我整天跟顾客打交道。|一日中お客さんの対応をしています。|하루 종일 고객을 응대해요.
+work|[It's well paid] but stressful.|[C'est bien payé] mais stressant.|工资不错，但是压力很大。|給料はいいけれど、ストレスが多いです。|보수는 좋지만 스트레스가 많아요.
+work|[I'd like to take] a day off.|[J'aimerais prendre] un jour de congé.|我想请一天假。|一日休みを取りたいです。|하루 쉬고 싶어요.
+work|[I'm on holiday] until the 15th.|[Je suis en congé] jusqu'au 15.|我休假到15号。|15日まで休暇中です。|15일까지 휴가예요.
+work|[Can we talk about] my salary?|[On peut parler de] mon salaire ?|我们能谈谈我的工资吗？|給料について話せますか。|제 월급에 대해 얘기할 수 있을까요?
+work|[I work part-time] in a café.|[Je travaille à mi-temps] dans un café.|我在一家咖啡馆做兼职。|カフェでパートタイムで働いています。|카페에서 시간제로 일해요.
+work|[I've just finished] my studies.|[Je viens de terminer] mes études.|我刚毕业。|学業を終えたばかりです。|이제 막 학업을 마쳤어요.
+work|[My colleagues are] very friendly.|[Mes collègues sont] très sympas.|我的同事都很友好。|同僚はとても親切です。|동료들이 아주 친절해요.
+work|[I'm good at] solving problems.|[Je suis doué pour] résoudre les problèmes.|我擅长解决问题。|問題を解決するのが得意です。|문제 해결을 잘해요.
+work|[I have experience in] sales.|[J'ai de l'expérience dans] la vente.|我有销售经验。|営業の経験があります。|영업 경험이 있어요.
+work|[I'm available from] next month.|[Je suis disponible à partir du] mois prochain.|我下个月起可以上班。|来月から勤務できます。|다음 달부터 일할 수 있어요.
+work|[Please find attached] my CV.|[Veuillez trouver ci-joint] mon CV.|附件是我的简历。|履歴書を添付いたします。|이력서를 첨부합니다.
+work|[I look forward to hearing from you].|[Dans l'attente de votre réponse].|期待您的回复。|お返事をお待ちしております。|답변 기다리겠습니다.
+work|[Sorry for the delay].|[Désolé pour le retard].|抱歉回复晚了。|遅くなってすみません。|늦어서 죄송합니다.
+work|[Let's take a break].|[Faisons une pause].|我们休息一下吧。|休憩しましょう。|잠깐 쉬어요.
+work|[I didn't understand] the last point.|[Je n'ai pas compris] le dernier point.|我没听懂最后一点。|最後の点がわかりませんでした。|마지막 부분을 이해 못 했어요.
+work|[Could you explain] it again?|[Vous pourriez l'expliquer] encore une fois ?|你能再解释一遍吗？|もう一度説明してもらえますか。|다시 설명해 주실 수 있어요?
+work|[I'll do my best].|[Je ferai de mon mieux].|我会尽力的。|ベストを尽くします。|최선을 다할게요.
+work|[Good luck] with your new job!|[Bonne chance] pour ton nouveau travail !|祝你新工作顺利！|新しい仕事、頑張ってね！|새 일 잘되길 바라요!
+stories|[Let me tell you] what happened.|[Je vais te raconter] ce qui s'est passé.|我跟你说说发生了什么。|何があったか話しますね。|무슨 일이 있었는지 얘기해 줄게요.
+stories|[While I was walking], I saw an old friend.|[Pendant que je marchais], j'ai vu un vieil ami.|我走路的时候看到了一个老朋友。|歩いていると、昔の友達に会いました。|걷다가 옛 친구를 봤어요.
+stories|[Suddenly], the lights went out.|[Tout à coup], la lumière s'est éteinte.|突然，灯灭了。|突然、明かりが消えました。|갑자기 불이 꺼졌어요.
+stories|[I had never seen] so much snow.|[Je n'avais jamais vu] autant de neige.|我从来没见过这么大的雪。|あんなにたくさんの雪は見たことがありませんでした。|그렇게 많은 눈은 처음 봤어요.
+stories|[When I arrived], the film had already started.|[Quand je suis arrivé], le film avait déjà commencé.|我到的时候，电影已经开始了。|着いたときには、映画はもう始まっていました。|도착했을 때 영화는 이미 시작했어요.
+stories|[It was so cold that] the lake froze.|[Il faisait si froid que] le lac a gelé.|天气冷得湖都结冰了。|とても寒くて湖が凍りました。|너무 추워서 호수가 얼었어요.
+stories|[After a while], we found the way.|[Au bout d'un moment], nous avons trouvé le chemin.|过了一会儿，我们找到了路。|しばらくして、道が見つかりました。|잠시 후에 길을 찾았어요.
+stories|[I'll never forget] that day.|[Je n'oublierai jamais] ce jour-là.|我永远不会忘记那一天。|あの日のことは決して忘れません。|그날을 절대 잊지 못할 거예요.
+stories|[It reminds me of] my childhood.|[Ça me rappelle] mon enfance.|这让我想起了我的童年。|子どもの頃を思い出します。|어린 시절이 생각나요.
+stories|[We got lost] in the forest.|[Nous nous sommes perdus] dans la forêt.|我们在森林里迷路了。|森で道に迷いました。|숲에서 길을 잃었어요.
+stories|[Luckily], a farmer helped us.|[Heureusement], un agriculteur nous a aidés.|幸好有个农民帮了我们。|幸い、農家の人が助けてくれました。|다행히 농부가 우리를 도와줬어요.
+stories|[Unfortunately], it started to rain.|[Malheureusement], il a commencé à pleuvoir.|不巧的是，开始下雨了。|あいにく、雨が降り始めました。|안타깝게도 비가 오기 시작했어요.
+stories|[I was about to leave] when the phone rang.|[J'étais sur le point de partir] quand le téléphone a sonné.|我正要走的时候，电话响了。|出かけようとしたときに電話が鳴りました。|막 나가려는데 전화가 울렸어요.
+stories|[It turned out that] the shop was closed.|[En fait], le magasin était fermé.|结果那家店关门了。|結局、店は閉まっていました。|알고 보니 가게가 문을 닫았더라고요.
+stories|[Nobody knew] what to do.|[Personne ne savait] quoi faire.|谁也不知道该怎么办。|誰もどうしたらいいかわかりませんでした。|아무도 어떻게 해야 할지 몰랐어요.
+stories|[I couldn't believe] my eyes.|[Je n'en croyais pas] mes yeux.|我简直不敢相信自己的眼睛。|自分の目が信じられませんでした。|제 눈을 믿을 수가 없었어요.
+stories|[Everyone started laughing].|[Tout le monde s'est mis à rire].|大家都笑了起来。|みんな笑い出しました。|모두 웃기 시작했어요.
+stories|[I had to wait] for three hours.|[J'ai dû attendre] trois heures.|我不得不等了三个小时。|三時間待たなければなりませんでした。|세 시간이나 기다려야 했어요.
+stories|[The best moment was] the sunset.|[Le meilleur moment, c'était] le coucher de soleil.|最美好的时刻是日落。|一番よかったのは夕日です。|가장 좋았던 순간은 해 질 녘이었어요.
+stories|[I've lived here] since 2018.|[J'habite ici depuis] 2018.|我从2018年起住在这里。|2018年からここに住んでいます。|2018년부터 여기 살고 있어요.
+stories|[It took us] two days to get there.|[Il nous a fallu] deux jours pour y arriver.|我们花了两天才到那里。|そこに着くまで二日かかりました。|거기 도착하는 데 이틀 걸렸어요.
+stories|[The plane was delayed], so we waited.|[L'avion avait du retard], alors nous avons attendu.|飞机晚点了，所以我们等着。|飛行機が遅れたので、待ちました。|비행기가 연착돼서 기다렸어요.
+stories|[As soon as I saw her], I knew.|[Dès que je l'ai vue], j'ai su.|我一看到她就知道了。|彼女を見た瞬間、わかりました。|그녀를 보자마자 알았어요.
+stories|[I had been waiting for] an hour when he arrived.|[J'attendais depuis] une heure quand il est arrivé.|我等了一个小时他才到。|一時間待っていたところに彼が来ました。|한 시간째 기다리고 있을 때 그가 왔어요.
+stories|[It was the best holiday] of my life.|[C'étaient les meilleures vacances] de ma vie.|那是我这辈子最棒的假期。|人生で最高の休暇でした。|제 인생 최고의 휴가였어요.
+stories|[I made a mistake].|[J'ai fait une erreur].|我犯了一个错误。|間違えました。|실수했어요.
+stories|[I didn't know that] he was ill.|[Je ne savais pas qu'il] était malade.|我不知道他病了。|彼が病気だとは知りませんでした。|그가 아픈 줄 몰랐어요.
+stories|[She told me that] she was moving.|[Elle m'a dit qu'elle] déménageait.|她告诉我她要搬家了。|彼女は引っ越すと言いました。|그녀가 이사한다고 말했어요.
+stories|[He asked me if] I was free.|[Il m'a demandé si] j'étais libre.|他问我有没有空。|彼は私に暇かどうか聞きました。|그가 저한테 시간 있냐고 물었어요.
+stories|[What happened next]?|[Et après, qu'est-ce qui s'est passé] ?|后来发生了什么？|それからどうなりましたか。|그다음에 어떻게 됐어요?
+stories|[Guess what]!|[Devine quoi] !|你猜怎么着！|ねえ、聞いて！|있잖아요!
+stories|[You won't believe it], but I won!|[Tu ne vas pas le croire], mais j'ai gagné !|你肯定不信，我赢了！|信じられないだろうけど、勝ったんです！|못 믿겠지만 제가 이겼어요!
+stories|[I had a strange dream] last night.|[J'ai fait un rêve bizarre] cette nuit.|我昨晚做了个奇怪的梦。|昨夜、変な夢を見ました。|어젯밤에 이상한 꿈을 꿨어요.
+stories|[We had a flat tyre] on the motorway.|[Nous avons crevé] sur l'autoroute.|我们在高速公路上爆胎了。|高速道路でパンクしました。|고속도로에서 타이어가 펑크 났어요.
+stories|[It could have been worse].|[Ça aurait pu être pire].|本来可能更糟的。|もっと悪いことになっていたかもしれません。|더 나빴을 수도 있었어요.
+stories|[I was so scared]!|[J'avais tellement peur] !|我吓坏了！|すごく怖かったです！|너무 무서웠어요!
+stories|[Since then], we've been friends.|[Depuis ce jour-là], nous sommes amis.|从那以后我们就成了朋友。|それ以来、私たちは友達です。|그때부터 우리는 친구예요.
+stories|[That's how] I learned to swim.|[C'est comme ça que] j'ai appris à nager.|我就是这样学会游泳的。|そうやって泳げるようになりました。|그렇게 수영을 배웠어요.
+stories|[Looking back], it was funny.|[Avec le recul], c'était drôle.|现在回想起来，那挺好笑的。|今思えば、面白かったです。|돌이켜 보면 웃긴 일이었어요.
+stories|[To cut a long story short], we got married.|[Bref], on s'est mariés.|长话短说，我们结婚了。|手短に言うと、結婚しました。|간단히 말하면 우리는 결혼했어요.

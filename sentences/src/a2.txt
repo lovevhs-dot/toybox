@@ -1,0 +1,122 @@
+# A2 sentences, written in all five languages together. [brackets] mark the key phrase in English and French.
+# Columns: part|English|French|Chinese (Simplified)|Japanese|Korean
+past|Yesterday I [went to] the cinema.|Hier, je [suis allé] au cinéma.|我昨天去看电影了。|昨日、映画館に行きました。|어제 영화관에 갔어요.
+past|[Did you have] a good weekend?|[Tu as passé] un bon week-end ?|你周末过得好吗？|週末は楽しかったですか。|주말 잘 보냈어요?
+past|We [stayed at home] because of the rain.|Nous [sommes restés à la maison] à cause de la pluie.|因为下雨，我们待在家里。|雨のせいで家にいました。|비 때문에 집에 있었어요.
+past|I [was born] in 1995.|Je [suis né] en 1995.|我出生于1995年。|1995年に生まれました。|저는 1995년에 태어났어요.
+past|[When I was a child], I lived in the country.|[Quand j'étais petit], j'habitais à la campagne.|我小时候住在乡下。|子どもの頃、田舎に住んでいました。|어렸을 때 시골에 살았어요.
+past|I [used to play] the piano.|Avant, je [jouais du piano].|我以前弹钢琴。|以前はピアノを弾いていました。|예전에는 피아노를 쳤어요.
+past|[Last year], I visited Italy.|[L'année dernière], j'ai visité l'Italie.|去年我去了意大利。|去年、イタリアに行きました。|작년에 이탈리아에 갔어요.
+past|I [have never been] to Africa.|Je [ne suis jamais allé] en Afrique.|我从来没去过非洲。|アフリカに行ったことはありません。|아프리카에 가 본 적이 없어요.
+past|[Have you ever eaten] snails?|[As-tu déjà mangé] des escargots ?|你吃过蜗牛吗？|エスカルゴを食べたことがありますか。|달팽이 요리 먹어 본 적 있어요?
+past|I [lost my keys] this morning.|J'[ai perdu mes clés] ce matin.|我今天早上把钥匙弄丢了。|今朝、鍵をなくしました。|오늘 아침에 열쇠를 잃어버렸어요.
+past|The film [was really good].|Le film [était vraiment bien].|那部电影真的很好看。|その映画は本当によかったです。|그 영화 정말 좋았어요.
+past|We [had dinner] at a small restaurant.|Nous [avons dîné] dans un petit restaurant.|我们在一家小餐馆吃了晚饭。|小さなレストランで夕食を食べました。|작은 식당에서 저녁을 먹었어요.
+past|I [arrived late] because of the traffic.|Je [suis arrivé en retard] à cause des embouteillages.|因为堵车，我来晚了。|渋滞で遅れて着きました。|차가 막혀서 늦게 도착했어요.
+past|[It was raining] when I left.|[Il pleuvait] quand je suis parti.|我出门的时候在下雨。|出かけたとき、雨が降っていました。|나갈 때 비가 오고 있었어요.
+past|I [met my best friend] at school.|J'[ai rencontré mon meilleur ami] à l'école.|我在学校认识了我最好的朋友。|親友とは学校で出会いました。|학교에서 제일 친한 친구를 만났어요.
+past|[How was] your trip?|[Comment s'est passé] ton voyage ?|你的旅行怎么样？|旅行はどうでしたか。|여행 어땠어요?
+past|[It was amazing]!|[C'était génial] !|太棒了！|最高でした！|정말 좋았어요!
+past|We [took a lot of photos].|Nous [avons pris beaucoup de photos].|我们拍了很多照片。|写真をたくさん撮りました。|사진을 많이 찍었어요.
+past|I [forgot to call] my mother.|J'[ai oublié d'appeler] ma mère.|我忘了给妈妈打电话。|母に電話するのを忘れました。|엄마한테 전화하는 걸 잊었어요.
+past|[Two years ago], I moved to this city.|[Il y a deux ans], j'ai déménagé dans cette ville.|两年前我搬到了这个城市。|二年前にこの町に引っ越しました。|2년 전에 이 도시로 이사 왔어요.
+past|I [didn't sleep well] last night.|Je [n'ai pas bien dormi] cette nuit.|我昨晚没睡好。|昨夜はよく眠れませんでした。|어젯밤에 잠을 잘 못 잤어요.
+past|She [has just left].|Elle [vient de partir].|她刚走。|彼女はたった今出かけました。|그녀는 방금 나갔어요.
+past|[I've already seen] this film.|[J'ai déjà vu] ce film.|我已经看过这部电影了。|この映画はもう見ました。|이 영화 벌써 봤어요.
+past|I [haven't finished] my homework yet.|Je [n'ai pas encore fini] mes devoirs.|我还没做完作业。|まだ宿題が終わっていません。|아직 숙제를 다 못 했어요.
+past|[What did you do] on Sunday?|[Qu'est-ce que tu as fait] dimanche ?|你星期天做了什么？|日曜日は何をしましたか。|일요일에 뭐 했어요?
+past|I [went for a walk] by the river.|Je [me suis promené] au bord de la rivière.|我去河边散步了。|川沿いを散歩しました。|강가를 산책했어요.
+past|The shop [was closed], so I came back.|Le magasin [était fermé], alors je suis revenu.|商店关门了，所以我回来了。|店が閉まっていたので、戻ってきました。|가게가 문을 닫아서 돌아왔어요.
+past|I [was very tired] after the trip.|J'[étais très fatigué] après le voyage.|旅行后我很累。|旅行の後、とても疲れていました。|여행 후에 아주 피곤했어요.
+past|We [laughed a lot] that evening.|Nous [avons beaucoup ri] ce soir-là.|那天晚上我们笑得很开心。|その夜はたくさん笑いました。|그날 저녁 정말 많이 웃었어요.
+past|My grandparents [got married] in 1970.|Mes grands-parents [se sont mariés] en 1970.|我的祖父母在1970年结婚。|祖父母は1970年に結婚しました。|조부모님은 1970년에 결혼하셨어요.
+past|I [studied art] for three years.|J'[ai étudié l'art] pendant trois ans.|我学了三年美术。|三年間美術を勉強しました。|3년 동안 미술을 공부했어요.
+past|[Did you hear] the news?|[Tu as entendu] la nouvelle ?|你听说那个消息了吗？|あのニュース聞きましたか。|그 소식 들었어요?
+past|He [called me] while I was cooking.|Il [m'a appelé] pendant que je cuisinais.|我做饭的时候他给我打了电话。|料理をしているときに彼から電話がありました。|요리하고 있을 때 그가 전화했어요.
+past|I [fell asleep] in front of the TV.|Je [me suis endormi] devant la télé.|我在电视机前睡着了。|テレビの前で寝てしまいました。|텔레비전 앞에서 잠들었어요.
+past|[At first], I didn't like it.|[Au début], je n'aimais pas ça.|一开始我不喜欢。|最初は好きではありませんでした。|처음에는 그게 싫었어요.
+past|[In the end], everything went well.|[Finalement], tout s'est bien passé.|最后一切都很顺利。|結局、全部うまくいきました。|결국 다 잘 됐어요.
+past|I [changed my mind].|J'[ai changé d'avis].|我改变主意了。|気が変わりました。|마음이 바뀌었어요.
+past|We [missed the train] by two minutes.|Nous [avons raté le train] de deux minutes.|我们差两分钟没赶上火车。|二分の差で電車に乗り遅れました。|2분 차이로 기차를 놓쳤어요.
+past|[It was the first time] I saw the sea.|[C'était la première fois] que je voyais la mer.|那是我第一次看到大海。|海を見たのは初めてでした。|바다를 본 건 처음이었어요.
+past|I [had a great time].|Je [me suis bien amusé].|我玩得很开心。|とても楽しかったです。|정말 즐거웠어요.
+plans|[What are you doing] tonight?|[Qu'est-ce que tu fais] ce soir ?|你今晚做什么？|今夜は何をしますか。|오늘 밤에 뭐 해요?
+plans|[I'm going to] visit my parents.|[Je vais] rendre visite à mes parents.|我要去看我父母。|両親に会いに行くつもりです。|부모님을 뵈러 갈 거예요.
+plans|[Would you like to] come with us?|[Tu veux] venir avec nous ?|你想跟我们一起去吗？|一緒に来ませんか。|우리랑 같이 갈래요?
+plans|[I'd love to]!|[Avec plaisir] !|我很乐意！|ぜひ！|좋아요!
+plans|[Sorry, I can't], I'm working.|[Désolé, je ne peux pas], je travaille.|对不起，我去不了，我要工作。|ごめんなさい、行けません。仕事なんです。|미안해요, 못 가요. 일해야 해요.
+plans|[How about] Saturday instead?|[Et si on disait] samedi plutôt ?|那改成星期六怎么样？|代わりに土曜日はどうですか。|대신 토요일은 어때요?
+plans|[Let's go] to the beach this weekend.|[Allons] à la plage ce week-end.|这个周末我们去海边吧。|今週末、海に行きましょう。|이번 주말에 바다에 가요.
+plans|[What time shall we meet]?|[À quelle heure on se retrouve] ?|我们几点见面？|何時に会いましょうか。|몇 시에 만날까요?
+plans|[I'll pick you up] at eight.|[Je passe te prendre] à huit heures.|我八点去接你。|八時に迎えに行きます。|여덟 시에 데리러 갈게요.
+plans|[Don't forget] to bring a jacket.|[N'oublie pas] d'apporter une veste.|别忘了带外套。|上着を持ってくるのを忘れないで。|재킷 가져오는 거 잊지 마세요.
+plans|Next summer, [I'd like to] travel to Spain.|L'été prochain, [j'aimerais] voyager en Espagne.|明年夏天我想去西班牙旅行。|来年の夏はスペインを旅行したいです。|내년 여름에는 스페인을 여행하고 싶어요.
+plans|[I'm thinking of] learning to cook.|[Je pense] apprendre à cuisiner.|我在考虑学做饭。|料理を習おうかと思っています。|요리를 배워 볼까 생각 중이에요.
+plans|[If it's sunny], we'll have a picnic.|[S'il fait beau], on fera un pique-nique.|如果天气好，我们就去野餐。|晴れたら、ピクニックをしましょう。|날씨가 좋으면 소풍을 갈 거예요.
+plans|[I hope] you can come.|[J'espère] que tu pourras venir.|我希望你能来。|来られるといいですね。|올 수 있으면 좋겠어요.
+plans|[Are you free] next Thursday?|[Tu es libre] jeudi prochain ?|你下星期四有空吗？|来週の木曜日は空いていますか。|다음 주 목요일에 시간 있어요?
+plans|[I'll let you know] tomorrow.|[Je te dirai] demain.|我明天告诉你。|明日お知らせします。|내일 알려 줄게요.
+plans|[Shall I book] a table?|[Je réserve] une table ?|要我订一张桌子吗？|席を予約しましょうか。|자리를 예약할까요?
+plans|[It depends on] the weather.|[Ça dépend] du temps.|要看天气。|天気次第です。|날씨에 달렸어요.
+plans|We're [having a party] on Friday.|On [fait une fête] vendredi.|我们星期五要开派对。|金曜日にパーティーをします。|금요일에 파티를 해요.
+plans|[Can I bring] a friend?|[Je peux amener] un ami ?|我可以带个朋友来吗？|友達を連れて行ってもいいですか。|친구 데려가도 돼요?
+plans|[Of course]!|[Bien sûr] !|当然可以！|もちろん！|물론이죠!
+plans|[I'm looking forward to] the holidays.|[J'ai hâte d'être] en vacances.|我很期待假期。|休みが楽しみです。|휴가가 기대돼요.
+plans|[We'd better] leave early.|[On ferait mieux de] partir tôt.|我们最好早点儿出发。|早めに出たほうがいいですね。|일찍 출발하는 게 좋겠어요.
+plans|[I won't be able to] come on time.|[Je ne pourrai pas] arriver à l'heure.|我没法准时到。|時間通りに行けそうにありません。|제시간에 못 갈 것 같아요.
+plans|[Text me] when you arrive.|[Envoie-moi un message] quand tu arrives.|你到了给我发个消息。|着いたらメッセージを送って。|도착하면 문자 줘요.
+plans|[Let's meet] in front of the station.|[Retrouvons-nous] devant la gare.|我们在车站前面见吧。|駅の前で会いましょう。|역 앞에서 만나요.
+plans|[It's my turn] to pay.|[C'est à moi] de payer.|这次轮到我付钱了。|今度は私が払う番です。|이번엔 제가 낼 차례예요.
+plans|[We're going to be late]!|[On va être en retard] !|我们要迟到了！|遅れそう！|우리 늦겠어요!
+plans|[I'll call you back] later.|[Je te rappelle] plus tard.|我待会儿给你回电话。|後でかけ直します。|나중에 다시 전화할게요.
+plans|[Could we change] the date?|[On pourrait changer] la date ?|我们能改个日期吗？|日にちを変えられますか。|날짜를 바꿀 수 있을까요?
+plans|[That suits me].|[Ça me va].|这个时间对我合适。|それで大丈夫です。|저는 좋아요.
+plans|[I'm not sure yet].|[Je ne sais pas encore].|我还不确定。|まだわかりません。|아직 잘 모르겠어요.
+plans|[Maybe next time].|[Peut-être la prochaine fois].|下次吧。|また今度ね。|다음에 해요.
+plans|[Have fun]!|[Amuse-toi bien] !|玩得开心！|楽しんでね！|재미있게 놀아요!
+plans|[I'm planning to buy] a car.|[J'ai l'intention d'acheter] une voiture.|我打算买一辆车。|車を買うつもりです。|차를 살 계획이에요.
+plans|[When are you leaving]?|[Quand est-ce que tu pars] ?|你什么时候走？|いつ出発しますか。|언제 떠나요?
+plans|[In two weeks].|[Dans deux semaines].|两个星期以后。|二週間後です。|2주 후에요.
+plans|We'll [stay for] a week.|Nous [resterons] une semaine.|我们会待一个星期。|一週間滞在します。|일주일 동안 머물 거예요.
+plans|[Don't worry], I'll be there.|[Ne t'inquiète pas], je serai là.|别担心，我会到的。|心配しないで、行きますから。|걱정 마요, 갈게요.
+plans|[See you on Saturday]!|[À samedi] !|星期六见！|土曜日にね！|토요일에 봐요!
+health|[I don't feel well].|[Je ne me sens pas bien].|我不太舒服。|気分がよくありません。|몸이 안 좋아요.
+health|[I have a headache].|[J'ai mal à la tête].|我头疼。|頭が痛いです。|머리가 아파요.
+health|[My back hurts].|[J'ai mal au dos].|我背疼。|背中が痛いです。|등이 아파요.
+health|[I have a cold].|[J'ai un rhume].|我感冒了。|風邪をひいています。|감기에 걸렸어요.
+health|[I think I have] a fever.|[Je crois que j'ai] de la fièvre.|我好像发烧了。|熱があるみたいです。|열이 있는 것 같아요.
+health|[I'd like to make an appointment] with the doctor.|[Je voudrais prendre rendez-vous] avec le médecin.|我想预约看医生。|お医者さんの予約をしたいのですが。|진료 예약을 하고 싶어요.
+health|[Since when] have you been ill?|[Depuis quand] êtes-vous malade ?|你从什么时候开始生病的？|いつから具合が悪いですか。|언제부터 아팠어요?
+health|[Since yesterday].|[Depuis hier].|从昨天开始。|昨日からです。|어제부터요.
+health|[Take this medicine] three times a day.|[Prenez ce médicament] trois fois par jour.|这个药一天吃三次。|この薬を一日三回飲んでください。|이 약을 하루에 세 번 드세요.
+health|[You should rest].|[Vous devriez vous reposer].|你应该休息一下。|休んだほうがいいですよ。|쉬는 게 좋겠어요.
+health|[Are you allergic to] anything?|[Vous êtes allergique à] quelque chose ?|你对什么过敏吗？|何かアレルギーはありますか。|알레르기 있는 거 있어요?
+health|I'm [allergic to nuts].|Je suis [allergique aux noix].|我对坚果过敏。|ナッツアレルギーです。|견과류 알레르기가 있어요.
+health|[Where is the nearest] pharmacy?|[Où est] la pharmacie la plus proche ?|最近的药店在哪儿？|一番近い薬局はどこですか。|가장 가까운 약국이 어디예요?
+health|[I need something for] a sore throat.|[Il me faut quelque chose contre] le mal de gorge.|我需要治嗓子疼的药。|喉の痛みに効く薬が欲しいです。|목 아픈 데 먹는 약이 필요해요.
+health|[Call an ambulance]!|[Appelez une ambulance] !|快叫救护车！|救急車を呼んでください！|구급차 불러 주세요!
+health|[I've hurt] my leg.|[Je me suis fait mal] à la jambe.|我的腿受伤了。|足をけがしました。|다리를 다쳤어요.
+health|[It's nothing serious].|[Ce n'est pas grave].|没什么大问题。|大したことはありません。|심각한 건 아니에요.
+health|[I'd like to open] a bank account.|[Je voudrais ouvrir] un compte bancaire.|我想开一个银行账户。|銀行口座を開きたいです。|은행 계좌를 만들고 싶어요.
+health|[I'd like to send] this parcel.|[Je voudrais envoyer] ce colis.|我想寄这个包裹。|この小包を送りたいです。|이 소포를 보내고 싶어요.
+health|[How long does it take]?|[Ça prend combien de temps] ?|要多长时间？|どのくらいかかりますか。|얼마나 걸려요?
+health|[Can you fill in] this form?|[Vous pouvez remplir] ce formulaire ?|你能填一下这张表吗？|この用紙に記入してもらえますか。|이 양식 좀 작성해 주시겠어요?
+health|[Sign here], please.|[Signez ici], s'il vous plaît.|请在这里签名。|ここにサインしてください。|여기에 서명해 주세요.
+health|[My phone doesn't work].|[Mon téléphone ne marche pas].|我的手机坏了。|携帯が使えません。|휴대폰이 안 돼요.
+health|[Could you fix] it today?|[Vous pourriez le réparer] aujourd'hui ?|今天能修好吗？|今日修理してもらえますか。|오늘 고쳐 주실 수 있어요?
+health|[There's a problem with] my room.|[Il y a un problème avec] ma chambre.|我的房间有问题。|部屋に問題があります。|제 방에 문제가 있어요.
+health|[The heating doesn't work].|[Le chauffage ne marche pas].|暖气坏了。|暖房が効きません。|난방이 안 돼요.
+health|[I'd like a refund].|[Je voudrais être remboursé].|我想退款。|返金してほしいです。|환불받고 싶어요.
+health|[Can I exchange] this shirt?|[Je peux échanger] cette chemise ?|这件衬衫可以换吗？|このシャツを交換できますか。|이 셔츠 교환할 수 있어요?
+health|[I've lost] my passport.|[J'ai perdu] mon passeport.|我的护照丢了。|パスポートをなくしました。|여권을 잃어버렸어요.
+health|[Someone stole] my bag.|[On m'a volé] mon sac.|我的包被偷了。|かばんを盗まれました。|가방을 도둑맞았어요.
+health|[Where can I] charge my phone?|[Où est-ce que je peux] recharger mon téléphone ?|我在哪儿可以给手机充电？|どこで携帯を充電できますか。|어디서 휴대폰을 충전할 수 있어요?
+health|[Is there wifi] here?|[Il y a du wifi] ici ?|这里有无线网吗？|ここにWi-Fiはありますか。|여기 와이파이 있어요?
+health|[What's the password]?|[Quel est le mot de passe] ?|密码是多少？|パスワードは何ですか。|비밀번호가 뭐예요?
+health|[I need to see] a dentist.|[Je dois voir] un dentiste.|我得去看牙医。|歯医者に行かなければなりません。|치과에 가야 해요.
+health|[Open your mouth], please.|[Ouvrez la bouche], s'il vous plaît.|请张开嘴。|口を開けてください。|입을 벌려 주세요.
+health|[Breathe deeply].|[Respirez profondément].|请深呼吸。|深呼吸してください。|숨을 깊이 쉬세요.
+health|I [have to stay] in bed for two days.|Je [dois rester] au lit pendant deux jours.|我得卧床两天。|二日間寝ていなければなりません。|이틀 동안 누워 있어야 해요.
+health|[I feel better] today.|[Je me sens mieux] aujourd'hui.|我今天感觉好多了。|今日は気分がよくなりました。|오늘은 좀 나아졌어요.
+health|[Get well soon]!|[Bon rétablissement] !|早日康复！|お大事に！|빨리 나으세요!
+health|[Thanks for your help].|[Merci de votre aide].|谢谢你的帮助。|助けてくれてありがとう。|도와줘서 고마워요.

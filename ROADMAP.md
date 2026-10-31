@@ -19,7 +19,7 @@ and what to build next, so any new session can continue without the earlier conv
 | `korean/` | Course page | Hangul live; Batchim, TOPIK 1-6 "coming soon" |
 | `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/ko, readings in each UI language's own spelling |
 | `hangul/` | Hangul Studio | 54 cards (40 jamo + 14 syllables), UI en/fr/zh-Hans/ja |
-| `english/`, `french/` | Course pages | CEFR steps A1-C1; A1 live (3 parts of 40 sentences) |
+| `english/`, `french/` | Course pages | CEFR steps A1-C1; A1-B2 live (3 parts of 40 sentences per level), C1 coming soon |
 | `sentences/` | Shared sentence app | `?set=en-a1-meet-1` or `fr-a1-meet-1`; data in `sentences/data/<level>.js` |
 | `shared/` | Catalog, home/course rendering, shared CSS | Courses and steps live in `shared/toybox.js` |
 
@@ -48,8 +48,7 @@ international framework) and by situation. No exam names are used.
   `part|English|French|Chinese|Japanese|Korean`, with the key phrase in [brackets] in English and
   French. The English course shows the other four as translations; the French course likewise.
   Write all five together; sentences are original (never from textbooks or exams).
-- Build `sentences/data/<level>.js` from the source (see the A1 build in git history: rows grouped by
-  part, `parts: {part: [count]}`), add the level step with `href` and
+- Build with `python3 sentences/tools/build.py <levels>` (checks brackets and duplicates), add the level step with `href` and
   `makeParts('sentences/', 'en-<level>', {...})` (and `fr-`) in `shared/toybox.js`, copy
   `english/a1/` and `french/a1/` to the new level, and add the part names to `kinds` in
   `shared/toybox.js` and `sentences/i18n.js` in every language.
@@ -59,8 +58,8 @@ international framework) and by situation. No exam names are used.
   answers without accents (with a reminder) and either gender ending (fatigué/fatiguée).
 - Review is the same as in the other apps (a 10-question review of the part that keeps progress).
 - Speech: en-GB for English (British spelling, e.g. favourite), fr-FR for French.
-- Plan per level: A1 meet/daily/out (done); then A2 and up with more situations (work, health,
-  travel problems, opinions, past and future events), about 40-50 sentences per part.
+- Done: A1 meet/daily/out, A2 past/plans/health, B1 opinions/work/stories, B2 debate/society/tact.
+  Next: C1 (for example idioms and register, abstract topics, hedging and nuance), 40 per part.
 
 then Playwright (Chromium is
   preinstalled) at mobile (390x844) and desktop widths, light and dark, and with Google Fonts blocked.

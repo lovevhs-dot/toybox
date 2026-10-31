@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
-  <link rel="stylesheet" href="../shared/toybox.css?v=2026-10-31.12">
+  <link rel="stylesheet" href="../shared/toybox.css?v=2026-10-31.13">
     <style>
     :root {
       --c: #6d4bd8;
@@ -190,7 +190,7 @@
   </div>
   <main class="page" id="page"><p class="msg">…</p></main>
 
-  <script src="i18n.js?v=2026-10-31.1"></script>
+  <script src="i18n.js?v=2026-10-31.2"></script>
   <script>
   (() => {
     'use strict';
@@ -294,8 +294,8 @@
     const plain = s => s.replace(/[[\]]/g, '');
     const chunkOf = s => (s.match(/\[([^\]]+)\]/) || [, ''])[1];
     // Words for the ordering step: punctuation stays out of the tiles
-    const wordsOf = s => plain(s).replace(/\s+([?!:;])/g, '$1').split(/\s+/).map(w => w.replace(/[.,!?;:]+$/, '')).filter(Boolean);
-    const endPunct = s => (plain(s).trim().match(/[.?!]$/) || [''])[0];
+    const wordsOf = s => plain(s).replace(/\s+([?!:;])/g, '$1').split(/\s+/).map(w => w.replace(/[.,!?;:…]+$/, '')).filter(Boolean);
+    const endPunct = s => (plain(s).trim().match(/(…|[.?!])$/) || [''])[0];
 
     const CONTRACTIONS = {
       "i'm": 'i am', "you're": 'you are', "it's": 'it is', "what's": 'what is', "that's": 'that is', "there's": 'there is',
@@ -304,7 +304,7 @@
       "i've": 'i have', "let's": 'let us', "won't": 'will not'
     };
     function norm(s, keepAccents) {
-      let x = s.toLowerCase().replace(/[’‘`´]/g, "'").replace(/[.,!?;:«»"()  ]/g, ' ').replace(/\s+/g, ' ').trim();
+      let x = s.toLowerCase().replace(/[’‘`´]/g, "'").replace(/[.,!?;:«»"()…  ]/g, ' ').replace(/\s+/g, ' ').trim();
       if (taught === 'en') {
         Object.entries(CONTRACTIONS).forEach(([a, b]) => { x = x.replace(new RegExp(`(^| )${a.replace("'", "'")}(?= |$)`, 'g'), `$1${b}`); });
       }
@@ -666,7 +666,7 @@
     if (!m) { fail(T.notFound); return; }
     kind = m[3]; partNo = Number(m[4]); storageKey = `${setId}-v1`;
     const script = document.createElement('script');
-    script.src = `data/${m[2]}.js?v=2026-10-31.1`;
+    script.src = `data/${m[2]}.js?v=2026-10-31.2`;
     script.onload = () => {
       D = window.SENTENCES;
       if (!D || !buildItems()) { D = null; fail(T.notFound); return; }

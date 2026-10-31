@@ -11,7 +11,7 @@ window.I18N = {
   ui: {
     en: {
       course: { en: 'English', fr: 'French' },
-      kinds: { meet: 'Meeting people', daily: 'Daily life', out: 'Out and about' },
+      kinds: { meet: 'Meeting people', daily: 'Daily life', out: 'Out and about', past: 'The past', plans: 'Plans and invitations', health: 'Health and services', opinions: 'Opinions and feelings', work: 'Work and studies', stories: 'Telling stories', debate: 'Making a case', society: 'Society and the world', tact: 'Tact and polite requests' },
       list: 'List',
       practice: 'Practice',
       mastered: (d, t) => `${d}/${t} mastered`,
@@ -52,7 +52,7 @@ window.I18N = {
     },
     fr: {
       course: { en: 'Anglais', fr: 'Français' },
-      kinds: { meet: 'Faire connaissance', daily: 'La vie quotidienne', out: 'En ville' },
+      kinds: { meet: 'Faire connaissance', daily: 'La vie quotidienne', out: 'En ville', past: 'Le passé', plans: 'Projets et invitations', health: 'Santé et services', opinions: 'Opinions et sentiments', work: 'Travail et études', stories: 'Raconter', debate: 'Argumenter', society: 'La société et le monde', tact: 'Tact et politesse' },
       list: 'Liste',
       practice: 'Pratique',
       mastered: (d, t) => `${d}/${t} maîtrisées`,
@@ -93,7 +93,7 @@ window.I18N = {
     },
     'zh-Hans': {
       course: { en: '英语', fr: '法语' },
-      kinds: { meet: '认识新朋友', daily: '日常生活', out: '出门在外' },
+      kinds: { meet: '认识新朋友', daily: '日常生活', out: '出门在外', past: '过去的事', plans: '计划和邀请', health: '健康和服务', opinions: '观点和感受', work: '工作和学习', stories: '讲故事', debate: '阐述观点', society: '社会与世界', tact: '委婉与礼貌' },
       list: '列表',
       practice: '练习',
       mastered: (d, t) => `已掌握 ${d}/${t}`,
@@ -134,7 +134,7 @@ window.I18N = {
     },
     ja: {
       course: { en: '英語', fr: 'フランス語' },
-      kinds: { meet: '人と知り合う', daily: '毎日の生活', out: '外出先で' },
+      kinds: { meet: '人と知り合う', daily: '毎日の生活', out: '外出先で', past: '過去のこと', plans: '予定と誘い', health: '健康とサービス', opinions: '意見と気持ち', work: '仕事と勉強', stories: '話を語る', debate: '主張する', society: '社会と世界', tact: '丁寧な頼み方' },
       list: '一覧',
       practice: '練習',
       mastered: (d, t) => `${d}/${t} 覚えた`,
@@ -175,7 +175,7 @@ window.I18N = {
     },
     ko: {
       course: { en: '영어', fr: '프랑스어' },
-      kinds: { meet: '사람 만나기', daily: '일상생활', out: '밖에서' },
+      kinds: { meet: '사람 만나기', daily: '일상생활', out: '밖에서', past: '지난 일', plans: '계획과 초대', health: '건강과 서비스', opinions: '의견과 감정', work: '일과 공부', stories: '이야기하기', debate: '논리적으로 말하기', society: '사회와 세계', tact: '정중하게 말하기' },
       list: '목록',
       practice: '연습',
       mastered: (d, t) => `${d}/${t} 외움`,

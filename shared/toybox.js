@@ -30,7 +30,7 @@
       continue: 'Continue',
       start: 'Start',
       allSteps: 'All steps',
-      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar', tones: 'Tones', initials: 'Initials', finals: 'Finals', meet: 'Meeting people', daily: 'Daily life', out: 'Out and about' },
+      kinds: { words: 'Words', chars: 'Characters', grammar: 'Grammar', tones: 'Tones', initials: 'Initials', finals: 'Finals', meet: 'Meeting people', daily: 'Daily life', out: 'Out and about', past: 'The past', plans: 'Plans and invitations', health: 'Health and services', opinions: 'Opinions and feelings', work: 'Work and studies', stories: 'Telling stories', debate: 'Making a case', society: 'Society and the world', tact: 'Tact and polite requests' },
       part: n => `Part ${n}`,
       backup: 'Back up or restore progress',
       backupNote: 'Progress is saved only in this browser. Copy a backup code to keep it safe or move it to another device.',
@@ -62,7 +62,7 @@
       continue: 'Continuer',
       start: 'Commencer',
       allSteps: 'Toutes les étapes',
-      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire', tones: 'Tons', initials: 'Initiales', finals: 'Finales', meet: 'Faire connaissance', daily: 'La vie quotidienne', out: 'En ville' },
+      kinds: { words: 'Vocabulaire', chars: 'Caractères', grammar: 'Grammaire', tones: 'Tons', initials: 'Initiales', finals: 'Finales', meet: 'Faire connaissance', daily: 'La vie quotidienne', out: 'En ville', past: 'Le passé', plans: 'Projets et invitations', health: 'Santé et services', opinions: 'Opinions et sentiments', work: 'Travail et études', stories: 'Raconter', debate: 'Argumenter', society: 'La société et le monde', tact: 'Tact et politesse' },
       part: n => `Partie ${n}`,
       backup: 'Sauvegarder ou restaurer la progression',
       backupNote: 'La progression est enregistrée uniquement dans ce navigateur. Copiez un code de sauvegarde pour la garder ou la transférer sur un autre appareil.',
@@ -94,7 +94,7 @@
       continue: '继续',
       start: '开始',
       allSteps: '全部阶段',
-      kinds: { words: '词汇', chars: '汉字', grammar: '语法', tones: '声调', initials: '声母', finals: '韵母', meet: '认识新朋友', daily: '日常生活', out: '出门在外' },
+      kinds: { words: '词汇', chars: '汉字', grammar: '语法', tones: '声调', initials: '声母', finals: '韵母', meet: '认识新朋友', daily: '日常生活', out: '出门在外', past: '过去的事', plans: '计划和邀请', health: '健康和服务', opinions: '观点和感受', work: '工作和学习', stories: '讲故事', debate: '阐述观点', society: '社会与世界', tact: '委婉与礼貌' },
       part: n => `第 ${n} 部分`,
       backup: '备份或恢复进度',
       backupNote: '进度只保存在这个浏览器里。复制备份码，可以妥善保存或转移到其他设备。',
@@ -126,7 +126,7 @@
       continue: '続ける',
       start: '始める',
       allSteps: 'すべてのステップ',
-      kinds: { words: '語彙', chars: '漢字', grammar: '文法', tones: '声調', initials: '声母', finals: '韻母', meet: '人と知り合う', daily: '毎日の生活', out: '外出先で' },
+      kinds: { words: '語彙', chars: '漢字', grammar: '文法', tones: '声調', initials: '声母', finals: '韻母', meet: '人と知り合う', daily: '毎日の生活', out: '外出先で', past: '過去のこと', plans: '予定と誘い', health: '健康とサービス', opinions: '意見と気持ち', work: '仕事と勉強', stories: '話を語る', debate: '主張する', society: '社会と世界', tact: '丁寧な頼み方' },
       part: n => `パート${n}`,
       backup: '進み具合のバックアップ・復元',
       backupNote: '進み具合はこのブラウザにだけ保存されます。バックアップコードをコピーしておけば、安全に保管したり別の端末に移したりできます。',
@@ -158,7 +158,7 @@
       continue: '이어서 하기',
       start: '시작하기',
       allSteps: '전체 단계',
-      kinds: { words: '어휘', chars: '한자', grammar: '문법', tones: '성조', initials: '성모', finals: '운모', meet: '사람 만나기', daily: '일상생활', out: '밖에서' },
+      kinds: { words: '어휘', chars: '한자', grammar: '문법', tones: '성조', initials: '성모', finals: '운모', meet: '사람 만나기', daily: '일상생활', out: '밖에서', past: '지난 일', plans: '계획과 초대', health: '건강과 서비스', opinions: '의견과 감정', work: '일과 공부', stories: '이야기하기', debate: '논리적으로 말하기', society: '사회와 세계', tact: '정중하게 말하기' },
       part: n => `파트 ${n}`,
       backup: '진행 기록 백업·복원',
       backupNote: '진행 기록은 이 브라우저에만 저장돼요. 백업 코드를 복사해두면 안전하게 보관하거나 다른 기기로 옮길 수 있어요.',
@@ -357,17 +357,20 @@
           desc: { en: 'Beginner · everyday sentences', fr: 'Débutant · phrases du quotidien', 'zh-Hans': '入门 · 日常句子', ja: '入門 · 日常のフレーズ', ko: '입문 · 일상 문장' }
         },
         {
-          id: 'en-a2',
+          id: 'en-a2', href: 'english/a2/',
+          parts: makeParts('sentences/', 'en-a2', { past: [40], plans: [40], health: [40] }),
           name: { en: 'A2', fr: 'A2', 'zh-Hans': 'A2', ja: 'A2', ko: 'A2' },
           desc: { en: 'Elementary · everyday sentences', fr: 'Élémentaire · phrases du quotidien', 'zh-Hans': '初级 · 日常句子', ja: '初級 · 日常のフレーズ', ko: '초급 · 일상 문장' }
         },
         {
-          id: 'en-b1',
+          id: 'en-b1', href: 'english/b1/',
+          parts: makeParts('sentences/', 'en-b1', { opinions: [40], work: [40], stories: [40] }),
           name: { en: 'B1', fr: 'B1', 'zh-Hans': 'B1', ja: 'B1', ko: 'B1' },
           desc: { en: 'Intermediate · everyday sentences', fr: 'Intermédiaire · phrases du quotidien', 'zh-Hans': '中级 · 日常句子', ja: '中級 · 日常のフレーズ', ko: '중급 · 일상 문장' }
         },
         {
-          id: 'en-b2',
+          id: 'en-b2', href: 'english/b2/',
+          parts: makeParts('sentences/', 'en-b2', { debate: [40], society: [40], tact: [40] }),
           name: { en: 'B2', fr: 'B2', 'zh-Hans': 'B2', ja: 'B2', ko: 'B2' },
           desc: { en: 'Upper intermediate · everyday sentences', fr: 'Intermédiaire avancé · phrases du quotidien', 'zh-Hans': '中高级 · 日常句子', ja: '中上級 · 日常のフレーズ', ko: '중상급 · 일상 문장' }
         },
@@ -393,17 +396,20 @@
           desc: { en: 'Beginner · everyday sentences', fr: 'Débutant · phrases du quotidien', 'zh-Hans': '入门 · 日常句子', ja: '入門 · 日常のフレーズ', ko: '입문 · 일상 문장' }
         },
         {
-          id: 'fr-a2',
+          id: 'fr-a2', href: 'french/a2/',
+          parts: makeParts('sentences/', 'fr-a2', { past: [40], plans: [40], health: [40] }),
           name: { en: 'A2', fr: 'A2', 'zh-Hans': 'A2', ja: 'A2', ko: 'A2' },
           desc: { en: 'Elementary · everyday sentences', fr: 'Élémentaire · phrases du quotidien', 'zh-Hans': '初级 · 日常句子', ja: '初級 · 日常のフレーズ', ko: '초급 · 일상 문장' }
         },
         {
-          id: 'fr-b1',
+          id: 'fr-b1', href: 'french/b1/',
+          parts: makeParts('sentences/', 'fr-b1', { opinions: [40], work: [40], stories: [40] }),
           name: { en: 'B1', fr: 'B1', 'zh-Hans': 'B1', ja: 'B1', ko: 'B1' },
           desc: { en: 'Intermediate · everyday sentences', fr: 'Intermédiaire · phrases du quotidien', 'zh-Hans': '中级 · 日常句子', ja: '中級 · 日常のフレーズ', ko: '중급 · 일상 문장' }
         },
         {
-          id: 'fr-b2',
+          id: 'fr-b2', href: 'french/b2/',
+          parts: makeParts('sentences/', 'fr-b2', { debate: [40], society: [40], tact: [40] }),
           name: { en: 'B2', fr: 'B2', 'zh-Hans': 'B2', ja: 'B2', ko: 'B2' },
           desc: { en: 'Upper intermediate · everyday sentences', fr: 'Intermédiaire avancé · phrases du quotidien', 'zh-Hans': '中高级 · 日常句子', ja: '中上級 · 日常のフレーズ', ko: '중상급 · 일상 문장' }
         },
