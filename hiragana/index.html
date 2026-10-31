@@ -1297,7 +1297,7 @@
 
   <div class="sheet-backdrop" id="backdrop"></div>
 
-  <script src="i18n.js?v=2026-10-31.3"></script>
+  <script src="i18n.js?v=2026-10-31.4"></script>
   <script>
     const HIRAGANA_DATA = [
       // Vowels & K / S
@@ -1456,13 +1456,13 @@
 
     function detectLang() {
       try {
-        const stored = (localStorage.getItem(LANG_KEY) || '').replace(/^zh-Hant$/, 'zh-Hant-HK');
+        const stored = (localStorage.getItem(LANG_KEY) || '').replace(/^zh-Hant.*/, 'zh-Hans');
         if (stored && I18N.ui[stored]) return stored;
       } catch (e) {}
       for (const l of navigator.languages || [navigator.language || 'en']) {
         const x = l.toLowerCase();
         if (x.startsWith('ko')) return 'ko';
-        if (x.startsWith('zh')) return /hant|tw|hk|mo/.test(x) ? 'zh-Hant-HK' : 'zh-Hans';
+        if (x.startsWith('zh')) return 'zh-Hans';
         if (x.startsWith('fr')) return 'fr';
         if (x.startsWith('en')) return 'en';
       }

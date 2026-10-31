@@ -11,8 +11,8 @@ and what to build next, so any new session can continue without the earlier conv
 | `japanese/` | Course page | Step 1 Hiragana live, later steps "coming soon" |
 | `chinese/` | Course page | Pinyin and HSK 1-6 steps, all "coming soon"; word lists in `chinese/data/` |
 | `korean/` | Course page | Step 1 Hangul live, later steps "coming soon" |
-| `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/zh-Hant-HK/ko, readings in each UI language's own spelling (Cantonese for 中文（香港）) |
-| `hangul/` | Hangul Studio | 54 cards (40 jamo + 14 syllables), UI en/fr/zh-Hans/zh-Hant-HK/ja |
+| `hiragana/` | Hiragana Studio | 55 cards, UI en/fr/zh-Hans/ko, readings in each UI language's own spelling |
+| `hangul/` | Hangul Studio | 54 cards (40 jamo + 14 syllables), UI en/fr/zh-Hans/ja |
 | `shared/` | Catalog, home/course rendering, shared CSS | Courses and steps live in `shared/toybox.js` |
 
 ## How a studio app works (copy `hangul/` for a new one)
