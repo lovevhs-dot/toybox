@@ -307,23 +307,43 @@
     // ---------- Sound (Web Audio, synthesized; no files) ----------
     const SCALE = [261.63, 293.66, 329.63, 349.23, 392.0, 440.0, 493.88]; // C4 D4 E4 F4 G4 A4 B4
     const Audio = {
-      ctx: null, noiseBuf: null,
+      ctx: null, out: null, noiseBuf: null, keepAlive: null,
+      // Called from a tap or key press: browsers only start audio after a user gesture
       init() {
-        if (this.ctx) { if (this.ctx.state === 'suspended') this.ctx.resume(); return; }
-        try {
-          this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-          const len = this.ctx.sampleRate * 0.5;
-          this.noiseBuf = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
-          const d = this.noiseBuf.getChannelData(0);
-          for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
-        } catch (e) { this.ctx = null; }
+        // iPhones mute Web Audio with the silent switch; ask for "playback" audio where Safari supports it
+        try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+        if (!this.ctx) {
+          try {
+            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            // Everything goes through a compressor so loud hits don't clip and quiet ones stay audible
+            const comp = this.ctx.createDynamicsCompressor();
+            const master = this.ctx.createGain(); master.gain.value = 0.9;
+            master.connect(comp).connect(this.ctx.destination);
+            this.out = master;
+            const len = this.ctx.sampleRate * 0.5;
+            this.noiseBuf = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
+            const d = this.noiseBuf.getChannelData(0);
+            for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+          } catch (e) { this.ctx = null; return; }
+        }
+        if (this.ctx.state !== 'running') this.ctx.resume().catch(() => {});
+        // A silent one-sample sound unlocks audio on older iPhones
+        try { const src = this.ctx.createBufferSource(); src.buffer = this.ctx.createBuffer(1, 1, 22050); src.connect(this.ctx.destination); src.start(0); } catch (e) {}
+        // Older iPhones without audioSession: a looping silent media element moves audio out of "ringer" mode
+        if (!navigator.audioSession && /iP(hone|ad|od)|Macintosh/.test(navigator.userAgent) && 'ontouchend' in document) {
+          try {
+            if (!this.keepAlive) { this.keepAlive = document.createElement('audio'); this.keepAlive.src = silentWav(); this.keepAlive.loop = true; this.keepAlive.setAttribute('playsinline', ''); }
+            const pr = this.keepAlive.play(); if (pr) pr.catch(() => {});
+          } catch (e) {}
+        }
       },
+      rest() { try { if (this.keepAlive) this.keepAlive.pause(); } catch (e) {} },
       env(node, t, vol, dur) {
         const g = this.ctx.createGain();
         g.gain.setValueAtTime(0.0001, t);
         g.gain.exponentialRampToValueAtTime(vol, t + 0.005);
         g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-        node.connect(g).connect(this.ctx.destination);
+        node.connect(g).connect(this.out);
         return g;
       },
       noise(t, dur, vol, type, freq) {
@@ -332,44 +352,57 @@
         s.connect(f); this.env(f, t, vol, dur); s.start(t); s.stop(t + dur + 0.02);
         return f;
       },
-      ok() { return prefs.sound && this.ctx; },
+      ok() { return prefs.sound && this.ctx && this.ctx.state === 'running'; },
+      // Kick: a falling tone plus a click, so phone speakers (which drop low notes) still hear the beat
       kick() {
         if (!this.ok()) return;
         const t = this.ctx.currentTime, o = this.ctx.createOscillator();
-        o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(45, t + 0.12);
-        this.env(o, t, 0.16, 0.14); o.start(t); o.stop(t + 0.16);
+        o.frequency.setValueAtTime(180, t); o.frequency.exponentialRampToValueAtTime(60, t + 0.12);
+        this.env(o, t, 0.5, 0.15); o.start(t); o.stop(t + 0.17);
+        this.noise(t, 0.02, 0.25, 'bandpass', 1800);
       },
-      hat() { if (this.ok()) this.noise(this.ctx.currentTime, 0.04, 0.03, 'highpass', 7000); },
-      // A drum hit whose pitch climbs one scale step per combo (C4, D4, E4, …)
+      hat() { if (this.ok()) this.noise(this.ctx.currentTime, 0.04, 0.12, 'highpass', 6000); },
+      // A drum hit whose pitch climbs one scale step per combo (C, D, E, …), an octave up for small speakers
       hit(combo) {
         if (!this.ok()) return;
         const t = this.ctx.currentTime, step = Math.min(combo - 1, 20);
-        const freq = SCALE[step % 7] * Math.pow(2, Math.floor(step / 7));
+        const freq = SCALE[step % 7] * 2 * Math.pow(2, Math.floor(step / 7));
         const o = this.ctx.createOscillator(); o.type = 'triangle'; o.frequency.value = freq;
-        this.env(o, t, 0.22, 0.2); o.start(t); o.stop(t + 0.22);
-        this.noise(t, 0.03, 0.08, 'bandpass', 3000);
+        this.env(o, t, 0.55, 0.22); o.start(t); o.stop(t + 0.24);
+        const o2 = this.ctx.createOscillator(); o2.type = 'sine'; o2.frequency.value = freq * 2;
+        this.env(o2, t, 0.15, 0.12); o2.start(t); o2.stop(t + 0.14);
+        this.noise(t, 0.03, 0.2, 'bandpass', 3000);
       },
-      // A record-scratch: noise and a falling saw, swept down
+      // A record scratch: noise and a falling saw, swept down
       scratch() {
         if (!this.ok()) return;
         const t = this.ctx.currentTime;
-        const f = this.noise(t, 0.3, 0.18, 'bandpass', 2400);
-        f.frequency.exponentialRampToValueAtTime(180, t + 0.3); f.Q.value = 4;
+        const f = this.noise(t, 0.3, 0.45, 'bandpass', 2400);
+        f.frequency.exponentialRampToValueAtTime(250, t + 0.3); f.Q.value = 3;
         const o = this.ctx.createOscillator(); o.type = 'sawtooth';
-        o.frequency.setValueAtTime(420, t); o.frequency.exponentialRampToValueAtTime(70, t + 0.28);
-        this.env(o, t, 0.06, 0.3); o.start(t); o.stop(t + 0.32);
+        o.frequency.setValueAtTime(520, t); o.frequency.exponentialRampToValueAtTime(110, t + 0.28);
+        this.env(o, t, 0.18, 0.3); o.start(t); o.stop(t + 0.32);
       },
       fever() {
         if (!this.ok()) return;
         const t = this.ctx.currentTime;
         [523.25, 659.25, 783.99, 1046.5].forEach((fq, i) => {
           const o = this.ctx.createOscillator(); o.type = 'square'; o.frequency.value = fq;
-          const g = this.ctx.createGain(); g.gain.setValueAtTime(0.0001, t + i * 0.06);
-          g.gain.exponentialRampToValueAtTime(0.05, t + i * 0.06 + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + i * 0.06 + 0.15);
-          o.connect(g).connect(this.ctx.destination); o.start(t + i * 0.06); o.stop(t + i * 0.06 + 0.17);
+          this.env(o, t + i * 0.06, 0.12, 0.15); o.start(t + i * 0.06); o.stop(t + i * 0.06 + 0.17);
         });
       }
     };
+    // Half a second of silence as a WAV (8 kHz, 8-bit), made here so no file is needed
+    function silentWav() {
+      const n = 4000, b = new Uint8Array(44 + n), v = new DataView(b.buffer);
+      const w = (o, str) => [...str].forEach((c, i) => b[o + i] = c.charCodeAt(0));
+      w(0, 'RIFF'); v.setUint32(4, 36 + n, true); w(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+      v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); w(36, 'data'); v.setUint32(40, n, true);
+      b.fill(128, 44);
+      return URL.createObjectURL(new Blob([b], { type: 'audio/wav' }));
+    }
+    // For tests: whether audio is running (read-only)
+    window.toyboxArcadeAudio = () => (Audio.ctx ? Audio.ctx.state : 'none');
 
     // ---------- Loading track data ----------
     const cache = {};
@@ -705,6 +738,7 @@
       $('again').focus({ preventScroll: true });
     }
     function toLobby() {
+      Audio.rest();
       if (G) { G.over = true; cancelAnimationFrame(G.raf); }
       G = null;
       $('game').hidden = true; $('result').hidden = true; $('lobby').hidden = false;
@@ -726,6 +760,7 @@
     // Lanes answer on pointer-down for a quick response
     $('lanes').addEventListener('pointerdown', e => {
       const b = e.target.closest('[data-lane]');
+      Audio.init();
       if (b && G && !G.over && G.note && !G.note.done) { e.preventDefault(); judge(Number(b.dataset.lane)); }
     });
     const KEYS = { '1': 0, '2': 1, '3': 2, '4': 3, d: 0, f: 1, j: 2, k: 3 };
@@ -763,7 +798,7 @@
       if (Math.abs(dy) > 30) moveTrack(dy < 0 ? 1 : -1);
       touchY = null;
     });
-    $('sound-btn').addEventListener('click', () => { prefs.sound = !prefs.sound; store.set(PREFS_KEY, prefs); renderChrome(); });
+    $('sound-btn').addEventListener('click', () => { prefs.sound = !prefs.sound; if (prefs.sound) { Audio.init(); setTimeout(() => Audio.hit(5), 60); } store.set(PREFS_KEY, prefs); renderChrome(); });
     $('calm-btn').addEventListener('click', () => { prefs.calm = !prefs.calm; store.set(PREFS_KEY, prefs); renderChrome(); });
     $('lang').addEventListener('change', e => {
       lang = e.target.value; T = I18N.ui[lang];
